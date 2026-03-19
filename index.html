@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Waldmomente – Waldbaden, Natur und Ruhe für Menschen mit zu viel Stress. Wald statt WLAN. Digitale Produkte von Elisabeth Müller.">
+  <meta name="keywords" content="Waldmomente, Waldbaden, Wald, Natur, Stress, Ruhe, Naturliebe, WaldStattWLAN, Elisabeth Müller">
+  <title>Waldmomente – Elisabeth Müller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── VARIABLES ── */
+    :root {
+      --sand:       #E2D5BF;
+      --green:      #2D4A35;
+      --brown:      #8B6847;
+      --cream:      #FDFAF5;
+      --dark:       #0f1a10;
+      --text:       #2A2118;
+      --gold:       #C8A96E;
+      --gold-light: #E8D5A3;
+      --gold-dark:  #A07840;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--sand);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    @media (hover: none) { body { cursor: auto; } }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── CURSOR ── */
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold), 0 0 20px rgba(200,169,110,0.5), 0 0 40px rgba(200,169,110,0.2);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, opacity .2s;
+      will-change: left, top;
+    }
+
+    /* ── SOUND BUTTON ── */
+    #sound-btn {
+      position: fixed;
+      top: 20px; right: 20px;
+      z-index: 8000;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,110,.55);
+      background: transparent;
+      color: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      cursor: none;
+      transition: background .3s;
+    }
+    #sound-btn:hover { background: rgba(200,169,110,.08); }
+    #sound-btn.muted { color: rgba(200,169,110,.3); border-color: rgba(200,169,110,.2); }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 6000;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
+      background: transparent;
+      transition: background .5s ease, backdrop-filter .5s ease;
+    }
+    #nav.scrolled {
+      background: rgba(10,18,10,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(200,169,110,.12);
+    }
+    .nav__logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.35rem;
+      color: var(--gold); letter-spacing: .07em;
+      text-shadow: 0 0 18px rgba(200,169,110,.4);
+    }
+    .nav__list {
+      display: flex; gap: 2.2rem; list-style: none;
+    }
+    @media (max-width: 700px) { .nav__list { display: none; } .nav__list.open { display: flex; flex-direction: column; position: fixed; inset: 64px 0 0; background: rgba(10,18,10,.97); backdrop-filter: blur(18px); align-items: center; justify-content: center; gap: 2.5rem; z-index: 5999; } }
+    .nav__link {
+      font-size: .58rem; letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(253,250,245,.6);
+      position: relative; transition: color .35s;
+    }
+    @media (max-width: 700px) { .nav__link { font-size: 1rem; letter-spacing: .25em; color: rgba(253,250,245,.8); } }
+    .nav__link::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transition: transform .35s;
+    }
+    .nav__link:hover, .nav__link.active { color: var(--gold); }
+    .nav__link:hover::after, .nav__link.active::after { transform: scaleX(1); }
+    .nav__burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: none; padding: 6px;
+    }
+    @media (max-width: 700px) { .nav__burger { display: flex; } }
+    .nav__burger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--gold); transition: all .35s;
+    }
+    .nav__burger.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+    .nav__burger.open span:nth-child(2) { opacity: 0; }
+    .nav__burger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+
+    /* ── CONTACT SECTION ── */
+    #contact { background: var(--sand); padding: 7rem 2rem; text-align: center; }
+    .contact__inner { max-width: 560px; margin: 0 auto; }
+    .contact__title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--gold); line-height: 1.2; margin-bottom: 1.2rem;
+      text-shadow: 0 0 40px rgba(200,169,110,.2);
+    }
+    .contact__sub {
+      font-size: 1rem; line-height: 1.9; color: var(--text);
+      margin-bottom: 2.8rem; opacity: .85;
+    }
+    .contact__email {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.4rem; color: var(--gold-dark);
+      border-bottom: 1px solid rgba(200,169,110,.4);
+      padding-bottom: 2px; transition: color .3s, border-color .3s;
+      margin-bottom: 2rem;
+    }
+    .contact__email:hover { color: var(--gold); border-color: var(--gold); }
+    .contact__insta {
+      display: block; font-size: .65rem; letter-spacing: .3em;
+      text-transform: uppercase; color: rgba(42,33,24,.55);
+      margin-top: 1.2rem; transition: color .3s;
+    }
+    .contact__insta:hover { color: var(--gold); }
+
+    /* ── OPENING SCREEN ── */
+    #opening {
+      position: fixed; inset: 0;
+      z-index: 7000;
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1.4rem;
+      transition: opacity 2s ease;
+    }
+    #opening.out { opacity: 0; pointer-events: none; }
+
+    .op-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 5.5vw, 3.8rem);
+      color: var(--cream);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 1.3s ease, transform 1.3s ease;
+    }
+    .op-line.show { opacity: 1; transform: translateY(0); }
+
+    .op-gold {
+      width: 55px; height: 1px;
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold);
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .op-gold.show { opacity: 1; }
+
+    /* ── GOLD SEPARATOR ── */
+    .gold-sep {
+      display: block;
+      width: 100%; height: 1px;
+      position: relative; overflow: hidden;
+    }
+    .gold-sep::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(200,169,110,0.3) 20%,
+        var(--gold-light) 50%,
+        rgba(200,169,110,0.3) 80%,
+        transparent 100%);
+      background-size: 200% 100%;
+      animation: sepShimmer 4s ease-in-out infinite;
+      box-shadow: 0 0 6px rgba(200,169,110,0.4);
+    }
+    @keyframes sepShimmer {
+      0%   { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-ind {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .scroll-ind__line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      transform-origin: top;
+      animation: drip 2.3s cubic-bezier(.4,0,.2,1) infinite;
+    }
+    @keyframes drip {
+      0%        { transform: scaleY(0); opacity: 0; }
+      25%, 65%  { transform: scaleY(1); opacity: 1; }
+      100%      { transform: scaleY(0) translateY(80%); opacity: 0; }
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .15s; }
+    .d2 { transition-delay: .3s; }
+    .d3 { transition-delay: .45s; }
+
+    /* ── SHIMMER HEADING ── */
+    .sh {
+      position: relative;
+      display: inline-block;
+    }
+    .sh::before {
+      content: attr(data-t);
+      position: absolute; inset: 0;
+      background: linear-gradient(100deg,
+        transparent 15%, var(--gold-light) 50%, transparent 85%);
+      background-size: 200% 100%;
+      background-position: 200% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+    }
+    .sh.shim::before {
+      opacity: 1;
+      animation: headShimmer 1.6s ease forwards;
+    }
+    @keyframes headShimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100svh; min-height: 560px;
+      overflow: hidden;
+    }
+    .hero__slide {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(1.07);
+      transition: opacity 2.6s ease, transform 9s linear;
+    }
+    .hero__slide.on { opacity: 1; transform: scale(1); }
+    .hero__slide:nth-child(1) { background-image: url('gruen.jpeg'); }
+    .hero__slide:nth-child(2) { background-image: url('golden.jpeg'); }
+    .hero__slide:nth-child(3) { background-image: url('moos.jpeg'); }
+
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(170deg,
+        rgba(15,26,16,.18) 0%,
+        rgba(15,26,16,.52) 55%,
+        rgba(15,26,16,.78) 100%);
+    }
+    .hero__content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+    }
+    .hero__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2.7rem, 8.5vw, 6.8rem);
+      line-height: 1.15; color: var(--cream);
+      text-shadow: 0 2px 40px rgba(0,0,0,.2);
+    }
+    .hero__title .w {
+      display: inline-block;
+      opacity: 0; transform: translateY(14px);
+    }
+    .hero__flug {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: rgba(253,250,245,0.6);
+      letter-spacing: .12em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hero__flug.show { opacity: 1; }
+    .hero__byline {
+      margin-top: 2.5rem;
+      font-size: .62rem;
+      letter-spacing: .45em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════
+       EINLEITUNG
+    ═══════════════════════════════ */
+    #intro {
+      background: var(--sand);
+      padding: 7rem 2rem 5rem;
+      text-align: center;
+    }
+    .intro__inner { max-width: 740px; margin: 0 auto; }
+    .intro__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 5.5vw, 3.6rem);
+      color: var(--gold-dark);
+      line-height: 1.25;
+      margin-bottom: 1.6rem;
+      text-shadow: 0 0 50px rgba(200,169,110,.2);
+    }
+    .intro__sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.22rem;
+      color: var(--text); opacity: .7;
+      margin-bottom: 2.5rem;
+    }
+    .tags {
+      font-size: .6rem;
+      letter-spacing: .42em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════
+       WARUM WALDBADEN
+    ═══════════════════════════════ */
+    #why { background: var(--sand); padding: 5rem 2rem 7rem; }
+    .why__inner { max-width: 840px; margin: 0 auto; }
+
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2.3rem, 5.5vw, 4.2rem);
+      color: var(--gold-dark);
+      line-height: 1.15;
+      margin-bottom: .8rem;
+      text-shadow: 0 0 60px rgba(200,169,110,.25);
+    }
+    .body-text {
+      font-size: 1.05rem;
+      line-height: 2.05;
+      color: var(--text);
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      margin: 2rem 0 3rem;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+      margin: 3rem 0;
+    }
+    .fact { border-top: 1px solid var(--gold); padding-top: 1.8rem; text-align: center; }
+    .fact__num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      color: var(--gold); line-height: 1;
+      text-shadow: 0 0 30px rgba(200,169,110,0.35), 0 2px 8px rgba(160,120,64,0.2);
+      margin-bottom: .8rem;
+    }
+    .fact__txt { font-size: .88rem; line-height: 1.75; }
+
+    .strip {
+      width: 100%;
+      height: clamp(200px, 32vw, 360px);
+      overflow: hidden; position: relative;
+      margin: 3rem 0;
+    }
+    .strip img {
+      width: 100%; height: 130%;
+      object-fit: cover;
+      will-change: transform;
+    }
+    .strip::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .tags-row { text-align: center; margin-top: 3rem; }
+
+    /* ═══════════════════════════════
+       WALDSPAZIERGANG
+    ═══════════════════════════════ */
+    .scene {
+      position: relative;
+      height: 100svh; min-height: 480px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .scene__bg {
+      position: absolute;
+      inset: -15% 0;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+    .scene__ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(15,26,16,.25), rgba(15,26,16,.6));
+    }
+    .scene__word {
+      position: relative; z-index: 2;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(4.5rem, 14vw, 11rem);
+      color: rgba(253,250,245,.95);
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 1.3s ease, transform 1.3s ease;
+    }
+    .scene__word.in {
+      opacity: 1; transform: translateY(0);
+      animation: wglow 3.5s ease forwards .2s;
+    }
+    @keyframes wglow {
+      0%   { text-shadow: 0 0 90px rgba(200,169,110,.85), 0 0 160px rgba(200,169,110,.45); }
+      60%  { text-shadow: 0 0 40px rgba(200,169,110,.25); }
+      100% { text-shadow: 0 0 15px rgba(200,169,110,.1); }
+    }
+
+    /* nebel fade */
+    .nebel {
+      height: 90px;
+      pointer-events: none; position: relative; z-index: 3;
+    }
+    .nb-sand  { background: linear-gradient(to bottom, var(--sand), transparent); margin-bottom: -90px; }
+    .nb-dark  { background: linear-gradient(to bottom, var(--dark), transparent); margin-bottom: -90px; }
+    .nb-sand-r{ background: linear-gradient(to top, var(--sand), transparent); margin-top: -90px; }
+    .nb-dark-r{ background: linear-gradient(to top, var(--dark), transparent); margin-top: -90px; }
+
+    /* ═══════════════════════════════
+       MEINE WALDSPUREN (dark)
+    ═══════════════════════════════ */
+    #waldspuren { background: var(--dark); padding: 8rem 2rem; }
+    .ws__inner {
+      max-width: 980px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    @media (max-width: 768px) {
+      .ws__inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    .ws__photo { position: relative; }
+    .ws__photo img {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover; object-position: center top;
+      border: 1px solid rgba(200,169,110,.35);
+    }
+    .ws__photo::before {
+      content: '';
+      position: absolute; inset: -5px;
+      border: 1px solid var(--gold-dark); opacity: .22;
+      pointer-events: none;
+    }
+    .ws__text .eyebrow { color: var(--gold); }
+    .ws__text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      color: var(--gold); line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+    .ws__text p {
+      font-size: 1rem; line-height: 1.95;
+      color: rgba(253,250,245,.85);
+      margin-bottom: 1.2rem;
+    }
+    .ws__text .dim { color: rgba(253,250,245,.5); font-size: .9rem; }
+
+    /* ═══════════════════════════════
+       FREEBIE
+    ═══════════════════════════════ */
+    #freebie { background: var(--sand); }
+    .fb__inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 768px) { .fb__inner { grid-template-columns: 1fr; } }
+    .fb__img { overflow: hidden; min-height: 440px; }
+    .fb__img img {
+      width: 100%; height: 100%; min-height: 440px;
+      object-fit: cover;
+      transition: transform .9s ease;
+    }
+    .fb__img:hover img { transform: scale(1.04); }
+    .fb__content {
+      padding: clamp(3rem,6vw,5.5rem);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .fb__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      color: var(--gold-dark);
+      margin-bottom: 1.5rem; line-height: 1.2;
+      text-shadow: 0 0 40px rgba(200,169,110,.2);
+    }
+    .fb__text { font-size: 1rem; line-height: 1.85; margin-bottom: 2.5rem; }
+
+    /* shared */
+    .eyebrow {
+      font-size: .6rem;
+      letter-spacing: .42em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    /* ═══════════════════════════════
+       BUTTONS
+    ═══════════════════════════════ */
+    .btn {
+      display: inline-block;
+      padding: .9rem 2.3rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: .7rem;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold);
+      color: var(--green);
+      background: transparent;
+      position: relative; overflow: hidden;
+      cursor: none;
+      transition: color .4s;
+    }
+    .btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      opacity: 0; transition: opacity .45s;
+    }
+    .btn span { position: relative; z-index: 1; }
+    .btn:hover::before { opacity: .22; }
+    .btn:hover { color: var(--gold-dark); border-color: var(--gold); }
+    .btn--cream { color: var(--cream); }
+    .btn--cream:hover { color: var(--cream); }
+
+    /* ═══════════════════════════════
+       PRODUKTE
+    ═══════════════════════════════ */
+    #products { background: var(--sand); padding: 7rem 2rem; }
+    .prod__grid {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem;
+    }
+    @media (max-width: 768px) { .prod__grid { grid-template-columns: 1fr; gap: 3rem; } }
+    .prod {
+      background: var(--cream);
+      padding: 2.8rem; position: relative;
+    }
+    .prod::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .prod__badge { font-size: .55rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+    .prod__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 3.5vw, 2.3rem);
+      color: var(--brown); margin-bottom: .4rem; line-height: 1.2;
+    }
+    .prod__sub { font-size: .78rem; letter-spacing: .1em; color: var(--brown); opacity: .75; margin-bottom: 1.5rem; }
+    .prod__text { font-size: .95rem; line-height: 1.85; margin-bottom: 2rem; }
+    .prod__price {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.9rem; color: var(--gold);
+      margin-bottom: 1.8rem; line-height: 1;
+    }
+
+    /* ═══════════════════════════════
+       ZITAT
+    ═══════════════════════════════ */
+    #quote { background: var(--dark); padding: 7rem 2rem; text-align: center; }
+    .quote__mark {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(9rem, 22vw, 16rem);
+      color: var(--gold); opacity: .1; line-height: .7;
+      margin-bottom: -1rem; user-select: none;
+    }
+    .quote__text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      color: var(--cream);
+      max-width: 700px; margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+    .quote__attr { font-size: .6rem; letter-spacing: .45em; text-transform: uppercase; color: var(--gold); }
+
+    /* ═══════════════════════════════
+       ÜBER MICH
+    ═══════════════════════════════ */
+    #about { background: var(--sand); padding: 8rem 2rem; }
+    .about__inner {
+      max-width: 980px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    @media (max-width: 768px) { .about__inner { grid-template-columns: 1fr; gap: 3rem; } }
+    .about__photo { position: relative; }
+    .about__photo img {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover; object-position: center 20%;
+      border: 1px solid rgba(200,169,110,.4);
+    }
+    .about__photo::before {
+      content: '';
+      position: absolute; inset: -5px;
+      border: 1px solid var(--gold); opacity: .2;
+      pointer-events: none;
+    }
+    .about__name {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2.3rem, 4.5vw, 3.3rem);
+      color: var(--gold-dark); margin-bottom: 1.8rem;
+      text-shadow: 0 0 40px rgba(200,169,110,.2);
+    }
+    .about__p { font-size: 1rem; line-height: 1.95; margin-bottom: 1.2rem; }
+    .about__p em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.08rem; color: var(--brown);
+    }
+    .about__sig {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: .82rem;
+      color: var(--gold-dark); letter-spacing: .04em;
+      margin-top: 1.5rem; display: block;
+    }
+
+    /* ═══════════════════════════════
+       GALERIE
+    ═══════════════════════════════ */
+    #gallery { background: var(--sand); padding: 5rem 0; overflow: hidden; }
+    .gallery__label { text-align: center; padding: 0 2rem 2.5rem; }
+    .gallery__wrap { overflow: hidden; }
+    .gallery__track {
+      display: flex; gap: 1px;
+      width: max-content; will-change: transform;
+    }
+    .gallery__item {
+      flex-shrink: 0;
+      width: clamp(240px, 28vw, 360px);
+      height: clamp(300px, 38vw, 460px);
+      overflow: hidden;
+    }
+    .gallery__item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .7s ease;
+    }
+    .gallery__item:hover img { transform: scale(1.05); }
+    .gallery__div { flex-shrink: 0; width: 1px; background: var(--gold); opacity: .32; }
+
+    /* ═══════════════════════════════
+       COMMUNITY
+    ═══════════════════════════════ */
+    #community { background: var(--sand); padding: 7rem 2rem; text-align: center; }
+    .community__inner { max-width: 600px; margin: 0 auto; }
+    .community__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      color: var(--gold-dark); margin-bottom: 1rem;
+      text-shadow: 0 0 40px rgba(200,169,110,.2);
+    }
+    .community__sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem; color: var(--brown); opacity: .75;
+      margin-bottom: 3rem;
+    }
+    .community__btns { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .btn__icon { display: inline-flex; align-items: center; gap: .5rem; }
+
+    /* ═══════════════════════════════
+       CLOSING
+    ═══════════════════════════════ */
+    #closing {
+      position: relative;
+      height: 100svh; min-height: 480px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .closing__bg {
+      position: absolute; inset: 0;
+      background-image: url('dunkelgruen.jpeg');
+      background-size: cover; background-position: center;
+      filter: brightness(.28);
+      will-change: transform;
+    }
+    .closing__content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
+    .closing__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2.6rem, 8vw, 6rem);
+      color: var(--cream);
+    }
+    .closing__sub { margin-top: 2rem; font-size: .62rem; letter-spacing: .5em; color: var(--gold); text-transform: uppercase; }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer { background: var(--dark); padding: 4.5rem 2rem; text-align: center; }
+    .footer__logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 2.1rem;
+      color: var(--gold); letter-spacing: .08em; margin-bottom: .8rem;
+    }
+    .footer__copy { font-size: .72rem; color: rgba(253,250,245,.4); margin-bottom: 1.5rem; }
+    .footer__nav { display: flex; gap: 2rem; justify-content: center; list-style: none; }
+    .footer__nav a {
+      font-size: .6rem; letter-spacing: .25em; text-transform: uppercase;
+      color: rgba(253,250,245,.4); position: relative; transition: color .3s;
+    }
+    .footer__nav a::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transition: transform .3s;
+    }
+    .footer__nav a:hover { color: var(--gold); }
+    .footer__nav a:hover::after { transform: scaleX(1); }
+  </style>
+</head>
+<body>
+
+  <!-- Gold cursor -->
+  <div id="cursor"></div>
+
+  <!-- Navigation -->
+  <nav id="nav" aria-label="Hauptnavigation">
+    <a href="#hero" class="nav__logo">Waldmomente</a>
+    <ul class="nav__list" id="nav-list">
+      <li><a href="#hero"     class="nav__link" data-sec="hero">Start</a></li>
+      <li><a href="#about"    class="nav__link" data-sec="about">Über mich</a></li>
+      <li><a href="#why"      class="nav__link" data-sec="why">Waldbaden</a></li>
+      <li><a href="#products" class="nav__link" data-sec="products">Produkte</a></li>
+      <li><a href="#contact"  class="nav__link" data-sec="contact">Kontakt</a></li>
+    </ul>
+    <button class="nav__burger" id="nav-burger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Sound toggle -->
+  <button id="sound-btn" aria-label="Waldambiente ein/aus">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+    </svg>
+  </button>
+
+  <!-- Opening -->
+  <div id="opening">
+    <p class="op-line" id="op1">Flugmodus an.</p>
+    <p class="op-line" id="op2">Der Wald wartet.</p>
+    <div class="op-gold" id="op-gold"></div>
+  </div>
+
+  <main>
+
+    <!-- ══════════ HERO ══════════ -->
+    <section id="hero" aria-label="Hero">
+      <div class="hero__slide on"></div>
+      <div class="hero__slide"></div>
+      <div class="hero__slide"></div>
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <p class="hero__flug" id="hero-flug">Flugmodus an.</p>
+        <h1 class="hero__title">
+          <span class="w">Der</span>&nbsp;<span class="w">Wald</span>&nbsp;<span class="w">sagt</span>&nbsp;<span class="w">wenig.</span><br>
+          <span class="w">Aber</span>&nbsp;<span class="w">oft</span>&nbsp;<span class="w">genau</span>&nbsp;<span class="w">das</span>&nbsp;<span class="w">Richtige.</span>
+        </h1>
+        <p class="hero__byline reveal d2">WALDMOMENTE · ELISABETH MÜLLER</p>
+      </div>
+      <div class="scroll-ind"><div class="scroll-ind__line"></div></div>
+    </section>
+
+    <!-- ══════════ EINLEITUNG ══════════ -->
+    <section id="intro">
+      <div class="intro__inner">
+        <h2 class="intro__title reveal sh" data-t="Waldbaden für Menschen mit zu viel im Kopf.">
+          Waldbaden für Menschen mit zu viel im Kopf.
+        </h2>
+        <p class="intro__sub reveal d1">Du musst nicht immer stark sein.</p>
+        <p class="tags reveal d2">WALDMOMENTE · WALDBADEN · NATURLIEBE · WALD STATT WLAN</p>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ WARUM WALDBADEN ══════════ -->
+    <section id="why">
+      <div class="why__inner">
+        <h2 class="sec-title reveal sh" data-t="Dein Körper weiß es längst.">
+          Dein Körper weiß es längst.
+        </h2>
+        <span class="gold-sep reveal d1"></span>
+        <p class="body-text reveal d2">
+          Du lebst in einer Zeit, die deinen Kopf niemals wirklich ruhen lässt.
+          Nachrichten, Benachrichtigungen, Erwartungen.
+          Dein Nervensystem ist im Dauerbetrieb.
+          Das ist kein Charakterfehler. Das ist Biologie.
+          Und der Wald ist die älteste Antwort darauf.
+          Schon 20 Minuten im Wald reichen, um den Cortisolspiegel messbar zu senken.
+          Das ist keine Wellness-Behauptung. Das ist Wissenschaft.
+        </p>
+
+        <div class="facts">
+          <div class="fact reveal">
+            <div class="fact__num" data-from="0" data-to="40" data-prefix="+" data-suffix=" %" data-dur="1800">0 %</div>
+            <p class="fact__txt">Killerzellen im Blut nach einem Tag im Wald. Sie bekämpfen Viren und Tumorzellen. Die Wirkung hält noch sieben Tage an.</p>
+          </div>
+          <div class="fact reveal d1">
+            <div class="fact__num" data-from="0" data-to="20" data-prefix="" data-suffix=" Min." data-dur="1600">0 Min.</div>
+            <p class="fact__txt">Reichen, um den Cortisolspiegel messbar zu senken. Ohne Sport. Ohne Anstrengung. Einfach da sein.</p>
+          </div>
+          <div class="fact reveal d2">
+            <div class="fact__num" data-from="0" data-to="2" data-prefix="" data-suffix=" Std." data-dur="1200">0 Std.</div>
+            <p class="fact__txt">Pro Woche für nachhaltige Wirkung auf Körper und Geist. In Japan ist Waldbaden seit 1982 Teil der staatlichen Gesundheitsversorgung.</p>
+          </div>
+        </div>
+
+        <div class="strip reveal" data-strip>
+          <img src="tropfen.jpeg" alt="Wassertropfen auf Blatt" loading="lazy">
+        </div>
+
+        <p class="body-text reveal">
+          Dein Gehirn atmet auf. Im Wald beruhigt sich der präfrontale Cortex,
+          jener Teil, der im Alltag ununterbrochen arbeitet.
+          Das Grübeln nimmt ab. Der Kopf wird stiller.
+          Die Bäume helfen aktiv. Sie geben Terpene ab,
+          ätherische Verbindungen, die du einatmest ohne es zu merken.
+          Diese Stoffe stimulieren nachweislich das Immunsystem.
+          Der typische Waldduft ist keine Romantik. Er ist Medizin.
+          Der Wald ist kein Luxus. Er ist das, was dein Körper schon immer gebraucht hat.
+        </p>
+
+        <div class="strip reveal" data-strip>
+          <img src="dorn.jpeg" alt="Dorn mit Tropfen" loading="lazy">
+        </div>
+
+        <p class="tags-row tags reveal">WALDMOMENTE · WALDBADEN · NATURLIEBE · WALD STATT WLAN</p>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ WALDSPAZIERGANG ══════════ -->
+    <section id="walk" aria-label="Waldspaziergang">
+      <div class="nebel nb-sand"></div>
+      <div class="scene" data-scene>
+        <div class="scene__bg" style="background-image:url('weg.jpeg')"></div>
+        <div class="scene__ov"></div>
+        <span class="scene__word">Ankommen.</span>
+      </div>
+      <div class="scene" data-scene>
+        <div class="scene__bg" style="background-image:url('pilz.jpeg')"></div>
+        <div class="scene__ov"></div>
+        <span class="scene__word">Erden.</span>
+      </div>
+      <div class="scene" data-scene>
+        <div class="scene__bg" style="background-image:url('tropfen.jpeg')"></div>
+        <div class="scene__ov"></div>
+        <span class="scene__word">Atmen.</span>
+      </div>
+      <div class="scene" data-scene>
+        <div class="scene__bg" style="background-image:url('dorn.jpeg')"></div>
+        <div class="scene__ov"></div>
+        <span class="scene__word">Spüren.</span>
+      </div>
+      <div class="scene" data-scene>
+        <div class="scene__bg" style="background-image:url('blaetter.jpeg')"></div>
+        <div class="scene__ov"></div>
+        <span class="scene__word">Loslassen.</span>
+      </div>
+      <div class="nebel nb-dark-r"></div>
+    </section>
+
+    <!-- ══════════ MEINE WALDSPUREN (dark) ══════════ -->
+    <section id="waldspuren" aria-label="Meine Waldspuren">
+      <span class="gold-sep"></span>
+      <div class="ws__inner" style="padding-top: 3rem;">
+        <div class="ws__photo reveal">
+          <img src="ich.jpeg" alt="Elisabeth Müller" loading="lazy">
+        </div>
+        <div class="ws__text reveal d1">
+          <span class="eyebrow">Über mich</span>
+          <h2 class="sh" data-t="Was ich im Wald finde.">Was ich im Wald finde.</h2>
+          <p>Ich bin keine Naturwissenschaftlerin. Ich bin eine Frau, die irgendwann gemerkt hat, dass sie sich im Wald anders fühlt als irgendwo sonst. Ruhiger. Klarer. Echter.</p>
+          <p>Ich hab angefangen, genauer hinzuschauen. Das Moos auf dem Stein. Den Tropfen am Dorn. Das Licht, das durch die Bäume fällt und den Boden in Gold taucht. Diese Momente sind keine Flucht. Sie sind Ankunft.</p>
+          <p class="dim">Ich bin zertifiziert in Waldbaden und Naturtherapie. Aber das Wichtigste hab ich nicht im Kurs gelernt. Das hab ich draußen gefunden.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="nebel nb-dark-r" style="background: linear-gradient(to top, var(--sand), transparent); margin-top: -90px; position: relative; z-index: 3;"></div>
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ FREEBIE ══════════ -->
+    <section id="freebie" aria-label="Gratis Waldimpuls">
+      <div class="fb__inner">
+        <div class="fb__img">
+          <img src="moos.jpeg" alt="Moos im Wald" loading="lazy">
+        </div>
+        <div class="fb__content">
+          <span class="eyebrow">Kostenlos · Jetzt</span>
+          <h2 class="fb__title reveal sh" data-t="Dein erster Waldimpuls.">Dein erster Waldimpuls.</h2>
+          <p class="fb__text reveal d1">
+            Leg jetzt dein Handy weg. Flugmodus an.<br>
+            Nicht für fünf Minuten. Für dich.<br>
+            Der Wald wartet bereits.
+          </p>
+          <a href="#" class="btn reveal d2"><span>Waldimpuls holen · kostenlos</span></a>
+        </div>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ PRODUKTE ══════════ -->
+    <section id="products" aria-label="Produkte">
+      <div class="prod__grid">
+        <div class="prod reveal">
+          <span class="prod__badge">NEU</span>
+          <h2 class="prod__title sh" data-t="Waldmomente auf der Spur.">Waldmomente auf der Spur.</h2>
+          <p class="prod__sub">Edition 1 · Zwölf Spuren durch den Wald</p>
+          <p class="prod__text">Kein Kurs. Kein Programm. Einfach rausgehen und hinschauen. Zwölf konkrete Spuren, die deine Sinne wieder wecken. Wald statt WLAN.</p>
+          <span class="prod__price">7 €</span>
+          <a href="#" class="btn"><span>Jetzt holen</span></a>
+        </div>
+        <div class="prod reveal d1">
+          <span class="prod__badge">Das Workbook</span>
+          <h2 class="prod__title sh" data-t="Das Waldmomente Workbook.">Das Waldmomente Workbook.</h2>
+          <p class="prod__text">10 Kapitel. Keine Schnelllösungen. Kein Optimierungswahn. Nur du. Und der Weg zurück zu dir. Ruhe ist keine Schwäche.</p>
+          <span class="prod__price">27 €</span>
+          <a href="#" class="btn"><span>Zugang sichern</span></a>
+        </div>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ ZITAT ══════════ -->
+    <section id="quote" aria-label="Zitat">
+      <span class="quote__mark reveal">"</span>
+      <p class="quote__text reveal d1">
+        Erschöpfung ist kein Zeichen von Schwäche.<br>
+        Sie ist ein Zeichen, dass du zu lange zu viel gegeben hast.
+      </p>
+      <p class="quote__attr reveal d2">ELISABETH MÜLLER · WALDMOMENTE</p>
+    </section>
+
+    <div style="height:1px; background: linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+
+    <!-- ══════════ ÜBER MICH ══════════ -->
+    <section id="about" aria-label="Über mich">
+      <div class="about__inner">
+        <div class="about__photo reveal">
+          <img src="lissi-herbst.jpeg" alt="Elisabeth Müller im Herbstwald" loading="lazy">
+        </div>
+        <div>
+          <span class="eyebrow">Über mich</span>
+          <h2 class="about__name reveal sh" data-t="Ich bin Lissi.">Ich bin Lissi.</h2>
+          <p class="about__p reveal d1">
+            Konditormeisterin. Kindergartenküche. Mutter.
+            Und jemand, der den Wald braucht wie andere ihren Kaffee.
+          </p>
+          <p class="about__p reveal d2">
+            Waldmomente ist mein Ort für alles, was langsamer, ehrlicher und grüner ist als der Rest des Internets.
+          </p>
+          <p class="about__p reveal d2">
+            <em>Für alle, die das kennen. Egal ob 38 oder 55. Der Wald macht da keine Unterschiede. Und ich auch nicht.</em>
+          </p>
+          <span class="about__sig reveal d3">Elisabeth Müller · Waldmomente · Zertifiziert in Waldbaden und Naturtherapie</span>
+        </div>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ GALERIE ══════════ -->
+    <section id="gallery" aria-label="Galerie">
+      <p class="gallery__label eyebrow">WALDMOMENTE · AUS DEM WALD</p>
+      <div class="gallery__wrap">
+        <div class="gallery__track" id="gtrack">
+          <div class="gallery__item"><img src="herz.jpeg" alt="" loading="lazy"></div>
+          <div class="gallery__div"></div>
+          <div class="gallery__item"><img src="nass.jpeg" alt="" loading="lazy"></div>
+          <div class="gallery__div"></div>
+          <div class="gallery__item"><img src="gruen.jpeg" alt="" loading="lazy"></div>
+          <div class="gallery__div"></div>
+          <div class="gallery__item"><img src="golden.jpeg" alt="" loading="lazy"></div>
+          <div class="gallery__div"></div>
+          <div class="gallery__item"><img src="ich.jpeg" alt="" loading="lazy"></div>
+          <div class="gallery__div"></div>
+          <div class="gallery__item"><img src="dunkelgruen.jpeg" alt="" loading="lazy"></div>
+          <div class="gallery__div"></div>
+          <div class="gallery__item"><img src="moos.jpeg" alt="" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ KONTAKT ══════════ -->
+    <section id="contact" aria-label="Kontakt">
+      <div class="contact__inner">
+        <span class="eyebrow reveal">Kontakt</span>
+        <span class="gold-sep reveal d1"></span>
+        <h2 class="contact__title reveal sh" data-t="Schreib mir einfach.">Schreib mir einfach.</h2>
+        <p class="contact__sub reveal d1">
+          Kein Formular. Keine Warteschleife. Einfach direkt.
+        </p>
+        <a href="mailto:hallo@waldmomente.de" class="contact__email reveal d2">hallo@waldmomente.de</a>
+        <a href="https://instagram.com/waldmomente" class="contact__insta reveal d3" target="_blank" rel="noopener">@waldmomente auf Instagram</a>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ COMMUNITY ══════════ -->
+    <section id="community" aria-label="Community">
+      <div class="community__inner">
+        <span class="eyebrow">Bleib dabei</span>
+        <h2 class="community__title reveal sh" data-t="Waldmomente begleiten.">Waldmomente begleiten.</h2>
+        <p class="community__sub reveal d1">Kleine Impulse. Direkt zu dir. Wald statt WLAN.</p>
+        <div class="community__btns">
+          <a href="#" class="btn reveal d1">
+            <span class="btn__icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+              Waldmomente aufs Handy
+            </span>
+          </a>
+          <a href="#" class="btn reveal d2">
+            <span class="btn__icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              @waldmomente
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ CLOSING ══════════ -->
+    <section id="closing" aria-label="Abschluss">
+      <div class="closing__bg" id="closing-bg"></div>
+      <div class="closing__content">
+        <h2 class="closing__title reveal">Du darfst jetzt ankommen.</h2>
+        <p class="closing__sub reveal d1">WALDMOMENTE</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="footer__logo">Waldmomente</p>
+    <p class="footer__copy">© Waldmomente · Elisabeth Müller</p>
+    <ul class="footer__nav">
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">Datenschutz</a></li>
+    </ul>
+  </footer>
+
+  <script>
+  (function () {
+
+    /* ── CURSOR ── */
+    const cur = document.getElementById('cursor');
+    if (window.matchMedia('(pointer:fine)').matches) {
+      document.addEventListener('mousemove', e => {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top  = e.clientY + 'px';
+      });
+      document.querySelectorAll('a,button').forEach(el => {
+        el.addEventListener('mouseenter', () => { cur.style.width='20px'; cur.style.height='20px'; cur.style.opacity='.55'; });
+        el.addEventListener('mouseleave', () => { cur.style.width=''; cur.style.height=''; cur.style.opacity=''; });
+      });
+    } else {
+      cur.style.display = 'none';
+    }
+
+    /* ── OPENING ── */
+    const opening = document.getElementById('opening');
+    setTimeout(() => document.getElementById('op1').classList.add('show'), 700);
+    setTimeout(() => document.getElementById('op2').classList.add('show'), 2300);
+    setTimeout(() => document.getElementById('op-gold').classList.add('show'), 3700);
+    setTimeout(() => {
+      opening.classList.add('out');
+      launchHero();
+    }, 5200);
+
+    /* ── HERO SLIDESHOW ── */
+    const slides = document.querySelectorAll('.hero__slide');
+    let cur_slide = 0;
+    function nextSlide() {
+      slides[cur_slide].classList.remove('on');
+      cur_slide = (cur_slide + 1) % slides.length;
+      slides[cur_slide].classList.add('on');
+    }
+    setInterval(nextSlide, 6800);
+
+    /* ── HERO WORDS ── */
+    function launchHero() {
+      // "Flugmodus an." zuerst
+      setTimeout(() => {
+        document.getElementById('hero-flug')?.classList.add('show');
+      }, 300);
+      // dann Wörter
+      const words = document.querySelectorAll('.hero__title .w');
+      words.forEach((w, i) => {
+        setTimeout(() => {
+          w.style.transition = 'opacity .85s ease, transform .85s ease';
+          w.style.opacity = '1';
+          w.style.transform = 'translateY(0)';
+        }, 1200 + i * 220);
+      });
+      setTimeout(() => {
+        document.querySelector('.hero__byline')?.classList.add('in');
+      }, 1200 + words.length * 220 + 200);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+    /* ── SHIMMER HEADINGS ── */
+    const shObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('shim'); shObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll('.sh').forEach(el => shObs.observe(el));
+
+    /* ── WALK SCENE WORDS ── */
+    const scObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const w = e.target.querySelector('.scene__word');
+        if (!w) return;
+        if (e.isIntersecting) w.classList.add('in');
+        else w.classList.remove('in');
+      });
+    }, { threshold: 0.52 });
+    document.querySelectorAll('[data-scene]').forEach(el => scObs.observe(el));
+
+    /* ── PARALLAX ── */
+    const parallaxScenes  = Array.from(document.querySelectorAll('.scene__bg'));
+    const parallaxStrips  = Array.from(document.querySelectorAll('[data-strip] img'));
+    const closingBg       = document.getElementById('closing-bg');
+
+    function rafParallax() {
+      const vh = window.innerHeight;
+
+      parallaxScenes.forEach(el => {
+        const r = el.parentElement.getBoundingClientRect();
+        const off = ((r.top + r.height / 2) - vh / 2) * 0.18;
+        el.style.transform = `translateY(${off}px)`;
+      });
+
+      parallaxStrips.forEach(el => {
+        const r = el.parentElement.getBoundingClientRect();
+        const off = ((r.top + r.height / 2) - vh / 2) * 0.14;
+        el.style.transform = `translateY(calc(-10% + ${off}px))`;
+      });
+
+      if (closingBg) {
+        const r = closingBg.parentElement.getBoundingClientRect();
+        const off = ((r.top + r.height / 2) - vh / 2) * 0.18;
+        closingBg.style.transform = `translateY(${off}px)`;
+      }
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(() => { rafParallax(); ticking = false; }); ticking = true; }
+    }, { passive: true });
+    rafParallax();
+
+    /* ── GALLERY INFINITE SCROLL ── */
+    const gtrack = document.getElementById('gtrack');
+    if (gtrack) {
+      const clone = gtrack.cloneNode(true);
+      clone.removeAttribute('id');
+      clone.setAttribute('aria-hidden', 'true');
+      gtrack.parentElement.appendChild(clone);
+
+      const trackW = gtrack.offsetWidth;
+      let pos = 0;
+      let paused = false;
+      const SPD = 0.42;
+
+      function galLoop() {
+        if (!paused) {
+          pos -= SPD;
+          if (pos <= -trackW) pos = 0;
+          gtrack.style.transform = `translateX(${pos}px)`;
+          clone.style.transform  = `translateX(${pos + trackW}px)`;
+        }
+        requestAnimationFrame(galLoop);
+      }
+
+      const gWrap = gtrack.parentElement;
+      gWrap.addEventListener('mouseenter', () => { paused = true; });
+      gWrap.addEventListener('mouseleave', () => { paused = false; });
+
+      requestAnimationFrame(galLoop);
+    }
+
+    /* ── SOUND (Web Audio API — pink noise forest ambience) ── */
+    let audioCtx = null, gainNode = null, muted = false;
+    const sBtn = document.getElementById('sound-btn');
+
+    function buildNoise(ctx) {
+      const sr = ctx.sampleRate;
+      const buf = ctx.createBuffer(2, sr * 4, sr);
+      for (let ch = 0; ch < 2; ch++) {
+        const d = buf.getChannelData(ch);
+        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+        for (let i = 0; i < d.length; i++) {
+          const w = Math.random() * 2 - 1;
+          b0 = .99886*b0 + w*.0555179; b1 = .99332*b1 + w*.0750759;
+          b2 = .96900*b2 + w*.1538520; b3 = .86650*b3 + w*.3104856;
+          b4 = .55000*b4 + w*.5329522; b5 = -.7616*b5 - w*.0168980;
+          d[i] = (b0+b1+b2+b3+b4+b5+b6+w*.5362) / 7; b6 = w*.115926;
+        }
+      }
+      return buf;
+    }
+
+    function startAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const buf = buildNoise(audioCtx);
+      gainNode = audioCtx.createGain();
+      gainNode.gain.value = 0.025;
+      const filt = audioCtx.createBiquadFilter();
+      filt.type = 'lowpass'; filt.frequency.value = 320; filt.Q.value = .7;
+      function loop() {
+        const src = audioCtx.createBufferSource();
+        src.buffer = buf;
+        src.connect(filt); filt.connect(gainNode); gainNode.connect(audioCtx.destination);
+        src.start(); src.onended = loop;
+      }
+      loop();
+    }
+
+    sBtn.addEventListener('click', () => {
+      startAudio();
+      muted = !muted;
+      if (gainNode) gainNode.gain.value = muted ? 0 : .025;
+      sBtn.classList.toggle('muted', muted);
+    });
+
+    window.addEventListener('scroll', () => startAudio(), { once: true });
+
+    /* ── FACT COUNT-UP ── */
+    function runCount(el) {
+      const from   = parseFloat(el.dataset.from) || 0;
+      const to     = parseFloat(el.dataset.to)   || 0;
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const dur    = parseInt(el.dataset.dur)    || 1500;
+      const start  = performance.now();
+      function step(now) {
+        const p     = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);          // cubic ease-out
+        const val   = Math.round(from + (to - from) * eased);
+        el.textContent = prefix + val + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    const countObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.dataset.counted) {
+          e.target.dataset.counted = '1';
+          runCount(e.target);
+          countObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fact__num[data-to]').forEach(el => countObs.observe(el));
+
+    /* ── NAVIGATION ── */
+    const navEl   = document.getElementById('nav');
+    const burger  = document.getElementById('nav-burger');
+    const navList = document.getElementById('nav-list');
+    const navLinks = navEl.querySelectorAll('.nav__link');
+
+    // Scrolled class
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Burger toggle
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      navList.classList.toggle('open');
+    });
+    navList.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navList.classList.remove('open');
+    });
+
+    // Active section highlight
+    const sections = ['hero','why','products','contact','about'].map(id => document.getElementById(id)).filter(Boolean);
+    const secObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = navEl.querySelector(`[data-sec="${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => secObs.observe(s));
+
+  })();
+  </script>
+</body>
+</html>

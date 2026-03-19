@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hallo Welt</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #1a1a2e;
+    }
+
+    .text {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 5rem;
+      font-weight: bold;
+      color: #e0e0e0;
+      cursor: pointer;
+      animation: float 3s ease-in-out infinite;
+      transition: color 0.4s ease, text-shadow 0.4s ease;
+      user-select: none;
+    }
+
+    .text:hover {
+      color: #ff6b6b;
+      text-shadow:
+        0 0 10px #ff6b6b,
+        0 0 30px #ff6b6b,
+        0 0 60px #ff4444;
+      animation: float 3s ease-in-out infinite, rainbow 1.5s linear infinite;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(0px); }
+      50%  { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes rainbow {
+      0%   { color: #ff6b6b; text-shadow: 0 0 20px #ff6b6b, 0 0 40px #ff6b6b; }
+      16%  { color: #ffa500; text-shadow: 0 0 20px #ffa500, 0 0 40px #ffa500; }
+      33%  { color: #ffff00; text-shadow: 0 0 20px #ffff00, 0 0 40px #ffff00; }
+      50%  { color: #00ff88; text-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88; }
+      66%  { color: #00bfff; text-shadow: 0 0 20px #00bfff, 0 0 40px #00bfff; }
+      83%  { color: #bf00ff; text-shadow: 0 0 20px #bf00ff, 0 0 40px #bf00ff; }
+      100% { color: #ff6b6b; text-shadow: 0 0 20px #ff6b6b, 0 0 40px #ff6b6b; }
+    }
+  </style>
+</head>
+<body>
+  <span class="text">Hallo Welt</span>
+</body>
+</html>

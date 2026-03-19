@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where node:*)",
+      "Bash(where python3:*)",
+      "Bash(where pwsh:*)",
+      "Bash(where powershell:*)",
+      "Bash(where msedge:*)",
+      "Bash(where chrome:*)",
+      "Read(//c/Program Files/Microsoft/Edge/Application/**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Bash(\"C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\" --headless --disable-gpu --screenshot=\"C:\\\\Users\\\\Stephi\\\\webside waldmomente\\\\hallo-welt.jpg\" --window-size=1280,720 \"file:///C:/Users/Stephi/webside%20waldmomente/hallo-welt.html\")",
+      "Bash(where py:*)",
+      "Bash(where npx:*)",
+      "Bash(py --version)",
+      "Bash(where php:*)",
+      "Bash(where ruby:*)",
+      "Read(//usr/**)",
+      "Read(//usr/bin/**)",
+      "Bash(powershell -command 'Get-Command python*')",
+      "Bash(where wsl:*)",
+      "Read(//c/Program Files/Git/mingw64/bin/**)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Read(//c/Users/Stephi/webside waldmomente/$APPDATA/**)",
+      "Read(//c/Users/Stephi/webside waldmomente/$LOCALAPPDATA/Programs/**)",
+      "Bash(ls \"/c/Python\"*)",
+      "Bash(where perl:*)",
+      "Bash(where java:*)",
+      "Read(//c/Windows/System32/inetsrv/**)",
+      "Bash(netstat -ano)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)",
+      "Bash(curl -v http://127.0.0.1:8080/)",
+      "Read(//dev/**)",
+      "Bash(\"C:\\\\Users\\\\Stephi\\\\webside waldmomente\\\\index.html\")"
+    ]
+  }
+}

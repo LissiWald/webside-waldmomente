@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "C:\\tmp-waldserver\\start.bat"],
+      "port": 7777,
+      "autoPort": false
+    }
+  ]
+}
