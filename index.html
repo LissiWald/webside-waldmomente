@@ -53,22 +53,6 @@
       will-change: left, top;
     }
 
-    /* ── SOUND BUTTON ── */
-    #sound-btn {
-      position: fixed;
-      top: 20px; right: 20px;
-      z-index: 8000;
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      border: 1px solid rgba(200,169,110,.55);
-      background: transparent;
-      color: var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      cursor: none;
-      transition: background .3s;
-    }
-    #sound-btn:hover { background: rgba(200,169,110,.08); }
-    #sound-btn.muted { color: rgba(200,169,110,.3); border-color: rgba(200,169,110,.2); }
 
     /* ── NAV ── */
     #nav {
@@ -665,29 +649,6 @@
       margin-top: 1.5rem; display: block;
     }
 
-    /* ═══════════════════════════════
-       GALERIE
-    ═══════════════════════════════ */
-    #gallery { background: var(--sand); padding: 5rem 0; overflow: hidden; }
-    .gallery__label { text-align: center; padding: 0 2rem 2.5rem; }
-    .gallery__wrap { overflow: hidden; }
-    .gallery__track {
-      display: flex; gap: 1px;
-      width: max-content; will-change: transform;
-    }
-    .gallery__item {
-      flex-shrink: 0;
-      width: clamp(240px, 28vw, 360px);
-      height: clamp(300px, 38vw, 460px);
-      overflow: hidden;
-    }
-    .gallery__item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform .7s ease;
-    }
-    .gallery__item:hover img { transform: scale(1.05); }
-    .gallery__div { flex-shrink: 0; width: 1px; background: var(--gold); opacity: .32; }
 
     /* ═══════════════════════════════
        COMMUNITY
@@ -779,13 +740,6 @@
       <span></span><span></span><span></span>
     </button>
   </nav>
-
-  <!-- Sound toggle -->
-  <button id="sound-btn" aria-label="Waldambiente ein/aus">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
-    </svg>
-  </button>
 
   <!-- Opening -->
   <div id="opening">
@@ -993,7 +947,7 @@
     <section id="about" aria-label="Über mich">
       <div class="about__inner">
         <div class="about__photo reveal">
-          <img src="lissi-herbst.jpeg" alt="Elisabeth Müller im Herbstwald" loading="lazy">
+          <img src="lissi.jpeg" alt="Elisabeth Müller" loading="lazy">
         </div>
         <div>
           <span class="eyebrow">Über mich</span>
@@ -1009,30 +963,6 @@
             <em>Für alle, die das kennen. Egal ob 38 oder 55. Der Wald macht da keine Unterschiede. Und ich auch nicht.</em>
           </p>
           <span class="about__sig reveal d3">Elisabeth Müller · Waldmomente · Zertifiziert in Waldbaden und Naturtherapie</span>
-        </div>
-      </div>
-    </section>
-
-    <span class="gold-sep"></span>
-
-    <!-- ══════════ GALERIE ══════════ -->
-    <section id="gallery" aria-label="Galerie">
-      <p class="gallery__label eyebrow">WALDMOMENTE · AUS DEM WALD</p>
-      <div class="gallery__wrap">
-        <div class="gallery__track" id="gtrack">
-          <div class="gallery__item"><img src="herz.jpeg" alt="" loading="lazy"></div>
-          <div class="gallery__div"></div>
-          <div class="gallery__item"><img src="nass.jpeg" alt="" loading="lazy"></div>
-          <div class="gallery__div"></div>
-          <div class="gallery__item"><img src="gruen.jpeg" alt="" loading="lazy"></div>
-          <div class="gallery__div"></div>
-          <div class="gallery__item"><img src="golden.jpeg" alt="" loading="lazy"></div>
-          <div class="gallery__div"></div>
-          <div class="gallery__item"><img src="ich.jpeg" alt="" loading="lazy"></div>
-          <div class="gallery__div"></div>
-          <div class="gallery__item"><img src="dunkelgruen.jpeg" alt="" loading="lazy"></div>
-          <div class="gallery__div"></div>
-          <div class="gallery__item"><img src="moos.jpeg" alt="" loading="lazy"></div>
         </div>
       </div>
     </section>
@@ -1211,82 +1141,6 @@
     }, { passive: true });
     rafParallax();
 
-    /* ── GALLERY INFINITE SCROLL ── */
-    const gtrack = document.getElementById('gtrack');
-    if (gtrack) {
-      const clone = gtrack.cloneNode(true);
-      clone.removeAttribute('id');
-      clone.setAttribute('aria-hidden', 'true');
-      gtrack.parentElement.appendChild(clone);
-
-      const trackW = gtrack.offsetWidth;
-      let pos = 0;
-      let paused = false;
-      const SPD = 0.42;
-
-      function galLoop() {
-        if (!paused) {
-          pos -= SPD;
-          if (pos <= -trackW) pos = 0;
-          gtrack.style.transform = `translateX(${pos}px)`;
-          clone.style.transform  = `translateX(${pos + trackW}px)`;
-        }
-        requestAnimationFrame(galLoop);
-      }
-
-      const gWrap = gtrack.parentElement;
-      gWrap.addEventListener('mouseenter', () => { paused = true; });
-      gWrap.addEventListener('mouseleave', () => { paused = false; });
-
-      requestAnimationFrame(galLoop);
-    }
-
-    /* ── SOUND (Web Audio API — pink noise forest ambience) ── */
-    let audioCtx = null, gainNode = null, muted = false;
-    const sBtn = document.getElementById('sound-btn');
-
-    function buildNoise(ctx) {
-      const sr = ctx.sampleRate;
-      const buf = ctx.createBuffer(2, sr * 4, sr);
-      for (let ch = 0; ch < 2; ch++) {
-        const d = buf.getChannelData(ch);
-        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-        for (let i = 0; i < d.length; i++) {
-          const w = Math.random() * 2 - 1;
-          b0 = .99886*b0 + w*.0555179; b1 = .99332*b1 + w*.0750759;
-          b2 = .96900*b2 + w*.1538520; b3 = .86650*b3 + w*.3104856;
-          b4 = .55000*b4 + w*.5329522; b5 = -.7616*b5 - w*.0168980;
-          d[i] = (b0+b1+b2+b3+b4+b5+b6+w*.5362) / 7; b6 = w*.115926;
-        }
-      }
-      return buf;
-    }
-
-    function startAudio() {
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const buf = buildNoise(audioCtx);
-      gainNode = audioCtx.createGain();
-      gainNode.gain.value = 0.025;
-      const filt = audioCtx.createBiquadFilter();
-      filt.type = 'lowpass'; filt.frequency.value = 320; filt.Q.value = .7;
-      function loop() {
-        const src = audioCtx.createBufferSource();
-        src.buffer = buf;
-        src.connect(filt); filt.connect(gainNode); gainNode.connect(audioCtx.destination);
-        src.start(); src.onended = loop;
-      }
-      loop();
-    }
-
-    sBtn.addEventListener('click', () => {
-      startAudio();
-      muted = !muted;
-      if (gainNode) gainNode.gain.value = muted ? 0 : .025;
-      sBtn.classList.toggle('muted', muted);
-    });
-
-    window.addEventListener('scroll', () => startAudio(), { once: true });
 
     /* ── FACT COUNT-UP ── */
     function runCount(el) {
