@@ -107,49 +107,100 @@
     .nav__burger.open span:nth-child(2) { opacity: 0; }
     .nav__burger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
 
-    /* ── SOUND PANEL (im Hero, unten zentriert) ── */
-    #sound-panel {
-      position: absolute;
-      bottom: 5.5rem; left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: flex; flex-direction: row; gap: 1.2rem;
-      align-items: center;
+    /* ── KLANG-SPIELWIESE ── */
+    #spielwiese {
+      background: var(--dark);
+      padding: 7rem 2rem 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .snd-btn {
-      display: flex; flex-direction: column; align-items: center; gap: .5rem;
-      background: none; border: none; cursor: none;
-      color: rgba(200,169,110,.5);
-      transition: color .35s;
+    #spielwiese::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('dunkelgruen.jpeg') center/cover no-repeat;
+      opacity: .12;
+      pointer-events: none;
     }
-    .snd-btn__circle {
-      width: 42px; height: 42px;
-      border-radius: 50%;
-      border: 1px solid rgba(200,169,110,.3);
-      background: rgba(10,16,10,.55);
-      backdrop-filter: blur(10px);
+    .spiel__inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+    .spiel__tag {
+      font-size: .58rem; letter-spacing: .45em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .spiel__title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      color: var(--cream); line-height: 1.15; margin-bottom: .9rem;
+    }
+    .spiel__sub {
+      font-size: .95rem; line-height: 1.85;
+      color: rgba(253,250,245,.55); margin-bottom: 3.8rem;
+    }
+    .spiel__orbs {
+      display: flex; gap: 2rem;
+      justify-content: center; align-items: center;
+      flex-wrap: wrap;
+    }
+    .orb {
+      background: none; border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: .9rem;
+      padding: .6rem; position: relative;
+    }
+    .orb__face {
+      width: 108px; height: 108px; border-radius: 50%;
+      background: rgba(10,26,16,.65);
+      border: 1px solid rgba(200,169,110,.18);
+      backdrop-filter: blur(14px);
       display: flex; align-items: center; justify-content: center;
-      transition: border-color .35s, box-shadow .35s, background .35s;
+      position: relative; z-index: 1;
+      transition: border-color .4s, box-shadow .4s, background .4s, transform .35s;
     }
-    .snd-btn svg { width: 15px; height: 15px; fill: currentColor; }
-    .snd-btn__label {
-      font-size: .48rem; letter-spacing: .3em;
-      text-transform: uppercase; color: rgba(200,169,110,.45);
-      transition: color .35s;
+    .orb__face svg { width: 34px; height: 34px; fill: rgba(200,169,110,.55); transition: fill .4s; }
+    .orb__label {
+      font-size: .52rem; letter-spacing: .38em; text-transform: uppercase;
+      color: rgba(200,169,110,.38); transition: color .4s;
     }
-    .snd-btn:hover { color: var(--gold); }
-    .snd-btn:hover .snd-btn__circle {
-      border-color: rgba(200,169,110,.6);
-      background: rgba(10,16,10,.8);
+    .orb:hover .orb__face {
+      border-color: rgba(200,169,110,.5); background: rgba(10,26,16,.9);
+      transform: translateY(-4px);
     }
-    .snd-btn:hover .snd-btn__label { color: var(--gold); }
-    .snd-btn.on { color: var(--gold); }
-    .snd-btn.on .snd-btn__circle {
+    .orb:hover .orb__face svg { fill: rgba(200,169,110,.9); }
+    .orb:hover .orb__label { color: rgba(200,169,110,.7); }
+    .orb.on .orb__face {
       border-color: var(--gold);
-      box-shadow: 0 0 16px rgba(200,169,110,.4), inset 0 0 10px rgba(200,169,110,.08);
-      background: rgba(10,16,10,.75);
+      box-shadow: 0 0 36px rgba(200,169,110,.4), inset 0 0 22px rgba(200,169,110,.07);
+      background: rgba(10,26,16,.92);
     }
-    .snd-btn.on .snd-btn__label { color: var(--gold); }
+    .orb.on .orb__face svg { fill: var(--gold); }
+    .orb.on .orb__label { color: var(--gold); }
+    .orb.on .orb__face::after {
+      content: '';
+      position: absolute; inset: -1px; border-radius: 50%;
+      border: 1px solid rgba(200,169,110,.3);
+      animation: orbpulse 2.4s ease-out infinite;
+    }
+    .orb.on::before, .orb.on::after {
+      content: ''; position: absolute;
+      top: .6rem; left: .6rem;
+      width: 108px; height: 108px; border-radius: 50%;
+      border: 1px solid rgba(200,169,110,.12);
+      animation: ripple 3.2s ease-out infinite;
+      pointer-events: none;
+    }
+    .orb.on::after { animation-delay: 1.6s; }
+    @keyframes orbpulse {
+      0%   { transform: scale(1);    opacity: .9; }
+      100% { transform: scale(1.22); opacity: 0;  }
+    }
+    @keyframes ripple {
+      0%   { transform: scale(1);   opacity: 1; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    .spiel__hint {
+      margin-top: 3.2rem; font-size: .62rem;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(200,169,110,.25);
+    }
 
     /* ── CONTACT SECTION ── */
     #contact { background: var(--sand); padding: 7rem 2rem; text-align: center; }
@@ -1054,6 +1105,69 @@
       </div>
     </section>
 
+    <!-- ══════════ KLANG-SPIELWIESE ══════════ -->
+    <section id="spielwiese">
+
+      <!-- Versteckte Audiodateien -->
+      <audio id="audio-birds"  src="snd-birds.ogg"  loop preload="none"></audio>
+      <audio id="audio-wind"   src="snd-wind.ogg"   loop preload="none"></audio>
+      <audio id="audio-rain"   src="snd-rain.ogg"   loop preload="none"></audio>
+      <audio id="audio-drops"  src="snd-drops.ogg"  loop preload="none"></audio>
+      <audio id="audio-leaves" src="snd-leaves.ogg" loop preload="none"></audio>
+
+      <div class="spiel__inner">
+        <p class="spiel__tag reveal">Klangraum</p>
+        <h2 class="spiel__title reveal sh" data-t="Hör in den Wald.">Hör in den Wald.</h2>
+        <p class="spiel__sub reveal d1">Tippe auf einen Klang — oder misch dir deine eigene Stille.<br>Du bestimmst, wie dein Wald klingt.</p>
+
+        <div class="spiel__orbs reveal d2">
+
+          <!-- Vögel -->
+          <button class="orb" id="orb-birds" aria-label="Vogelgezwitscher">
+            <div class="orb__face">
+              <svg viewBox="0 0 24 24"><path d="M21.5 2.5c-2.5 0-5 1-6.5 2.5L12 7.5 9 5C7 3.5 4.5 3 2 3.5c0 2.5 1 5 3 6.5l1 .5-1 3.5c2-.5 4-1.5 5.5-3L12 10l2.5 2c1.5 1.5 3.5 2.5 5.5 3l-1-3.5 1-.5c2-1.5 3-4 3-6.5z"/></svg>
+            </div>
+            <span class="orb__label">Vögel</span>
+          </button>
+
+          <!-- Wind -->
+          <button class="orb" id="orb-wind" aria-label="Wind">
+            <div class="orb__face">
+              <svg viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 0-3 3M3 16h8a3 3 0 1 0-3 3"/></svg>
+            </div>
+            <span class="orb__label">Wind</span>
+          </button>
+
+          <!-- Regen -->
+          <button class="orb" id="orb-rain" aria-label="Regen">
+            <div class="orb__face">
+              <svg viewBox="0 0 24 24"><path d="M20 17.5a4 4 0 0 0-4-7.5h-1A7 7 0 1 0 4 17.5M8 19v2M8 15v2M12 21v2M12 17v-2M16 19v2"/></svg>
+            </div>
+            <span class="orb__label">Regen</span>
+          </button>
+
+          <!-- Tropfen -->
+          <button class="orb" id="orb-drops" aria-label="Tropfen">
+            <div class="orb__face">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6 10 4 14 4 17a8 8 0 0 0 16 0c0-3-2-7-8-15z"/></svg>
+            </div>
+            <span class="orb__label">Tropfen</span>
+          </button>
+
+          <!-- Laub -->
+          <button class="orb" id="orb-leaves" aria-label="Laub">
+            <div class="orb__face">
+              <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.34A1 1 0 0 0 5 21C13 21 18.46 13.38 17 8z"/><path d="M17 8c0 5-3 9-7 11"/></svg>
+            </div>
+            <span class="orb__label">Laub</span>
+          </button>
+
+        </div>
+
+        <p class="spiel__hint reveal d3">Am schönsten mit Kopfhörern</p>
+      </div>
+    </section>
+
     <span class="gold-sep"></span>
 
     <!-- ══════════ WARUM WALDBADEN ══════════ -->
@@ -1595,191 +1709,36 @@
     }, { threshold: 0.4 });
     sections.forEach(s => secObs.observe(s));
 
-    /* ── WALDKLÄNGE (natürliche Klangsynthese) ── */
+    /* ── KLANG-SPIELWIESE: echte Naturklänge ── */
     (function() {
-      let ctx = null;
-      function ac() {
-        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-        ctx.resume();
-        return ctx;
+      const ids    = ['birds','wind','rain','drops','leaves'];
+      const vols   = { birds:.82, wind:.52, rain:.65, drops:.72, leaves:.58 };
+
+      function fadeIn(el, target) {
+        el.volume = 0; el.play().catch(()=>{});
+        (function tick(){
+          el.volume = Math.min(el.volume + .018, target);
+          if (el.volume < target) requestAnimationFrame(tick);
+        })();
+      }
+      function fadeOut(el) {
+        (function tick(){
+          el.volume = Math.max(el.volume - .018, 0);
+          if (el.volume > 0) requestAnimationFrame(tick);
+          else el.pause();
+        })();
       }
 
-      /* Weißes Rauschen als Puffer */
-      function whiteNoise(c, sec) {
-        const buf = c.createBuffer(2, c.sampleRate * sec, c.sampleRate);
-        for (let ch = 0; ch < 2; ch++) {
-          const d = buf.getChannelData(ch);
-          let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-          for (let i = 0; i < d.length; i++) {
-            const w = Math.random() * 2 - 1;
-            /* Paul Kellet's pink noise approximation */
-            b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759;
-            b2=.96900*b2+w*.1538520; b3=.86650*b3+w*.3104856;
-            b4=.55000*b4+w*.5329522; b5=-.7616*b5-w*.0168980;
-            d[i] = (b0+b1+b2+b3+b4+b5+b6+w*.5362)*0.11;
-            b6 = w * 0.115926;
-          }
-        }
-        const src = c.createBufferSource();
-        src.buffer = buf; src.loop = true;
-        return src;
-      }
-
-      /* ─── VÖGEL: FM-Synthese mit Vibrato, mehrere Stimmen ─── */
-      const birdsState = { on:false, timers:[] };
-      function birdNote(c, t, freq, dur, vol) {
-        /* Träger + Modulator (FM) für organischen Klang */
-        const mod  = c.createOscillator();
-        const modG = c.createGain();
-        const car  = c.createOscillator();
-        const vib  = c.createOscillator();
-        const vibG = c.createGain();
-        const env  = c.createGain();
-        mod.type='sine'; mod.frequency.setValueAtTime(freq*3.1, t);
-        modG.gain.setValueAtTime(freq*1.8, t);
-        mod.connect(modG); modG.connect(car.frequency);
-        car.type='sine';
-        car.frequency.setValueAtTime(freq, t);
-        car.frequency.exponentialRampToValueAtTime(freq*1.38, t+dur*.4);
-        car.frequency.exponentialRampToValueAtTime(freq*.91,  t+dur*.85);
-        car.frequency.setValueAtTime(freq*.95, t+dur);
-        /* Vibrato */
-        vib.type='sine'; vib.frequency.value=6.5+Math.random()*2;
-        vibG.gain.value=freq*.025;
-        vib.connect(vibG); vibG.connect(car.frequency);
-        /* Hüllkurve */
-        env.gain.setValueAtTime(0, t);
-        env.gain.linearRampToValueAtTime(vol, t+dur*.06);
-        env.gain.setValueAtTime(vol, t+dur*.55);
-        env.gain.exponentialRampToValueAtTime(.0001, t+dur);
-        car.connect(env); env.connect(c.destination);
-        [mod,car,vib].forEach(o=>{o.start(t);o.stop(t+dur+.1);});
-      }
-      function scheduleBirds() {
-        if (!birdsState.on) return;
-        const c=ac(), now=c.currentTime, r=Math.random();
-        if (r<.4) {            /* Meise: kurze Silben-Folge */
-          const f=3400+Math.random()*500, n=3+Math.floor(Math.random()*4);
-          for(let i=0;i<n;i++) birdNote(c, now+i*.11+Math.random()*.02, f, .082, .11);
-        } else if (r<.72) {    /* Amsel: melodische Phrase */
-          const scale=[1,1.12,1.26,1.19,1.42,1.33,1.5];
-          const base=1350+Math.random()*200, n=4+Math.floor(Math.random()*3);
-          for(let i=0;i<n;i++) birdNote(c, now+i*.21+Math.random()*.03, base*scale[i%scale.length], .17, .085);
-        } else if (r<.88) {    /* Rotkehlchen: hohe kurze Rufe */
-          const f=4800+Math.random()*800, n=2+Math.floor(Math.random()*3);
-          for(let i=0;i<n;i++) birdNote(c, now+i*.08, f, .06, .07);
-        } else {               /* Fernruf einzeln, leise */
-          birdNote(c, now, 2200+Math.random()*600, .14, .045);
-        }
-        birdsState.timers.push(setTimeout(scheduleBirds, 1500+Math.random()*4500));
-      }
-
-      /* ─── WIND: Pink-Noise + 3 Bänder + Boen-LFO ─── */
-      const windState = { on:false, nodes:[] };
-      function startWind() {
-        const c=ac(), nodes=[];
-        const src=whiteNoise(c,6); nodes.push(src);
-        const master=c.createGain(); master.gain.value=.15; master.connect(c.destination);
-        /* 3 Frequenzbänder für Raumtiefe */
-        [[180,.9,.04],[520,.5,.07],[1400,.3,.05]].forEach(([f,q,g])=>{
-          const bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=f; bp.Q.value=q;
-          const gn=c.createGain(); gn.gain.value=g;
-          src.connect(bp); bp.connect(gn); gn.connect(master);
-          nodes.push(bp,gn);
+      ids.forEach(id => {
+        const btn   = document.getElementById('orb-' + id);
+        const audio = document.getElementById('audio-' + id);
+        if (!btn || !audio) return;
+        btn.addEventListener('click', () => {
+          const on = btn.classList.toggle('on');
+          if (on) fadeIn(audio, vols[id]);
+          else    fadeOut(audio);
         });
-        /* Langsame Böen */
-        const lfo=c.createOscillator(); lfo.frequency.value=.05+Math.random()*.04;
-        const lfoG=c.createGain(); lfoG.gain.value=.07;
-        lfo.connect(lfoG); lfoG.connect(master.gain);
-        nodes.push(lfo);
-        src.start(); lfo.start();
-        windState.nodes=[...nodes,master];
-      }
-      function stopWind(){windState.nodes.forEach(n=>{try{n.stop();}catch(e){}});windState.nodes=[];}
-
-      /* ─── REGEN: 3 Schichten (Grundregen + Tropfen + Oberflächenblubber) ─── */
-      const rainState = { on:false, nodes:[] };
-      function startRain() {
-        const c=ac(), nodes=[], master=c.createGain();
-        master.gain.value=.2; master.connect(c.destination);
-        nodes.push(master);
-        /* Schicht 1: Grundregen (rosa, 1–8 kHz) */
-        const s1=whiteNoise(c,5);
-        const hp1=c.createBiquadFilter(); hp1.type='highpass'; hp1.frequency.value=1200; hp1.Q.value=.5;
-        const lp1=c.createBiquadFilter(); lp1.type='lowpass';  lp1.frequency.value=8000;
-        const g1=c.createGain(); g1.gain.value=.55;
-        s1.connect(hp1); hp1.connect(lp1); lp1.connect(g1); g1.connect(master);
-        /* Schicht 2: Aufprall-Rauschen (300–1200 Hz) */
-        const s2=whiteNoise(c,3);
-        const bp2=c.createBiquadFilter(); bp2.type='bandpass'; bp2.frequency.value=650; bp2.Q.value=.7;
-        const g2=c.createGain(); g2.gain.value=.3;
-        s2.connect(bp2); bp2.connect(g2); g2.connect(master);
-        /* Schicht 3: Kribbeln (4–12 kHz) */
-        const s3=whiteNoise(c,4);
-        const hp3=c.createBiquadFilter(); hp3.type='highpass'; hp3.frequency.value=4500;
-        const g3=c.createGain(); g3.gain.value=.15;
-        s3.connect(hp3); hp3.connect(g3); g3.connect(master);
-        [s1,s2,s3].forEach(s=>s.start());
-        rainState.nodes=[s1,s2,s3,...nodes];
-      }
-      function stopRain(){rainState.nodes.forEach(n=>{try{n.stop();}catch(e){}});rainState.nodes=[];}
-
-      /* ─── TROPFEN: Resonanter Aufprall mit natürlichem Abfall ─── */
-      const dropsState = { on:false, timers:[] };
-      function singleDrop() {
-        if(!dropsState.on) return;
-        const c=ac(), now=c.currentTime;
-        /* Aufprall-Klick */
-        const click=c.createBuffer(1, c.sampleRate*.003, c.sampleRate);
-        const cd=click.getChannelData(0);
-        for(let i=0;i<cd.length;i++) cd[i]=(Math.random()*2-1)*(1-i/cd.length);
-        const clickSrc=c.createBufferSource(); clickSrc.buffer=click;
-        const clickG=c.createGain(); clickG.gain.value=.25;
-        clickSrc.connect(clickG); clickG.connect(c.destination); clickSrc.start(now);
-        /* Resonanz-Nachklang */
-        const res=c.createOscillator(); res.type='sine';
-        const resG=c.createGain();
-        const f=380+Math.random()*280;
-        res.frequency.setValueAtTime(f,now); res.frequency.exponentialRampToValueAtTime(f*.55,now+.35);
-        resG.gain.setValueAtTime(.14,now); resG.gain.exponentialRampToValueAtTime(.0001,now+.4);
-        res.connect(resG); resG.connect(c.destination);
-        res.start(now); res.stop(now+.45);
-        dropsState.timers.push(setTimeout(singleDrop, 700+Math.random()*3200));
-      }
-
-      /* ─── LAUB: Geformte Rausch-Bursts, weich und dicht ─── */
-      const leavesState = { on:false, timers:[] };
-      function rustle() {
-        if(!leavesState.on) return;
-        const c=ac();
-        const dur=.08+Math.random()*.2;
-        const buf=c.createBuffer(2, c.sampleRate*dur, c.sampleRate);
-        for(let ch=0;ch<2;ch++){
-          const d=buf.getChannelData(ch);
-          for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(Math.sin(Math.PI*i/d.length));
-        }
-        const src=c.createBufferSource(); src.buffer=buf;
-        const bp=c.createBiquadFilter(); bp.type='bandpass';
-        bp.frequency.value=3500+Math.random()*4000; bp.Q.value=.8+Math.random()*.8;
-        const g=c.createGain(); g.gain.value=.06+Math.random()*.08;
-        src.connect(bp); bp.connect(g); g.connect(c.destination);
-        src.start();
-        leavesState.timers.push(setTimeout(rustle, 200+Math.random()*1800));
-      }
-
-      /* ─── Toggle-Logik ─── */
-      function toggle(id, state, onFn, offFn) {
-        const btn=document.getElementById(id); if(!btn) return;
-        state.on=!state.on; btn.classList.toggle('on',state.on);
-        if(state.on) onFn();
-        else { offFn(); (state.timers||[]).forEach(clearTimeout); if(state.timers) state.timers=[]; }
-      }
-
-      document.getElementById('snd-birds') ?.addEventListener('click',()=>toggle('snd-birds',birdsState,scheduleBirds,()=>{birdsState.timers.forEach(clearTimeout);birdsState.timers=[];}));
-      document.getElementById('snd-wind')  ?.addEventListener('click',()=>toggle('snd-wind',windState,startWind,stopWind));
-      document.getElementById('snd-rain')  ?.addEventListener('click',()=>toggle('snd-rain',rainState,startRain,stopRain));
-      document.getElementById('snd-drops') ?.addEventListener('click',()=>toggle('snd-drops',dropsState,singleDrop,()=>{}));
-      document.getElementById('snd-leaves')?.addEventListener('click',()=>toggle('snd-leaves',leavesState,rustle,()=>{}));
+      });
 
     })();
 
