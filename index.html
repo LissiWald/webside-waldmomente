@@ -107,57 +107,49 @@
     .nav__burger.open span:nth-child(2) { opacity: 0; }
     .nav__burger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
 
-    /* ── SOUND PANEL ── */
+    /* ── SOUND PANEL (im Hero, unten zentriert) ── */
     #sound-panel {
-      position: fixed; bottom: 1.6rem; right: 1.6rem;
-      z-index: 8000;
-      display: flex; flex-direction: column; gap: .55rem;
+      position: absolute;
+      bottom: 5.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex; flex-direction: row; gap: 1.2rem;
       align-items: center;
     }
-    .snd-label {
-      font-size: .42rem; letter-spacing: .28em;
-      text-transform: uppercase; color: rgba(200,169,110,.45);
-      writing-mode: vertical-rl; text-orientation: mixed;
-      transform: rotate(180deg);
-      margin-bottom: .2rem;
-    }
     .snd-btn {
-      width: 40px; height: 40px;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      background: none; border: none; cursor: none;
+      color: rgba(200,169,110,.5);
+      transition: color .35s;
+    }
+    .snd-btn__circle {
+      width: 42px; height: 42px;
       border-radius: 50%;
-      border: 1px solid rgba(200,169,110,.28);
-      background: rgba(10,16,10,.82);
-      backdrop-filter: blur(12px);
-      color: rgba(200,169,110,.55);
+      border: 1px solid rgba(200,169,110,.3);
+      background: rgba(10,16,10,.55);
+      backdrop-filter: blur(10px);
       display: flex; align-items: center; justify-content: center;
-      cursor: none;
-      transition: color .35s, border-color .35s, box-shadow .35s, background .35s;
-      position: relative;
+      transition: border-color .35s, box-shadow .35s, background .35s;
     }
-    .snd-btn svg { width: 16px; height: 16px; fill: currentColor; }
-    .snd-btn:hover {
-      color: var(--gold);
+    .snd-btn svg { width: 15px; height: 15px; fill: currentColor; }
+    .snd-btn__label {
+      font-size: .48rem; letter-spacing: .3em;
+      text-transform: uppercase; color: rgba(200,169,110,.45);
+      transition: color .35s;
+    }
+    .snd-btn:hover { color: var(--gold); }
+    .snd-btn:hover .snd-btn__circle {
       border-color: rgba(200,169,110,.6);
-      background: rgba(10,16,10,.95);
+      background: rgba(10,16,10,.8);
     }
-    .snd-btn.on {
-      color: var(--gold);
+    .snd-btn:hover .snd-btn__label { color: var(--gold); }
+    .snd-btn.on { color: var(--gold); }
+    .snd-btn.on .snd-btn__circle {
       border-color: var(--gold);
-      box-shadow: 0 0 14px rgba(200,169,110,.35), inset 0 0 8px rgba(200,169,110,.08);
+      box-shadow: 0 0 16px rgba(200,169,110,.4), inset 0 0 10px rgba(200,169,110,.08);
+      background: rgba(10,16,10,.75);
     }
-    .snd-btn .snd-tip {
-      position: absolute; right: 48px; top: 50%;
-      transform: translateY(-50%);
-      background: rgba(10,16,10,.92);
-      border: 1px solid rgba(200,169,110,.2);
-      color: var(--gold-light);
-      font-size: .55rem; letter-spacing: .18em;
-      text-transform: uppercase;
-      padding: .35rem .75rem;
-      white-space: nowrap;
-      opacity: 0; pointer-events: none;
-      transition: opacity .3s;
-    }
-    .snd-btn:hover .snd-tip { opacity: 1; }
+    .snd-btn.on .snd-btn__label { color: var(--gold); }
 
     /* ── CONTACT SECTION ── */
     #contact { background: var(--sand); padding: 7rem 2rem; text-align: center; }
@@ -1008,30 +1000,7 @@
   <!-- Gold cursor -->
   <div id="cursor"></div>
 
-  <!-- Sound Panel -->
-  <div id="sound-panel" aria-label="Waldklänge">
-    <span class="snd-label">Klang</span>
-    <button class="snd-btn" id="snd-birds" aria-label="Vögel">
-      <span class="snd-tip">Vögel</span>
-      <svg viewBox="0 0 24 24"><path d="M21.5 2c-.3 0-7.3 2.1-10.4 7.4C9.7 7.1 7.6 6 5 6c0 2.8 1.5 5.2 3.8 6.5-.4.9-.7 1.9-.8 2.9L5 19h2l1.5-2c.3 0 .5.1.8.1 3 0 5.7-1.7 7.1-4.4C18.6 11.5 21.5 6.3 21.5 2z"/></svg>
-    </button>
-    <button class="snd-btn" id="snd-wind" aria-label="Wind">
-      <span class="snd-tip">Wind</span>
-      <svg viewBox="0 0 24 24"><path d="M12.5 3.5a3 3 0 0 1 3 3c0 1.66-1.34 3-3 3H3v-2h9.5c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1H9.5c0-1.66 1.34-3 3-3zM3 13h13.5a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3h2a1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1H3v-2zm0-4h2v2H3V9z"/></svg>
-    </button>
-    <button class="snd-btn" id="snd-rain" aria-label="Regen">
-      <span class="snd-tip">Regen</span>
-      <svg viewBox="0 0 24 24"><path d="M17.66 8L12 2.35 6.34 8C4.78 9.56 4 11.64 4 13.64c0 2 .78 4.04 2.34 5.6 1.56 1.56 3.62 2.35 5.66 2.35s4.1-.79 5.66-2.35C19.22 17.68 20 15.64 20 13.64c0-2-.78-4.08-2.34-5.64z"/></svg>
-    </button>
-    <button class="snd-btn" id="snd-drops" aria-label="Tropfen">
-      <span class="snd-tip">Tropfen</span>
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
-    </button>
-    <button class="snd-btn" id="snd-leaves" aria-label="Laub">
-      <span class="snd-tip">Laub</span>
-      <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-5 12"/></svg>
-    </button>
-  </div>
+  <!-- Sound Panel wird im Hero eingebettet (siehe unten) -->
 
   <!-- Navigation -->
   <nav id="nav" aria-label="Hauptnavigation">
@@ -1626,7 +1595,7 @@
     }, { threshold: 0.4 });
     sections.forEach(s => secObs.observe(s));
 
-    /* ── WALDKLÄNGE ── */
+    /* ── WALDKLÄNGE (natürliche Klangsynthese) ── */
     (function() {
       let ctx = null;
       function ac() {
@@ -1635,159 +1604,182 @@
         return ctx;
       }
 
-      /* ── Rauschen-Puffer (für Wind, Regen, Laub) ── */
-      function makeNoise(c, seconds) {
-        const buf = c.createBuffer(1, c.sampleRate * seconds, c.sampleRate);
-        const d = buf.getChannelData(0);
-        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      /* Weißes Rauschen als Puffer */
+      function whiteNoise(c, sec) {
+        const buf = c.createBuffer(2, c.sampleRate * sec, c.sampleRate);
+        for (let ch = 0; ch < 2; ch++) {
+          const d = buf.getChannelData(ch);
+          let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+          for (let i = 0; i < d.length; i++) {
+            const w = Math.random() * 2 - 1;
+            /* Paul Kellet's pink noise approximation */
+            b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759;
+            b2=.96900*b2+w*.1538520; b3=.86650*b3+w*.3104856;
+            b4=.55000*b4+w*.5329522; b5=-.7616*b5-w*.0168980;
+            d[i] = (b0+b1+b2+b3+b4+b5+b6+w*.5362)*0.11;
+            b6 = w * 0.115926;
+          }
+        }
         const src = c.createBufferSource();
         src.buffer = buf; src.loop = true;
         return src;
       }
 
-      /* ──────────────────────────────────
-         VÖGEL  (Meise, Amsel, Fernruf)
-      ────────────────────────────────── */
-      const birdsState = { on: false, timers: [] };
-      function chirp(c, t, f, dur, vol) {
-        const o = c.createOscillator(), g = c.createGain();
-        o.connect(g); g.connect(c.destination);
-        o.type = 'sine';
-        o.frequency.setValueAtTime(f, t);
-        o.frequency.exponentialRampToValueAtTime(f * 1.55, t + dur * .45);
-        o.frequency.exponentialRampToValueAtTime(f * .82,  t + dur);
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(vol, t + dur * .08);
-        g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-        o.start(t); o.stop(t + dur + .05);
+      /* ─── VÖGEL: FM-Synthese mit Vibrato, mehrere Stimmen ─── */
+      const birdsState = { on:false, timers:[] };
+      function birdNote(c, t, freq, dur, vol) {
+        /* Träger + Modulator (FM) für organischen Klang */
+        const mod  = c.createOscillator();
+        const modG = c.createGain();
+        const car  = c.createOscillator();
+        const vib  = c.createOscillator();
+        const vibG = c.createGain();
+        const env  = c.createGain();
+        mod.type='sine'; mod.frequency.setValueAtTime(freq*3.1, t);
+        modG.gain.setValueAtTime(freq*1.8, t);
+        mod.connect(modG); modG.connect(car.frequency);
+        car.type='sine';
+        car.frequency.setValueAtTime(freq, t);
+        car.frequency.exponentialRampToValueAtTime(freq*1.38, t+dur*.4);
+        car.frequency.exponentialRampToValueAtTime(freq*.91,  t+dur*.85);
+        car.frequency.setValueAtTime(freq*.95, t+dur);
+        /* Vibrato */
+        vib.type='sine'; vib.frequency.value=6.5+Math.random()*2;
+        vibG.gain.value=freq*.025;
+        vib.connect(vibG); vibG.connect(car.frequency);
+        /* Hüllkurve */
+        env.gain.setValueAtTime(0, t);
+        env.gain.linearRampToValueAtTime(vol, t+dur*.06);
+        env.gain.setValueAtTime(vol, t+dur*.55);
+        env.gain.exponentialRampToValueAtTime(.0001, t+dur);
+        car.connect(env); env.connect(c.destination);
+        [mod,car,vib].forEach(o=>{o.start(t);o.stop(t+dur+.1);});
       }
       function scheduleBirds() {
         if (!birdsState.on) return;
-        const c = ac(), now = c.currentTime;
-        const type = Math.random();
-        if (type < .45) {           // Meise
-          const b = 3200 + Math.random() * 700;
-          for (let i = 0; i < 3 + Math.floor(Math.random()*3); i++) {
-            chirp(c, now + i*.13, b, .09, .13);
-            chirp(c, now + i*.13 + .04, b*1.5, .07, .045);
-          }
-        } else if (type < .78) {    // Amsel
-          [1400,1650,1900,1550,2100].slice(0,3+Math.floor(Math.random()*2))
-            .forEach((f,i) => { chirp(c, now+i*.22, f, .16, .09); chirp(c,now+i*.22+.05,f*1.4,.1,.03); });
-        } else {                    // Ferner Ruf
-          chirp(c, now, 2600+Math.random()*800, .12, .05);
+        const c=ac(), now=c.currentTime, r=Math.random();
+        if (r<.4) {            /* Meise: kurze Silben-Folge */
+          const f=3400+Math.random()*500, n=3+Math.floor(Math.random()*4);
+          for(let i=0;i<n;i++) birdNote(c, now+i*.11+Math.random()*.02, f, .082, .11);
+        } else if (r<.72) {    /* Amsel: melodische Phrase */
+          const scale=[1,1.12,1.26,1.19,1.42,1.33,1.5];
+          const base=1350+Math.random()*200, n=4+Math.floor(Math.random()*3);
+          for(let i=0;i<n;i++) birdNote(c, now+i*.21+Math.random()*.03, base*scale[i%scale.length], .17, .085);
+        } else if (r<.88) {    /* Rotkehlchen: hohe kurze Rufe */
+          const f=4800+Math.random()*800, n=2+Math.floor(Math.random()*3);
+          for(let i=0;i<n;i++) birdNote(c, now+i*.08, f, .06, .07);
+        } else {               /* Fernruf einzeln, leise */
+          birdNote(c, now, 2200+Math.random()*600, .14, .045);
         }
-        const t = setTimeout(scheduleBirds, 1800 + Math.random()*5000);
-        birdsState.timers.push(t);
+        birdsState.timers.push(setTimeout(scheduleBirds, 1500+Math.random()*4500));
       }
 
-      /* ──────────────────────────────────
-         WIND (gefiltertes Rauschen, langsam moduliert)
-      ────────────────────────────────── */
-      const windState = { on: false, nodes: [] };
+      /* ─── WIND: Pink-Noise + 3 Bänder + Boen-LFO ─── */
+      const windState = { on:false, nodes:[] };
       function startWind() {
-        const c = ac();
-        const noise = makeNoise(c, 4);
-        const bp1 = c.createBiquadFilter(); bp1.type='bandpass'; bp1.frequency.value=320; bp1.Q.value=.6;
-        const bp2 = c.createBiquadFilter(); bp2.type='bandpass'; bp2.frequency.value=700; bp2.Q.value=.4;
-        const gain = c.createGain(); gain.gain.value = .18;
-        const lfo  = c.createOscillator(); lfo.frequency.value = .08;
-        const lfoG = c.createGain(); lfoG.gain.value = .06;
-        lfo.connect(lfoG); lfoG.connect(gain.gain);
-        noise.connect(bp1); noise.connect(bp2);
-        bp1.connect(gain); bp2.connect(gain);
-        gain.connect(c.destination);
-        noise.start(); lfo.start();
-        windState.nodes = [noise, lfo, gain];
+        const c=ac(), nodes=[];
+        const src=whiteNoise(c,6); nodes.push(src);
+        const master=c.createGain(); master.gain.value=.15; master.connect(c.destination);
+        /* 3 Frequenzbänder für Raumtiefe */
+        [[180,.9,.04],[520,.5,.07],[1400,.3,.05]].forEach(([f,q,g])=>{
+          const bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=f; bp.Q.value=q;
+          const gn=c.createGain(); gn.gain.value=g;
+          src.connect(bp); bp.connect(gn); gn.connect(master);
+          nodes.push(bp,gn);
+        });
+        /* Langsame Böen */
+        const lfo=c.createOscillator(); lfo.frequency.value=.05+Math.random()*.04;
+        const lfoG=c.createGain(); lfoG.gain.value=.07;
+        lfo.connect(lfoG); lfoG.connect(master.gain);
+        nodes.push(lfo);
+        src.start(); lfo.start();
+        windState.nodes=[...nodes,master];
       }
-      function stopWind() {
-        windState.nodes.forEach(n => { try { n.stop(); } catch(e){} });
-        windState.nodes = [];
-      }
+      function stopWind(){windState.nodes.forEach(n=>{try{n.stop();}catch(e){}});windState.nodes=[];}
 
-      /* ──────────────────────────────────
-         REGEN (Hochpass-Rauschen, dicht)
-      ────────────────────────────────── */
-      const rainState = { on: false, nodes: [] };
+      /* ─── REGEN: 3 Schichten (Grundregen + Tropfen + Oberflächenblubber) ─── */
+      const rainState = { on:false, nodes:[] };
       function startRain() {
-        const c = ac();
-        const noise = makeNoise(c, 3);
-        const hp = c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=3500; hp.Q.value=.3;
-        const lp = c.createBiquadFilter(); lp.type='lowpass';  lp.frequency.value=9000;
-        const gain = c.createGain(); gain.gain.value = .22;
-        noise.connect(hp); hp.connect(lp); lp.connect(gain); gain.connect(c.destination);
-        noise.start();
-        rainState.nodes = [noise, gain];
+        const c=ac(), nodes=[], master=c.createGain();
+        master.gain.value=.2; master.connect(c.destination);
+        nodes.push(master);
+        /* Schicht 1: Grundregen (rosa, 1–8 kHz) */
+        const s1=whiteNoise(c,5);
+        const hp1=c.createBiquadFilter(); hp1.type='highpass'; hp1.frequency.value=1200; hp1.Q.value=.5;
+        const lp1=c.createBiquadFilter(); lp1.type='lowpass';  lp1.frequency.value=8000;
+        const g1=c.createGain(); g1.gain.value=.55;
+        s1.connect(hp1); hp1.connect(lp1); lp1.connect(g1); g1.connect(master);
+        /* Schicht 2: Aufprall-Rauschen (300–1200 Hz) */
+        const s2=whiteNoise(c,3);
+        const bp2=c.createBiquadFilter(); bp2.type='bandpass'; bp2.frequency.value=650; bp2.Q.value=.7;
+        const g2=c.createGain(); g2.gain.value=.3;
+        s2.connect(bp2); bp2.connect(g2); g2.connect(master);
+        /* Schicht 3: Kribbeln (4–12 kHz) */
+        const s3=whiteNoise(c,4);
+        const hp3=c.createBiquadFilter(); hp3.type='highpass'; hp3.frequency.value=4500;
+        const g3=c.createGain(); g3.gain.value=.15;
+        s3.connect(hp3); hp3.connect(g3); g3.connect(master);
+        [s1,s2,s3].forEach(s=>s.start());
+        rainState.nodes=[s1,s2,s3,...nodes];
       }
-      function stopRain() {
-        rainState.nodes.forEach(n => { try { n.stop(); } catch(e){} });
-        rainState.nodes = [];
+      function stopRain(){rainState.nodes.forEach(n=>{try{n.stop();}catch(e){}});rainState.nodes=[];}
+
+      /* ─── TROPFEN: Resonanter Aufprall mit natürlichem Abfall ─── */
+      const dropsState = { on:false, timers:[] };
+      function singleDrop() {
+        if(!dropsState.on) return;
+        const c=ac(), now=c.currentTime;
+        /* Aufprall-Klick */
+        const click=c.createBuffer(1, c.sampleRate*.003, c.sampleRate);
+        const cd=click.getChannelData(0);
+        for(let i=0;i<cd.length;i++) cd[i]=(Math.random()*2-1)*(1-i/cd.length);
+        const clickSrc=c.createBufferSource(); clickSrc.buffer=click;
+        const clickG=c.createGain(); clickG.gain.value=.25;
+        clickSrc.connect(clickG); clickG.connect(c.destination); clickSrc.start(now);
+        /* Resonanz-Nachklang */
+        const res=c.createOscillator(); res.type='sine';
+        const resG=c.createGain();
+        const f=380+Math.random()*280;
+        res.frequency.setValueAtTime(f,now); res.frequency.exponentialRampToValueAtTime(f*.55,now+.35);
+        resG.gain.setValueAtTime(.14,now); resG.gain.exponentialRampToValueAtTime(.0001,now+.4);
+        res.connect(resG); resG.connect(c.destination);
+        res.start(now); res.stop(now+.45);
+        dropsState.timers.push(setTimeout(singleDrop, 700+Math.random()*3200));
       }
 
-      /* ──────────────────────────────────
-         TROPFEN (einzelne Klick-Impulse)
-      ────────────────────────────────── */
-      const dropsState = { on: false, timers: [] };
-      function drop() {
-        if (!dropsState.on) return;
-        const c = ac(), now = c.currentTime;
-        const o = c.createOscillator(), g = c.createGain();
-        o.connect(g); g.connect(c.destination);
-        o.type = 'sine';
-        const f = 800 + Math.random()*600;
-        o.frequency.setValueAtTime(f, now);
-        o.frequency.exponentialRampToValueAtTime(f*.4, now+.12);
-        g.gain.setValueAtTime(.18, now);
-        g.gain.exponentialRampToValueAtTime(.0001, now+.18);
-        o.start(now); o.stop(now+.2);
-        const t = setTimeout(drop, 600 + Math.random()*2800);
-        dropsState.timers.push(t);
-      }
-
-      /* ──────────────────────────────────
-         LAUB (kurze Rausch-Bursts)
-      ────────────────────────────────── */
-      const leavesState = { on: false, timers: [] };
+      /* ─── LAUB: Geformte Rausch-Bursts, weich und dicht ─── */
+      const leavesState = { on:false, timers:[] };
       function rustle() {
-        if (!leavesState.on) return;
-        const c = ac();
-        const buf = c.createBuffer(1, c.sampleRate*.18, c.sampleRate);
-        const d = buf.getChannelData(0);
-        for (let i=0; i<d.length; i++) d[i]=Math.random()*2-1;
-        const src = c.createBufferSource(); src.buffer = buf;
-        const bp  = c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=4000+Math.random()*3000; bp.Q.value=1.2;
-        const g   = c.createGain(); g.gain.value = .07 + Math.random()*.06;
+        if(!leavesState.on) return;
+        const c=ac();
+        const dur=.08+Math.random()*.2;
+        const buf=c.createBuffer(2, c.sampleRate*dur, c.sampleRate);
+        for(let ch=0;ch<2;ch++){
+          const d=buf.getChannelData(ch);
+          for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*(Math.sin(Math.PI*i/d.length));
+        }
+        const src=c.createBufferSource(); src.buffer=buf;
+        const bp=c.createBiquadFilter(); bp.type='bandpass';
+        bp.frequency.value=3500+Math.random()*4000; bp.Q.value=.8+Math.random()*.8;
+        const g=c.createGain(); g.gain.value=.06+Math.random()*.08;
         src.connect(bp); bp.connect(g); g.connect(c.destination);
         src.start();
-        const t = setTimeout(rustle, 400 + Math.random()*2200);
-        leavesState.timers.push(t);
+        leavesState.timers.push(setTimeout(rustle, 200+Math.random()*1800));
       }
 
-      /* ──────────────────────────────────
-         BUTTON-LOGIK
-      ────────────────────────────────── */
-      function toggle(btnId, state, startFn, stopFn, timersProp) {
-        const btn = document.getElementById(btnId);
-        if (!btn) return;
-        state.on = !state.on;
-        btn.classList.toggle('on', state.on);
-        if (state.on) { startFn(); }
-        else {
-          stopFn();
-          if (timersProp) { (state[timersProp]||[]).forEach(clearTimeout); state[timersProp]=[]; }
-        }
+      /* ─── Toggle-Logik ─── */
+      function toggle(id, state, onFn, offFn) {
+        const btn=document.getElementById(id); if(!btn) return;
+        state.on=!state.on; btn.classList.toggle('on',state.on);
+        if(state.on) onFn();
+        else { offFn(); (state.timers||[]).forEach(clearTimeout); if(state.timers) state.timers=[]; }
       }
 
-      document.getElementById('snd-birds') ?.addEventListener('click', () =>
-        toggle('snd-birds', birdsState, scheduleBirds, ()=>{birdsState.timers.forEach(clearTimeout);birdsState.timers=[];}, null));
-      document.getElementById('snd-wind')  ?.addEventListener('click', () =>
-        toggle('snd-wind',  windState,  startWind,  stopWind,  null));
-      document.getElementById('snd-rain')  ?.addEventListener('click', () =>
-        toggle('snd-rain',  rainState,  startRain,  stopRain,  null));
-      document.getElementById('snd-drops') ?.addEventListener('click', () =>
-        toggle('snd-drops', dropsState, drop, ()=>{}, 'timers'));
-      document.getElementById('snd-leaves')?.addEventListener('click', () =>
-        toggle('snd-leaves',leavesState,rustle,()=>{}, 'timers'));
+      document.getElementById('snd-birds') ?.addEventListener('click',()=>toggle('snd-birds',birdsState,scheduleBirds,()=>{birdsState.timers.forEach(clearTimeout);birdsState.timers=[];}));
+      document.getElementById('snd-wind')  ?.addEventListener('click',()=>toggle('snd-wind',windState,startWind,stopWind));
+      document.getElementById('snd-rain')  ?.addEventListener('click',()=>toggle('snd-rain',rainState,startRain,stopRain));
+      document.getElementById('snd-drops') ?.addEventListener('click',()=>toggle('snd-drops',dropsState,singleDrop,()=>{}));
+      document.getElementById('snd-leaves')?.addEventListener('click',()=>toggle('snd-leaves',leavesState,rustle,()=>{}));
 
     })();
 
