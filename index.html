@@ -554,6 +554,96 @@
     .btn--cream:hover { color: var(--cream); }
 
     /* ═══════════════════════════════
+       SPUR EINLADUNG
+    ═══════════════════════════════ */
+    #spur-invite {
+      background: var(--dark);
+      padding: 8rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #spur-invite::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url('pilz.jpeg');
+      background-size: cover; background-position: center 40%;
+      opacity: .08;
+      pointer-events: none;
+    }
+    .si__inner { max-width: 820px; margin: 0 auto; position: relative; }
+    .si__kicker {
+      font-size: .58rem; letter-spacing: .42em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2rem; display: block;
+    }
+    .si__title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(2rem, 5.5vw, 3.8rem);
+      color: var(--cream); line-height: 1.25;
+      margin-bottom: 1.8rem;
+      text-shadow: 0 0 60px rgba(200,169,110,.2);
+    }
+    .si__intro {
+      font-size: 1.05rem; line-height: 1.95;
+      color: rgba(253,250,245,.75);
+      max-width: 640px; margin: 0 auto 3.5rem;
+    }
+    .si__facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem; margin-bottom: 4rem;
+      text-align: left;
+    }
+    .si__fact {
+      border: 1px solid rgba(200,169,110,.18);
+      padding: 1.8rem 1.6rem;
+      background: rgba(200,169,110,.04);
+      position: relative;
+    }
+    .si__fact::before {
+      content: '';
+      position: absolute; top: 0; left: 1.6rem; right: 1.6rem; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .si__fact-num {
+      font-family: 'Cormorant Garamond', serif; font-weight: 600;
+      font-size: 2.4rem; color: var(--gold); line-height: 1;
+      margin-bottom: .5rem;
+      text-shadow: 0 0 25px rgba(200,169,110,.5);
+    }
+    .si__fact-txt {
+      font-size: .82rem; line-height: 1.75;
+      color: rgba(253,250,245,.7);
+    }
+    .si__fact-src {
+      font-size: .62rem; color: rgba(200,169,110,.5);
+      margin-top: .6rem; display: block;
+      font-style: italic; letter-spacing: .03em;
+    }
+    .si__invite {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      color: var(--gold-light); line-height: 1.6;
+      max-width: 580px; margin: 0 auto 3rem;
+    }
+    .si__btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .btn--gold-fill {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-color: var(--gold-dark);
+      color: var(--dark);
+      font-weight: 500;
+      padding: 1.1rem 3rem;
+      font-size: .72rem;
+      letter-spacing: .3em;
+    }
+    .btn--gold-fill:hover { color: var(--dark); }
+    .btn--gold-fill::before { background: rgba(255,255,255,.15); }
+    .si__sub {
+      font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(200,169,110,.45);
+    }
+
+    /* ═══════════════════════════════
        PRODUKTE
     ═══════════════════════════════ */
     #products { background: var(--sand); padding: 7rem 2rem; }
@@ -902,6 +992,59 @@
             Der Wald wartet bereits.
           </p>
           <a href="#" class="btn reveal d2"><span>Waldimpuls holen · kostenlos</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ SPUR EINLADUNG ══════════ -->
+    <section id="spur-invite" aria-label="Waldmomente auf der Spur – kostenlos testen">
+      <div class="si__inner">
+        <span class="si__kicker reveal">Kostenlos · Erste Spur</span>
+        <span class="gold-sep reveal d1"></span>
+        <h2 class="si__title reveal d1">
+          Dein Nervensystem<br>kennt den Wald noch.
+        </h2>
+        <p class="si__intro reveal d2">
+          Als Kind hast du jedes Blatt umgedreht. Jeden Pilz begutachtet.
+          Jeden Ast zerbrochen — einfach um zu hören, wie er klingt.
+          Dann kam das Erwachsenenleben. Und plötzlich geht man durch den Wald,
+          ohne ihn wirklich zu sehen. Waldmomente auf der Spur ist eine
+          Einladung zurück. Nicht in die Kindheit. Sondern zu dir.
+        </p>
+
+        <div class="si__facts">
+          <div class="si__fact reveal">
+            <div class="si__fact-num">13 %</div>
+            <p class="si__fact-txt">weniger Cortisol im Blut bereits nach 15 Minuten im Wald. Ohne Sport. Ohne Anstrengung. Einfach da sein.</p>
+            <span class="si__fact-src">Miyazaki et al., Chiba-Universität Tokyo, 2010</span>
+          </div>
+          <div class="si__fact reveal d1">
+            <div class="si__fact-num">50 %</div>
+            <p class="si__fact-txt">mehr Immunzellen (NK-Zellen) nach einem Tag Waldbaden. Sie bekämpfen Viren und Tumorzellen. Wirkung hält bis zu 7 Tage an.</p>
+            <span class="si__fact-src">Li Q., Tokyo Nippon Medical School, European Journal of Applied Physiology, 2010</span>
+          </div>
+          <div class="si__fact reveal d2">
+            <div class="si__fact-num">90 Min.</div>
+            <p class="si__fact-txt">Naturspaziergang reichen, um Grübeln messbar zu reduzieren. Stanford-Forscher konnten die Veränderung im Gehirn per MRT sichtbar machen.</p>
+            <span class="si__fact-src">Bratman et al., Stanford University, PNAS, 2015</span>
+          </div>
+          <div class="si__fact reveal d3">
+            <div class="si__fact-num">seit 1982</div>
+            <p class="si__fact-txt">ist Shinrin-yoku in Japan Teil der staatlichen Gesundheitsversorgung. Der Wald ist keine Wellness-Mode. Er ist angewandte Medizin.</p>
+            <span class="si__fact-src">Japanisches Forstministerium, Yoshifumi Miyazaki</span>
+          </div>
+        </div>
+
+        <p class="si__invite reveal">
+          Zwölf konkrete Spuren bringen deine Sinne wieder zum Sprechen.<br>
+          Die erste Spur zeige ich dir. Kostenlos. Zum Kennenlernen.
+        </p>
+
+        <div class="si__btn-wrap reveal d1">
+          <a href="#" class="btn btn--gold-fill">
+            <span>Erste Spur kostenlos testen</span>
+          </a>
+          <span class="si__sub">Keine Anmeldung · Kein Abo · Einfach rausgehen</span>
         </div>
       </div>
     </section>
