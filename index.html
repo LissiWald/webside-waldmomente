@@ -642,6 +642,31 @@
       font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
       color: rgba(200,169,110,.45);
     }
+    /* Schwebendes Cover in Einladungs-Sektion */
+    .si__cover-float {
+      display: flex; justify-content: center;
+      margin: 0 0 3.5rem;
+    }
+    .si__cover-float img {
+      max-height: 240px; width: auto;
+      filter: drop-shadow(0 16px 48px rgba(200,169,110,.35));
+      animation: floatCover 4s ease-in-out infinite;
+    }
+    @keyframes floatCover {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+    /* Freebie-Cover */
+    .fb__cover {
+      display: flex; justify-content: center;
+      padding: 2rem 0 1rem;
+    }
+    .fb__cover img {
+      max-height: 180px; width: auto;
+      filter: drop-shadow(0 8px 24px rgba(100,70,30,.25));
+      transition: transform .5s ease;
+    }
+    .fb__cover img:hover { transform: translateY(-4px) scale(1.02); }
 
     /* ═══════════════════════════════
        PRODUKTE
@@ -654,13 +679,43 @@
     @media (max-width: 768px) { .prod__grid { grid-template-columns: 1fr; gap: 3rem; } }
     .prod {
       background: var(--cream);
-      padding: 2.8rem; position: relative;
+      padding: 0 0 2.8rem; position: relative;
+      overflow: hidden;
     }
     .prod::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      z-index: 2;
     }
+    /* Produkt-Cover-Bild */
+    .prod__cover-wrap {
+      overflow: hidden;
+      position: relative;
+      background: #EDE5D5;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2.5rem 2rem;
+      min-height: 220px;
+      margin-bottom: 2.4rem;
+    }
+    .prod__cover-wrap::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,169,110,.5), transparent);
+    }
+    .prod__cover {
+      max-height: 200px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 28px rgba(100,70,30,.28));
+      transition: transform .6s ease, filter .6s ease;
+    }
+    .prod:hover .prod__cover {
+      transform: translateY(-6px) scale(1.03);
+      filter: drop-shadow(0 18px 40px rgba(160,120,64,.4));
+    }
+    .prod__body { padding: 0 2.8rem; }
     .prod__badge { font-size: .55rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
     .prod__title {
       font-family: 'Cormorant Garamond', serif;
@@ -984,6 +1039,9 @@
           <img src="moos.jpeg" alt="Moos im Wald" loading="lazy">
         </div>
         <div class="fb__content">
+          <div class="fb__cover reveal">
+            <img src="cover-waldimpuls.jpeg" alt="Dein erster Waldimpuls – Cover" loading="lazy">
+          </div>
           <span class="eyebrow">Kostenlos · Jetzt</span>
           <h2 class="fb__title reveal sh" data-t="Dein erster Waldimpuls.">Dein erster Waldimpuls.</h2>
           <p class="fb__text reveal d1">
@@ -1035,6 +1093,10 @@
           </div>
         </div>
 
+        <div class="si__cover-float reveal">
+          <img src="cover-waldspur.jpeg" alt="Waldmomente auf der Spur – Cover" loading="lazy">
+        </div>
+
         <p class="si__invite reveal">
           Zwölf konkrete Spuren bringen deine Sinne wieder zum Sprechen.<br>
           Die erste Spur zeige ich dir. Kostenlos. Zum Kennenlernen.
@@ -1055,19 +1117,29 @@
     <section id="products" aria-label="Produkte">
       <div class="prod__grid">
         <div class="prod reveal">
-          <span class="prod__badge">NEU</span>
-          <h2 class="prod__title sh" data-t="Waldmomente auf der Spur.">Waldmomente auf der Spur.</h2>
-          <p class="prod__sub">Edition 1 · Zwölf Spuren durch den Wald</p>
-          <p class="prod__text">Kein Kurs. Kein Programm. Einfach rausgehen und hinschauen. Zwölf konkrete Spuren, die deine Sinne wieder wecken. Wald statt WLAN.</p>
-          <span class="prod__price">7 €</span>
-          <a href="#" class="btn"><span>Jetzt holen</span></a>
+          <div class="prod__cover-wrap">
+            <img src="cover-waldspur.jpeg" alt="Waldmomente auf der Spur – Cover" class="prod__cover" loading="lazy">
+          </div>
+          <div class="prod__body">
+            <span class="prod__badge">NEU</span>
+            <h2 class="prod__title sh" data-t="Waldmomente auf der Spur.">Waldmomente auf der Spur.</h2>
+            <p class="prod__sub">Edition 1 · Zwölf Spuren durch den Wald</p>
+            <p class="prod__text">Kein Kurs. Kein Programm. Einfach rausgehen und hinschauen. Zwölf konkrete Spuren, die deine Sinne wieder wecken. Wald statt WLAN.</p>
+            <span class="prod__price">7 €</span>
+            <a href="#" class="btn"><span>Jetzt holen</span></a>
+          </div>
         </div>
         <div class="prod reveal d1">
-          <span class="prod__badge">Das Workbook</span>
-          <h2 class="prod__title sh" data-t="Das Waldmomente Workbook.">Das Waldmomente Workbook.</h2>
-          <p class="prod__text">10 Kapitel. Keine Schnelllösungen. Kein Optimierungswahn. Nur du. Und der Weg zurück zu dir. Ruhe ist keine Schwäche.</p>
-          <span class="prod__price">27 €</span>
-          <a href="#" class="btn"><span>Zugang sichern</span></a>
+          <div class="prod__cover-wrap">
+            <img src="cover-workbook.jpeg" alt="Das Waldmomente Workbook – Cover" class="prod__cover" loading="lazy">
+          </div>
+          <div class="prod__body">
+            <span class="prod__badge">Das Workbook</span>
+            <h2 class="prod__title sh" data-t="Das Waldmomente Workbook.">Das Waldmomente Workbook.</h2>
+            <p class="prod__text">10 Kapitel. Keine Schnelllösungen. Kein Optimierungswahn. Nur du. Und der Weg zurück zu dir. Ruhe ist keine Schwäche.</p>
+            <span class="prod__price">27 €</span>
+            <a href="#" class="btn"><span>Zugang sichern</span></a>
+          </div>
         </div>
       </div>
     </section>
