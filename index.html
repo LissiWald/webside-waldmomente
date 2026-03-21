@@ -1839,191 +1839,22 @@
         return ctx;
       }
 
-      /* Pink noise – Paul Kellet Approximation */
-      function pinkNoise(c, secs) {
-        const n = c.sampleRate * secs;
-        const buf = c.createBuffer(2, n, c.sampleRate);
-        for (let ch = 0; ch < 2; ch++) {
-          const d = buf.getChannelData(ch);
-          let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-          for (let i = 0; i < n; i++) {
-            const w = Math.random()*2-1;
-            b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759;
-            b2=.96900*b2+w*.1538520; b3=.86650*b3+w*.3104856;
-            b4=.55000*b4+w*.5329522; b5=-.7616*b5-w*.0168980;
-            d[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11; b6=w*.115926;
-          }
-        }
-        const s = c.createBufferSource(); s.buffer=buf; s.loop=true; return s;
+      /* ── Echte Naturklänge aus sounds/ ── */
+      function makePlayer(file, mG) {
+        const audio = new Audio('sounds/' + file);
+        audio.loop = true;
+        audio.preload = 'none';
+        const src = ac().createMediaElementSource(audio);
+        src.connect(mG);
+        audio.play().catch(()=>{});
+        return { stop() { audio.pause(); audio.currentTime = 0; } };
       }
 
-      /* Synthetischer Hallraum */
-      function makeReverb(c, secs, decay) {
-        const rev = c.createConvolver();
-        const n = c.sampleRate * secs;
-        const buf = c.createBuffer(2, n, c.sampleRate);
-        for (let ch = 0; ch < 2; ch++) {
-          const d = buf.getChannelData(ch);
-          for (let i = 0; i < n; i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,decay);
-        }
-        rev.buffer=buf; return rev;
-      }
-
-      /* ── VÖGEL ── Sinus + Rauschanteil, kurze Noten, schnelle Triller */
-      function startBirds(mG) {
-        const c=ac(); let stopped=false;
-
-        function chirp(freq,t,dur,vol) {
-          /* Tonaler Kern */
-          const osc=c.createOscillator(); osc.type='sine';
-          osc.frequency.setValueAtTime(freq,t);
-          osc.frequency.exponentialRampToValueAtTime(freq*1.18,t+dur*.38);
-          osc.frequency.exponentialRampToValueAtTime(freq*.96,t+dur);
-
-          /* Kleiner Rauschanteil für organische Textur */
-          const nLen=Math.floor(c.sampleRate*dur);
-          const nBuf=c.createBuffer(1,nLen,c.sampleRate);
-          const nd=nBuf.getChannelData(0);
-          for(let i=0;i<nLen;i++) nd[i]=(Math.random()*2-1)*.12;
-          const noise=c.createBufferSource(); noise.buffer=nBuf;
-          const nbp=c.createBiquadFilter(); nbp.type='bandpass';
-          nbp.frequency.value=freq*1.4; nbp.Q.value=4;
-
-          /* Gemeinsame Hüllkurve */
-          const env=c.createGain();
-          env.gain.setValueAtTime(0,t);
-          env.gain.linearRampToValueAtTime(vol,t+dur*.05);
-          env.gain.exponentialRampToValueAtTime(.001,t+dur);
-
-          osc.connect(env);
-          noise.connect(nbp); nbp.connect(env);
-          env.connect(mG);
-          osc.start(t); osc.stop(t+dur+.02);
-          noise.start(t);
-        }
-
-        function schedule() {
-          if (stopped) return;
-          /* Vogeltypen: [Grundfreq, Notendauer, Lautstärke, Notenanzahl] */
-          const types=[
-            [3200,.045,.13,4],[2600,.06,.11,3],[4100,.035,.09,5],
-            [2100,.08,.10,2], [3700,.04,.10,6],[1900,.10,.08,2]
-          ];
-          const [freq,dur,vol,cnt]=types[Math.floor(Math.random()*types.length)];
-          let t=ac().currentTime+.04;
-          for(let i=0;i<cnt;i++){
-            chirp(freq*(.97+Math.random()*.07),t,dur,vol);
-            t+=dur+.03+Math.random()*.05;
-          }
-          setTimeout(schedule,700+Math.random()*3800);
-        }
-        schedule();
-        return { stop(){ stopped=true; } };
-      }
-
-      /* ── WIND ── Pink Noise, 3 Bänder + LFO-Bö */
-      function startWind(mG) {
-        const c=ac(), src=pinkNoise(c,6);
-        const lp=c.createBiquadFilter(); lp.type='lowpass';  lp.frequency.value=200; lp.Q.value=.8;
-        const bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=600; bp.Q.value=1.3;
-        const hp=c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=2800;hp.Q.value=2.2;
-        const g1=c.createGain(); g1.gain.value=.38;
-        const g2=c.createGain(); g2.gain.value=.52;
-        const g3=c.createGain(); g3.gain.value=.10;
-        src.connect(lp); lp.connect(g1); g1.connect(mG);
-        src.connect(bp); bp.connect(g2); g2.connect(mG);
-        src.connect(hp); hp.connect(g3); g3.connect(mG);
-        const lfo=c.createOscillator(),lfoG=c.createGain();
-        lfo.type='sine'; lfo.frequency.value=.07+Math.random()*.04;
-        lfoG.gain.value=.26; lfo.connect(lfoG); lfoG.connect(g2.gain);
-        src.start(); lfo.start();
-        return { stop(){ src.stop(); lfo.stop(); } };
-      }
-
-      /* ── REGEN ── 3 Schichten: Hauptregen, Aufprall, Schimmer */
-      function startRain(mG) {
-        const c=ac();
-        const s1=pinkNoise(c,6),s2=pinkNoise(c,6),s3=pinkNoise(c,6);
-        const hp1=c.createBiquadFilter(); hp1.type='highpass'; hp1.frequency.value=1300;hp1.Q.value=.5;
-        const bp1=c.createBiquadFilter(); bp1.type='bandpass'; bp1.frequency.value=750; bp1.Q.value=1.4;
-        const hp2=c.createBiquadFilter(); hp2.type='highpass'; hp2.frequency.value=5500;hp2.Q.value=1;
-        const g1=c.createGain(); g1.gain.value=.52;
-        const g2=c.createGain(); g2.gain.value=.22;
-        const g3=c.createGain(); g3.gain.value=.07;
-        s1.connect(hp1); hp1.connect(g1); g1.connect(mG);
-        s2.connect(bp1); bp1.connect(g2); g2.connect(mG);
-        s3.connect(hp2); hp2.connect(g3); g3.connect(mG);
-        [s1,s2,s3].forEach(s=>s.start());
-        return { stop(){ [s1,s2,s3].forEach(s=>s.stop()); } };
-      }
-
-      /* ── TROPFEN ── Rauschimpuls durch resonanten Bandpass = echter Tropfenklang */
-      function startDrops(mG) {
-        const c=ac(); let stopped=false;
-
-        function drop() {
-          if (stopped) return;
-          const t=ac().currentTime;
-          const freq=500+Math.random()*900;
-          const vol=.18+Math.random()*.14;
-          const dur=.07+Math.random()*.09;
-          const n=Math.floor(c.sampleRate*dur);
-          const buf=c.createBuffer(1,n,c.sampleRate);
-          const d=buf.getChannelData(0);
-          for(let i=0;i<n;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.5);
-          const src=c.createBufferSource(); src.buffer=buf;
-          const bp=c.createBiquadFilter(); bp.type='bandpass';
-          bp.frequency.value=freq; bp.Q.value=10+Math.random()*10;
-          const g=c.createGain(); g.gain.value=vol*3.5;
-          src.connect(bp); bp.connect(g); g.connect(mG);
-          src.start(t);
-          setTimeout(drop,1600+Math.random()*5000);
-        }
-        drop();
-        return { stop(){ stopped=true; } };
-      }
-
-      /* ── LAUB ── echte WAV-Datei, Fallback: Pink-Noise-Envelope */
-      function startLeaves(mG) {
-        const c=ac(); let stopped=false; let loopSrc=null;
-
-        fetch('snd-leaves.wav')
-          .then(r=>r.arrayBuffer())
-          .then(ab=>c.decodeAudioData(ab))
-          .then(buf=>{
-            if(stopped) return;
-            loopSrc=c.createBufferSource();
-            loopSrc.buffer=buf; loopSrc.loop=true;
-            loopSrc.playbackRate.value=.9+Math.random()*.2;
-            const g=c.createGain(); g.gain.value=.55;
-            loopSrc.connect(g); g.connect(mG); loopSrc.start();
-          })
-          .catch(()=>{
-            /* Fallback: Pink-Noise-Rascheln */
-            function rustle(){
-              if(stopped) return;
-              const t=ac().currentTime, dur=.35+Math.random()*.55;
-              const n=Math.floor(c.sampleRate*dur);
-              const buf=c.createBuffer(1,n,c.sampleRate);
-              const d=buf.getChannelData(0);
-              let b0=0,b1=0,b2=0;
-              for(let i=0;i<n;i++){
-                const w=Math.random()*2-1;
-                b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.96900*b2+w*.1538520;
-                d[i]=(b0+b1+b2)*.15*Math.sin(Math.PI*i/n);
-              }
-              const src=c.createBufferSource(); src.buffer=buf;
-              const hp=c.createBiquadFilter(); hp.type='highpass';
-              hp.frequency.value=1800+Math.random()*1200;
-              const g=c.createGain(); g.gain.value=.25+Math.random()*.20;
-              src.connect(hp); hp.connect(g); g.connect(mG); src.start(t);
-              setTimeout(rustle,350+Math.random()*1600);
-            }
-            rustle();
-          });
-
-        return { stop(){ stopped=true; if(loopSrc) try{loopSrc.stop();}catch(e){} } };
-      }
+      function startBirds(mG) { return makePlayer('birds.mp3',  mG); }
+      function startWind(mG)  { return makePlayer('wind.mp3',   mG); }
+      function startRain(mG)  { return makePlayer('rain.mp3',   mG); }
+      function startDrops(mG) { return makePlayer('drops.mp3',  mG); }
+      function startLeaves(mG){ return makePlayer('leaves.mp3', mG); }
 
       const synths={birds:startBirds,wind:startWind,rain:startRain,drops:startDrops,leaves:startLeaves};
 
