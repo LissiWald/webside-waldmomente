@@ -1787,67 +1787,55 @@
         rev.buffer=buf; return rev;
       }
 
-      /* ── VÖGEL ── Oberton-Synthese nach echten Waldvögeln (Amsel, Meise, Rotkehlchen, Buchfink) */
+      /* ── VÖGEL ── Sinus + Rauschanteil, kurze Noten, schnelle Triller */
       function startBirds(mG) {
         const c=ac(); let stopped=false;
 
-        function note(freq,t,dur,vol) {
-          /* 3 Obertöne: Grundton + Oktave + Quinte => kein Pfeifton mehr */
-          const ratios=[1,2,3.02], weights=[1.0,.30,.12];
-          ratios.forEach((r,i)=>{
-            const osc=c.createOscillator(); osc.type='sine';
-            const f0=freq*r;
-            osc.frequency.setValueAtTime(f0,t);
-            /* Natürlicher Tonverlauf: erst leichter Anstieg, dann Abfall */
-            osc.frequency.linearRampToValueAtTime(f0*1.07,t+dur*.28);
-            osc.frequency.exponentialRampToValueAtTime(f0*.92,t+dur*.95);
-            const env=c.createGain();
-            env.gain.setValueAtTime(0,t);
-            env.gain.linearRampToValueAtTime(vol*weights[i],t+dur*.09);
-            env.gain.setValueAtTime(vol*weights[i]*.88,t+dur*.55);
-            env.gain.exponentialRampToValueAtTime(.001,t+dur);
-            osc.connect(env); env.connect(mG);
-            osc.start(t); osc.stop(t+dur+.03);
-          });
-          /* Ansatz-Rauschen (Hauch) für organischen Charakter */
-          const nLen=Math.floor(c.sampleRate*Math.min(dur*.18,.03));
-          if(nLen>4){
-            const nBuf=c.createBuffer(1,nLen,c.sampleRate);
-            const nd=nBuf.getChannelData(0);
-            for(let i=0;i<nLen;i++) nd[i]=(Math.random()*2-1)*(1-i/nLen);
-            const ns=c.createBufferSource(); ns.buffer=nBuf;
-            const nbp=c.createBiquadFilter(); nbp.type='bandpass';
-            nbp.frequency.value=freq*1.6; nbp.Q.value=3;
-            const ng=c.createGain(); ng.gain.value=vol*.18;
-            ns.connect(nbp); nbp.connect(ng); ng.connect(mG);
-            ns.start(t);
-          }
+        function chirp(freq,t,dur,vol) {
+          /* Tonaler Kern */
+          const osc=c.createOscillator(); osc.type='sine';
+          osc.frequency.setValueAtTime(freq,t);
+          osc.frequency.exponentialRampToValueAtTime(freq*1.18,t+dur*.38);
+          osc.frequency.exponentialRampToValueAtTime(freq*.96,t+dur);
+
+          /* Kleiner Rauschanteil für organische Textur */
+          const nLen=Math.floor(c.sampleRate*dur);
+          const nBuf=c.createBuffer(1,nLen,c.sampleRate);
+          const nd=nBuf.getChannelData(0);
+          for(let i=0;i<nLen;i++) nd[i]=(Math.random()*2-1)*.12;
+          const noise=c.createBufferSource(); noise.buffer=nBuf;
+          const nbp=c.createBiquadFilter(); nbp.type='bandpass';
+          nbp.frequency.value=freq*1.4; nbp.Q.value=4;
+
+          /* Gemeinsame Hüllkurve */
+          const env=c.createGain();
+          env.gain.setValueAtTime(0,t);
+          env.gain.linearRampToValueAtTime(vol,t+dur*.05);
+          env.gain.exponentialRampToValueAtTime(.001,t+dur);
+
+          osc.connect(env);
+          noise.connect(nbp); nbp.connect(env);
+          env.connect(mG);
+          osc.start(t); osc.stop(t+dur+.02);
+          noise.start(t);
         }
 
-        function phrase() {
-          if(stopped) return;
-          /* Melodische Phrasen nach echten deutschen Waldvögeln */
-          const songs=[
-            /* Amsel: reichhaltige, absteigende Melodie */
-            {notes:[[2600,.18,.26],[2100,.15,.24],[1750,.20,.28],[1500,.22,.22]],gap:.07},
-            /* Kohlmeise: "zi-zi-zi-bäh" Muster */
-            {notes:[[4200,.07,.18],[4200,.07,.18],[4200,.07,.18],[3100,.14,.20]],gap:.045},
-            /* Rotkehlchen: aufsteigende, zarte Phrase */
-            {notes:[[2200,.09,.16],[2800,.07,.18],[3500,.06,.20],[4100,.08,.22]],gap:.055},
-            /* Buchfink: absteigende Trillerkette mit Schlussruf */
-            {notes:[[3800,.06,.17],[3400,.06,.17],[3000,.06,.18],[2600,.05,.20],[2200,.12,.22]],gap:.035},
-            /* Gartenrotschwanz: kurze schnelle Rufe */
-            {notes:[[4800,.05,.15],[4200,.04,.16],[4800,.05,.16],[3800,.07,.18]],gap:.04},
+        function schedule() {
+          if (stopped) return;
+          /* Vogeltypen: [Grundfreq, Notendauer, Lautstärke, Notenanzahl] */
+          const types=[
+            [3200,.045,.13,4],[2600,.06,.11,3],[4100,.035,.09,5],
+            [2100,.08,.10,2], [3700,.04,.10,6],[1900,.10,.08,2]
           ];
-          const song=songs[Math.floor(Math.random()*songs.length)];
-          let t=c.currentTime+.1;
-          song.notes.forEach(([freq,dur,vol])=>{
-            note(freq*(.96+Math.random()*.08),t,dur,vol);
-            t+=dur+song.gap+Math.random()*.04;
-          });
-          setTimeout(phrase,(t-c.currentTime)*1000+2000+Math.random()*4500);
+          const [freq,dur,vol,cnt]=types[Math.floor(Math.random()*types.length)];
+          let t=ac().currentTime+.04;
+          for(let i=0;i<cnt;i++){
+            chirp(freq*(.97+Math.random()*.07),t,dur,vol);
+            t+=dur+.03+Math.random()*.05;
+          }
+          setTimeout(schedule,700+Math.random()*3800);
         }
-        phrase();
+        schedule();
         return { stop(){ stopped=true; } };
       }
 
