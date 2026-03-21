@@ -1840,21 +1840,23 @@
       }
 
       /* ── Echte Naturklänge aus sounds/ ── */
-      function makePlayer(file, mG) {
+      const audioEls = {};
+      function makePlayer(id, file, mG) {
         const audio = new Audio('sounds/' + file);
         audio.loop = true;
         audio.preload = 'none';
+        audioEls[id] = audio;
         const src = ac().createMediaElementSource(audio);
         src.connect(mG);
         audio.play().catch(()=>{});
-        return { stop() { audio.pause(); audio.currentTime = 0; } };
+        return { stop() { audio.pause(); audio.currentTime = 0; delete audioEls[id]; } };
       }
 
-      function startBirds(mG) { return makePlayer('birds.mp3',  mG); }
-      function startWind(mG)  { return makePlayer('wind.mp3',   mG); }
-      function startRain(mG)  { return makePlayer('rain.mp3',   mG); }
-      function startDrops(mG) { return makePlayer('drops.mp3',  mG); }
-      function startLeaves(mG){ return makePlayer('leaves.mp3', mG); }
+      function startBirds(mG) { return makePlayer('birds',  'birds.mp3',  mG); }
+      function startWind(mG)  { return makePlayer('wind',   'wind.mp3',   mG); }
+      function startRain(mG)  { return makePlayer('rain',   'rain.mp3',   mG); }
+      function startDrops(mG) { return makePlayer('drops',  'drops.mp3',  mG); }
+      function startLeaves(mG){ return makePlayer('leaves', 'leaves.mp3', mG); }
 
       const synths={birds:startBirds,wind:startWind,rain:startRain,drops:startDrops,leaves:startLeaves};
 
@@ -1885,9 +1887,16 @@
         const sl=btn.querySelector('.orb__vol');
         if (sl) {
           sl.addEventListener('input',e=>{
-            volumes[id]=e.target.value/100;
-            if (gainNodes[id]&&!masterMuted)
-              gainNodes[id].gain.setTargetAtTime(volumes[id],ac().currentTime,.1);
+            const vol=e.target.value/100;
+            volumes[id]=vol;
+            if (gainNodes[id]&&!masterMuted) {
+              gainNodes[id].gain.setValueAtTime(vol,ac().currentTime);
+            }
+            /* Audio-Element pausieren wenn Regler auf 0, sonst fortsetzen */
+            if (audioEls[id]) {
+              if (vol===0) { audioEls[id].pause(); }
+              else if (audioEls[id].paused) { audioEls[id].play().catch(()=>{}); }
+            }
           });
           /* Slider-Klick darf Orb nicht umschalten */
           ['click','mousedown','touchstart'].forEach(ev=>
