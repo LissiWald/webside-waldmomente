@@ -3,9 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Waldmomente – Waldbaden, Natur und Ruhe für Menschen mit zu viel Stress. Wald statt WLAN. Digitale Produkte von Elisabeth Müller.">
-  <meta name="keywords" content="Waldmomente, Waldbaden, Wald, Natur, Stress, Ruhe, Naturliebe, WaldStattWLAN, Elisabeth Müller">
-  <title>Waldmomente – Elisabeth Müller</title>
+  <meta name="robots" content="index, follow">
+
+  <!-- Primary SEO -->
+  <title>Waldmomente – Waldbaden &amp; Naturtherapie | Elisabeth Müller</title>
+  <meta name="description" content="Waldbaden für Menschen mit zu viel im Kopf. Digitale Begleiter für deine Zeit im Wald – von Elisabeth Müller, zertifiziert in Waldbaden und Naturtherapie. Wald statt WLAN.">
+  <meta name="keywords" content="Waldbaden, Waldmomente, Naturtherapie, Shinrin-yoku, Stress abbauen, Wald, Natur, Ruhe, Elisabeth Müller, Saarbrücken, digitale Produkte Waldbaden">
+  <meta name="author" content="Elisabeth Müller">
+  <link rel="canonical" href="https://www.waldmomente.me/">
+
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:url" content="https://www.waldmomente.me/">
+  <meta property="og:site_name" content="Waldmomente">
+  <meta property="og:title" content="Waldmomente – Waldbaden &amp; Naturtherapie | Elisabeth Müller">
+  <meta property="og:description" content="Waldbaden für Menschen mit zu viel im Kopf. Digitale Begleiter für deine Zeit im Wald – von Elisabeth Müller, zertifiziert in Waldbaden und Naturtherapie.">
+  <meta property="og:image" content="https://www.waldmomente.me/cover-waldspur.jpeg">
+  <meta property="og:image:alt" content="Waldmomente auf der Spur – Digitaler Waldbegleiter von Elisabeth Müller">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Waldmomente – Waldbaden &amp; Naturtherapie">
+  <meta name="twitter:description" content="Waldbaden für Menschen mit zu viel im Kopf. Wald statt WLAN.">
+  <meta name="twitter:image" content="https://www.waldmomente.me/cover-waldspur.jpeg">
+
+  <!-- Structured Data: Person + WebSite + Products -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.waldmomente.me/#person",
+        "name": "Elisabeth Müller",
+        "alternateName": "Lissi",
+        "url": "https://www.waldmomente.me/",
+        "sameAs": ["https://instagram.com/waldmomente"],
+        "jobTitle": "Zertifizierte Waldbadeguide und Naturtherapeutin",
+        "description": "Elisabeth Müller, zertifiziert in Waldbaden und Naturtherapie, begleitet Menschen mit zu viel im Kopf zurück in den Wald.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Saarbrücken",
+          "addressCountry": "DE"
+        },
+        "email": "info@waldmomente.me"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.waldmomente.me/#website",
+        "url": "https://www.waldmomente.me/",
+        "name": "Waldmomente",
+        "description": "Waldbaden und Naturtherapie – digitale Begleiter für deine Zeit im Wald",
+        "inLanguage": "de-DE",
+        "publisher": { "@id": "https://www.waldmomente.me/#person" }
+      },
+      {
+        "@type": "Product",
+        "name": "Waldmomente auf der Spur",
+        "description": "Zwölf konkrete Spuren durch den Wald – kein Kurs, kein Programm. Einfach rausgehen und hinschauen. Für Menschen, die ihre Sinne wieder wecken wollen.",
+        "image": "https://www.waldmomente.me/cover-waldspur.jpeg",
+        "offers": {
+          "@type": "Offer",
+          "price": "7.00",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "brand": { "@id": "https://www.waldmomente.me/#person" }
+      },
+      {
+        "@type": "Product",
+        "name": "Das Waldmomente Workbook",
+        "description": "10 Kapitel. Keine Schnelllösungen. Nur du und der Weg zurück zu dir. Ruhe ist keine Schwäche.",
+        "image": "https://www.waldmomente.me/cover-workbook.jpeg",
+        "offers": {
+          "@type": "Offer",
+          "price": "27.00",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "brand": { "@id": "https://www.waldmomente.me/#person" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -1440,7 +1522,7 @@
         </div>
         <div class="test__grid">
           <div class="test__card reveal">
-            <img src="test-kunden.jpeg" alt="Walderlebnis" loading="lazy">
+            <img src="test-kunden.jpeg" alt="Teilnehmerin beim Waldbaden – Erfahrung mit Waldmomente auf der Spur" loading="lazy">
             <div class="test__overlay">
               <div class="test__gold-bar"></div>
               <p class="test__quote">„Ich hab zum ersten Mal seit Monaten einfach nur dagesessen. Ohne zu denken. Das hat mir die Waldspur gegeben."</p>
@@ -1448,7 +1530,7 @@
             </div>
           </div>
           <div class="test__card reveal d1">
-            <img src="test2.jpeg" alt="Walderlebnis" loading="lazy">
+            <img src="test2.jpeg" alt="Waldmomente Teilnehmerin – Waldbaden Erfahrungsbericht Spur 1" loading="lazy">
             <div class="test__overlay">
               <div class="test__gold-bar"></div>
               <p class="test__quote">„Ich dachte, Waldbaden ist nichts für mich. Nach Spur 1 wollte ich nie wieder aufhören."</p>
@@ -1456,7 +1538,7 @@
             </div>
           </div>
           <div class="test__card reveal d2">
-            <img src="test3.jpeg" alt="Walderlebnis" loading="lazy">
+            <img src="test3.jpeg" alt="Waldmomente Teilnehmerin – 40 Minuten Wald, Kopf leerer als nach zwei Wochen Urlaub" loading="lazy">
             <div class="test__overlay">
               <div class="test__gold-bar"></div>
               <p class="test__quote">„Mein Kopf war leerer als nach zwei Wochen Urlaub. Und ich war nur 40 Minuten draußen."</p>
