@@ -1787,36 +1787,42 @@
         rev.buffer=buf; return rev;
       }
 
-      /* ── VÖGEL ── Einfache Sinuston-Pfeifer, kein FM */
+      /* ── VÖGEL ── Gefiltertes Rauschen durch Bandpass = organischer Vogelklang */
       function startBirds(mG) {
         const c=ac(); let stopped=false;
 
         function chirp(freq,t,dur,vol) {
-          const osc=c.createOscillator(), env=c.createGain();
-          osc.type='sine';
-          osc.frequency.setValueAtTime(freq,t);
-          osc.frequency.exponentialRampToValueAtTime(freq*1.12,t+dur*.45);
-          osc.frequency.exponentialRampToValueAtTime(freq*.94,t+dur);
-          env.gain.setValueAtTime(0,t);
-          env.gain.linearRampToValueAtTime(vol,t+dur*.07);
-          env.gain.exponentialRampToValueAtTime(.001,t+dur);
-          osc.connect(env); env.connect(mG);
-          osc.start(t); osc.stop(t+dur+.05);
+          const n=Math.floor(c.sampleRate*dur);
+          const buf=c.createBuffer(1,n,c.sampleRate);
+          const d=buf.getChannelData(0);
+          for(let i=0;i<n;i++){
+            const env=Math.sin(Math.PI*i/n);
+            d[i]=(Math.random()*2-1)*env;
+          }
+          const src=c.createBufferSource(); src.buffer=buf;
+          const bp=c.createBiquadFilter(); bp.type='bandpass';
+          bp.frequency.setValueAtTime(freq,t);
+          bp.frequency.linearRampToValueAtTime(freq*(1.12+Math.random()*.08),t+dur*.5);
+          bp.frequency.linearRampToValueAtTime(freq*.96,t+dur);
+          bp.Q.value=22+Math.random()*14;
+          const g=c.createGain(); g.gain.value=vol*2.8;
+          src.connect(bp); bp.connect(g); g.connect(mG);
+          src.start(t);
         }
 
         function schedule() {
           if (stopped) return;
           const types=[
-            [3100,.10,.14],[2000,.22,.11],[1750,.30,.09],[4000,.06,.08],[2500,.15,.12]
+            [3000,.09,.14],[2100,.20,.11],[1850,.28,.09],[3800,.06,.09],[2600,.14,.12]
           ];
           const [freq,dur,vol]=types[Math.floor(Math.random()*types.length)];
           const count=1+Math.floor(Math.random()*3);
           let t=ac().currentTime+.05;
           for(let i=0;i<count;i++){
-            chirp(freq*(.96+Math.random()*.08),t,dur,vol);
-            t+=dur+.04+Math.random()*.18;
+            chirp(freq*(.95+Math.random()*.10),t,dur,vol);
+            t+=dur+.05+Math.random()*.20;
           }
-          setTimeout(schedule,700+Math.random()*3200);
+          setTimeout(schedule,800+Math.random()*3500);
         }
         schedule();
         return { stop(){ stopped=true; } };
@@ -1858,26 +1864,27 @@
         return { stop(){ [s1,s2,s3].forEach(s=>s.stop()); } };
       }
 
-      /* ── TROPFEN ── Weicher Sinuston, sanfter Attack */
+      /* ── TROPFEN ── Rauschimpuls durch resonanten Bandpass = echter Tropfenklang */
       function startDrops(mG) {
         const c=ac(); let stopped=false;
 
         function drop() {
           if (stopped) return;
           const t=ac().currentTime;
-          const freq=900+Math.random()*700;
-          const vol=.07+Math.random()*.10;
-          const dur=.28+Math.random()*.22;
-          const osc=c.createOscillator(),env=c.createGain();
-          osc.type='sine';
-          osc.frequency.setValueAtTime(freq,t);
-          osc.frequency.exponentialRampToValueAtTime(freq*.58,t+dur);
-          env.gain.setValueAtTime(0,t);
-          env.gain.linearRampToValueAtTime(vol,t+.006);
-          env.gain.exponentialRampToValueAtTime(.001,t+dur);
-          osc.connect(env); env.connect(mG);
-          osc.start(t); osc.stop(t+dur+.05);
-          setTimeout(drop,1400+Math.random()*4500);
+          const freq=500+Math.random()*900;
+          const vol=.18+Math.random()*.14;
+          const dur=.07+Math.random()*.09;
+          const n=Math.floor(c.sampleRate*dur);
+          const buf=c.createBuffer(1,n,c.sampleRate);
+          const d=buf.getChannelData(0);
+          for(let i=0;i<n;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.5);
+          const src=c.createBufferSource(); src.buffer=buf;
+          const bp=c.createBiquadFilter(); bp.type='bandpass';
+          bp.frequency.value=freq; bp.Q.value=10+Math.random()*10;
+          const g=c.createGain(); g.gain.value=vol*3.5;
+          src.connect(bp); bp.connect(g); g.connect(mG);
+          src.start(t);
+          setTimeout(drop,1600+Math.random()*5000);
         }
         drop();
         return { stop(){ stopped=true; } };
