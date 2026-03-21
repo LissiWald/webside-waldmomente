@@ -1787,42 +1787,53 @@
         rev.buffer=buf; return rev;
       }
 
-      /* ── VÖGEL ── Gefiltertes Rauschen durch Bandpass = organischer Vogelklang */
+      /* ── VÖGEL ── Sinus + Rauschanteil, kurze Noten, schnelle Triller */
       function startBirds(mG) {
         const c=ac(); let stopped=false;
 
         function chirp(freq,t,dur,vol) {
-          const n=Math.floor(c.sampleRate*dur);
-          const buf=c.createBuffer(1,n,c.sampleRate);
-          const d=buf.getChannelData(0);
-          for(let i=0;i<n;i++){
-            const env=Math.sin(Math.PI*i/n);
-            d[i]=(Math.random()*2-1)*env;
-          }
-          const src=c.createBufferSource(); src.buffer=buf;
-          const bp=c.createBiquadFilter(); bp.type='bandpass';
-          bp.frequency.setValueAtTime(freq,t);
-          bp.frequency.linearRampToValueAtTime(freq*(1.12+Math.random()*.08),t+dur*.5);
-          bp.frequency.linearRampToValueAtTime(freq*.96,t+dur);
-          bp.Q.value=22+Math.random()*14;
-          const g=c.createGain(); g.gain.value=vol*2.8;
-          src.connect(bp); bp.connect(g); g.connect(mG);
-          src.start(t);
+          /* Tonaler Kern */
+          const osc=c.createOscillator(); osc.type='sine';
+          osc.frequency.setValueAtTime(freq,t);
+          osc.frequency.exponentialRampToValueAtTime(freq*1.18,t+dur*.38);
+          osc.frequency.exponentialRampToValueAtTime(freq*.96,t+dur);
+
+          /* Kleiner Rauschanteil für organische Textur */
+          const nLen=Math.floor(c.sampleRate*dur);
+          const nBuf=c.createBuffer(1,nLen,c.sampleRate);
+          const nd=nBuf.getChannelData(0);
+          for(let i=0;i<nLen;i++) nd[i]=(Math.random()*2-1)*.12;
+          const noise=c.createBufferSource(); noise.buffer=nBuf;
+          const nbp=c.createBiquadFilter(); nbp.type='bandpass';
+          nbp.frequency.value=freq*1.4; nbp.Q.value=4;
+
+          /* Gemeinsame Hüllkurve */
+          const env=c.createGain();
+          env.gain.setValueAtTime(0,t);
+          env.gain.linearRampToValueAtTime(vol,t+dur*.05);
+          env.gain.exponentialRampToValueAtTime(.001,t+dur);
+
+          osc.connect(env);
+          noise.connect(nbp); nbp.connect(env);
+          env.connect(mG);
+          osc.start(t); osc.stop(t+dur+.02);
+          noise.start(t);
         }
 
         function schedule() {
           if (stopped) return;
+          /* Vogeltypen: [Grundfreq, Notendauer, Lautstärke, Notenanzahl] */
           const types=[
-            [3000,.09,.14],[2100,.20,.11],[1850,.28,.09],[3800,.06,.09],[2600,.14,.12]
+            [3200,.045,.13,4],[2600,.06,.11,3],[4100,.035,.09,5],
+            [2100,.08,.10,2], [3700,.04,.10,6],[1900,.10,.08,2]
           ];
-          const [freq,dur,vol]=types[Math.floor(Math.random()*types.length)];
-          const count=1+Math.floor(Math.random()*3);
-          let t=ac().currentTime+.05;
-          for(let i=0;i<count;i++){
-            chirp(freq*(.95+Math.random()*.10),t,dur,vol);
-            t+=dur+.05+Math.random()*.20;
+          const [freq,dur,vol,cnt]=types[Math.floor(Math.random()*types.length)];
+          let t=ac().currentTime+.04;
+          for(let i=0;i<cnt;i++){
+            chirp(freq*(.97+Math.random()*.07),t,dur,vol);
+            t+=dur+.03+Math.random()*.05;
           }
-          setTimeout(schedule,800+Math.random()*3500);
+          setTimeout(schedule,700+Math.random()*3800);
         }
         schedule();
         return { stop(){ stopped=true; } };
