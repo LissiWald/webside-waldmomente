@@ -149,30 +149,72 @@
     .orb__face {
       width: 108px; height: 108px; border-radius: 50%;
       background: rgba(10,26,16,.65);
-      border: 1px solid rgba(200,169,110,.18);
+      border: 2px solid rgba(200,169,110,.4);
       backdrop-filter: blur(14px);
       display: flex; align-items: center; justify-content: center;
       position: relative; z-index: 1;
       transition: border-color .4s, box-shadow .4s, background .4s, transform .35s;
     }
-    .orb__face svg { width: 34px; height: 34px; fill: rgba(200,169,110,.55); transition: fill .4s; }
+    .orb__face svg { width: 34px; height: 34px; fill: rgba(200,169,110,.6); stroke: rgba(200,169,110,.6); transition: fill .4s, stroke .4s; }
     .orb__label {
       font-size: .52rem; letter-spacing: .38em; text-transform: uppercase;
-      color: rgba(200,169,110,.38); transition: color .4s;
+      color: rgba(200,169,110,.45); transition: color .4s;
     }
     .orb:hover .orb__face {
-      border-color: rgba(200,169,110,.5); background: rgba(10,26,16,.9);
+      border-color: rgba(200,169,110,.7); background: rgba(10,26,16,.9);
       transform: translateY(-4px);
     }
-    .orb:hover .orb__face svg { fill: rgba(200,169,110,.9); }
-    .orb:hover .orb__label { color: rgba(200,169,110,.7); }
+    .orb:hover .orb__face svg { fill: rgba(200,169,110,.95); stroke: rgba(200,169,110,.95); }
+    .orb:hover .orb__label { color: rgba(200,169,110,.75); }
     .orb.on .orb__face {
       border-color: var(--gold);
-      box-shadow: 0 0 36px rgba(200,169,110,.4), inset 0 0 22px rgba(200,169,110,.07);
+      box-shadow: 0 0 40px rgba(200,169,110,.5), 0 0 80px rgba(200,169,110,.15), inset 0 0 22px rgba(200,169,110,.08);
       background: rgba(10,26,16,.92);
     }
-    .orb.on .orb__face svg { fill: var(--gold); }
+    .orb.on .orb__face svg { fill: var(--gold); stroke: var(--gold); }
     .orb.on .orb__label { color: var(--gold); }
+    /* Volume slider */
+    .orb__vol-wrap {
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s ease;
+      width: 90px;
+    }
+    .orb.on .orb__vol-wrap { max-height: 32px; }
+    .orb__vol {
+      -webkit-appearance: none; appearance: none;
+      width: 90px; height: 2px; margin-top: 14px;
+      background: rgba(200,169,110,.25); border-radius: 1px;
+      outline: none; cursor: pointer; display: block;
+    }
+    .orb__vol::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 13px; height: 13px;
+      border-radius: 50%; background: var(--gold);
+      box-shadow: 0 0 8px rgba(200,169,110,.55); cursor: pointer;
+    }
+    .orb__vol::-moz-range-thumb {
+      width: 13px; height: 13px; border-radius: 50%;
+      background: var(--gold); border: none; cursor: pointer;
+    }
+    /* Mute-Button */
+    .spiel__controls { margin-top: 2.8rem; display: flex; justify-content: center; }
+    .spiel__mute {
+      background: none; border: 1px solid rgba(200,169,110,.28);
+      color: rgba(200,169,110,.5);
+      padding: .7rem 2rem; font-family: 'Jost', sans-serif;
+      font-size: .62rem; letter-spacing: .28em; text-transform: uppercase;
+      cursor: pointer; display: flex; align-items: center; gap: .75rem;
+      transition: color .35s, border-color .35s, background .35s;
+    }
+    .spiel__mute svg { width: 17px; height: 17px; flex-shrink: 0; fill: currentColor; stroke: currentColor; }
+    .spiel__mute:hover { color: var(--gold); border-color: rgba(200,169,110,.55); }
+    .spiel__mute.muted { color: var(--gold-dark); border-color: var(--gold-dark); background: rgba(200,169,110,.05); }
+    /* Community-Buttons */
+    #community .btn {
+      color: var(--cream);
+      border-color: rgba(200,169,110,.55);
+      background: rgba(200,169,110,.08);
+    }
+    #community .btn:hover { color: var(--gold-light); border-color: var(--gold); background: rgba(200,169,110,.14); }
     .orb.on .orb__face::after {
       content: '';
       position: absolute; inset: -1px; border-radius: 50%;
@@ -1107,61 +1149,95 @@
 
     <!-- ══════════ KLANG-SPIELWIESE ══════════ -->
     <section id="spielwiese">
-
-      <!-- Versteckte Audiodateien -->
-      <audio id="audio-birds"  src="snd-birds.ogg"  loop preload="none"></audio>
-      <audio id="audio-wind"   src="snd-wind.ogg"   loop preload="none"></audio>
-      <audio id="audio-rain"   src="snd-rain.ogg"   loop preload="none"></audio>
-      <audio id="audio-drops"  src="snd-drops.ogg"  loop preload="none"></audio>
-      <audio id="audio-leaves" src="snd-leaves.ogg" loop preload="none"></audio>
-
       <div class="spiel__inner">
         <p class="spiel__tag reveal">Klangraum</p>
         <h2 class="spiel__title reveal sh" data-t="Hör in den Wald.">Hör in den Wald.</h2>
-        <p class="spiel__sub reveal d1">Tippe auf einen Klang — oder misch dir deine eigene Stille.<br>Du bestimmst, wie dein Wald klingt.</p>
+        <p class="spiel__sub reveal d1">Tippe auf einen Klang oder mische dir deine eigene Stille.</p>
 
         <div class="spiel__orbs reveal d2">
 
           <!-- Vögel -->
           <button class="orb" id="orb-birds" aria-label="Vogelgezwitscher">
             <div class="orb__face">
-              <svg viewBox="0 0 24 24"><path d="M21.5 2.5c-2.5 0-5 1-6.5 2.5L12 7.5 9 5C7 3.5 4.5 3 2 3.5c0 2.5 1 5 3 6.5l1 .5-1 3.5c2-.5 4-1.5 5.5-3L12 10l2.5 2c1.5 1.5 3.5 2.5 5.5 3l-1-3.5 1-.5c2-1.5 3-4 3-6.5z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M22 6c-2.5.5-5 1.5-6.5 3L12 8l-3.5 1C7 7.5 4.5 6.5 2 6c.5 3 2 5.5 4.5 6.5l2-.5 1 3.5 1.5-2.5 1.5 2.5 1-3.5 2 .5C18 12 20 9.5 22 6z"/>
+              </svg>
             </div>
             <span class="orb__label">Vögel</span>
+            <div class="orb__vol-wrap">
+              <input type="range" class="orb__vol" min="0" max="100" value="75" aria-label="Lautstärke Vögel">
+            </div>
           </button>
 
           <!-- Wind -->
           <button class="orb" id="orb-wind" aria-label="Wind">
             <div class="orb__face">
-              <svg viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 0-3 3M3 16h8a3 3 0 1 0-3 3"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                <path d="M5 8h9a3 3 0 1 0-3-3"/>
+                <path d="M5 12h13a3 3 0 1 0-3 3"/>
+                <path d="M5 16h7a2.5 2.5 0 1 0-2.5 2.5"/>
+              </svg>
             </div>
             <span class="orb__label">Wind</span>
+            <div class="orb__vol-wrap">
+              <input type="range" class="orb__vol" min="0" max="100" value="60" aria-label="Lautstärke Wind">
+            </div>
           </button>
 
           <!-- Regen -->
           <button class="orb" id="orb-rain" aria-label="Regen">
             <div class="orb__face">
-              <svg viewBox="0 0 24 24"><path d="M20 17.5a4 4 0 0 0-4-7.5h-1A7 7 0 1 0 4 17.5M8 19v2M8 15v2M12 21v2M12 17v-2M16 19v2"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M17 10h-.3A5.5 5.5 0 0 0 6 10.5 3.5 3.5 0 0 0 6.5 17H17a3.5 3.5 0 0 0 0-7z"/>
+                <circle cx="8.5" cy="20.5" r="1.4"/>
+                <circle cx="12" cy="21.5" r="1.4"/>
+                <circle cx="15.5" cy="20.5" r="1.4"/>
+              </svg>
             </div>
             <span class="orb__label">Regen</span>
+            <div class="orb__vol-wrap">
+              <input type="range" class="orb__vol" min="0" max="100" value="70" aria-label="Lautstärke Regen">
+            </div>
           </button>
 
           <!-- Tropfen -->
           <button class="orb" id="orb-drops" aria-label="Tropfen">
             <div class="orb__face">
-              <svg viewBox="0 0 24 24"><path d="M12 2C6 10 4 14 4 17a8 8 0 0 0 16 0c0-3-2-7-8-15z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M12 2C6 10 4 14 4 17a8 8 0 0 0 16 0c0-3-2-7-8-15z"/>
+              </svg>
             </div>
             <span class="orb__label">Tropfen</span>
+            <div class="orb__vol-wrap">
+              <input type="range" class="orb__vol" min="0" max="100" value="65" aria-label="Lautstärke Tropfen">
+            </div>
           </button>
 
           <!-- Laub -->
           <button class="orb" id="orb-leaves" aria-label="Laub">
             <div class="orb__face">
-              <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.34A1 1 0 0 0 5 21C13 21 18.46 13.38 17 8z"/><path d="M17 8c0 5-3 9-7 11"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M17 8C8 10 5.9 16.17 3.82 19.34A1 1 0 0 0 5 21C13 21 18.46 13.38 17 8z"/>
+                <path d="M17 8c0 5-3 9-7 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
             </div>
             <span class="orb__label">Laub</span>
+            <div class="orb__vol-wrap">
+              <input type="range" class="orb__vol" min="0" max="100" value="55" aria-label="Lautstärke Laub">
+            </div>
           </button>
 
+        </div>
+
+        <div class="spiel__controls reveal d3">
+          <button id="spiel-mute" class="spiel__mute">
+            <svg viewBox="0 0 24 24">
+              <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>Alle stumm</span>
+          </button>
         </div>
 
         <p class="spiel__hint reveal d3">Am schönsten mit Kopfhörern</p>
@@ -1278,44 +1354,18 @@
     <div class="nebel nb-dark-r" style="background: linear-gradient(to top, var(--sand), transparent); margin-top: -90px; position: relative; z-index: 3;"></div>
     <span class="gold-sep"></span>
 
-    <!-- ══════════ FREEBIE ══════════ -->
-    <section id="freebie" aria-label="Gratis Waldimpuls">
-      <div class="fb__inner">
-        <div class="fb__img">
-          <img src="moos.jpeg" alt="Moos im Wald" loading="lazy">
-        </div>
-        <div class="fb__content">
-          <div class="fb__cover reveal">
-            <a href="waldimpuls.pdf" target="_blank" rel="noopener" title="Waldimpuls als PDF öffnen">
-              <img src="waldimpuls-echt.jpeg" alt="Dein erster Waldimpuls – Cover" loading="lazy">
-            </a>
-          </div>
-          <span class="eyebrow">Kostenlos · Jetzt</span>
-          <h2 class="fb__title reveal sh" data-t="Dein erster Waldimpuls.">Dein erster Waldimpuls.</h2>
-          <p class="fb__text reveal d1">
-            Leg jetzt dein Handy weg. Flugmodus an.<br>
-            Nicht für fünf Minuten. Für dich.<br>
-            Der Wald wartet bereits.
-          </p>
-          <a href="waldimpuls.pdf" target="_blank" rel="noopener" class="btn btn--prominent reveal d2"><span>Waldimpuls kostenlos holen</span></a>
-        </div>
-      </div>
-    </section>
-
     <!-- ══════════ SPUR EINLADUNG ══════════ -->
-    <section id="spur-invite" aria-label="Waldmomente auf der Spur – kostenlos testen">
+    <section id="spur-invite" aria-label="Waldmomente auf der Spur">
       <div class="si__inner">
-        <span class="si__kicker reveal">Kostenlos · Erste Spur</span>
         <span class="gold-sep reveal d1"></span>
         <h2 class="si__title reveal d1">
           Dein Nervensystem<br>kennt den Wald noch.
         </h2>
         <p class="si__intro reveal d2">
           Als Kind hast du jedes Blatt umgedreht. Jeden Pilz begutachtet.
-          Jeden Ast zerbrochen — einfach um zu hören, wie er klingt.
+          Jeden Ast zerbrochen, einfach um zu hören, wie er klingt.
           Dann kam das Erwachsenenleben. Und plötzlich geht man durch den Wald,
-          ohne ihn wirklich zu sehen. Waldmomente auf der Spur ist eine
-          Einladung zurück. Nicht in die Kindheit. Sondern zu dir.
+          ohne ihn wirklich zu sehen.
         </p>
 
         <div class="si__facts">
@@ -1339,22 +1389,6 @@
             <p class="si__fact-txt">ist Shinrin-yoku in Japan Teil der staatlichen Gesundheitsversorgung. Der Wald ist keine Wellness-Mode. Er ist angewandte Medizin.</p>
             <span class="si__fact-src">Japanisches Forstministerium, Yoshifumi Miyazaki</span>
           </div>
-        </div>
-
-        <div class="si__cover-float reveal">
-          <img src="cover-waldspur.jpeg" alt="Waldmomente auf der Spur – Cover" loading="lazy">
-        </div>
-
-        <p class="si__invite reveal">
-          Zwölf konkrete Spuren bringen deine Sinne wieder zum Sprechen.<br>
-          Die erste Spur zeige ich dir. Kostenlos. Zum Kennenlernen.
-        </p>
-
-        <div class="si__btn-wrap reveal d1">
-          <a href="#" class="btn btn--gold-fill">
-            <span>Erste Spur kostenlos testen</span>
-          </a>
-          <span class="si__sub">Keine Anmeldung · Kein Abo · Einfach rausgehen</span>
         </div>
       </div>
     </section>
@@ -1495,16 +1529,16 @@
         <h2 class="community__title reveal sh" data-t="Waldmomente begleiten.">Waldmomente begleiten.</h2>
         <p class="community__sub reveal d1">Kleine Impulse. Direkt zu dir. Wald statt WLAN.</p>
         <div class="community__btns">
-          <a href="#" class="btn reveal d1">
+          <a href="#" class="btn btn--cream reveal d1">
             <span class="btn__icon">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
               Waldmomente aufs Handy
             </span>
           </a>
-          <a href="#" class="btn reveal d2">
+          <a href="#" class="btn btn--cream reveal d2">
             <span class="btn__icon">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              @waldmomente
+              Waldmomente auf Instagram
             </span>
           </a>
         </div>
@@ -1709,36 +1743,239 @@
     }, { threshold: 0.4 });
     sections.forEach(s => secObs.observe(s));
 
-    /* ── KLANG-SPIELWIESE: echte Naturklänge ── */
-    (function() {
-      const ids    = ['birds','wind','rain','drops','leaves'];
-      const vols   = { birds:.82, wind:.52, rain:.65, drops:.72, leaves:.58 };
+    /* ── KLANG-SPIELWIESE: Web Audio Synthese ── */
+    (function () {
+      let ctx = null;
+      const volumes = { birds:.75, wind:.60, rain:.70, drops:.65, leaves:.55 };
+      let masterMuted = false;
+      const gainNodes = {}, activeSounds = {};
 
-      function fadeIn(el, target) {
-        el.volume = 0; el.play().catch(()=>{});
-        (function tick(){
-          el.volume = Math.min(el.volume + .018, target);
-          if (el.volume < target) requestAnimationFrame(tick);
-        })();
-      }
-      function fadeOut(el) {
-        (function tick(){
-          el.volume = Math.max(el.volume - .018, 0);
-          if (el.volume > 0) requestAnimationFrame(tick);
-          else el.pause();
-        })();
+      function ac() {
+        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
       }
 
-      ids.forEach(id => {
-        const btn   = document.getElementById('orb-' + id);
-        const audio = document.getElementById('audio-' + id);
-        if (!btn || !audio) return;
-        btn.addEventListener('click', () => {
-          const on = btn.classList.toggle('on');
-          if (on) fadeIn(audio, vols[id]);
-          else    fadeOut(audio);
+      /* Pink noise – Paul Kellet Approximation */
+      function pinkNoise(c, secs) {
+        const n = c.sampleRate * secs;
+        const buf = c.createBuffer(2, n, c.sampleRate);
+        for (let ch = 0; ch < 2; ch++) {
+          const d = buf.getChannelData(ch);
+          let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+          for (let i = 0; i < n; i++) {
+            const w = Math.random()*2-1;
+            b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759;
+            b2=.96900*b2+w*.1538520; b3=.86650*b3+w*.3104856;
+            b4=.55000*b4+w*.5329522; b5=-.7616*b5-w*.0168980;
+            d[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11; b6=w*.115926;
+          }
+        }
+        const s = c.createBufferSource(); s.buffer=buf; s.loop=true; return s;
+      }
+
+      /* Synthetischer Hallraum */
+      function makeReverb(c, secs, decay) {
+        const rev = c.createConvolver();
+        const n = c.sampleRate * secs;
+        const buf = c.createBuffer(2, n, c.sampleRate);
+        for (let ch = 0; ch < 2; ch++) {
+          const d = buf.getChannelData(ch);
+          for (let i = 0; i < n; i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,decay);
+        }
+        rev.buffer=buf; return rev;
+      }
+
+      /* ── VÖGEL ── FM-Synthese mit Vibrato + Reverb */
+      function startBirds(mG) {
+        const c=ac(); let stopped=false;
+        const rev=makeReverb(c,1.8,2.5);
+        const revG=c.createGain(); revG.gain.value=.28;
+        const dryG=c.createGain(); dryG.gain.value=.72;
+        rev.connect(revG); revG.connect(mG); dryG.connect(mG);
+
+        function note(freq,t,dur,vol) {
+          const mod=c.createOscillator(),modG=c.createGain();
+          const car=c.createOscillator();
+          const vib=c.createOscillator(),vibG=c.createGain();
+          const env=c.createGain();
+          mod.type='sine'; mod.frequency.setValueAtTime(freq*(2.2+Math.random()*.5),t);
+          modG.gain.value=freq*(1.3+Math.random()*.6);
+          mod.connect(modG); modG.connect(car.frequency);
+          car.type='sine';
+          car.frequency.setValueAtTime(freq,t);
+          car.frequency.exponentialRampToValueAtTime(freq*(1.18+Math.random()*.25),t+dur*.38);
+          car.frequency.exponentialRampToValueAtTime(freq*(.88+Math.random()*.08),t+dur*.82);
+          vib.type='sine'; vib.frequency.value=5.5+Math.random()*3;
+          vibG.gain.value=freq*.016; vib.connect(vibG); vibG.connect(car.frequency);
+          env.gain.setValueAtTime(0,t); env.gain.linearRampToValueAtTime(vol,t+dur*.06);
+          env.gain.setValueAtTime(vol*.9,t+dur*.65);
+          env.gain.exponentialRampToValueAtTime(.0001,t+dur);
+          car.connect(env); env.connect(dryG); env.connect(rev);
+          [mod,car,vib].forEach(o=>{o.start(t);o.stop(t+dur+.05);});
+        }
+
+        function burst() {
+          if (stopped) return;
+          const types=[
+            [2800,.11,.28,.06,.13],[1650,.28,.22,.28,.75],
+            [3300,.07,.18,.04,.10],[1100,.38,.12,1.8,4.5],[2150,.17,.20,.14,.38]
+          ];
+          const [freq,dur,vol,gMin,gMax]=types[Math.floor(Math.random()*types.length)];
+          const count=1+Math.floor(Math.random()*4);
+          let t=ac().currentTime+.05;
+          for(let i=0;i<count;i++){
+            note(freq*(.93+Math.random()*.16),t,dur,vol);
+            t+=dur+gMin+Math.random()*(gMax-gMin);
+          }
+          setTimeout(burst,400+Math.random()*2800);
+        }
+        burst();
+        return { stop(){ stopped=true; } };
+      }
+
+      /* ── WIND ── Pink Noise, 3 Bänder + LFO-Bö */
+      function startWind(mG) {
+        const c=ac(), src=pinkNoise(c,6);
+        const lp=c.createBiquadFilter(); lp.type='lowpass';  lp.frequency.value=200; lp.Q.value=.8;
+        const bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=600; bp.Q.value=1.3;
+        const hp=c.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=2800;hp.Q.value=2.2;
+        const g1=c.createGain(); g1.gain.value=.38;
+        const g2=c.createGain(); g2.gain.value=.52;
+        const g3=c.createGain(); g3.gain.value=.10;
+        src.connect(lp); lp.connect(g1); g1.connect(mG);
+        src.connect(bp); bp.connect(g2); g2.connect(mG);
+        src.connect(hp); hp.connect(g3); g3.connect(mG);
+        const lfo=c.createOscillator(),lfoG=c.createGain();
+        lfo.type='sine'; lfo.frequency.value=.07+Math.random()*.04;
+        lfoG.gain.value=.26; lfo.connect(lfoG); lfoG.connect(g2.gain);
+        src.start(); lfo.start();
+        return { stop(){ src.stop(); lfo.stop(); } };
+      }
+
+      /* ── REGEN ── 3 Schichten: Hauptregen, Aufprall, Schimmer */
+      function startRain(mG) {
+        const c=ac();
+        const s1=pinkNoise(c,6),s2=pinkNoise(c,6),s3=pinkNoise(c,6);
+        const hp1=c.createBiquadFilter(); hp1.type='highpass'; hp1.frequency.value=1300;hp1.Q.value=.5;
+        const bp1=c.createBiquadFilter(); bp1.type='bandpass'; bp1.frequency.value=750; bp1.Q.value=1.4;
+        const hp2=c.createBiquadFilter(); hp2.type='highpass'; hp2.frequency.value=5500;hp2.Q.value=1;
+        const g1=c.createGain(); g1.gain.value=.52;
+        const g2=c.createGain(); g2.gain.value=.22;
+        const g3=c.createGain(); g3.gain.value=.07;
+        s1.connect(hp1); hp1.connect(g1); g1.connect(mG);
+        s2.connect(bp1); bp1.connect(g2); g2.connect(mG);
+        s3.connect(hp2); hp2.connect(g3); g3.connect(mG);
+        [s1,s2,s3].forEach(s=>s.start());
+        return { stop(){ [s1,s2,s3].forEach(s=>s.stop()); } };
+      }
+
+      /* ── TROPFEN ── Klick-Impuls + resonanter Abklingoszillator */
+      function startDrops(mG) {
+        const c=ac(); let stopped=false;
+        const rev=makeReverb(c,1.4,3.5);
+        const revG=c.createGain(); revG.gain.value=.45;
+        rev.connect(revG); revG.connect(mG);
+
+        function drop() {
+          if (stopped) return;
+          const c2=ac(),t=c2.currentTime;
+          const freq=400+Math.random()*280, vol=.12+Math.random()*.18;
+          const cBuf=c2.createBuffer(1,Math.floor(c2.sampleRate*.003),c2.sampleRate);
+          const cd=cBuf.getChannelData(0);
+          for(let i=0;i<cd.length;i++) cd[i]=(Math.random()*2-1)*(1-i/cd.length);
+          const clk=c2.createBufferSource(); clk.buffer=cBuf;
+          const cG=c2.createGain(); cG.gain.value=vol*.55;
+          clk.connect(cG); cG.connect(mG); cG.connect(rev); clk.start(t);
+          const osc=c2.createOscillator(),env=c2.createGain();
+          osc.type='sine';
+          osc.frequency.setValueAtTime(freq,t);
+          osc.frequency.exponentialRampToValueAtTime(freq*.68,t+.32);
+          env.gain.setValueAtTime(vol,t);
+          env.gain.exponentialRampToValueAtTime(.0001,t+.36);
+          osc.connect(env); env.connect(mG); env.connect(rev);
+          osc.start(t); osc.stop(t+.4);
+          setTimeout(drop,900+Math.random()*3500);
+        }
+        drop();
+        return { stop(){ stopped=true; } };
+      }
+
+      /* ── LAUB ── Granulares Rauschen mit Bandpass */
+      function startLeaves(mG) {
+        const c=ac(); let stopped=false;
+        function rustle() {
+          if (stopped) return;
+          const c2=ac(),t=c2.currentTime;
+          const len=.12+Math.random()*.3, n=Math.floor(c2.sampleRate*len);
+          const buf=c2.createBuffer(2,n,c2.sampleRate);
+          for(let ch=0;ch<2;ch++){
+            const d=buf.getChannelData(ch);
+            for(let i=0;i<n;i++){const e=Math.sin(Math.PI*i/n); d[i]=(Math.random()*2-1)*e*e;}
+          }
+          const src=c2.createBufferSource(); src.buffer=buf;
+          const bp=c2.createBiquadFilter(); bp.type='bandpass';
+          bp.frequency.value=3800+Math.random()*3800; bp.Q.value=1.3+Math.random();
+          const g=c2.createGain(); g.gain.value=.28+Math.random()*.22;
+          src.connect(bp); bp.connect(g); g.connect(mG); src.start(t);
+          setTimeout(rustle,180+Math.random()*1100);
+        }
+        rustle();
+        return { stop(){ stopped=true; } };
+      }
+
+      const synths={birds:startBirds,wind:startWind,rain:startRain,drops:startDrops,leaves:startLeaves};
+
+      function startSound(id) {
+        const c=ac(), g=c.createGain();
+        g.gain.setValueAtTime(0,c.currentTime);
+        g.gain.setTargetAtTime(masterMuted?0:volumes[id],c.currentTime,.7);
+        g.connect(c.destination);
+        gainNodes[id]=g; activeSounds[id]=synths[id](g);
+      }
+
+      function stopSound(id) {
+        if (!gainNodes[id]) return;
+        const c=ac();
+        gainNodes[id].gain.setTargetAtTime(0,c.currentTime,.5);
+        const g=gainNodes[id],s=activeSounds[id];
+        setTimeout(()=>{ try{s.stop();}catch(e){} delete gainNodes[id]; delete activeSounds[id]; },2000);
+      }
+
+      /* Orb-Buttons verdrahten */
+      ['birds','wind','rain','drops','leaves'].forEach(id=>{
+        const btn=document.getElementById('orb-'+id);
+        if (!btn) return;
+        btn.addEventListener('click',()=>{
+          const on=btn.classList.toggle('on');
+          if (on) startSound(id); else stopSound(id);
         });
+        const sl=btn.querySelector('.orb__vol');
+        if (sl) {
+          sl.addEventListener('input',e=>{
+            volumes[id]=e.target.value/100;
+            if (gainNodes[id]&&!masterMuted)
+              gainNodes[id].gain.setTargetAtTime(volumes[id],ac().currentTime,.1);
+          });
+          /* Slider-Klick darf Orb nicht umschalten */
+          ['click','mousedown','touchstart'].forEach(ev=>
+            sl.addEventListener(ev,e=>e.stopPropagation(),{passive:true}));
+        }
       });
+
+      /* Alle stumm */
+      const muteBtn=document.getElementById('spiel-mute');
+      if (muteBtn) {
+        muteBtn.addEventListener('click',()=>{
+          masterMuted=!masterMuted;
+          muteBtn.classList.toggle('muted',masterMuted);
+          const c=ac();
+          Object.entries(gainNodes).forEach(([id,g])=>{
+            g.gain.setTargetAtTime(masterMuted?0:volumes[id],c.currentTime,.3);
+          });
+          muteBtn.querySelector('span').textContent=masterMuted?'Alle an':'Alle stumm';
+        });
+      }
 
     })();
 
