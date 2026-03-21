@@ -178,8 +178,9 @@
       max-height: 0; overflow: hidden;
       transition: max-height .4s ease;
       width: 90px;
+      pointer-events: none;
     }
-    .orb.on .orb__vol-wrap { max-height: 32px; }
+    .orb.on .orb__vol-wrap { max-height: 32px; pointer-events: auto; }
     .orb__vol {
       -webkit-appearance: none; appearance: none;
       width: 90px; height: 2px; margin-top: 14px;
@@ -1929,7 +1930,7 @@
       function startSound(id) {
         const c=ac(), g=c.createGain();
         g.gain.setValueAtTime(0,c.currentTime);
-        g.gain.setTargetAtTime(masterMuted?0:volumes[id],c.currentTime,.7);
+        g.gain.setTargetAtTime(masterMuted?0:volumes[id],c.currentTime,.25);
         g.connect(c.destination);
         gainNodes[id]=g; activeSounds[id]=synths[id](g);
       }
