@@ -331,6 +331,59 @@
       color: rgba(200,169,110,.25);
     }
 
+    /* ── WALDMOMENTE TO GO ── */
+    #togo {
+      background: var(--dark);
+      padding: 7rem 2rem;
+      text-align: center;
+    }
+    .togo__inner { max-width: 600px; margin: 0 auto; }
+    .togo__kicker {
+      font-size: .58rem; letter-spacing: .44em; text-transform: uppercase;
+      color: var(--gold); opacity: .7; margin-bottom: 1.4rem; display: block;
+    }
+    .togo__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      color: var(--gold); line-height: 1.2;
+      margin-bottom: 1.6rem;
+    }
+    .togo__text {
+      font-size: 1rem; line-height: 2;
+      color: rgba(253,250,245,.75);
+      margin-bottom: 1rem;
+    }
+    .togo__list {
+      font-size: .88rem; letter-spacing: .06em;
+      color: var(--gold-light); opacity: .85;
+      margin-bottom: .8rem;
+    }
+    .togo__gift {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: rgba(253,250,245,.65);
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── VIDEO SECTION ── */
+    #wald-video {
+      background: var(--dark);
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .wald-video__inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+    #wald-video video {
+      width: 100%;
+      display: block;
+      border: 1px solid rgba(200,169,110,.18);
+    }
+
     /* ── CONTACT SECTION ── */
     #contact { background: var(--sand); padding: 7rem 2rem; text-align: center; }
     .contact__inner { max-width: 560px; margin: 0 auto; }
@@ -1331,6 +1384,43 @@
         <p class="spiel__hint reveal d3">Am schönsten mit Kopfhörern</p>
       </div>
     </section>
+
+    <!-- ══════════ VIDEO ══════════ -->
+    <section id="wald-video" aria-label="Waldvideo">
+      <div class="wald-video__inner">
+        <!-- TODO: Dateiname des Videos hier eintragen -->
+        <video autoplay muted loop playsinline
+               src="VIDEONAME_HIER_EINTRAGEN.mp4"
+               poster="">
+        </video>
+      </div>
+    </section>
+
+    <!-- ══════════ WALDMOMENTE TO GO ══════════ -->
+    <section id="togo" aria-label="Waldmomente to go">
+      <div class="togo__inner">
+        <span class="togo__kicker reveal">Gratis für dich</span>
+        <h2 class="togo__title reveal">Waldmomente to go.</h2>
+        <p class="togo__text reveal d1">
+          Der Wald hat eine Sprache.<br>
+          Die meisten hören sie nur nicht mehr.<br>
+          Dieses kleine Paket erinnert dich daran.
+        </p>
+        <p class="togo__list reveal d1">
+          Waldbingo. Waldmemory. Steinmandala. Waldsprüche.
+        </p>
+        <p class="togo__gift reveal d2">
+          Zum Ausdrucken. Zum Mitnehmen. Zum Ankommen.<br>
+          Ein Geschenk. Von mir. Für dich.
+        </p>
+        <!-- TODO: Taplink-Link hier eintragen -->
+        <a href="#" class="btn reveal d3" target="_blank" rel="noopener">
+          <span>Kostenlos herunterladen</span>
+        </a>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
 
     <!-- ══════════ CTA NACH KLANGRAUM ══════════ -->
     <section id="spur-cta" style="background:var(--dark);padding:5rem 2rem;text-align:center;">
