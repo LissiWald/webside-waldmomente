@@ -95,12 +95,12 @@
   <style>
     /* ── VARIABLES ── */
     :root {
-      --sand:       #2C2318;
+      --sand:       #F5F2EC;
       --green:      #2D4A35;
       --brown:      #8B6847;
       --cream:      #FDFAF5;
       --dark:       #0f1a10;
-      --text:       #CDBFAD;
+      --text:       #2D3A20;
       --gold:       #C8A96E;
       --gold-light: #E8D5A3;
       --gold-dark:  #A07840;
@@ -120,6 +120,10 @@
     @media (hover: none) { body { cursor: auto; } }
     img { display: block; max-width: 100%; }
     a { text-decoration: none; color: inherit; }
+
+    /* ── DUNKLE SEKTIONEN: Text hell ── */
+    #spielwiese, #waldspuren, #spur-invite, #testimonials,
+    #quote, #spur-cta, footer { color: var(--cream); }
 
     /* ── CURSOR ── */
     #cursor {
@@ -293,11 +297,11 @@
     .spiel__mute.muted { color: var(--gold-dark); border-color: var(--gold-dark); background: rgba(200,169,110,.05); }
     /* Community-Buttons */
     #community .btn {
-      color: var(--cream);
-      border-color: rgba(200,169,110,.55);
-      background: rgba(200,169,110,.08);
+      color: var(--gold-dark);
+      border-color: rgba(160,120,64,.6);
+      background: rgba(200,169,110,.12);
     }
-    #community .btn:hover { color: var(--gold-light); border-color: var(--gold); background: rgba(200,169,110,.14); }
+    #community .btn:hover { color: var(--gold-dark); border-color: var(--gold-dark); background: rgba(200,169,110,.22); }
     .orb.on .orb__face::after {
       content: '';
       position: absolute; inset: -1px; border-radius: 50%;
