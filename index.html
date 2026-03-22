@@ -1189,9 +1189,14 @@
     }
     .closing__bg {
       position: absolute; inset: 0;
-      background-image: url('dunkelgruen.jpeg');
-      background-size: cover; background-position: center;
-      filter: brightness(.28);
+      background-color: #0f1a10; /* Fallback */
+      overflow: hidden;
+    }
+    .closing__bg video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.35);
       will-change: transform;
     }
     .closing__content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
@@ -1388,11 +1393,7 @@
     <!-- ══════════ VIDEO ══════════ -->
     <section id="wald-video" aria-label="Waldvideo">
       <div class="wald-video__inner">
-        <!-- TODO: Dateiname des Videos hier eintragen -->
-        <video autoplay muted loop playsinline
-               src="VIDEONAME_HIER_EINTRAGEN.mp4"
-               poster="">
-        </video>
+        <video autoplay muted loop playsinline src="video hell.mp4"></video>
       </div>
     </section>
 
@@ -1760,7 +1761,9 @@
 
     <!-- ══════════ CLOSING ══════════ -->
     <section id="closing" aria-label="Abschluss">
-      <div class="closing__bg" id="closing-bg"></div>
+      <div class="closing__bg" id="closing-bg">
+        <video autoplay muted loop playsinline src="video dunkel.mp4"></video>
+      </div>
       <div class="closing__content">
         <h2 class="closing__title reveal">Du darfst jetzt ankommen.</h2>
         <p class="closing__sub reveal d1">WALDMOMENTE</p>
