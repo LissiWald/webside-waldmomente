@@ -1637,6 +1637,17 @@
         <span class="eyebrow">Bleib dabei</span>
         <h2 class="community__title reveal sh" data-t="Waldmomente begleiten.">Waldmomente begleiten.</h2>
         <p class="community__sub reveal d1">Kleine Impulse. Direkt zu dir. Wald statt WLAN.</p>
+        <form action="https://formspree.io/f/xeerwzpv" method="POST" id="newsletter-form"
+          style="margin:0 auto 2.5rem;max-width:400px;display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;" novalidate>
+          <input type="email" name="email" placeholder="Deine E-Mail-Adresse" required
+            style="flex:1;min-width:180px;background:none;border:1px solid rgba(200,169,110,.3);border-radius:0;padding:.7rem 1rem;color:var(--cream);font-family:inherit;font-size:.85rem;outline:none;transition:border-color .3s;"
+            onfocus="this.style.borderColor='rgba(200,169,110,.7)'" onblur="this.style.borderColor='rgba(200,169,110,.3)'">
+          <input type="hidden" name="_subject" value="Waldpost Anmeldung">
+          <button type="submit"
+            style="background:none;border:1px solid rgba(200,169,110,.45);padding:.7rem 1.2rem;color:var(--gold);font-family:inherit;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:border-color .3s,color .3s;white-space:nowrap;"
+            onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(200,169,110,.45)'">Waldpost abonnieren</button>
+          <p id="newsletter-ok" style="display:none;width:100%;font-size:.82rem;color:rgba(200,169,110,.75);font-style:italic;margin-top:.4rem;text-align:center;">Schön, dass du dabei bist.</p>
+        </form>
         <div class="community__btns">
           <a href="https://t.me/+MZ9EF-w558RhYzBi" class="btn btn--cream reveal d1" target="_blank" rel="noopener">
             <span class="btn__icon">
@@ -1668,17 +1679,6 @@
   <footer>
     <p class="footer__logo">Waldmomente</p>
     <p class="footer__copy">© Waldmomente · Elisabeth Müller</p>
-    <form action="https://formspree.io/f/xeerwzpv" method="POST" id="newsletter-form"
-      style="margin:0 auto 2rem;max-width:380px;display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;" novalidate>
-      <input type="email" name="email" placeholder="Deine E-Mail-Adresse" required
-        style="flex:1;min-width:180px;background:none;border:1px solid rgba(200,169,110,.3);border-radius:0;padding:.7rem 1rem;color:var(--cream);font-family:inherit;font-size:.85rem;outline:none;transition:border-color .3s;"
-        onfocus="this.style.borderColor='rgba(200,169,110,.7)'" onblur="this.style.borderColor='rgba(200,169,110,.3)'">
-      <input type="hidden" name="_subject" value="Waldpost Anmeldung">
-      <button type="submit"
-        style="background:none;border:1px solid rgba(200,169,110,.45);padding:.7rem 1.2rem;color:var(--gold);font-family:inherit;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:border-color .3s,color .3s;white-space:nowrap;"
-        onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(200,169,110,.45)'">Waldpost abonnieren</button>
-      <p id="newsletter-ok" style="display:none;width:100%;font-size:.82rem;color:rgba(200,169,110,.75);font-style:italic;margin-top:.4rem;">Schön, dass du dabei bist.</p>
-    </form>
     <ul class="footer__nav">
       <li><a href="impressum.html">Impressum</a></li>
       <li><a href="datenschutz.html">Datenschutz</a></li>
