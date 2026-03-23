@@ -91,6 +91,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="gruen.jpeg" fetchpriority="high">
 
   <style>
     /* ── VARIABLES ── */
@@ -418,7 +419,7 @@
       background: var(--dark);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 1.4rem;
-      transition: opacity 2s ease;
+      transition: opacity 1s ease;
     }
     #opening.out { opacity: 0; pointer-events: none; }
 
@@ -1802,13 +1803,13 @@
 
     /* ── OPENING ── */
     const opening = document.getElementById('opening');
-    setTimeout(() => document.getElementById('op1').classList.add('show'), 700);
-    setTimeout(() => document.getElementById('op2').classList.add('show'), 2300);
-    setTimeout(() => document.getElementById('op-gold').classList.add('show'), 3700);
+    setTimeout(() => document.getElementById('op1').classList.add('show'), 300);
+    setTimeout(() => document.getElementById('op2').classList.add('show'), 1100);
+    setTimeout(() => document.getElementById('op-gold').classList.add('show'), 1800);
     setTimeout(() => {
       opening.classList.add('out');
       launchHero();
-    }, 5200);
+    }, 2500);
 
     /* ── HERO SLIDESHOW ── */
     const slides = document.querySelectorAll('.hero__slide');
