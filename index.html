@@ -1998,6 +1998,13 @@
         return ctx;
       }
 
+      /* AudioContext vorab aufwärmen beim ersten Nutzer-Kontakt */
+      function warmUp() {
+        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      document.addEventListener('touchstart', warmUp, { once: true, passive: true });
+      document.addEventListener('mousemove',  warmUp, { once: true, passive: true });
+
       /* ── Echte Naturklänge aus sounds/ ── */
       const audioEls = {};
       function makePlayer(id, file, mG) {
@@ -2041,7 +2048,8 @@
         if (!btn) return;
         btn.addEventListener('click',()=>{
           const on=btn.classList.toggle('on');
-          if (on) startSound(id); else stopSound(id);
+          /* Visuelles Update zuerst malen, dann Audio starten → besseres INP */
+          setTimeout(()=>{ if (on) startSound(id); else stopSound(id); }, 0);
         });
         const sl=btn.querySelector('.orb__vol');
         if (sl) {
