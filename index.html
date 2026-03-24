@@ -109,6 +109,8 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    /* Nav-Überlappung verhindern beim Anklicken von Ankerlinks */
+    section[id] { scroll-margin-top: 80px; }
 
     body {
       background: var(--sand);
