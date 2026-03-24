@@ -554,6 +554,13 @@
         rgba(15,26,16,.52) 55%,
         rgba(15,26,16,.78) 100%);
     }
+    /* Nav-Bereich im Hero immer dunkel genug für Lesbarkeit */
+    #hero::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 110px;
+      background: linear-gradient(to bottom, rgba(10,18,10,.55), transparent);
+      z-index: 1; pointer-events: none;
+    }
     .hero__content {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
@@ -1662,7 +1669,7 @@
             <div class="test__overlay">
               <div class="test__gold-bar"></div>
               <p class="test__quote">„Ich war sicherlich nicht zum letzten Mal auf der Spur im Wald."</p>
-              <span class="test__name">Stefan · Was bleibt</span>
+              <span class="test__name">Stefan · Waldmomente auf der Spur</span>
             </div>
           </div>
         </div>
@@ -1979,7 +1986,7 @@
 
     // Scrolled class
     window.addEventListener('scroll', () => {
-      navEl.classList.toggle('scrolled', window.scrollY > 60);
+      navEl.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
 
     // Burger toggle
