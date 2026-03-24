@@ -1039,6 +1039,70 @@
     }
 
     /* ═══════════════════════════════
+       KUNDENSTIMMEN
+    ═══════════════════════════════ */
+    #kundenstimmen {
+      background: var(--sand);
+      padding: 6rem 2rem;
+    }
+    .kst__inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .kst__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: .5rem;
+    }
+    .kst__sub {
+      font-size: .85rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 3rem;
+    }
+    .kst__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      justify-items: center;
+    }
+    .kst__card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 2.2rem 2rem;
+      box-shadow: 0 2px 20px rgba(45,58,32,.07);
+      text-align: center;
+      max-width: 340px;
+      width: 100%;
+    }
+    .kst__img {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.4rem;
+      border: 2px solid var(--gold-light);
+    }
+    .kst__quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    .kst__name {
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+    }
+
+    /* ═══════════════════════════════
        PRODUKTE
     ═══════════════════════════════ */
     #products { background: var(--sand); padding: 7rem 2rem; }
@@ -1590,6 +1654,24 @@
             <p class="si__fact-txt">ist Shinrin-yoku in Japan Teil der staatlichen Gesundheitsversorgung. Der Wald ist keine Wellness-Mode. Er ist angewandte Medizin.</p>
             <span class="si__fact-src">Japanisches Forstministerium, Yoshifumi Miyazaki</span>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ KUNDENSTIMMEN ══════════ -->
+    <section id="kundenstimmen" aria-label="Kundenstimmen">
+      <div class="kst__inner">
+        <span class="gold-sep reveal"></span>
+        <h2 class="kst__title reveal">Was sie danach sagten.</h2>
+        <p class="kst__sub reveal d1">Echte Stimmen. Echte Momente.</p>
+        <div class="kst__grid">
+
+          <div class="kst__card reveal">
+            <img src="WhatsApp Image 2026-03-24 at 07.22.43.jpeg" alt="Stefan im Wald" class="kst__img">
+            <p class="kst__quote">„Ich werde es wiederholen."</p>
+            <span class="kst__name">— Stefan</span>
+          </div>
+
         </div>
       </div>
     </section>
