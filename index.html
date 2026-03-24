@@ -1134,8 +1134,30 @@
       text-transform: uppercase;
       color: var(--gold-dark);
     }
+    .kst__divider {
+      width: 40px; height: 1px;
+      background: var(--gold-light);
+      margin: 2.5rem auto;
+    }
+    .kst__photos--birgit {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .5rem;
+      margin-bottom: 2rem;
+      border-radius: .8rem;
+      overflow: hidden;
+    }
+    .kst__photos--birgit img {
+      width: 100%; aspect-ratio: 1;
+      object-fit: cover; display: block;
+      transition: transform .5s ease;
+    }
+    .kst__photos--birgit img:hover { transform: scale(1.04); }
+    .kst__photos--birgit img:nth-child(4) { grid-column: 1 / 2; }
+    .kst__photos--birgit img:nth-child(5) { grid-column: 2 / 3; }
     @media (max-width: 500px) {
       .kst__photos--5 { grid-template-columns: 1fr 1fr; }
+      .kst__photos--birgit { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* ═══════════════════════════════
@@ -1713,6 +1735,22 @@
           <p class="kst__quote">„Ich werde es wiederholen."</p>
           <p class="kst__review">Nach der Arbeit ein Spaziergang durch den Wald. Achtsames Umherstreifen auf den Spuren von etwas Altem, etwas Neuem, verschiedenen Grüntönen, verschiedenen Berührungen und einer langen Pause. War sicherlich nicht zum letzten Mal.</p>
           <span class="kst__name">— Stefan</span>
+        </div>
+
+        <div class="kst__divider"></div>
+
+        <!-- Birgit -->
+        <div class="kst__story reveal">
+          <p class="kst__story-name">Birgit auf Spurensuche</p>
+          <div class="kst__photos kst__photos--birgit">
+            <img src="feder.jpeg"       alt="Feder im Wald" loading="lazy">
+            <img src="moos birgit.jpeg" alt="Moos" loading="lazy">
+            <img src="stein.jpeg"       alt="Stein im Wald" loading="lazy">
+            <img src="spur birgit.jpeg" alt="Spur im Wald" loading="lazy">
+            <img src="ast.jpeg"         alt="Ast im Wald" loading="lazy">
+          </div>
+          <p class="kst__quote">„Das hat Spaß gemacht – ich werde es bestimmt öfter mitnehmen."</p>
+          <span class="kst__name">— Birgit</span>
         </div>
 
       </div>
