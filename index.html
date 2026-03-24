@@ -1065,39 +1065,50 @@
       color: var(--gold-dark);
       margin-bottom: 3rem;
     }
-    .kst__grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem;
-      justify-items: center;
-    }
-    .kst__card {
+    .kst__story {
       background: #fff;
-      border-radius: 1rem;
-      padding: 2.2rem 2rem;
-      box-shadow: 0 2px 20px rgba(45,58,32,.07);
+      border-radius: 1.2rem;
+      padding: 2.5rem 2rem 2rem;
+      box-shadow: 0 2px 24px rgba(45,58,32,.08);
       text-align: center;
-      max-width: 340px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .kst__story-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 1.6rem;
+    }
+    .kst__photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .5rem;
+      margin-bottom: 2rem;
+      border-radius: .8rem;
+      overflow: hidden;
+    }
+    .kst__photos img {
       width: 100%;
-    }
-    .kst__img {
-      width: 88px; height: 88px;
-      border-radius: 50%;
+      aspect-ratio: 1;
       object-fit: cover;
-      margin-bottom: 1.4rem;
-      border: 2px solid var(--gold-light);
+      display: block;
+      transition: transform .5s ease;
     }
+    .kst__photos img:hover { transform: scale(1.04); }
     .kst__quote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       line-height: 1.6;
       color: var(--dark);
-      margin-bottom: 1rem;
+      margin-bottom: .9rem;
     }
     .kst__name {
       font-size: .75rem;
-      letter-spacing: .15em;
+      letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--gold-dark);
     }
@@ -1664,15 +1675,22 @@
         <span class="gold-sep reveal"></span>
         <h2 class="kst__title reveal">Was sie danach sagten.</h2>
         <p class="kst__sub reveal d1">Echte Stimmen. Echte Momente.</p>
-        <div class="kst__grid">
 
-          <div class="kst__card reveal">
-            <img src="WhatsApp Image 2026-03-24 at 07.22.43.jpeg" alt="Stefan im Wald" class="kst__img">
-            <p class="kst__quote">„Ich werde es wiederholen."</p>
-            <span class="kst__name">— Stefan</span>
+        <!-- Stefan -->
+        <div class="kst__story reveal">
+          <p class="kst__story-name">Stefan auf Spurensuche</p>
+          <div class="kst__photos">
+            <img src="WhatsApp Image 2026-03-24 at 07.22.43.jpeg"       alt="Stefan im Wald" loading="lazy">
+            <img src="WhatsApp Image 2026-03-24 at 07.22.43 (1).jpeg"   alt="Stefan im Wald" loading="lazy">
+            <img src="WhatsApp Image 2026-03-24 at 07.22.43 (2).jpeg"   alt="Stefan im Wald" loading="lazy">
+            <img src="WhatsApp Image 2026-03-24 at 07.22.43 (3).jpeg"   alt="Stefan im Wald" loading="lazy">
+            <img src="WhatsApp Image 2026-03-24 at 07.22.44.jpeg"       alt="Stefan im Wald" loading="lazy">
+            <img src="WhatsApp Image 2026-03-24 at 07.22.44 (1).jpeg"   alt="Stefan im Wald" loading="lazy">
           </div>
-
+          <p class="kst__quote">„Ich werde es wiederholen."</p>
+          <span class="kst__name">— Stefan</span>
         </div>
+
       </div>
     </section>
 
