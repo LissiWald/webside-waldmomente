@@ -1196,6 +1196,25 @@
     }
     .prod__sub { font-size: .78rem; letter-spacing: .1em; color: var(--brown); opacity: .75; margin-bottom: 1.5rem; }
     .prod__text { font-size: .95rem; line-height: 1.85; margin-bottom: 2rem; color: #3A2A1A; }
+    .prod__bullets {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 1.2rem;
+    }
+    .prod__bullets li {
+      padding: .3rem 0 .3rem 1.4rem;
+      position: relative;
+      font-size: .88rem;
+      color: var(--text);
+      opacity: .85;
+    }
+    .prod__bullets li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
     .prod__price {
       display: block;
       font-family: 'Cormorant Garamond', serif;
@@ -1395,21 +1414,31 @@
           <span class="w">Aber</span>&nbsp;<span class="w">oft</span>&nbsp;<span class="w">genau</span>&nbsp;<span class="w">das</span>&nbsp;<span class="w">Richtige.</span>
         </h1>
         <p class="hero__byline reveal d2">WALDMOMENTE · ELISABETH MÜLLER</p>
-        <a href="#products" class="hero__cta reveal d3" style="
-          display:inline-block;
-          margin-top:2rem;
-          padding:.65rem 1.8rem;
-          border:1px solid rgba(200,169,110,.6);
-          color:var(--gold);
-          font-family:'Jost',sans-serif;
-          font-size:.78rem;
-          letter-spacing:.2em;
-          text-transform:uppercase;
-          text-decoration:none;
-          transition:background .3s,border-color .3s;
-        " onmouseover="this.style.background='rgba(200,169,110,.15)'" onmouseout="this.style.background='none'">
-          Produkte entdecken &nbsp;·&nbsp; ab 7 €
-        </a>
+        <div class="reveal d3" style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:2rem;">
+          <a href="https://waldmomente.taplink.site/d/84fb/" target="_blank" rel="noopener" style="
+            display:inline-block;
+            padding:.75rem 2.2rem;
+            background:var(--gold);
+            color:#1a1a0e;
+            font-family:'Jost',sans-serif;
+            font-size:.8rem;
+            letter-spacing:.2em;
+            text-transform:uppercase;
+            text-decoration:none;
+            font-weight:600;
+            transition:opacity .3s;
+          " onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+            Jetzt kaufen &nbsp;·&nbsp; ab 7 €
+          </a>
+          <a href="#products" style="
+            font-family:'Jost',sans-serif;
+            font-size:.72rem;
+            letter-spacing:.18em;
+            text-transform:uppercase;
+            color:rgba(200,169,110,.65);
+            text-decoration:none;
+          ">Erst stöbern ↓</a>
+        </div>
       </div>
       <div class="scroll-ind"><div class="scroll-ind__line"></div></div>
     </section>
@@ -1591,8 +1620,13 @@
           <div class="prod__body">
             <span class="prod__badge">NEU</span>
             <h2 class="prod__title sh" data-t="Waldmomente auf der Spur.">Waldmomente auf der Spur.</h2>
-            <p class="prod__sub">Edition 1 · Zwölf Spuren durch den Wald</p>
-            <p class="prod__text">Sie hat alles. Und trotzdem fehlt irgendetwas.<br>Nicht dramatisch. Nur so ein leises Ziehen.<br>Als würde ein Teil von ihr schon lange auf Antwort warten.<br><br>Zwölf Spuren führen dich dorthin, wo dieser Teil noch weiß, wer du bist.<br>Nicht als Kurs. Nicht als Methode.<br>Sondern als das, was du eigentlich schon immer gekonnt hast<br>einfach draußen sein. Hinschauen. Spüren.<br><br>Spur 1 beginnt bei einem einzigen Moment.<br>Was danach passiert, hat Frauen überrascht, die dachten, sie bräuchten sowas nicht.<br><br>7 €. Einmal. Für dich.</p>
+            <p class="prod__sub">Edition 1 · Zwölf Spuren durch den Wald · <em style="color:var(--gold-dark);font-style:normal;">Solange verfügbar</em></p>
+            <p class="prod__text">Zwölf Spuren durch den Wald. Kein Kurs. Kein Programm.<br>Einfach rausgehen und anfangen hinzuschauen.</p>
+            <ul class="prod__bullets">
+              <li>12 konkrete Spuren für draußen</li>
+              <li>Allein, zu zweit oder mit Kindern</li>
+              <li>Sofort als Download verfügbar</li>
+            </ul>
             <span class="prod__price">7 €</span>
             <a href="https://waldmomente.taplink.site/d/84fb/" class="btn" target="_blank" rel="noopener"><span>Jetzt holen</span></a>
           </div>
@@ -1604,7 +1638,12 @@
           <div class="prod__body">
             <span class="prod__badge">Das Workbook</span>
             <h2 class="prod__title sh" data-t="Das Waldmomente Workbook.">Das Waldmomente Workbook.</h2>
-            <p class="prod__text">Weißt du noch, wie es sich angefühlt hat, wirklich bei dir zu sein?<br>Nicht erschöpft ins Bett fallen. Nicht funktionieren bis der Tag vorbei ist.<br>Sondern wirklich bei dir.<br><br>Die meisten Frauen zwischen 35 und 50 wissen genau, was allen anderen gut tut.<br>Und haben längst vergessen, was sie selbst brauchen.<br><br>Dieses Workbook ist der Moment, wo das aufhört.<br>Zehn Lektionen. Keine Schnelllösungen. Kein Optimierungswahn.<br>Jede Lektion greift etwas auf, das du kennst<br>den Druck, das Gedankenkarussell, das Gefühl nie wirklich fertig zu sein.<br>Und führt dich, Schritt für Schritt, mit ehrlichen Fragen, kleinen Ritualen und dem Wald als Spiegel, zurück zu etwas, das du vielleicht schon lange vermisst hast.<br>Dir selbst.<br><br>Frauen, die es durchgearbeitet haben, beschreiben danach nicht mehr Energie oder Produktivität.<br>Sie beschreiben das Gefühl, sich wieder zu kennen.<br><br>Das ist kein Workbook über den Wald.<br>Es ist eines über dich.<br><br>27 €. Einmal. Wird Zeit.</p>
+            <p class="prod__text">Du weißt, was anderen gut tut.<br>Aber wann warst du zuletzt wirklich bei dir?</p>
+            <ul class="prod__bullets">
+              <li>10 Lektionen mit ehrlichen Fragen</li>
+              <li>Rituale und Waldübungen</li>
+              <li>Sofort als Download verfügbar</li>
+            </ul>
             <span class="prod__price">27 €</span>
             <a href="https://waldmomente.taplink.site/d/8396/" class="btn" target="_blank" rel="noopener"><span>Zugang sichern</span></a>
           </div>
@@ -1651,6 +1690,8 @@
           <p class="kst__quote">„Das hat Spaß gemacht, ich werde es bestimmt öfter mitnehmen."</p>
           <span class="kst__name">Birgit</span>
         </div>
+
+        <p class="reveal" style="text-align:center;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(var(--gold-dark-rgb, 140,110,60),.5);margin-top:2.5rem;font-family:'Jost',sans-serif;">Weitere Stimmen folgen</p>
 
       </div>
     </section>
@@ -1816,6 +1857,29 @@
         <a href="Waldmomente to go.pdf" class="btn reveal d3" download rel="noopener">
           <span>Kostenlos herunterladen</span>
         </a>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ WALDPOST ══════════ -->
+    <section id="waldpost" style="background:var(--dark);padding:6rem 2rem;text-align:center;">
+      <div style="max-width:560px;margin:0 auto;">
+        <span style="font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(200,169,110,.55);display:block;margin-bottom:1.2rem;">Für dein Postfach</span>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem,5vw,2.8rem);color:var(--gold);line-height:1.2;margin-bottom:1rem;">Die Waldpost.</h2>
+        <p style="font-size:1rem;color:rgba(253,250,245,.7);line-height:1.85;margin-bottom:.6rem;">Kleine Waldmomente direkt in dein Postfach.</p>
+        <p style="font-size:.88rem;color:rgba(253,250,245,.5);margin-bottom:2.2rem;">Kein Spam. Kein Lärm. Nur der Wald.</p>
+        <form action="https://formspree.io/f/xeerwzpv" method="POST" id="waldpost-form"
+          style="display:flex;flex-direction:column;align-items:center;gap:.8rem;max-width:380px;margin:0 auto;" novalidate>
+          <input type="email" name="email" placeholder="Deine E-Mail-Adresse" required
+            style="width:100%;background:rgba(253,250,245,.06);border:1px solid rgba(200,169,110,.35);padding:.85rem 1.2rem;color:var(--cream);font-family:inherit;font-size:.9rem;outline:none;text-align:center;transition:border-color .3s;"
+            onfocus="this.style.borderColor='rgba(200,169,110,.8)'" onblur="this.style.borderColor='rgba(200,169,110,.35)'">
+          <input type="hidden" name="_subject" value="Waldpost Anmeldung">
+          <button type="submit"
+            style="width:100%;background:var(--gold);border:none;padding:.85rem 2rem;color:#1a1a0e;font-family:inherit;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:opacity .3s;"
+            onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Waldpost abonnieren</button>
+          <p id="waldpost-ok" style="display:none;font-size:.82rem;color:rgba(200,169,110,.75);font-style:italic;">Schön, dass du dabei bist.</p>
+        </form>
       </div>
     </section>
 
@@ -2094,6 +2158,15 @@
           .then(r => { if(r.ok){ form.reset(); document.getElementById('newsletter-ok').style.display='block'; } });
       });
     })();
+
+      const waldpostForm = document.getElementById('waldpost-form');
+      if (waldpostForm) {
+        waldpostForm.addEventListener('submit', e => {
+          e.preventDefault();
+          fetch(waldpostForm.action, { method: 'POST', body: new FormData(waldpostForm), headers: { Accept: 'application/json' } })
+            .then(r => { if(r.ok){ waldpostForm.reset(); document.getElementById('waldpost-ok').style.display='block'; } });
+        });
+      }
 
     // Active section highlight
     const sections = ['hero','why','products','contact','about'].map(id => document.getElementById(id)).filter(Boolean);
