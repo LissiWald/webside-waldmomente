@@ -1083,34 +1083,30 @@
       margin-bottom: 1.6rem;
     }
     .kst__photos {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
       gap: .5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
       margin-bottom: 2rem;
-      border-radius: .8rem;
-      overflow: hidden;
+      padding-bottom: .2rem;
     }
+    .kst__photos::-webkit-scrollbar { display: none; }
     .kst__photos img {
-      width: 100%;
-      aspect-ratio: 1;
+      flex: 0 0 auto;
+      width: clamp(180px, 60vw, 280px);
+      height: 320px;
       object-fit: cover;
+      border-radius: .5rem;
+      scroll-snap-align: start;
+      transition: transform .4s ease;
       display: block;
-      transition: transform .5s ease;
     }
-    .kst__photos img:hover { transform: scale(1.04); }
-    /* 5-photo layout: book large left, 2x2 grid right */
-    .kst__photos--5 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
-      gap: .5rem;
-    }
-    .kst__photos--5 .kst__p-book {
-      grid-row: 1 / 5;
-      aspect-ratio: 3/4;
-    }
-    .kst__photos--5 img:not(.kst__p-book) {
-      aspect-ratio: 1;
+    .kst__photos img:hover { transform: scale(1.03); }
+    .kst__photos .kst__p-book {
+      width: clamp(160px, 45vw, 220px);
+      height: 320px;
     }
     .kst__quote {
       font-family: 'Cormorant Garamond', serif;
@@ -1139,25 +1135,8 @@
       background: var(--gold-light);
       margin: 2.5rem auto;
     }
-    .kst__photos--birgit {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: .5rem;
-      margin-bottom: 2rem;
-      border-radius: .8rem;
-      overflow: hidden;
-    }
-    .kst__photos--birgit img {
-      width: 100%; aspect-ratio: 1;
-      object-fit: cover; display: block;
-      transition: transform .5s ease;
-    }
-    .kst__photos--birgit img:hover { transform: scale(1.04); }
-    .kst__photos--birgit img:nth-child(4) { grid-column: 1 / 2; }
-    .kst__photos--birgit img:nth-child(5) { grid-column: 2 / 3; }
     @media (max-width: 500px) {
-      .kst__photos--5 { grid-template-columns: 1fr 1fr; }
-      .kst__photos--birgit { grid-template-columns: repeat(2, 1fr); }
+      .kst__photos img { height: 260px; }
     }
 
     /* ═══════════════════════════════
