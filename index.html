@@ -2225,5 +2225,51 @@
 
   })();
   </script>
+
+  <!-- ══════════ COOKIE BANNER ══════════ -->
+  <div id="cookie-banner" style="
+    display:none;
+    position:fixed;
+    bottom:0;left:0;right:0;
+    background:#1a2410;
+    color:#e8e0d0;
+    padding:1.2rem 1.5rem;
+    z-index:9999;
+    font-family:'Jost',sans-serif;
+    font-size:.9rem;
+    line-height:1.6;
+    box-shadow:0 -2px 20px rgba(0,0,0,.35);
+  ">
+    <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;">
+      <p style="margin:0;flex:1;min-width:220px;">
+        Diese Website verwendet Cloudflare Web Analytics zur anonymen Reichweitenmessung — ohne Cookies und ohne persönliche Daten.
+        <a href="datenschutz.html" style="color:#c8a96e;text-decoration:underline;">Mehr erfahren</a>
+      </p>
+      <button id="cookie-ok" style="
+        background:#c8a96e;
+        color:#1a2410;
+        border:none;
+        padding:.6rem 1.6rem;
+        border-radius:2px;
+        font-family:'Jost',sans-serif;
+        font-size:.85rem;
+        letter-spacing:.08em;
+        cursor:pointer;
+        white-space:nowrap;
+        font-weight:600;
+      ">Verstanden</button>
+    </div>
+  </div>
+  <script>
+    (function(){
+      if(!localStorage.getItem('cookie-ok')){
+        document.getElementById('cookie-banner').style.display='block';
+      }
+      document.getElementById('cookie-ok').addEventListener('click',function(){
+        localStorage.setItem('cookie-ok','1');
+        document.getElementById('cookie-banner').style.display='none';
+      });
+    })();
+  </script>
 </body>
 </html>
