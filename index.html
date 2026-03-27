@@ -898,10 +898,10 @@
     }
     .si__fact-txt {
       font-size: .82rem; line-height: 1.75;
-      color: rgba(253,250,245,.7);
+      color: #3A2A1A;
     }
     .si__fact-src {
-      font-size: .62rem; color: rgba(200,169,110,.5);
+      font-size: .62rem; color: rgba(58,42,26,.55);
       margin-top: .6rem; display: block;
       font-style: italic; letter-spacing: .03em;
     }
@@ -1428,7 +1428,7 @@
             font-weight:600;
             transition:opacity .3s;
           " onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-            Jetzt kaufen &nbsp;·&nbsp; ab 7 €
+            12 Waldspuren · Sofort rausgehen · 7 €
           </a>
           <a href="#products" style="
             font-family:'Jost',sans-serif;
@@ -1922,9 +1922,38 @@
           Zum Ausdrucken. Zum Mitnehmen. Zum Ankommen.<br>
           Ein Geschenk. Von mir. Für dich.
         </p>
-        <a href="Waldmomente to go.pdf" class="btn reveal d3" download rel="noopener">
-          <span>Kostenlos herunterladen</span>
-        </a>
+        <form id="togo-form" class="reveal d3"
+          style="display:flex;flex-direction:column;align-items:center;gap:.75rem;width:100%;max-width:380px;margin:0 auto;"
+          novalidate>
+          <input type="email" id="togo-email" placeholder="Deine E-Mail-Adresse" required
+            style="width:100%;padding:.85rem 1.2rem;border:1px solid rgba(200,169,110,.4);background:rgba(200,169,110,.06);color:var(--text);font-family:'Jost',sans-serif;font-size:.95rem;outline:none;border-radius:0;"/>
+          <button type="submit" class="btn" style="width:100%;">
+            <span>Jetzt kostenlos herunterladen</span>
+          </button>
+          <p style="font-size:.72rem;color:var(--brown);opacity:.6;margin:0;">Kein Spam. Nur Waldluft.</p>
+        </form>
+        <div id="togo-success" style="display:none;text-align:center;margin-top:1rem;">
+          <p style="font-size:1rem;color:var(--green);margin-bottom:1.2rem;">Danke! Hier ist dein Download:</p>
+          <a href="Waldmomente to go.pdf" class="btn" download rel="noopener">
+            <span>PDF jetzt laden</span>
+          </a>
+        </div>
+        <script>
+        document.getElementById('togo-form').addEventListener('submit', async function(e){
+          e.preventDefault();
+          var email = document.getElementById('togo-email').value;
+          if(!email) return;
+          try {
+            await fetch('https://formspree.io/f/xeerwzpv', {
+              method: 'POST',
+              headers: {'Content-Type':'application/json','Accept':'application/json'},
+              body: JSON.stringify({email: email, _subject: 'Waldmomente to go Download'})
+            });
+          } catch(err) {}
+          this.style.display = 'none';
+          document.getElementById('togo-success').style.display = 'block';
+        });
+        </script>
       </div>
     </section>
 
