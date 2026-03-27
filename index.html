@@ -1603,6 +1603,91 @@
 
     <span class="gold-sep"></span>
 
+    <!-- ══════════ FELDHASE ══════════ -->
+    <style>
+      @keyframes fhx-anim { from{transform:translateX(108vw)} to{transform:translateX(-260px)} }
+      @keyframes fhy-anim {
+        0%   {transform:translateY(0)}
+        8%   {transform:translateY(-36px)}
+        14%  {transform:translateY(4px)}
+        17%  {transform:translateY(0)}
+        25%  {transform:translateY(-36px)}
+        31%  {transform:translateY(4px)}
+        34%  {transform:translateY(0)}
+        42%  {transform:translateY(-36px)}
+        48%  {transform:translateY(4px)}
+        51%  {transform:translateY(0)}
+        59%  {transform:translateY(-36px)}
+        65%  {transform:translateY(4px)}
+        68%  {transform:translateY(0)}
+        76%  {transform:translateY(-36px)}
+        82%  {transform:translateY(4px)}
+        85%  {transform:translateY(0)}
+        93%  {transform:translateY(-36px)}
+        99%  {transform:translateY(4px)}
+        100% {transform:translateY(0)}
+      }
+      #fhx.go { animation: fhx-anim 11s linear 1 forwards; }
+      #fhy.go { animation: fhy-anim 11s linear 1 forwards; }
+    </style>
+    <div id="fhase-anchor" style="position:relative;height:12px;pointer-events:none;z-index:20;overflow:visible;">
+      <div id="fhx" style="position:absolute;top:-100px;left:0;">
+        <div id="fhy">
+          <svg width="220" height="130" viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- Schwanz -->
+            <ellipse cx="188" cy="65" rx="12" ry="8" fill="#EAE0D2" transform="rotate(18 188 65)"/>
+            <!-- Hinterbein hinten -->
+            <path d="M180,78 C190,64 196,50 190,38 C187,31 181,32 179,40 C177,52 179,68 180,78Z" fill="#7A5425"/>
+            <!-- Hinterbein vorne -->
+            <path d="M166,82 C176,68 182,54 176,42 C173,35 167,36 165,44 C163,56 165,72 166,82Z" fill="#956830"/>
+            <!-- Körper -->
+            <path d="M164,72 C150,46 114,38 78,42 C50,46 28,58 22,73 C16,88 30,102 65,106 C100,110 144,103 164,87 C171,81 168,77 164,72Z" fill="#A07238"/>
+            <!-- Bauch heller -->
+            <path d="M152,77 C140,60 112,54 84,58 C62,62 44,72 42,83 C40,92 54,100 80,103 C108,106 138,100 152,86 C156,82 154,80 152,77Z" fill="#C8A870" opacity="0.38"/>
+            <!-- Kopf -->
+            <path d="M20,59 C22,42 38,31 52,35 C68,40 70,57 62,70 C54,82 24,81 18,68 C15,63 18,62 20,59Z" fill="#A07238"/>
+            <!-- Kopf innen heller -->
+            <path d="M22,61 C24,48 36,40 48,44 C60,48 62,60 56,70 C50,78 28,78 22,68 C19,63 21,62 22,61Z" fill="#B8894A" opacity="0.3"/>
+            <!-- Ohr hinten (dunkler) -->
+            <path d="M 50,34 C 46,16 44,3 48,-3 C 51,-8 57,-6 57,1 C 59,12 56,27 52,36Z" fill="#7A5425"/>
+            <!-- Ohr vorne -->
+            <path d="M 38,32 C 34,14 33,1 37,-5 C 40,-10 47,-8 47,0 C 49,11 46,27 41,34Z" fill="#A07238"/>
+            <!-- Ohr vorne innen -->
+            <path d="M 37,31 C 34,16 34,5 37,0 C 39,-4 44,-2 44,4 C 45,14 43,28 39,33Z" fill="#C87858" opacity="0.72"/>
+            <!-- Auge -->
+            <circle cx="24" cy="56" r="5.5" fill="#180C00"/>
+            <circle cx="25.5" cy="54.5" r="2.2" fill="white" opacity="0.68"/>
+            <circle cx="23" cy="57" r="1" fill="#3C2010" opacity="0.45"/>
+            <!-- Nase -->
+            <path d="M8,64 C7,60 11,58 14,61 C16,64 13,67 10,66 C8,65 8,65 8,64Z" fill="#7A3030" opacity="0.92"/>
+            <!-- Schnurrhaare -->
+            <line x1="13" y1="63" x2="1" y2="59" stroke="#604020" stroke-width="0.6" opacity="0.45"/>
+            <line x1="13" y1="65" x2="1" y2="68" stroke="#604020" stroke-width="0.6" opacity="0.45"/>
+            <!-- Vorderbein hinten -->
+            <path d="M 42,88 C 30,97 17,104 5,109 C 2,110 0,107 3,106 C 14,101 25,93 34,83Z" fill="#7A5425"/>
+            <!-- Vorderbein vorne -->
+            <path d="M 57,86 C 45,95 32,102 20,107 C 17,108 15,105 18,104 C 29,99 40,91 50,81Z" fill="#9C6D35"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var anchor = document.getElementById('fhase-anchor');
+      if(!anchor) return;
+      var triggered = false;
+      var obs = new IntersectionObserver(function(e){
+        if(e[0].isIntersecting && !triggered){
+          triggered = true;
+          document.getElementById('fhx').classList.add('go');
+          document.getElementById('fhy').classList.add('go');
+          obs.disconnect();
+        }
+      }, {threshold: 0.1});
+      obs.observe(anchor);
+    })();
+    </script>
+
     <!-- ══════════ PRODUKTE ══════════ -->
     <section id="products" aria-label="Produkte">
       <div class="prod__grid">
