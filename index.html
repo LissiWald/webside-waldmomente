@@ -1631,42 +1631,73 @@
       #fhy.go { animation: fhy-anim 11s linear 1 forwards; }
     </style>
     <div id="fhase-anchor" style="position:relative;height:12px;pointer-events:none;z-index:20;overflow:visible;">
-      <div id="fhx" style="position:absolute;top:-100px;left:0;">
+      <div id="fhx" style="position:absolute;top:-155px;left:0;">
         <div id="fhy">
-          <svg width="220" height="130" viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg">
+          <svg width="300" height="170" viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="hbody" cx="42%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#C49848"/>
+                <stop offset="60%" stop-color="#9C7030"/>
+                <stop offset="100%" stop-color="#6A4418"/>
+              </radialGradient>
+              <radialGradient id="hhead" cx="55%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#B88838"/>
+                <stop offset="100%" stop-color="#7A5220"/>
+              </radialGradient>
+              <radialGradient id="heye" cx="38%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#7C4A10"/>
+                <stop offset="100%" stop-color="#1A0800"/>
+              </radialGradient>
+            </defs>
             <!-- Schwanz -->
-            <ellipse cx="188" cy="65" rx="12" ry="8" fill="#EAE0D2" transform="rotate(18 188 65)"/>
-            <!-- Hinterbein hinten -->
-            <path d="M180,78 C190,64 196,50 190,38 C187,31 181,32 179,40 C177,52 179,68 180,78Z" fill="#7A5425"/>
-            <!-- Hinterbein vorne -->
-            <path d="M166,82 C176,68 182,54 176,42 C173,35 167,36 165,44 C163,56 165,72 166,82Z" fill="#956830"/>
-            <!-- Körper -->
-            <path d="M164,72 C150,46 114,38 78,42 C50,46 28,58 22,73 C16,88 30,102 65,106 C100,110 144,103 164,87 C171,81 168,77 164,72Z" fill="#A07238"/>
-            <!-- Bauch heller -->
-            <path d="M152,77 C140,60 112,54 84,58 C62,62 44,72 42,83 C40,92 54,100 80,103 C108,106 138,100 152,86 C156,82 154,80 152,77Z" fill="#C8A870" opacity="0.38"/>
+            <ellipse cx="272" cy="72" rx="16" ry="11" fill="#D8D0C0" transform="rotate(-12 272 72)"/>
+            <ellipse cx="271" cy="71" rx="11" ry="8" fill="#F0EDE6" transform="rotate(-12 271 71)"/>
+            <!-- Hinterbein weit (dunkler, hinten) -->
+            <path d="M262,78 C272,62 276,44 268,32 C263,24 256,26 254,36 C252,50 256,68 262,78Z" fill="#5C3A14"/>
+            <path d="M255,82 C264,98 268,122 258,148 C256,153 249,152 250,147 C258,126 254,104 246,88Z" fill="#523214"/>
+            <path d="M250,148 C246,158 234,165 220,165 C216,165 216,160 220,159 C232,159 244,154 250,146Z" fill="#4A2C10"/>
+            <!-- Hinterbein nah (heller, vorne) -->
+            <path d="M248,84 C258,68 262,50 254,38 C249,30 242,32 240,42 C238,56 242,74 248,84Z" fill="#7A5225"/>
+            <path d="M242,88 C252,104 256,128 246,154 C244,159 237,158 238,153 C246,132 242,110 234,94Z" fill="#6A4418"/>
+            <path d="M238,154 C234,164 222,170 208,170 C204,170 204,165 208,164 C220,164 232,159 238,152Z" fill="#5C3A14"/>
+            <!-- Hauptkörper -->
+            <path d="M264,70 C256,46 234,34 202,30 C172,26 142,32 116,44 C92,56 76,70 72,84 C68,98 76,112 96,118 C122,126 166,122 206,112 C238,104 260,90 268,78 C270,74 266,70 264,70Z" fill="url(#hbody)"/>
+            <!-- Bauchseite heller -->
+            <path d="M240,90 C226,74 202,66 176,66 C152,66 130,74 114,84 C102,92 96,102 98,110 C100,116 114,120 138,120 C168,120 202,112 226,100 C238,94 244,91 240,90Z" fill="#D8B870" opacity="0.4"/>
+            <!-- Hals -->
+            <path d="M96,80 C86,70 78,64 80,74 C82,86 90,88 96,80Z" fill="#8B6228"/>
             <!-- Kopf -->
-            <path d="M20,59 C22,42 38,31 52,35 C68,40 70,57 62,70 C54,82 24,81 18,68 C15,63 18,62 20,59Z" fill="#A07238"/>
-            <!-- Kopf innen heller -->
-            <path d="M22,61 C24,48 36,40 48,44 C60,48 62,60 56,70 C50,78 28,78 22,68 C19,63 21,62 22,61Z" fill="#B8894A" opacity="0.3"/>
-            <!-- Ohr hinten (dunkler) -->
-            <path d="M 50,34 C 46,16 44,3 48,-3 C 51,-8 57,-6 57,1 C 59,12 56,27 52,36Z" fill="#7A5425"/>
-            <!-- Ohr vorne -->
-            <path d="M 38,32 C 34,14 33,1 37,-5 C 40,-10 47,-8 47,0 C 49,11 46,27 41,34Z" fill="#A07238"/>
-            <!-- Ohr vorne innen -->
-            <path d="M 37,31 C 34,16 34,5 37,0 C 39,-4 44,-2 44,4 C 45,14 43,28 39,33Z" fill="#C87858" opacity="0.72"/>
-            <!-- Auge -->
-            <circle cx="24" cy="56" r="5.5" fill="#180C00"/>
-            <circle cx="25.5" cy="54.5" r="2.2" fill="white" opacity="0.68"/>
-            <circle cx="23" cy="57" r="1" fill="#3C2010" opacity="0.45"/>
+            <path d="M40,86 C42,64 58,50 76,54 C96,58 102,76 94,94 C86,110 54,114 40,100 C32,92 38,96 40,86Z" fill="url(#hhead)"/>
+            <!-- Wange heller -->
+            <path d="M52,88 C54,72 64,62 76,66 C88,70 92,82 86,94 C80,104 58,106 50,96 C46,90 50,92 52,88Z" fill="#C8A04A" opacity="0.3"/>
+            <!-- Ohr hinten (dunkler, schräg nach oben-hinten) -->
+            <path d="M80,52 C85,34 90,14 88,2 C86,-5 80,-6 77,1 C74,10 74,32 76,52Z" fill="#5A3A10"/>
+            <path d="M88,2 C90,-6 84,-10 79,2 Z" fill="#1E1008"/>
+            <!-- Ohr vorne (heller) -->
+            <path d="M68,50 C72,32 76,12 74,0 C72,-7 66,-8 63,-1 C60,8 60,30 64,50Z" fill="#9C7030"/>
+            <!-- Innenohr -->
+            <path d="M67,49 C70,34 73,16 71,4 C70,-2 65,-3 63,4 C61,14 61,32 64,49Z" fill="#C87260" opacity="0.8"/>
+            <path d="M74,0 C76,-8 70,-12 65,-1 Z" fill="#1E1008"/>
+            <!-- Auge - groß und realistisch -->
+            <ellipse cx="52" cy="82" rx="9" ry="10" fill="#1A0800"/>
+            <ellipse cx="52" cy="82" rx="8" ry="9" fill="url(#heye)"/>
+            <ellipse cx="50" cy="80" rx="5.5" ry="6" fill="#0E0400"/>
+            <circle cx="51" cy="78" r="3" fill="white" opacity="0.7"/>
+            <circle cx="49" cy="82" r="1.2" fill="#6C3A10" opacity="0.4"/>
             <!-- Nase -->
-            <path d="M8,64 C7,60 11,58 14,61 C16,64 13,67 10,66 C8,65 8,65 8,64Z" fill="#7A3030" opacity="0.92"/>
+            <path d="M26,92 C24,87 28,84 33,87 C37,91 35,97 30,96 C27,95 26,94 26,92Z" fill="#904040"/>
+            <path d="M30,96 C32,101 35,104 33,102" stroke="#7A3535" stroke-width="1.2" fill="none" opacity="0.7"/>
             <!-- Schnurrhaare -->
-            <line x1="13" y1="63" x2="1" y2="59" stroke="#604020" stroke-width="0.6" opacity="0.45"/>
-            <line x1="13" y1="65" x2="1" y2="68" stroke="#604020" stroke-width="0.6" opacity="0.45"/>
-            <!-- Vorderbein hinten -->
-            <path d="M 42,88 C 30,97 17,104 5,109 C 2,110 0,107 3,106 C 14,101 25,93 34,83Z" fill="#7A5425"/>
-            <!-- Vorderbein vorne -->
-            <path d="M 57,86 C 45,95 32,102 20,107 C 17,108 15,105 18,104 C 29,99 40,91 50,81Z" fill="#9C6D35"/>
+            <line x1="32" y1="91" x2="8" y2="85" stroke="#A08050" stroke-width="0.9" opacity="0.55"/>
+            <line x1="32" y1="93" x2="8" y2="99" stroke="#A08050" stroke-width="0.9" opacity="0.55"/>
+            <line x1="32" y1="89" x2="14" y2="78" stroke="#A08050" stroke-width="0.7" opacity="0.4"/>
+            <line x1="32" y1="95" x2="14" y2="106" stroke="#A08050" stroke-width="0.7" opacity="0.4"/>
+            <!-- Vorderbein hinten (dunkler) -->
+            <path d="M76,106 C66,118 56,132 44,150 C42,154 36,153 38,149 C48,132 58,118 66,104Z" fill="#6A4418"/>
+            <path d="M38,150 C34,160 22,166 10,164 C6,163 7,158 11,158 C22,159 32,155 38,148Z" fill="#5A3414"/>
+            <!-- Vorderbein vorne (heller) -->
+            <path d="M90,110 C80,122 70,136 58,154 C56,158 50,157 52,153 C62,136 72,122 80,108Z" fill="#7A5225"/>
+            <path d="M52,154 C48,164 36,170 24,168 C20,167 21,162 25,162 C36,163 46,159 52,152Z" fill="#6A4418"/>
           </svg>
         </div>
       </div>
