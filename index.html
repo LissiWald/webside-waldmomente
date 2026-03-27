@@ -1631,58 +1631,6 @@
 
     <span class="gold-sep"></span>
 
-    <!-- ══════════ FELDHASE ══════════ -->
-    <style>
-      @keyframes fhx-anim { from{transform:translateX(108vw)} to{transform:translateX(-260px)} }
-      @keyframes fhy-anim {
-        0%   {transform:translateY(0)}
-        8%   {transform:translateY(-36px)}
-        14%  {transform:translateY(4px)}
-        17%  {transform:translateY(0)}
-        25%  {transform:translateY(-36px)}
-        31%  {transform:translateY(4px)}
-        34%  {transform:translateY(0)}
-        42%  {transform:translateY(-36px)}
-        48%  {transform:translateY(4px)}
-        51%  {transform:translateY(0)}
-        59%  {transform:translateY(-36px)}
-        65%  {transform:translateY(4px)}
-        68%  {transform:translateY(0)}
-        76%  {transform:translateY(-36px)}
-        82%  {transform:translateY(4px)}
-        85%  {transform:translateY(0)}
-        93%  {transform:translateY(-36px)}
-        99%  {transform:translateY(4px)}
-        100% {transform:translateY(0)}
-      }
-      #fhx.go { animation: fhx-anim 11s linear 1 forwards; }
-      #fhy.go { animation: fhy-anim 11s linear 1 forwards; }
-    </style>
-    <div id="fhase-anchor" style="position:relative;height:12px;pointer-events:none;z-index:20;overflow:visible;">
-      <div id="fhx" style="position:absolute;top:-130px;left:0;">
-        <div id="fhy">
-          <img src="hase.jpeg" alt="Feldhase" width="320"
-            style="display:block;mix-blend-mode:multiply;filter:contrast(1.05) saturate(1.1);">
-        </div>
-      </div>
-    </div>
-    <script>
-    (function(){
-      var anchor = document.getElementById('fhase-anchor');
-      if(!anchor) return;
-      var triggered = false;
-      var obs = new IntersectionObserver(function(e){
-        if(e[0].isIntersecting && !triggered){
-          triggered = true;
-          document.getElementById('fhx').classList.add('go');
-          document.getElementById('fhy').classList.add('go');
-          obs.disconnect();
-        }
-      }, {threshold: 0.1});
-      obs.observe(anchor);
-    })();
-    </script>
-
     <!-- ══════════ PRODUKTE ══════════ -->
     <section id="products" aria-label="Produkte">
       <div class="prod__grid">
