@@ -1415,6 +1415,47 @@
         </h1>
         <p class="hero__byline reveal d2">WALDMOMENTE · ELISABETH MÜLLER</p>
         <div class="reveal d3" style="display:flex;flex-direction:column;align-items:center;gap:1.4rem;margin-top:2.4rem;">
+          <style>
+            @keyframes hero-glow {
+              0%,100% { box-shadow: 0 0 0 1px rgba(200,169,110,.5), 0 0 22px rgba(200,169,110,.13); }
+              50%      { box-shadow: 0 0 0 1px rgba(200,169,110,.95), 0 0 40px rgba(200,169,110,.32), 0 0 80px rgba(200,169,110,.10); }
+            }
+            @keyframes hero-shimmer {
+              0%   { transform: translateX(-120%) skewX(-18deg); }
+              100% { transform: translateX(340%) skewX(-18deg); }
+            }
+            @keyframes sp-a {
+              0%,100% { opacity:0; transform:scale(0) rotate(0deg); }
+              45%,55% { opacity:1; transform:scale(1) rotate(180deg); }
+            }
+            @keyframes sp-b {
+              0%,100% { opacity:0; transform:scale(0) rotate(45deg); }
+              45%,55% { opacity:.85; transform:scale(1) rotate(225deg); }
+            }
+            @keyframes sp-c {
+              0%,100% { opacity:0; transform:scale(0); }
+              45%,55% { opacity:.7; transform:scale(1); }
+            }
+            #hero-cta-btn { animation: hero-glow 2.8s ease-in-out infinite; }
+            #hero-cta-btn .hcta-shimmer {
+              position:absolute; top:0; left:0; width:35%; height:100%;
+              background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
+              animation: hero-shimmer 3.6s ease-in-out infinite 1.2s;
+              pointer-events:none;
+            }
+            .hcta-sp {
+              position:absolute; width:8px; height:8px; pointer-events:none;
+            }
+            .hcta-sp::before, .hcta-sp::after {
+              content:''; position:absolute; background:rgba(200,169,110,.95); border-radius:1px;
+            }
+            .hcta-sp::before { width:2px; height:8px; left:3px; top:0; }
+            .hcta-sp::after  { width:8px; height:2px; left:0; top:3px; }
+            .hcta-sp1 { top:-5px;  left:18%;  animation: sp-a 3.6s ease-in-out infinite 0s; }
+            .hcta-sp2 { top:-4px;  right:20%; animation: sp-b 3.6s ease-in-out infinite .9s; }
+            .hcta-sp3 { bottom:-5px; left:38%; animation: sp-c 3.6s ease-in-out infinite 1.8s; }
+            .hcta-sp4 { top:35%;   right:-5px; animation: sp-a 3.6s ease-in-out infinite 2.6s; }
+          </style>
           <a href="https://waldmomente.taplink.site/d/84fb/" target="_blank" rel="noopener"
             id="hero-cta-btn"
             style="
@@ -1424,35 +1465,39 @@
               gap:0;
               padding:0;
               border:none;
-              background:linear-gradient(135deg,rgba(200,169,110,.22) 0%,rgba(200,169,110,.08) 100%);
+              background:linear-gradient(135deg,rgba(200,169,110,.28) 0%,rgba(200,169,110,.10) 100%);
               text-decoration:none;
-              transition:background .4s, box-shadow .4s;
-              box-shadow:0 0 0 1px rgba(200,169,110,.45), inset 0 1px 0 rgba(255,255,255,.07);
+              transition:background .4s;
               overflow:hidden;
             "
-            onmouseover="this.style.background='linear-gradient(135deg,rgba(200,169,110,.35) 0%,rgba(200,169,110,.15) 100%)';this.style.boxShadow='0 0 0 1px rgba(200,169,110,.85), 0 8px 32px rgba(200,169,110,.18), inset 0 1px 0 rgba(255,255,255,.1)'"
-            onmouseout="this.style.background='linear-gradient(135deg,rgba(200,169,110,.22) 0%,rgba(200,169,110,.08) 100%)';this.style.boxShadow='0 0 0 1px rgba(200,169,110,.45), inset 0 1px 0 rgba(255,255,255,.07)'">
+            onmouseover="this.style.background='linear-gradient(135deg,rgba(200,169,110,.42) 0%,rgba(200,169,110,.18) 100%)'"
+            onmouseout="this.style.background='linear-gradient(135deg,rgba(200,169,110,.28) 0%,rgba(200,169,110,.10) 100%)'">
+            <span class="hcta-shimmer"></span>
+            <span class="hcta-sp hcta-sp1"></span>
+            <span class="hcta-sp hcta-sp2"></span>
+            <span class="hcta-sp hcta-sp3"></span>
+            <span class="hcta-sp hcta-sp4"></span>
             <span style="
               display:inline-flex;
               flex-direction:column;
               align-items:center;
-              padding:1.1rem 2.6rem 1rem;
-              border-right:1px solid rgba(200,169,110,.3);
-              gap:.22rem;
+              padding:1.2rem 2.8rem 1.1rem;
+              border-right:1px solid rgba(200,169,110,.35);
+              gap:.3rem;
             ">
-              <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;color:#fff;letter-spacing:.04em;font-weight:400;line-height:1;">Auf die Spur</span>
-              <span style="font-family:'Jost',sans-serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,110,.7);font-weight:300;line-height:1;">Dein erster Waldimpuls</span>
+              <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.6rem;color:#fff;letter-spacing:.05em;font-weight:500;line-height:1;text-shadow:0 0 18px rgba(200,169,110,.6), 0 1px 4px rgba(0,0,0,.5);">Auf die Spur</span>
+              <span style="font-family:'Jost',sans-serif;font-size:.54rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(200,169,110,.85);font-weight:300;line-height:1;">Dein erster Waldimpuls</span>
             </span>
             <span style="
               display:inline-flex;
               flex-direction:column;
               align-items:center;
               justify-content:center;
-              padding:.9rem 1.6rem;
+              padding:.9rem 1.7rem;
               gap:.1rem;
             ">
-              <span style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);font-weight:600;line-height:1;">7 €</span>
-              <span style="font-family:'Jost',sans-serif;font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(200,169,110,.6);font-weight:300;line-height:1;">einmalig</span>
+              <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold);font-weight:600;line-height:1;">7 €</span>
+              <span style="font-family:'Jost',sans-serif;font-size:.48rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(200,169,110,.7);font-weight:300;line-height:1;">einmalig</span>
             </span>
           </a>
           <a href="#products" style="
