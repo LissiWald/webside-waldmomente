@@ -34,7 +34,19 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080/)",
       "Bash(curl -v http://127.0.0.1:8080/)",
       "Read(//dev/**)",
-      "Bash(\"C:\\\\Users\\\\Stephi\\\\webside waldmomente\\\\index.html\")"
+      "Bash(\"C:\\\\Users\\\\Stephi\\\\webside waldmomente\\\\index.html\")",
+      "WebFetch(domain:pixabay.com)",
+      "WebSearch",
+      "WebFetch(domain:mixkit.co)",
+      "WebFetch(domain:archive.org)",
+      "WebFetch(domain:www.chosic.com)",
+      "WebFetch(domain:freesound.org)",
+      "WebFetch(domain:orangefreesounds.com)",
+      "Bash(curl -L -o birds.mp3 \"https://archive.org/download/various-bird-sounds/birds-in-forest-on-sunny-day-14444.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
+      "Bash(curl -L -o rain.mp3 \"https://archive.org/download/rain-sounds-gentle-rain-thunderstorms/gentle-rainfall-16960.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
+      "Bash(curl -L -o wind.mp3 \"https://archive.org/download/Red_Library_Nature_Wind/R22-11-Blustery%20Wind%20Loop.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
+      "Bash(curl -L -o drops.mp3 \"https://archive.org/download/naturesounds-soundtheraphy/Relaxing%20Nature%20Sounds%20-%20Trickling%20Stream%20Sounds%20%26%20Birds.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
+      "Bash(curl -L -o leaves.mp3 \"https://archive.org/download/walking-sound-effects/rustling-leaves-30452.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)"
     ]
   }
 }
