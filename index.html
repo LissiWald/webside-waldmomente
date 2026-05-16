@@ -1369,16 +1369,35 @@
       font-size: 1rem; color: rgba(253,250,245,.65);
       margin-bottom: 2.8rem;
     }
-    .insta__feed-placeholder {
-      background: rgba(200,169,110,.04);
-      border: 1px dashed rgba(200,169,110,.2);
-      width: 100%; max-width: 680px; height: 200px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 3rem;
+    .insta__preview-link {
+      display: block; position: relative;
+      max-width: 360px; margin: 0 auto 3rem;
+      overflow: hidden;
+      border: 1px solid rgba(200,169,110,.25);
+      transition: border-color .4s;
     }
-    .insta__feed-placeholder span {
-      font-size: .6rem; letter-spacing: .38em;
-      text-transform: uppercase; color: rgba(200,169,110,.28);
+    .insta__preview-link:hover { border-color: rgba(200,169,110,.6); }
+    .insta__preview-img {
+      width: 100%; height: auto;
+      display: block;
+      transition: transform .6s ease, filter .6s ease;
+      filter: brightness(.92);
+    }
+    .insta__preview-link:hover .insta__preview-img {
+      transform: scale(1.03);
+      filter: brightness(.7);
+    }
+    .insta__preview-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .4s;
+    }
+    .insta__preview-link:hover .insta__preview-overlay { opacity: 1; }
+    .insta__preview-handle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.5rem;
+      color: var(--cream); letter-spacing: .08em;
+      text-shadow: 0 2px 20px rgba(0,0,0,.5);
     }
 
     /* ═══════════════════════════════
@@ -1741,9 +1760,12 @@
         <span class="eyebrow reveal">Community</span>
         <h2 class="insta__title reveal sh" data-t="Hier leben die Waldmomente.">Hier leben die Waldmomente.</h2>
         <p class="insta__sub reveal d1">Jeden Tag. Auf Instagram.</p>
-        <div class="insta__feed-placeholder reveal d2">
-          <span>Instagram Feed</span>
-        </div>
+        <a href="https://instagram.com/waldmomente" class="insta__preview-link reveal d2" target="_blank" rel="noopener" aria-label="@waldmomente auf Instagram">
+          <img src="claude/insta-preview.png" alt="@waldmomente Instagram Feed" class="insta__preview-img">
+          <span class="insta__preview-overlay">
+            <span class="insta__preview-handle">@waldmomente</span>
+          </span>
+        </a>
         <a href="https://instagram.com/waldmomente" class="btn btn--cream reveal d3" target="_blank" rel="noopener">
           <span>@waldmomente folgen</span>
         </a>
