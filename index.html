@@ -100,7 +100,7 @@
 
  /* ── DUNKLE SEKTIONEN: Text hell ── */
  #spielwiese, #waldspuren, #spur-invite, #testimonials,
- #quote, #community-insta, #togo, #kooperation, #gutenacht, #workbook, footer { color: var(--cream); }
+ #quote, #community-insta, #togo, #kooperation, #gutenacht, #workbook, #spur, footer { color: var(--cream); }
 
  /* ── CURSOR ── */
  #cursor {
@@ -462,6 +462,56 @@
  letter-spacing: .02em;
  }
  .workbook__note {
+ font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
+ color: rgba(253,250,245,.4);
+ margin-top: 1.2rem; display: block;
+ }
+
+ /* ── SPUR SECTION ── */
+ #spur {
+ background: var(--green);
+ padding: 7rem 2rem;
+ text-align: center;
+ }
+ .spur__inner { max-width: 620px; margin: 0 auto; }
+ .spur__kicker {
+ font-size: .58rem; letter-spacing: .44em; text-transform: uppercase;
+ color: var(--gold); opacity: .7; margin-bottom: 1.4rem; display: block;
+ }
+ .spur__title {
+ font-family: 'Cormorant Garamond', serif;
+ font-style: italic;
+ font-size: clamp(2rem, 5vw, 3.2rem);
+ color: var(--cream); line-height: 1.25;
+ margin-bottom: 1.4rem;
+ }
+ .spur__body {
+ text-align: left;
+ margin-bottom: 2.5rem;
+ }
+ .spur__body p {
+ font-size: .98rem;
+ line-height: 1.95;
+ color: rgba(253,250,245,.78);
+ margin-bottom: 1rem;
+ }
+ .spur__body strong {
+ display: block;
+ font-family: 'Cormorant Garamond', serif;
+ font-style: italic;
+ font-size: clamp(1.4rem, 3vw, 1.9rem);
+ color: var(--gold);
+ margin: 2rem 0 .6rem;
+ font-weight: 400;
+ }
+ .spur__price {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: clamp(2.5rem, 6vw, 3.8rem);
+ color: var(--gold);
+ margin-bottom: 2.5rem;
+ letter-spacing: .02em;
+ }
+ .spur__note {
  font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
  color: rgba(253,250,245,.4);
  margin-top: 1.2rem; display: block;
@@ -1749,11 +1799,12 @@
  <div class="produkt-card reveal d1">
  <span class="produkt-badge">Für draußen</span>
  <h3 class="produkt-name">Waldmomente<br>auf der Spur</h3>
- <p class="produkt-desc">12 konkrete Aufgaben für deinen nächsten Waldspaziergang. Einfach rausgehen und loslegen.</p>
+ <p class="produkt-desc">Du willst raus. Aber der Kopf kommt nicht mit. 12 Aufgaben die das ändern.</p>
  <div class="produkt-price">7,90 €</div>
  <a href="https://payhip.com/b/nNLAI" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
  <span>Jetzt kaufen</span>
  </a>
+ <a href="#spur" class="produkt-more">Mehr erfahren ↓</a>
  </div>
 
  <!-- Workbook featured -->
@@ -2074,6 +2125,43 @@
  <span class="gold-sep"></span>
 
  <!-- ══════════ GUTE NACHT GESCHICHTEN ══════════ -->
+ <!-- ══════════ SPUR ══════════ -->
+ <section id="spur" aria-label="Waldmomente auf der Spur">
+ <div class="spur__inner">
+ <span class="spur__kicker reveal">12 Aufgaben · Sofort draußen</span>
+ <h2 class="spur__title reveal">Waldmomente<br>auf der Spur</h2>
+
+ <div class="spur__body reveal d1">
+ <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);">Du willst raus. Aber der Kopf kommt nicht mit.</em></p>
+ <p>Du stehst im Wald. Schön. Aber nach fünf Minuten kreisen die Gedanken schon wieder. Die Liste. Das Gespräch von gestern. Was du noch erledigen musst.</p>
+ <p>Die Spur gibt deinem Kopf etwas anderes zu tun. Zwölf konkrete Aufgaben, die dich zwingen, wirklich anzukommen.</p>
+
+ <strong>Was das ist</strong>
+ <p>Ein PDF. 12 Spuren durch den Wald, jede mit einer klaren Aufgabe die du direkt draußen erledigst. Nicht im Kopf. Nicht später. Jetzt.</p>
+ <p>Kein Kurs. Kein Programm. Kein Vorbereiten. Einfach ausdrucken oder auf dem Handy öffnen und losgehen.</p>
+
+ <strong>Was dich erwartet</strong>
+ <p>Spuren die alle Sinne ansprechen: Sehen, Hören, Tasten, Innehalten. Manche dauern zwei Minuten. Manche bleiben den ganzen Tag bei dir.</p>
+ <p>Allein machbar. Zu zweit noch besser. Mit der Familie auch.</p>
+
+ <strong>Für wen</strong>
+ <p>Für alle, die schon oft im Wald waren aber nie wirklich angekommen sind. Die gerne draußen sind, aber nicht wissen, wie sie abschalten.</p>
+ <p>Das hier ist der einfachste Einstieg in Waldmomente. Kein Aufwand. Sofort wirksam.</p>
+ </div>
+
+ <div class="spur__price reveal d2">7,90 €</div>
+ <div class="reveal d2" style="text-align:center;">
+ <a href="https://payhip.com/b/nNLAI" class="btn btn--cream" target="_blank" rel="noopener" style="display:inline-block;">
+ <span>Jetzt kaufen</span>
+ </a>
+ </div>
+ <span class="spur__note reveal d3">Einmalig · Kein Abo · Sofort-Download</span>
+ </div>
+ </section>
+
+
+ <span class="gold-sep"></span>
+
  <!-- ══════════ WORKBOOK ══════════ -->
  <section id="workbook" aria-label="Waldmomente Workbook">
  <div class="workbook__inner">
@@ -2212,13 +2300,7 @@
  <h2 class="community__title reveal sh" data-t="Waldmomente begleiten.">Waldmomente begleiten.</h2>
  <p class="community__sub reveal d1">Kleine Impulse. Direkt zu dir. Wald statt WLAN.</p>
  <div class="community__btns">
- <a href="https://t.me/+MZ9EF-w558RhYzBi" class="btn btn--cream reveal d1" target="_blank" rel="noopener">
- <span class="btn__icon">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
- Waldmomente aufs Handy
- </span>
- </a>
- <a href="https://www.instagram.com/waldmomente?igsh=OXlhcmdjbTF0eG9z&utm_source=qr" class="btn btn--cream reveal d2" target="_blank" rel="noopener">
+ <a href="https://www.instagram.com/waldmomente?igsh=OXlhcmdjbTF0eG9z&utm_source=qr" class="btn btn--cream reveal d1" target="_blank" rel="noopener">
  <span class="btn__icon">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
  Waldmomente auf Instagram
