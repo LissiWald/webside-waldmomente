@@ -392,14 +392,30 @@
       color: rgba(253,250,245,.5);
       margin-bottom: 2.2rem; display: block;
     }
-    .gutenacht__hint {
-      font-size: .9rem;
-      color: rgba(253,250,245,.6);
-      line-height: 1.9;
-      max-width: 440px;
-      margin: 0 auto;
+    .gutenacht__body {
+      text-align: left;
+      margin-bottom: 2.5rem;
     }
-    .gutenacht__hint em { color: var(--gold-light); font-style: normal; }
+    .gutenacht__body p {
+      font-size: .98rem;
+      line-height: 1.95;
+      color: rgba(253,250,245,.78);
+      margin-bottom: 1rem;
+    }
+    .gutenacht__body strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      color: var(--gold);
+      margin: 2rem 0 .6rem;
+      font-weight: 400;
+    }
+    .gutenacht__note {
+      font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
+      color: rgba(253,250,245,.4);
+      margin-top: 1.2rem; display: block;
+    }
 
     /* ── VIDEO SECTION ── */
     #wald-video {
@@ -1933,21 +1949,33 @@
       <div class="gutenacht__inner">
         <span class="gutenacht__kicker reveal">Jetzt erhältlich</span>
         <h2 class="gutenacht__title reveal">Gute Nacht Geschichten<br>aus dem Wald</h2>
-        <p class="gutenacht__text reveal d1">
-          30 Seiten voller Ruhe, Waldduft und Abendstille.<br>
-          Zum Vorlesen, Einschlafen und Loslassen.
-        </p>
-        <div class="gutenacht__price reveal d1">9,90 €</div>
-        <div class="reveal d2">
-          <div class="gutenacht__qr-wrap">
-            <img src="paypal-qr.jpeg" alt="PayPal QR-Code 9,90 €" class="gutenacht__qr-img">
-          </div>
+
+        <div class="gutenacht__body reveal d1">
+          <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);">Dein Kopf weiß nicht, dass der Tag vorbei ist.</em></p>
+          <p>Er rechnet noch. Plant. Dreht Gespräche durch, die du längst vergessen haben solltest. Irgendwo zwischen 22 Uhr und Mitternacht fängt das an. Immer dasselbe.</p>
+          <p>Ich kenne das. Deshalb gibt es diese Geschichten.</p>
+          <p>Ich gehe seit Jahren in den Wald. Nicht wegen Schrittzähler oder frischer Luft. Sondern weil es das Einzige ist, das meinen Kopf wirklich stoppt. Nicht dramatisch. Einfach für eine Weile.</p>
+          <p>Irgendwann hab ich gedacht: Was wäre, wenn ich dieses Gefühl abends mitnehmen könnte? Nicht den Wald. Aber die Stille. Das Ankommen.</p>
+          <p>So sind diese 30 Geschichten entstanden.</p>
+
+          <strong>Was das ist</strong>
+          <p>30 kurze Geschichten. Jede nimmt dich mit. In den Wald, abends, im Nebel, im Schnee, nach einem langen Tag, wenn du eigentlich nicht schlafen kannst.</p>
+          <p>Keine Atemübungen. Keine Aufgaben. Kein Protokoll.</p>
+          <p>Du liest. Und dein Kopf kommt irgendwann mit.</p>
+
+          <strong>Für wen</strong>
+          <p>Für Menschen, die abends nicht runterkommen. Die müde sind, aber nicht schlafen können. Die wissen, dass ihnen Natur gut tut, aber gerade nicht rauskommen.</p>
+          <p>Nicht für dich, wenn du Schlaftipps suchst. Das ist kein Ratgeber. Keine Methode.</p>
+          <p>Das ist Lesen. Ankommen. Fertig.</p>
         </div>
-        <span class="gutenacht__qr-label reveal d2">QR-Code mit PayPal scannen &amp; bezahlen</span>
-        <p class="gutenacht__hint reveal d3">
-          Auf dem Handy: PayPal öffnen → Zahlen → <em>info@waldmomente.me</em> → 9,90 €<br>
-          Deine E-Mail-Adresse als Notiz mitsenden – du bekommst das PDF sofort.
-        </p>
+
+        <div class="gutenacht__price reveal d2">9,90 €</div>
+        <div class="reveal d2" style="text-align:center;">
+          <a href="https://payhip.com/b/LCtjW" class="btn btn--cream" target="_blank" rel="noopener" style="display:inline-block;">
+            <span>Jetzt kaufen</span>
+          </a>
+        </div>
+        <span class="gutenacht__note reveal d3">Einmalig · Kein Abo · Sofort-Download</span>
       </div>
     </section>
 
