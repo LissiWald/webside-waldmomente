@@ -884,6 +884,8 @@
     .btn:hover { color: var(--gold-dark); border-color: var(--gold); }
     .btn--cream { color: var(--cream); }
     .btn--cream:hover { color: var(--cream); }
+    .btn--green { background: var(--green); color: var(--cream); border-color: var(--green); }
+    .btn--green:hover { background: var(--dark); border-color: var(--dark); color: var(--cream); }
 
     /* ═══════════════════════════════
        SPUR EINLADUNG
@@ -1474,6 +1476,67 @@
     }
 
     /* ═══════════════════════════════
+       PRODUKTE
+    ═══════════════════════════════ */
+    #produkte { background: var(--sand); padding: 8rem 2rem; }
+    .produkte__inner { max-width: 1020px; margin: 0 auto; text-align: center; }
+    .produkte__title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      color: var(--gold-dark); margin-bottom: .6rem;
+    }
+    .produkte__sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.05rem; color: var(--brown); opacity: .7; margin-bottom: 4rem;
+    }
+    .produkte__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+    }
+    @media (max-width: 780px) { .produkte__grid { grid-template-columns: 1fr; } }
+    .produkt-card {
+      background: var(--cream);
+      border: 1px solid rgba(200,169,110,.2);
+      padding: 2.8rem 2rem 2.2rem;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: .9rem;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .produkt-card:hover { border-color: rgba(200,169,110,.55); box-shadow: 0 8px 40px rgba(0,0,0,.06); }
+    .produkt-card--feat {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--cream);
+    }
+    .produkt-badge {
+      font-size: .52rem; letter-spacing: .38em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: .3rem;
+    }
+    .produkt-name {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(1.35rem, 3vw, 1.65rem);
+      color: var(--gold-dark); line-height: 1.3;
+    }
+    .produkt-card--feat .produkt-name { color: var(--gold); }
+    .produkt-desc {
+      font-size: .9rem; line-height: 1.75; color: var(--brown);
+      opacity: .85; flex-grow: 1;
+    }
+    .produkt-card--feat .produkt-desc { color: rgba(253,250,245,.75); opacity: 1; }
+    .produkt-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; color: var(--gold-dark); letter-spacing: .03em;
+    }
+    .produkt-card--feat .produkt-price { color: var(--gold); }
+    .produkt-more {
+      font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); opacity: .6; margin-top: -.3rem;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .produkt-more:hover { opacity: 1; }
+
+    /* ═══════════════════════════════
        KOOPERATION
     ═══════════════════════════════ */
     #kooperation { background: var(--dark); padding: 7rem 2rem; text-align: center; }
@@ -1505,7 +1568,7 @@
       <li><a href="#hero"     class="nav__link" data-sec="hero">Start</a></li>
       <li><a href="#about"    class="nav__link" data-sec="about">Über mich</a></li>
       <li><a href="#why"      class="nav__link" data-sec="why">Waldbaden</a></li>
-      <li><a href="#togo" class="nav__link" data-sec="togo">To go</a></li>
+      <li><a href="#produkte" class="nav__link" data-sec="produkte">Produkte</a></li>
       <li><a href="#contact"  class="nav__link" data-sec="contact">Kontakt</a></li>
     </ul>
     <button class="nav__burger" id="nav-burger" aria-label="Menü öffnen">
@@ -1552,7 +1615,7 @@
               pointer-events:none;
             }
           </style>
-          <a href="#togo"
+          <a href="#produkte"
             id="hero-cta-btn"
             style="
               position:relative;
@@ -1577,8 +1640,8 @@
               padding:.8rem 2.4rem .75rem;
               gap:.2rem;
             ">
-              <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--gold);letter-spacing:.06em;font-weight:500;line-height:1;">Waldmomente to go</span>
-              <span style="font-family:'Jost',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,169,110,.65);font-weight:300;line-height:1;">Dein kostenloser Waldbegleiter</span>
+              <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--gold);letter-spacing:.06em;font-weight:500;line-height:1;">Womit fange ich an?</span>
+              <span style="font-family:'Jost',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,169,110,.65);font-weight:300;line-height:1;">Alle Produkte entdecken</span>
             </span>
           </a>
           <a href="#wissenschaft" style="
@@ -1708,6 +1771,55 @@
             <em>Zertifiziert in Waldbaden &amp; Naturtherapie. Das Wichtigste hab ich aber draußen gelernt.</em>
           </p>
           <span class="about__sig reveal d3">Elisabeth Müller · Waldmomente</span>
+        </div>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ PRODUKTE ══════════ -->
+    <section id="produkte" aria-label="Produkte">
+      <div class="produkte__inner">
+        <span class="eyebrow reveal">Digitale Waldbegleiter</span>
+        <h2 class="produkte__title reveal">Womit möchtest du anfangen?</h2>
+        <p class="produkte__sub reveal d1">Drei Wege. Dein Tempo. Dein Wald.</p>
+
+        <div class="produkte__grid">
+
+          <!-- Waldspur -->
+          <div class="produkt-card reveal d1">
+            <span class="produkt-badge">Für draußen</span>
+            <h3 class="produkt-name">Waldmomente<br>auf der Spur</h3>
+            <p class="produkt-desc">12 konkrete Aufgaben für deinen nächsten Waldspaziergang. Einfach rausgehen und loslegen.</p>
+            <div class="produkt-price">7,90 €</div>
+            <a href="https://payhip.com/b/nNLAI" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
+              <span>Jetzt kaufen</span>
+            </a>
+          </div>
+
+          <!-- Workbook – featured -->
+          <div class="produkt-card produkt-card--feat reveal d2">
+            <span class="produkt-badge">Empfohlen</span>
+            <h3 class="produkt-name">Waldmomente<br>Workbook</h3>
+            <p class="produkt-desc">10 Kapitel mit ehrlichen Fragen, Raum zum Schreiben und Innehalten. Für alle die tiefer gehen wollen.</p>
+            <div class="produkt-price">24,90 €</div>
+            <a href="https://payhip.com/b/YavhW" class="btn btn--cream reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
+              <span>Jetzt kaufen</span>
+            </a>
+          </div>
+
+          <!-- Gute Nacht -->
+          <div class="produkt-card reveal d3">
+            <span class="produkt-badge">Für den Abend</span>
+            <h3 class="produkt-name">Gute Nacht Geschichten<br>aus dem Wald</h3>
+            <p class="produkt-desc">30 kurze Geschichten wenn der Kopf abends nicht aufhört. Lesen. Ankommen. Fertig.</p>
+            <div class="produkt-price">9,90 €</div>
+            <a href="https://payhip.com/b/LCtjW" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
+              <span>Jetzt kaufen</span>
+            </a>
+            <a href="#gutenacht" class="produkt-more">Mehr erfahren ↓</a>
+          </div>
+
         </div>
       </div>
     </section>
