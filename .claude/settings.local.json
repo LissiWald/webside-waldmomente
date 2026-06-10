@@ -46,7 +46,8 @@
       "Bash(curl -L -o rain.mp3 \"https://archive.org/download/rain-sounds-gentle-rain-thunderstorms/gentle-rainfall-16960.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
       "Bash(curl -L -o wind.mp3 \"https://archive.org/download/Red_Library_Nature_Wind/R22-11-Blustery%20Wind%20Loop.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
       "Bash(curl -L -o drops.mp3 \"https://archive.org/download/naturesounds-soundtheraphy/Relaxing%20Nature%20Sounds%20-%20Trickling%20Stream%20Sounds%20%26%20Birds.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
-      "Bash(curl -L -o leaves.mp3 \"https://archive.org/download/walking-sound-effects/rustling-leaves-30452.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)"
+      "Bash(curl -L -o leaves.mp3 \"https://archive.org/download/walking-sound-effects/rustling-leaves-30452.mp3\" --max-time 60 -w \"HTTP %{http_code} | Size: %{size_download} bytes\\\\n\" -s)",
+      "Bash(cp /root/.claude/uploads/5fcdf0f3-b7cb-5d84-a329-36acf2fda65b/aa92104a-IMG_2365.jpeg /home/user/webside-waldmomente/paypal-qr.jpeg)"
     ]
   }
 }
