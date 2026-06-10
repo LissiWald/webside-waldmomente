@@ -100,7 +100,7 @@
 
     /* ── DUNKLE SEKTIONEN: Text hell ── */
     #spielwiese, #waldspuren, #spur-invite, #testimonials,
-    #quote, #community-insta, #togo, #kooperation, footer { color: var(--cream); }
+    #quote, #community-insta, #togo, #kooperation, #gutenacht, footer { color: var(--cream); }
 
     /* ── CURSOR ── */
     #cursor {
@@ -343,6 +343,63 @@
       color: rgba(253,250,245,.65);
       margin-bottom: 2.8rem;
     }
+
+    /* ═══════════════════════════════
+       GUTE NACHT GESCHICHTEN
+    ═══════════════════════════════ */
+    #gutenacht {
+      background: var(--green);
+      padding: 7rem 2rem;
+      text-align: center;
+    }
+    .gutenacht__inner { max-width: 620px; margin: 0 auto; }
+    .gutenacht__kicker {
+      font-size: .58rem; letter-spacing: .44em; text-transform: uppercase;
+      color: var(--gold); opacity: .7; margin-bottom: 1.4rem; display: block;
+    }
+    .gutenacht__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--cream); line-height: 1.25;
+      margin-bottom: 1.4rem;
+    }
+    .gutenacht__text {
+      font-size: 1rem; line-height: 1.9;
+      color: rgba(253,250,245,.75);
+      margin-bottom: 2rem;
+    }
+    .gutenacht__price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 3.8rem);
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      letter-spacing: .02em;
+    }
+    .gutenacht__qr-wrap {
+      background: white;
+      display: inline-block;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .gutenacht__qr-img {
+      width: 190px; height: 190px;
+      object-fit: contain;
+      display: block;
+    }
+    .gutenacht__qr-label {
+      font-size: .62rem; letter-spacing: .35em; text-transform: uppercase;
+      color: rgba(253,250,245,.5);
+      margin-bottom: 2.2rem; display: block;
+    }
+    .gutenacht__hint {
+      font-size: .9rem;
+      color: rgba(253,250,245,.6);
+      line-height: 1.9;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .gutenacht__hint em { color: var(--gold-light); font-style: normal; }
 
     /* ── VIDEO SECTION ── */
     #wald-video {
@@ -1866,6 +1923,31 @@
             <span>Jetzt kostenlos herunterladen</span>
           </a>
         </div>
+      </div>
+    </section>
+
+    <span class="gold-sep"></span>
+
+    <!-- ══════════ GUTE NACHT GESCHICHTEN ══════════ -->
+    <section id="gutenacht" aria-label="Gute Nacht Geschichten aus dem Wald">
+      <div class="gutenacht__inner">
+        <span class="gutenacht__kicker reveal">Jetzt erhältlich</span>
+        <h2 class="gutenacht__title reveal">Gute Nacht Geschichten<br>aus dem Wald</h2>
+        <p class="gutenacht__text reveal d1">
+          30 Seiten voller Ruhe, Waldduft und Abendstille.<br>
+          Zum Vorlesen, Einschlafen und Loslassen.
+        </p>
+        <div class="gutenacht__price reveal d1">9,90 €</div>
+        <div class="reveal d2">
+          <div class="gutenacht__qr-wrap">
+            <img src="paypal-qr.jpeg" alt="PayPal QR-Code 9,90 €" class="gutenacht__qr-img">
+          </div>
+        </div>
+        <span class="gutenacht__qr-label reveal d2">QR-Code mit PayPal scannen &amp; bezahlen</span>
+        <p class="gutenacht__hint reveal d3">
+          Auf dem Handy: PayPal öffnen → Zahlen → <em>info@waldmomente.me</em> → 9,90 €<br>
+          Deine E-Mail-Adresse als Notiz mitsenden – du bekommst das PDF sofort.
+        </p>
       </div>
     </section>
 
