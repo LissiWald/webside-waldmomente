@@ -100,7 +100,7 @@
 
  /* ── DUNKLE SEKTIONEN: Text hell ── */
  #spielwiese, #waldspuren, #spur-invite, #testimonials,
- #quote, #community-insta, #togo, #kooperation, #gutenacht, footer { color: var(--cream); }
+ #quote, #community-insta, #togo, #kooperation, #gutenacht, #workbook, footer { color: var(--cream); }
 
  /* ── CURSOR ── */
  #cursor {
@@ -412,6 +412,56 @@
  font-weight: 400;
  }
  .gutenacht__note {
+ font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
+ color: rgba(253,250,245,.4);
+ margin-top: 1.2rem; display: block;
+ }
+
+ /* ── WORKBOOK SECTION ── */
+ #workbook {
+ background: var(--dark);
+ padding: 7rem 2rem;
+ text-align: center;
+ }
+ .workbook__inner { max-width: 620px; margin: 0 auto; }
+ .workbook__kicker {
+ font-size: .58rem; letter-spacing: .44em; text-transform: uppercase;
+ color: var(--gold); opacity: .7; margin-bottom: 1.4rem; display: block;
+ }
+ .workbook__title {
+ font-family: 'Cormorant Garamond', serif;
+ font-style: italic;
+ font-size: clamp(2rem, 5vw, 3.2rem);
+ color: var(--cream); line-height: 1.25;
+ margin-bottom: 1.4rem;
+ }
+ .workbook__body {
+ text-align: left;
+ margin-bottom: 2.5rem;
+ }
+ .workbook__body p {
+ font-size: .98rem;
+ line-height: 1.95;
+ color: rgba(253,250,245,.78);
+ margin-bottom: 1rem;
+ }
+ .workbook__body strong {
+ display: block;
+ font-family: 'Cormorant Garamond', serif;
+ font-style: italic;
+ font-size: clamp(1.4rem, 3vw, 1.9rem);
+ color: var(--gold);
+ margin: 2rem 0 .6rem;
+ font-weight: 400;
+ }
+ .workbook__price {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: clamp(2.5rem, 6vw, 3.8rem);
+ color: var(--gold);
+ margin-bottom: 2.5rem;
+ letter-spacing: .02em;
+ }
+ .workbook__note {
  font-size: .65rem; letter-spacing: .35em; text-transform: uppercase;
  color: rgba(253,250,245,.4);
  margin-top: 1.2rem; display: block;
@@ -1710,11 +1760,12 @@
  <div class="produkt-card produkt-card--feat reveal d2">
  <span class="produkt-badge">Empfohlen</span>
  <h3 class="produkt-name">Waldmomente<br>Workbook</h3>
- <p class="produkt-desc">10 Kapitel mit ehrlichen Fragen, Raum zum Schreiben und Innehalten. Für alle die tiefer gehen wollen.</p>
+ <p class="produkt-desc">Du funktionierst. Jeden Tag. Für alle. 49 Seiten mit den Fragen, die du dir noch nie gestellt hast.</p>
  <div class="produkt-price">24,90 €</div>
  <a href="https://payhip.com/b/YavhW" class="btn btn--cream reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
  <span>Jetzt kaufen</span>
  </a>
+ <a href="#workbook" class="produkt-more">Mehr erfahren ↓</a>
  </div>
 
  <!-- Gute Nacht -->
@@ -2023,6 +2074,44 @@
  <span class="gold-sep"></span>
 
  <!-- ══════════ GUTE NACHT GESCHICHTEN ══════════ -->
+ <!-- ══════════ WORKBOOK ══════════ -->
+ <section id="workbook" aria-label="Waldmomente Workbook">
+ <div class="workbook__inner">
+ <span class="workbook__kicker reveal">49 Seiten · 10 Kapitel</span>
+ <h2 class="workbook__title reveal">Waldmomente<br>Workbook</h2>
+
+ <div class="workbook__body reveal d1">
+ <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);">Du bist nicht schwach. Du bist erschöpft.</em></p>
+ <p>Du stehst morgens auf und fängst sofort an zu funktionieren. Für andere. Für die Arbeit. Für die Familie. Irgendwann weißt du nicht mehr, was du eigentlich selbst brauchst.</p>
+ <p>Das ist kein Mangel. Das ist ein Unterschied. Und dieses Workbook stellt dir die Fragen, die du dir selbst noch nie gestellt hast.</p>
+
+ <strong>Was das ist</strong>
+ <p>49 Seiten. 10 Kapitel. Jedes beginnt mit einem Waldimpuls. Mit einer Frage, die langsam in dir arbeitet.</p>
+ <p>Wo trägst du Dinge, die nicht dir gehören? Wo sagst du Ja, obwohl dein ganzer Körper Nein schreit? Was macht dich jeden Tag innerlich kleiner?</p>
+ <p>Kein Ratgeber. Kein Programm. Kein Optimierungsplan. Nur du, ein Stift und der Wald.</p>
+
+ <strong>Wie es funktioniert</strong>
+ <p>Lies langsam. Mach Pausen. Leg das Handy weg, wenn du merkst, dass dein Kopf wieder schneller wird als dein Herz.</p>
+ <p>Und wenn du kannst: Geh damit nach draußen. Zwischen Bäumen wird vieles klarer. Nicht weil der Wald Antworten gibt. Sondern weil er nichts von dir will.</p>
+
+ <strong>Für wen</strong>
+ <p>Für alle, die funktionieren und sich dabei verlieren. Die schon vieles versucht haben und immer noch nicht bei sich angekommen sind.</p>
+ <p>Nicht für dich, wenn du Tipps suchst. Das ist kein Ratgeber. Das ist ein Spiegel.</p>
+ </div>
+
+ <div class="workbook__price reveal d2">24,90 €</div>
+ <div class="reveal d2" style="text-align:center;">
+ <a href="https://payhip.com/b/YavhW" class="btn btn--cream" target="_blank" rel="noopener" style="display:inline-block;">
+ <span>Jetzt kaufen</span>
+ </a>
+ </div>
+ <span class="workbook__note reveal d3">Einmalig · Kein Abo · Sofort-Download</span>
+ </div>
+ </section>
+
+
+ <span class="gold-sep"></span>
+
  <section id="gutenacht" aria-label="Gute Nacht Geschichten aus dem Wald">
  <div class="gutenacht__inner">
  <span class="gutenacht__kicker reveal">Jetzt erhältlich</span>
