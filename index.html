@@ -416,6 +416,38 @@
  color: rgba(253,250,245,.4);
  margin-top: 1.2rem; display: block;
  }
+ /* ── Wald der tausend Wege ── */
+ #tausendwege { background: var(--sand); }
+ .tausendwege__inner {
+ max-width: 680px; margin: 0 auto; padding: 6rem 2rem; text-align: center;
+ }
+ .tausendwege__kicker {
+ font-size: .58rem; letter-spacing: .45em; text-transform: uppercase;
+ color: var(--green); font-family: 'Jost', sans-serif; font-weight: 400;
+ display: block; margin-bottom: 1.2rem;
+ }
+ .tausendwege__title {
+ font-family: 'Cormorant Garamond', serif; font-style: italic;
+ font-size: clamp(2rem,5vw,3.2rem); color: var(--green);
+ line-height: 1.15; margin: 0 0 2.8rem;
+ }
+ .tausendwege__body {
+ font-family: 'Jost', sans-serif; font-size: .98rem;
+ line-height: 1.85; color: var(--brown); text-align: left; margin-bottom: 2.2rem;
+ }
+ .tausendwege__body p { margin-bottom: 1.1rem; }
+ .tausendwege__body strong {
+ color: var(--green); font-weight: 600; display: block; margin: 1.4rem 0 .4rem;
+ }
+ .tausendwege__price {
+ font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;
+ color: var(--green); margin-bottom: 1.6rem;
+ }
+ .tausendwege__note {
+ display: block; font-size: .62rem; letter-spacing: .35em;
+ text-transform: uppercase; color: rgba(45,74,53,.45);
+ margin-top: 1.4rem; font-family: 'Jost', sans-serif;
+ }
 
  /* ── WORKBOOK SECTION ── */
  #workbook {
@@ -1591,10 +1623,11 @@
  }
  .produkte__grid {
  display: grid;
- grid-template-columns: repeat(3, 1fr);
+ grid-template-columns: repeat(4, 1fr);
  gap: 1.8rem;
  }
- @media (max-width: 780px) { .produkte__grid { grid-template-columns: 1fr; } }
+ @media (max-width: 1000px) { .produkte__grid { grid-template-columns: repeat(2, 1fr); } }
+ @media (max-width: 540px) { .produkte__grid { grid-template-columns: 1fr; } }
  .produkt-card {
  background: var(--cream);
  border: 1px solid rgba(200,169,110,.2);
@@ -1792,7 +1825,7 @@
  <div class="produkte__inner">
  <span class="eyebrow reveal">Digitale Waldbegleiter</span>
  <h2 class="produkte__title reveal">Womit möchtest du anfangen?</h2>
- <p class="produkte__sub reveal d1">Drei Wege. Dein Tempo. Dein Wald.</p>
+ <p class="produkte__sub reveal d1">Vier Wege. Dein Tempo. Dein Wald.</p>
 
  <div class="produkte__grid">
 
@@ -1830,6 +1863,18 @@
  <span>Jetzt kaufen</span>
  </a>
  <a href="#gutenacht" class="produkt-more">Mehr erfahren ↓</a>
+ </div>
+
+ <!-- Wald der tausend Wege -->
+ <div class="produkt-card reveal d4">
+ <span class="produkt-badge" style="background:var(--green);color:var(--cream);">Neu · Sommer</span>
+ <h3 class="produkt-name">Der Wald der<br>tausend Wege</h3>
+ <p class="produkt-desc">5 Orte. 8 Wege. Keiner ist falsch. Ein interaktives Abenteuer für draußen.</p>
+ <div class="produkt-price">7,90 €</div>
+ <a href="https://payhip.com/b/j0CNE" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
+ <span>Jetzt kaufen</span>
+ </a>
+ <a href="#tausendwege" class="produkt-more">Mehr erfahren ↓</a>
  </div>
 
  </div>
@@ -2232,6 +2277,37 @@
  </a>
  </div>
  <span class="gutenacht__note reveal d3">Einmalig · Kein Abo · Sofort-Download</span>
+ </div>
+ </section>
+
+
+ <span class="gold-sep"></span>
+
+ <!-- ══════════ WALD DER TAUSEND WEGE ══════════ -->
+ <section id="tausendwege" aria-label="Der Wald der tausend Wege">
+ <div class="tausendwege__inner">
+ <span class="tausendwege__kicker reveal">Neu · Sommeredition</span>
+ <h2 class="tausendwege__title reveal">Der Wald der<br>tausend Wege</h2>
+
+ <div class="tausendwege__body reveal d1">
+ <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--green);">Manchmal weiß man nicht, welchen Weg man nehmen soll. Das ist kein Problem. Das ist der Anfang.</em></p>
+ <p>Fünf Orte. Acht Wege. Und kein einziger davon ist falsch. Du entscheidest, welche Richtung du gehst — der Wald zeigt dir, was dort wartet.</p>
+ <p>Dieses interaktive Erlebnis ist kein Ratgeber und kein Programm. Es ist eine Einladung: Rausgehen. Entscheiden. Ankommen.</p>
+
+ <strong>Was drin steckt</strong>
+ <p>5 Waldorte · 8 Erzählpfade · Jedes Mal anders erlebt · Kein Weg führt falsch · Sofort-Download als PDF</p>
+
+ <strong>Für wen</strong>
+ <p>Für alle, die im Sommer einfach mal rausgehen wollen — mit etwas in der Hand, das mehr ist als eine To-do-Liste. Alleine, zu zweit, mit Kindern.</p>
+ </div>
+
+ <div class="tausendwege__price reveal d2">7,90 €</div>
+ <div class="reveal d2" style="text-align:center;">
+ <a href="https://payhip.com/b/j0CNE" class="btn btn--green" target="_blank" rel="noopener" style="display:inline-block;">
+ <span>Jetzt kaufen</span>
+ </a>
+ </div>
+ <span class="tausendwege__note reveal d3">Einmalig · Kein Abo · Sofort-Download</span>
  </div>
  </section>
 
