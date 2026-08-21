@@ -84,7 +84,7 @@
  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  html { scroll-behavior: smooth; }
  /* Nav-Überlappung verhindern beim Anklicken von Ankerlinks */
- section[id] { scroll-margin-top: 80px; }
+ section[id] { scroll-margin-top: 118px; }
 
  body {
  background: var(--sand);
@@ -117,9 +117,39 @@
  }
 
 
+ /* ── FREEBIE-BAR ── */
+ #freebie-bar {
+ position: fixed; top: 0; left: 0; right: 0;
+ z-index: 6100;
+ height: 38px;
+ display: flex; align-items: center; justify-content: center; gap: .9rem;
+ background: var(--green);
+ border-bottom: 1px solid rgba(200,169,110,.25);
+ }
+ .fb-bar__text {
+ font-family: 'Jost', sans-serif;
+ font-size: .6rem; letter-spacing: .28em; text-transform: uppercase;
+ color: rgba(200,169,110,.75);
+ white-space: nowrap;
+ }
+ .fb-bar__link {
+ font-family: 'Jost', sans-serif;
+ font-size: .6rem; letter-spacing: .28em; text-transform: uppercase;
+ color: var(--gold);
+ text-decoration: none;
+ border-bottom: 1px solid rgba(200,169,110,.45);
+ padding-bottom: 1px;
+ white-space: nowrap;
+ transition: color .3s, border-color .3s;
+ }
+ .fb-bar__link:hover { color: #fff; border-color: rgba(255,255,255,.6); }
+ @media (max-width: 480px) {
+ .fb-bar__text { display: none; }
+ }
+
  /* ── NAV ── */
  #nav {
- position: fixed; top: 0; left: 0; right: 0;
+ position: fixed; top: 38px; left: 0; right: 0;
  z-index: 6000;
  height: 64px;
  display: flex; align-items: center; justify-content: space-between;
@@ -141,7 +171,7 @@
  .nav__list {
  display: flex; gap: 2.2rem; list-style: none;
  }
- @media (max-width: 700px) { .nav__list { display: none; } .nav__list.open { display: flex; flex-direction: column; position: fixed; inset: 64px 0 0; background: rgba(10,18,10,.97); backdrop-filter: blur(18px); align-items: center; justify-content: center; gap: 2.5rem; z-index: 5999; } }
+ @media (max-width: 700px) { .nav__list { display: none; } .nav__list.open { display: flex; flex-direction: column; position: fixed; inset: 102px 0 0; background: rgba(10,18,10,.97); backdrop-filter: blur(18px); align-items: center; justify-content: center; gap: 2.5rem; z-index: 5999; } }
  .nav__link {
  font-size: .58rem; letter-spacing: .32em;
  text-transform: uppercase;
@@ -1562,6 +1592,12 @@
  <!-- Sound Panel wird im Hero eingebettet (siehe unten) -->
 
  <!-- Navigation -->
+ <!-- ── FREEBIE BAR ── -->
+ <div id="freebie-bar">
+ <span class="fb-bar__text">Kostenloser Waldbegleiter für draußen &mdash;</span>
+ <a href="Waldmomente%20to%20go.pdf" class="fb-bar__link" target="_blank" rel="noopener">Jetzt kostenlos herunterladen ↓</a>
+ </div>
+
  <nav id="nav" aria-label="Hauptnavigation">
  <a href="#hero" class="nav__logo">Waldmomente</a>
  <ul class="nav__list" id="nav-list">
@@ -1643,6 +1679,19 @@
  <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--gold);letter-spacing:.06em;font-weight:500;line-height:1;">Womit fange ich an?</span>
  <span style="font-family:'Jost',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,169,110,.65);font-weight:300;line-height:1;">Alle Produkte entdecken</span>
  </span>
+ </a>
+ <a href="Waldmomente%20to%20go.pdf" target="_blank" rel="noopener" style="
+ font-family:'Jost',sans-serif;
+ font-size:.6rem;
+ letter-spacing:.24em;
+ text-transform:uppercase;
+ color:rgba(200,169,110,.6);
+ text-decoration:none;
+ border-bottom:1px solid rgba(200,169,110,.3);
+ padding-bottom:2px;
+ transition:color .3s, border-color .3s;
+ " onmouseover="this.style.color='rgba(200,169,110,1)';this.style.borderColor='rgba(200,169,110,.7)'" onmouseout="this.style.color='rgba(200,169,110,.6)';this.style.borderColor='rgba(200,169,110,.3)'">
+ Kostenloser Waldbegleiter &darr;
  </a>
  <a href="#wissenschaft" style="
  font-family:'Jost',sans-serif;
