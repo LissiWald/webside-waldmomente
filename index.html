@@ -1729,6 +1729,26 @@
 .fb-bar__link{font-size:.75rem!important;color:#fdfaf5!important;opacity:1!important}
 a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4px}
 @media(max-width:540px){.produkte__grid{grid-template-columns:minmax(0,1fr)}#produkte{padding:4rem 1.2rem}.produkt-cover{max-width:200px}}
+
+/* ── FREEBIE POPUP ── */
+#fm{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:1.2rem}
+#fm[hidden]{display:none}
+.fm__backdrop{position:absolute;inset:0;background:rgba(10,18,10,.82);backdrop-filter:blur(6px)}
+.fm__box{position:relative;z-index:1;background:var(--cream);max-width:420px;width:100%;padding:2.6rem 2.2rem 2rem;box-shadow:0 24px 80px rgba(0,0,0,.45);max-height:90vh;overflow-y:auto}
+.fm__close{position:absolute;top:.7rem;right:.9rem;background:none;border:none;font-size:1.5rem;line-height:1;color:var(--brown);opacity:.5;cursor:pointer;padding:.3rem}
+.fm__close:hover{opacity:1}
+.fm__kicker{font-size:.56rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dark);display:block;margin-bottom:.9rem}
+.fm__title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.85rem;color:var(--brown);line-height:1.2;margin-bottom:.8rem}
+.fm__text{font-size:.92rem;line-height:1.7;color:var(--text);margin-bottom:1.6rem}
+.fm__input{width:100%;padding:.85rem 1rem;font-family:'Jost',sans-serif;font-size:.95rem;color:var(--text);background:#fff;border:1px solid rgba(139,104,71,.35);margin-bottom:.9rem}
+.fm__input:focus{outline:none;border-color:var(--gold-dark)}
+.fm__submit{width:100%;padding:.9rem 1rem;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cream);background:var(--green);border:none;cursor:pointer;transition:background .3s}
+.fm__submit:hover{background:var(--dark)}
+.fm__note{font-size:.72rem;line-height:1.6;color:var(--brown);opacity:.6;margin-top:1rem}
+.fm__note a{text-decoration:underline}
+.fm__dl{display:inline-block;margin-top:.4rem;padding:.9rem 2rem;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cream);background:var(--green);transition:background .3s}
+.fm__dl:hover{background:var(--dark)}
+@media(hover:none){.fm__close,.fm__submit{cursor:pointer}}
 </style>
 </head>
 <body>
@@ -1742,7 +1762,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <!-- ── FREEBIE BAR ── -->
  <div id="freebie-bar">
  <span class="fb-bar__text">Kostenloser Waldbegleiter für draußen &mdash;</span>
- <a href="Waldmomente%20to%20go.pdf" class="fb-bar__link" target="_blank" rel="noopener">Jetzt kostenlos herunterladen ↓</a>
+ <a href="Waldmomente%20to%20go.pdf" class="fb-bar__link" data-freebie target="_blank" rel="noopener">Jetzt kostenlos herunterladen ↓</a>
  </div>
 
  <nav id="nav" aria-label="Hauptnavigation">
@@ -1828,7 +1848,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <span style="font-family:'Jost',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,169,110,.65);font-weight:300;line-height:1;">Alle Produkte entdecken</span>
  </span>
  </a>
- <a href="Waldmomente%20to%20go.pdf" target="_blank" rel="noopener" style="
+ <a href="Waldmomente%20to%20go.pdf" data-freebie target="_blank" rel="noopener" style="
  font-family:'Jost',sans-serif;
  font-size:.6rem;
  letter-spacing:.24em;
@@ -1900,17 +1920,17 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <li style="font-size:.9rem;letter-spacing:.04em;color:var(--brown);padding:.4rem 0;padding-left:1.1em;text-indent:-1.1em;">· Waldsprüche – ausschneiden und mitnehmen.</li>
  </ul>
  <p style="font-size:.9rem;line-height:1.8;color:var(--brown);opacity:.8;margin-bottom:2.4rem;">Fünf Seiten als PDF. Für dich allein oder zusammen mit anderen. Aufs Handy laden oder ausdrucken.</p>
- <a href="Waldmomente%20to%20go.pdf" class="btn" target="_blank" rel="noopener">
+ <a href="Waldmomente%20to%20go.pdf" class="btn" data-freebie target="_blank" rel="noopener">
  <span>Erst herunterladen. Dann Flugmodus.</span>
  </a>
  </div>
 
  <!-- Bilder -->
  <div class="reveal d2" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start;">
- <a href="Waldmomente%20to%20go.pdf" target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+ <a href="Waldmomente%20to%20go.pdf" data-freebie target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
  <img src="togo-cover.jpeg" alt="Waldmomente to go Cover" style="width:100%;display:block;">
  </a>
- <a href="Waldmomente%20to%20go.pdf" target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+ <a href="Waldmomente%20to%20go.pdf" data-freebie target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
  <img src="togo-waldbingo.jpeg" alt="Waldbingo Vorschau" style="width:100%;display:block;">
  </a>
  </div>
@@ -2344,7 +2364,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  Aufs Handy laden oder ausdrucken.
  </p>
  <div class="reveal d4" style="text-align:center;">
- <a href="Waldmomente%20to%20go.pdf" class="btn btn--cream" target="_blank" rel="noopener" style="display:inline-block;">
+ <a href="Waldmomente%20to%20go.pdf" class="btn btn--cream" data-freebie target="_blank" rel="noopener" style="display:inline-block;">
  <span>Erst herunterladen. Dann Flugmodus.</span>
  </a>
  </div>
@@ -2377,7 +2397,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
 
  <div class="reveal" style="border-top:1px solid rgba(200,169,110,.25);padding:1.8rem 0;">
  <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--brown);margin-bottom:.7rem;font-weight:500;">Was ist Waldmomente to go — und warum ist es kostenlos?</p>
- <p style="font-size:.95rem;color:var(--brown);opacity:.8;line-height:1.75;">Weil der erste Schritt raus manchmal der schwerste ist. Waldmomente to go ist ein kleines PDF mit vier Ideen für deinen nächsten Waldspaziergang — Waldbingo, Waldmemory, Waldmandala, Waldsprüche. Keine App, kein Abo, kein Aufwand. Einfach herunterladen und mitnehmen. Kostenlos, weil ich möchte, dass du einfach mal anfängst.</p>
+ <p style="font-size:.95rem;color:var(--brown);opacity:.8;line-height:1.75;">Weil der erste Schritt raus manchmal der schwerste ist. Waldmomente to go ist ein kleines PDF mit vier Ideen für deinen nächsten Waldspaziergang — Waldbingo, Waldmemory, Waldmandala, Waldsprüche. Du trägst einmal deine E-Mail ein, dann kannst du es direkt herunterladen. Danach schicke ich dir ab und zu Post aus dem Wald; abmelden geht jederzeit mit einem Klick.</p>
  </div>
 
  <div class="reveal" style="border-top:1px solid rgba(200,169,110,.25);border-bottom:1px solid rgba(200,169,110,.25);padding:1.8rem 0;">
@@ -2845,6 +2865,81 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  document.getElementById('cookie-ok').addEventListener('click',function(){
  localStorage.setItem('cookie-ok','1');
  document.getElementById('cookie-banner').style.display='none';
+ });
+ })();
+ </script>
+
+ <!-- ══════════ FREEBIE POPUP ══════════ -->
+ <div id="fm" hidden>
+ <div class="fm__backdrop" data-fm-close></div>
+ <div class="fm__box" role="dialog" aria-modal="true" aria-labelledby="fm-title">
+ <button class="fm__close" data-fm-close aria-label="Schließen">&times;</button>
+
+ <div id="fm-view-form">
+ <span class="fm__kicker">Kostenlos für dich</span>
+ <h2 class="fm__title" id="fm-title">Waldmomente to go</h2>
+ <p class="fm__text">Vier kleine Waldideen für deinen nächsten Spaziergang. Trag deine E-Mail ein, dann kannst du sie direkt herunterladen.</p>
+ <form id="fm-form" action="https://assets.mailerlite.com/jsonp/2587270/forms/198406643568870499/subscribe" method="post" target="fm-sink">
+ <input type="hidden" name="ml-submit" value="1">
+ <input type="email" name="fields[email]" class="fm__input" required placeholder="deine@email.de" autocomplete="email" aria-label="E-Mail-Adresse">
+ <button type="submit" class="fm__submit">Herunterladen</button>
+ </form>
+ <p class="fm__note">Du bekommst danach ab und zu Post von mir aus dem Wald. Abmelden geht jederzeit mit einem Klick. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+ </div>
+
+ <div id="fm-view-done" hidden>
+ <span class="fm__kicker">Fertig</span>
+ <h2 class="fm__title">Dein Waldbegleiter wartet.</h2>
+ <p class="fm__text">Schau gleich noch in dein Postfach — dort liegt eine Mail, mit der du deine Anmeldung bestätigst.</p>
+ <a href="Waldmomente%20to%20go.pdf" class="fm__dl" target="_blank" rel="noopener">PDF öffnen</a>
+ </div>
+ </div>
+ </div>
+ <iframe name="fm-sink" title="Formularziel" style="display:none" aria-hidden="true"></iframe>
+
+ <script>
+ (function(){
+ var fm = document.getElementById('fm');
+ var form = document.getElementById('fm-form');
+ var viewForm = document.getElementById('fm-view-form');
+ var viewDone = document.getElementById('fm-view-done');
+ var lastFocus = null;
+
+ function open(e){
+ if(e) e.preventDefault();
+ lastFocus = document.activeElement;
+ viewForm.hidden = false;
+ viewDone.hidden = true;
+ fm.hidden = false;
+ document.body.style.overflow = 'hidden';
+ var input = form.querySelector('input[type=email]');
+ if(input) setTimeout(function(){ input.focus(); }, 60);
+ }
+
+ function close(){
+ fm.hidden = true;
+ document.body.style.overflow = '';
+ if(lastFocus) lastFocus.focus();
+ }
+
+ document.querySelectorAll('[data-freebie]').forEach(function(el){
+ el.addEventListener('click', open);
+ });
+
+ fm.querySelectorAll('[data-fm-close]').forEach(function(el){
+ el.addEventListener('click', close);
+ });
+
+ document.addEventListener('keydown', function(e){
+ if(e.key === 'Escape' && !fm.hidden) close();
+ });
+
+ // Formular postet in das versteckte iframe, die Seite bleibt stehen.
+ form.addEventListener('submit', function(){
+ setTimeout(function(){
+ viewForm.hidden = true;
+ viewDone.hidden = false;
+ }, 400);
  });
  })();
  </script>
