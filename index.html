@@ -1716,6 +1716,20 @@
  }
  </style>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "d571c77dc41a421f85257e91ba24e251"}'></script><!-- End Cloudflare Web Analytics -->
+<style>
+/* Produktdarstellung und Lesbarkeit */
+.produkte__grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:820px;margin-inline:auto}
+.produkt-card{padding:1.6rem;min-width:0}
+.produkt-cover{width:100%;max-width:230px;height:auto;display:block;margin:0 auto .8rem;box-shadow:0 4px 16px #0002}
+.produkt-badge,.produkt-more{font-size:.75rem;letter-spacing:.12em;opacity:1;color:#70542c}
+.produkt-card--feat .produkt-badge,.produkt-card--feat .produkt-more{color:#f3dba8}
+.produkt-name{font-size:1.8rem;color:#604825}.produkt-card--feat .produkt-name{color:#f3dba8}
+.produkt-desc{opacity:1}.produkt-card--feat .produkt-desc{color:#fdfaf5}
+.nav__link{font-size:.75rem!important;color:#fdfaf5!important;opacity:1!important}
+.fb-bar__link{font-size:.75rem!important;color:#fdfaf5!important;opacity:1!important}
+a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4px}
+@media(max-width:540px){.produkte__grid{grid-template-columns:minmax(0,1fr)}#produkte{padding:4rem 1.2rem}.produkt-cover{max-width:200px}}
+</style>
 </head>
 <body>
 
@@ -1924,9 +1938,10 @@
 
  <!-- Waldspur -->
  <div class="produkt-card reveal d1">
+ <img src="waldmomente-spur-cover.jpg" alt="Cover Waldmomente auf der Spur" class="produkt-cover" loading="lazy">
  <span class="produkt-badge">Für draußen</span>
  <h3 class="produkt-name">Waldmomente<br>auf der Spur</h3>
- <p class="produkt-desc">Du willst raus. Aber der Kopf kommt nicht mit. 12 Aufgaben die das ändern.</p>
+ <p class="produkt-desc">Zwölf Beobachtungsaufgaben für deinen nächsten Waldspaziergang. Als PDF zum Mitnehmen.</p>
  <div class="produkt-price">7,90 €</div>
  <a href="https://payhip.com/b/nNLAI" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
  <span>Jetzt kaufen</span>
@@ -1936,9 +1951,10 @@
 
  <!-- Workbook featured -->
  <div class="produkt-card produkt-card--feat reveal d2">
+ <img src="waldmomente-workbook-cover.jpg" alt="Cover Waldmomente Workbook" class="produkt-cover" loading="lazy">
  <span class="produkt-badge">Empfohlen</span>
  <h3 class="produkt-name">Waldmomente<br>Workbook</h3>
- <p class="produkt-desc">Du funktionierst. Jeden Tag. Für alle. 49 Seiten mit den Fragen, die du dir noch nie gestellt hast.</p>
+ <p class="produkt-desc">Du musst nicht alles tragen. 36 Seiten für konkrete Absprachen, klare Zuständigkeiten und deine Pause. Digital ausfüllbar.</p>
  <div class="produkt-price">24,90 €</div>
  <a href="https://payhip.com/b/YavhW" class="btn btn--cream reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
  <span>Jetzt kaufen</span>
@@ -2243,25 +2259,19 @@
  <!-- ══════════ SPUR ══════════ -->
  <section id="spur" aria-label="Waldmomente auf der Spur">
  <div class="spur__inner">
- <span class="spur__kicker reveal">12 Aufgaben · Sofort draußen</span>
+ <span class="spur__kicker reveal">Zwölf Aufgaben · Sofort draußen</span>
  <h2 class="spur__title reveal">Waldmomente<br>auf der Spur</h2>
 
  <div class="spur__body reveal d1">
- <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);">Du willst raus. Aber der Kopf kommt nicht mit.</em></p>
- <p>Du stehst im Wald. Schön. Aber nach fünf Minuten kreisen die Gedanken schon wieder. Die Liste. Das Gespräch von gestern. Was du noch erledigen musst.</p>
- <p>Die Spur gibt deinem Kopf etwas anderes zu tun. Zwölf konkrete Aufgaben, die dich zwingen, wirklich anzukommen.</p>
+ <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);">Schon mitten im Wald. Gedanklich noch beim Einkauf.</em></p>
+ <p>Du bist draußen. Trotzdem gehst du im Kopf durch, was heute noch alles ansteht.</p>
 
  <strong>Was das ist</strong>
- <p>Ein PDF. 12 Spuren durch den Wald, jede mit einer klaren Aufgabe die du direkt draußen erledigst. Nicht im Kopf. Nicht später. Jetzt.</p>
- <p>Kein Kurs. Kein Programm. Kein Vorbereiten. Einfach ausdrucken oder auf dem Handy öffnen und losgehen.</p>
+ <p>Ein PDF mit zwölf konkreten Beobachtungsaufgaben für unterwegs. Rinde genauer ansehen, Knospen entdecken, Geräuschen folgen.</p>
 
- <strong>Was dich erwartet</strong>
- <p>Spuren die alle Sinne ansprechen: Sehen, Hören, Tasten, Innehalten. Manche dauern zwei Minuten. Manche bleiben den ganzen Tag bei dir.</p>
- <p>Allein machbar. Zu zweit noch besser. Mit der Familie auch.</p>
-
- <strong>Für wen</strong>
- <p>Für alle, die schon oft im Wald waren aber nie wirklich angekommen sind. Die gerne draußen sind, aber nicht wissen, wie sie abschalten.</p>
- <p>Das hier ist der einfachste Einstieg in Waldmomente. Kein Aufwand. Sofort wirksam.</p>
+ <strong>So geht's</strong>
+ <p>Aufs Handy laden oder ausdrucken. Eine Aufgabe auswählen und losgehen. Allein, zu zweit oder mit der Familie.</p>
+ <p>Für deine nächste Runde – auch auf dem Weg, den du längst zu kennen glaubst.</p>
  </div>
 
  <div class="spur__price reveal d2">7,90 €</div>
@@ -2280,26 +2290,20 @@
  <!-- ══════════ WORKBOOK ══════════ -->
  <section id="workbook" aria-label="Waldmomente Workbook">
  <div class="workbook__inner">
- <span class="workbook__kicker reveal">49 Seiten · 10 Kapitel</span>
+ <span class="workbook__kicker reveal">36 Seiten · 10 Kapitel</span>
  <h2 class="workbook__title reveal">Waldmomente<br>Workbook</h2>
 
  <div class="workbook__body reveal d1">
- <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);">Du bist nicht schwach. Du bist erschöpft.</em></p>
- <p>Du stehst morgens auf und fängst sofort an zu funktionieren. Für andere. Für die Arbeit. Für die Familie. Irgendwann weißt du nicht mehr, was du eigentlich selbst brauchst.</p>
- <p>Das ist kein Mangel. Das ist ein Unterschied. Und dieses Workbook stellt dir die Fragen, die du dir selbst noch nie gestellt hast.</p>
+ <p><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);">Du musst nicht alles tragen.</em></p>
+ <p>Alle fragen dich. Du denkst dran. Und selbst deine Pause muss noch organisiert werden.</p>
 
  <strong>Was das ist</strong>
- <p>49 Seiten. 10 Kapitel. Jedes beginnt mit einem Waldimpuls. Mit einer Frage, die langsam in dir arbeitet.</p>
- <p>Wo trägst du Dinge, die nicht dir gehören? Wo sagst du Ja, obwohl dein ganzer Körper Nein schreit? Was macht dich jeden Tag innerlich kleiner?</p>
- <p>Kein Ratgeber. Kein Programm. Kein Optimierungsplan. Nur du, ein Stift und der Wald.</p>
+ <p>36 Seiten mit konkreten Fragen, Schreibseiten und zehn Waldimpulsen. Du machst sichtbar, was du täglich übernimmst – vom Mitdenken bis zum Erledigen.</p>
 
- <strong>Wie es funktioniert</strong>
- <p>Lies langsam. Mach Pausen. Leg das Handy weg, wenn du merkst, dass dein Kopf wieder schneller wird als dein Herz.</p>
- <p>Und wenn du kannst: Geh damit nach draußen. Zwischen Bäumen wird vieles klarer. Nicht weil der Wald Antworten gibt. Sondern weil er nichts von dir will.</p>
-
- <strong>Für wen</strong>
- <p>Für alle, die funktionieren und sich dabei verlieren. Die schon vieles versucht haben und immer noch nicht bei sich angekommen sind.</p>
- <p>Nicht für dich, wenn du Tipps suchst. Das ist kein Ratgeber. Das ist ein Spiegel.</p>
+ <strong>Was du damit anfängst</strong>
+ <p>Eine Aufgabe wirklich abgeben. Vor dem nächsten Ja kurz überlegen. Eine Pause verabreden, die im Kalender steht.</p>
+ <p>63 ausfüllbare Textfelder. In einem PDF-Programm mit Formularfunktion ausfüllen und speichern oder einzelne Schreibseiten ausdrucken.</p>
+ <p>Für Menschen, bei denen viel zusammenläuft. Auch dann, wenn niemand sieht, wie viel.</p>
  </div>
 
  <div class="workbook__price reveal d2">24,90 €</div>
@@ -2368,7 +2372,7 @@
 
  <div class="reveal" style="border-top:1px solid rgba(200,169,110,.25);padding:1.8rem 0;">
  <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--brown);margin-bottom:.7rem;font-weight:500;">Was ist der Unterschied zwischen Spur und Workbook?</p>
- <p style="font-size:.95rem;color:var(--brown);opacity:.8;line-height:1.75;">Die Spur (7,90 €) bringt dich sofort raus: konkrete Aufgaben, direkt anwendbar. Das Workbook (24,90 €) geht tiefer: 10 Kapitel mit ehrlichen Fragen an dich, Raum zum Schreiben und Innehalten. Beides ergänzt sich.</p>
+ <p style="font-size:.95rem;color:var(--brown);opacity:.8;line-height:1.75;">Die Spur (7,90 €) enthält zwölf Beobachtungsaufgaben für draußen. Im Workbook (24,90 €) arbeitest du auf 36 Seiten an Alltagssituationen und Absprachen. Zehn Waldimpulse begleiten die Schreibseiten; 63 Textfelder sind digital ausfüllbar. Beides ergänzt sich.</p>
  </div>
 
  <div class="reveal" style="border-top:1px solid rgba(200,169,110,.25);padding:1.8rem 0;">
