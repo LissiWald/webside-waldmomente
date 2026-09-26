@@ -685,6 +685,8 @@
  bottom: 2.5rem; left: 50%;
  transform: translateX(-50%);
  display: flex; flex-direction: column; align-items: center;
+ /* rein dekorativ - darf Klicks auf die Hero-Links nicht abfangen */
+ pointer-events: none;
  }
  .scroll-ind__line {
  width: 1px; height: 52px;
@@ -1762,7 +1764,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <!-- ── FREEBIE BAR ── -->
  <div id="freebie-bar">
  <span class="fb-bar__text">Kostenloser Waldbegleiter für draußen &mdash;</span>
- <a href="Waldmomente%20to%20go.pdf" class="fb-bar__link" data-freebie target="_blank" rel="noopener">Jetzt kostenlos herunterladen ↓</a>
+ <a href="#togo" class="fb-bar__link" data-freebie target="_blank" rel="noopener">Jetzt kostenlos herunterladen ↓</a>
  </div>
 
  <nav id="nav" aria-label="Hauptnavigation">
@@ -1848,7 +1850,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <span style="font-family:'Jost',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,169,110,.65);font-weight:300;line-height:1;">Alle Produkte entdecken</span>
  </span>
  </a>
- <a href="Waldmomente%20to%20go.pdf" data-freebie target="_blank" rel="noopener" style="
+ <a href="#togo" data-freebie target="_blank" rel="noopener" style="
  font-family:'Jost',sans-serif;
  font-size:.6rem;
  letter-spacing:.24em;
@@ -1920,17 +1922,17 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <li style="font-size:.9rem;letter-spacing:.04em;color:var(--brown);padding:.4rem 0;padding-left:1.1em;text-indent:-1.1em;">· Waldsprüche – ausschneiden und mitnehmen.</li>
  </ul>
  <p style="font-size:.9rem;line-height:1.8;color:var(--brown);opacity:.8;margin-bottom:2.4rem;">Fünf Seiten als PDF. Für dich allein oder zusammen mit anderen. Aufs Handy laden oder ausdrucken.</p>
- <a href="Waldmomente%20to%20go.pdf" class="btn" data-freebie target="_blank" rel="noopener">
+ <a href="#togo" class="btn" data-freebie target="_blank" rel="noopener">
  <span>Erst herunterladen. Dann Flugmodus.</span>
  </a>
  </div>
 
  <!-- Bilder -->
  <div class="reveal d2" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start;">
- <a href="Waldmomente%20to%20go.pdf" data-freebie target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+ <a href="#togo" data-freebie target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
  <img src="togo-cover.jpeg" alt="Waldmomente to go Cover" style="width:100%;display:block;">
  </a>
- <a href="Waldmomente%20to%20go.pdf" data-freebie target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+ <a href="#togo" data-freebie target="_blank" rel="noopener" style="display:block;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);transition:transform .4s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
  <img src="togo-waldbingo.jpeg" alt="Waldbingo Vorschau" style="width:100%;display:block;">
  </a>
  </div>
@@ -2032,7 +2034,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="si__facts" style="margin:3rem 0;">
  <div class="si__fact reveal">
  <div class="si__fact-num fact__num" data-from="0" data-to="13" data-prefix="" data-suffix=" %" data-dur="1500">0 %</div>
- <p class="si__fact-txt">weniger Cortisol im Blut bereits nach 15 Minuten im Wald. Ohne Sport. Ohne Anstrengung. Einfach da sein.</p>
+ <p class="si__fact-txt">weniger Cortisol im Speichel bereits nach 15 Minuten im Wald. Ohne Sport. Ohne Anstrengung. Einfach da sein.</p>
  <span class="si__fact-src">Miyazaki et al., Chiba-Universität Tokyo, 2010</span>
  </div>
  <div class="si__fact reveal d1">
@@ -2047,8 +2049,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </div>
  <div class="si__fact reveal d3">
  <div class="si__fact-num">seit 1982</div>
- <p class="si__fact-txt">ist Shinrin-yoku in Japan Teil der staatlichen Gesundheitsversorgung. Der Wald ist keine Wellness Mode. Er ist angewandte Medizin.</p>
- <span class="si__fact-src">Japanisches Forstministerium, Yoshifumi Miyazaki</span>
+ <p class="si__fact-txt">gibt es den Begriff Shinrin-yoku. Die japanische Forstbehörde prägte ihn 1982, seither wird die Wirkung des Waldes systematisch erforscht.</p>
+ <span class="si__fact-src">Japanische Forstbehörde; Forschung u. a. Yoshifumi Miyazaki</span>
  </div>
  </div>
 
@@ -2096,11 +2098,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <span class="gold-sep reveal d1"></span>
  <p class="wiss__text reveal d2">
  Vielleicht brauchst du nur 20 Minuten Wald.
- Studien zeigen: schon zwei Stunden in der Natur pro Woche senken das Stresshormon Cortisol messbar.
- Nicht gefühlt. Nachgewiesen.
- Dein Blutdruck sinkt. Dein Nervensystem schaltet um. Dein Kopf wird leiser.
+ Wer pro Woche mindestens zwei Stunden in der Natur verbringt, berichtet deutlich häufiger von guter Gesundheit und hohem Wohlbefinden. Das zeigt eine Auswertung von fast 20.000 Menschen.
  Der Wald macht das. Nicht du. Du musst da nur reingehen.
  </p>
+ <span class="si__fact-src reveal d3" style="display:block;margin-top:1.2rem;">White et al., University of Exeter, Scientific Reports, 2019</span>
  </div>
  </section>
 
@@ -2364,7 +2365,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  Aufs Handy laden oder ausdrucken.
  </p>
  <div class="reveal d4" style="text-align:center;">
- <a href="Waldmomente%20to%20go.pdf" class="btn btn--cream" data-freebie target="_blank" rel="noopener" style="display:inline-block;">
+ <a href="#togo" class="btn btn--cream" data-freebie target="_blank" rel="noopener" style="display:inline-block;">
  <span>Erst herunterladen. Dann Flugmodus.</span>
  </a>
  </div>
@@ -2830,11 +2831,11 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  bottom:0;left:0;right:0;
  background:#1a2410;
  color:#e8e0d0;
- padding:1.2rem 1.5rem;
+ padding:.65rem 1.2rem;
  z-index:9999;
  font-family:'Jost',sans-serif;
- font-size:.9rem;
- line-height:1.6;
+ font-size:.78rem;
+ line-height:1.45;
  box-shadow:0 -2px 20px rgba(0,0,0,.35);
  ">
  <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;">
