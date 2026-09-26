@@ -952,38 +952,6 @@
  color: rgba(253,250,245,.75);
  max-width: 640px; margin: 0 auto 3.5rem;
  }
- .si__facts {
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
- gap: 1.5rem; margin-bottom: 4rem;
- text-align: left;
- }
- .si__fact {
- border: 1px solid rgba(200,169,110,.18);
- padding: 1.8rem 1.6rem;
- background: rgba(200,169,110,.04);
- position: relative;
- }
- .si__fact::before {
- content: '';
- position: absolute; top: 0; left: 1.6rem; right: 1.6rem; height: 1px;
- background: linear-gradient(90deg, transparent, var(--gold), transparent);
- }
- .si__fact-num {
- font-family: 'Cormorant Garamond', serif; font-weight: 600;
- font-size: 2.4rem; color: var(--gold); line-height: 1;
- margin-bottom: .5rem;
- text-shadow: 0 0 25px rgba(200,169,110,.5);
- }
- .si__fact-txt {
- font-size: .82rem; line-height: 1.75;
- color: #3A2A1A;
- }
- .si__fact-src {
- font-size: .62rem; color: rgba(58,42,26,.55);
- margin-top: .6rem; display: block;
- font-style: italic; letter-spacing: .03em;
- }
  .si__invite {
  font-family: 'Cormorant Garamond', serif; font-style: italic;
  font-size: clamp(1.3rem, 3vw, 1.8rem);
@@ -1451,13 +1419,6 @@
  /* ═══════════════════════════════
  WISSENSCHAFT
  ═══════════════════════════════ */
- #wissenschaft { background: var(--sand); padding: 7rem 2rem; }
- .wiss__inner { max-width: 740px; margin: 0 auto; text-align: center; }
- .wiss__text {
- font-size: 1.05rem; line-height: 2.05;
- color: var(--text); font-weight: 300;
- letter-spacing: 0.01em; margin: 2rem 0 0;
- }
 
  /* ═══════════════════════════════
  COMMUNITY INSTA
@@ -1729,7 +1690,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  " onmouseover="this.style.color='rgba(200,169,110,1)';this.style.borderColor='rgba(200,169,110,.7)'" onmouseout="this.style.color='rgba(200,169,110,.6)';this.style.borderColor='rgba(200,169,110,.3)'">
  Kostenloser Waldbegleiter &darr;
  </a>
- <a href="#wissenschaft" style="
+ <a href="#why" style="
  font-family:'Jost',sans-serif;
  font-size:.65rem;
  letter-spacing:.22em;
@@ -1889,42 +1850,14 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <!-- ══════════ WARUM WALDBADEN ══════════ -->
  <section id="why">
  <div class="why__inner">
- <h2 class="sec-title reveal sh" data-t="Dein Körper weiß es längst.">
- Dein Körper weiß es längst.
+ <h2 class="sec-title reveal sh" data-t="Was draußen anders wird">
+ Was draußen anders wird
  </h2>
  <span class="gold-sep reveal d1"></span>
 
- <div class="si__facts" style="margin:3rem 0;">
- <div class="si__fact reveal">
- <div class="si__fact-num fact__num" data-from="0" data-to="13" data-prefix="" data-suffix=" %" data-dur="1500">0 %</div>
- <p class="si__fact-txt">weniger Cortisol im Speichel bereits nach 15 Minuten im Wald. Ohne Sport. Ohne Anstrengung. Einfach da sein.</p>
- <span class="si__fact-src">Miyazaki et al., Chiba-Universität Tokyo, 2010</span>
- </div>
- <div class="si__fact reveal d1">
- <div class="si__fact-num fact__num" data-from="0" data-to="50" data-prefix="" data-suffix=" %" data-dur="1800">0 %</div>
- <p class="si__fact-txt">mehr Immunzellen (NK Zellen) nach einem Tag Waldbaden. Sie bekämpfen Viren und Tumorzellen. Wirkung hält bis zu 7 Tage an.</p>
- <span class="si__fact-src">Li Q., Tokyo Nippon Medical School, European Journal of Applied Physiology, 2010</span>
- </div>
- <div class="si__fact reveal d2">
- <div class="si__fact-num fact__num" data-from="0" data-to="90" data-prefix="" data-suffix=" Min." data-dur="2000">0 Min.</div>
- <p class="si__fact-txt">Naturspaziergang reichen, um Grübeln messbar zu reduzieren. Stanford-Forscher konnten die Veränderung im Gehirn per MRT sichtbar machen.</p>
- <span class="si__fact-src">Bratman et al., Stanford University, PNAS, 2015</span>
- </div>
- <div class="si__fact reveal d3">
- <div class="si__fact-num">seit 1982</div>
- <p class="si__fact-txt">gibt es den Begriff Shinrin-yoku. Die japanische Forstbehörde prägte ihn 1982, seither wird die Wirkung des Waldes systematisch erforscht.</p>
- <span class="si__fact-src">Japanische Forstbehörde; Forschung u. a. Yoshifumi Miyazaki</span>
- </div>
- </div>
-
  <p class="body-text reveal d2">
- Du lebst in einer Zeit, die deinen Kopf niemals wirklich ruhen lässt.
- Nachrichten, Benachrichtigungen, Erwartungen.
- Dein Nervensystem ist im Dauerbetrieb.
- Das ist kein Charakterfehler. Das ist Biologie.
- Und der Wald ist die älteste Antwort darauf.
- Schon 20 Minuten im Wald reichen, um den Cortisolspiegel messbar zu senken.
- Das ist keine Wellness-Behauptung. Das ist Wissenschaft.
+ Im Wald gibt es Dinge, die nicht gleichzeitig deine Antwort brauchen:
+ Licht auf einem Stamm, ein Geräusch hinter dir, den nächsten Schritt auf dem Weg.
  </p>
 
  <div class="strip reveal" data-strip>
@@ -1932,14 +1865,9 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </div>
 
  <p class="body-text reveal">
- Dein Gehirn atmet auf. Im Wald beruhigt sich der präfrontale Cortex,
- jener Teil, der im Alltag ununterbrochen arbeitet.
- Das Grübeln nimmt ab. Der Kopf wird stiller.
- Die Bäume helfen aktiv. Sie geben Terpene ab,
- ätherische Verbindungen, die du einatmest ohne es zu merken.
- Diese Stoffe stimulieren nachweislich das Immunsystem.
- Der typische Waldduft ist keine Romantik. Er ist Medizin.
- Der Wald ist kein Luxus. Er ist das, was dein Körper schon immer gebraucht hat.
+ Untersuchungen zu Naturaufenthalten zeigen interessante Zusammenhänge mit Stress und Grübeln.
+ Wie sich ein Spaziergang für dich anfühlt, ist trotzdem keine Zahl und kein Versprechen.
+ Bei Waldmomente geht es darum, genauer hinzusehen und eigene Erfahrungen zu machen.
  </p>
 
  <div class="strip reveal" data-strip>
@@ -1952,21 +1880,6 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
 
 
  <span class="gold-sep"></span>
-
- <!-- ══════════ WISSENSCHAFT ══════════ -->
- <section id="wissenschaft" aria-label="Wald und Wissenschaft">
- <div class="wiss__inner">
- <span class="eyebrow reveal">Wald &amp; Wissenschaft</span>
- <h2 class="sec-title reveal sh" data-t="Zwanzig Minuten reichen schon.">Zwanzig Minuten reichen schon.</h2>
- <span class="gold-sep reveal d1"></span>
- <p class="wiss__text reveal d2">
- Vielleicht brauchst du nur 20 Minuten Wald.
- Wer pro Woche mindestens zwei Stunden in der Natur verbringt, berichtet deutlich häufiger von guter Gesundheit und hohem Wohlbefinden. Das zeigt eine Auswertung von fast 20.000 Menschen.
- Der Wald macht das. Nicht du. Du musst da nur reingehen.
- </p>
- <span class="si__fact-src reveal d3" style="display:block;margin-top:1.2rem;">White et al., University of Exeter, Scientific Reports, 2019</span>
- </div>
- </section>
 
 
  <span class="gold-sep"></span>
@@ -2076,7 +1989,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="insta__inner">
  <span class="eyebrow reveal">Community</span>
  <h2 class="insta__title reveal sh" data-t="Hier leben die Waldmomente.">Hier leben die Waldmomente.</h2>
- <p class="insta__sub reveal d1">Jeden Tag. Auf Instagram.</p>
+ <p class="insta__sub reveal d1">Draußen entdeckt. Auf Instagram geteilt.</p>
  <a href="https://instagram.com/waldmomente" class="insta__preview-link reveal d2" target="_blank" rel="noopener" aria-label="@waldmomente auf Instagram">
  <img src="claude/IMG_5773.jpeg" alt="@waldmomente Instagram Feed" class="insta__preview-img">
  <span class="insta__preview-overlay">
@@ -2313,7 +2226,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <section id="kooperation" aria-label="Kooperation">
  <div class="koop__inner">
  <span class="eyebrow reveal">Zusammenarbeiten</span>
- <h2 class="koop__title reveal sh" data-t="Waldmomente erreicht täglich Menschen, die gern draußen unterwegs sind.">Waldmomente erreicht täglich Menschen, die gern draußen unterwegs sind.</h2>
+ <h2 class="koop__title reveal sh" data-t="Waldmomente erreicht Menschen, die gern draußen unterwegs sind.">Waldmomente erreicht Menschen, die gern draußen unterwegs sind.</h2>
  <p class="koop__text reveal d1">
  Neugierig, naturverbunden, oft im Wald.
  Ich empfehle nur, was ich selbst benutze.
