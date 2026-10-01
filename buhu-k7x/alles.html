@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Buhu · Übersicht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="radar.css">
+<style>
+  .liste { list-style: none; margin: 0 0 2rem; }
+  .eintrag {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.1rem;
+    margin-bottom: .7rem;
+    background: rgba(43,50,38,.6);
+    border: 1px solid rgba(200,169,110,.22);
+    border-radius: 14px;
+    min-height: 68px;
+    text-decoration: none;
+    transition: background .2s, border-color .2s;
+  }
+  .eintrag:active { background: rgba(200,169,110,.16); border-color: var(--gold); }
+  .eintrag--start { background: rgba(45,74,53,.7); border-color: rgba(200,169,110,.45); }
+
+  .eintrag__nr {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--gold); color: var(--nacht);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+  }
+  .eintrag--start .eintrag__nr { background: var(--radar); font-size: .95rem; }
+
+  .eintrag__text { flex: 1; min-width: 0; }
+  .eintrag__titel {
+    display: block;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1.25rem; color: var(--gold); line-height: 1.25;
+  }
+  .eintrag__was {
+    display: block;
+    font-size: .8rem; line-height: 1.4;
+    color: rgba(239,232,216,.6); margin-top: .2rem;
+  }
+  .eintrag__pfeil { color: rgba(200,169,110,.5); font-size: 1.3rem; flex-shrink: 0; }
+
+  .hinweis {
+    background: rgba(232,185,110,.1);
+    border: 1px solid rgba(232,185,110,.3);
+    border-radius: 12px;
+    padding: .9rem 1rem;
+    font-size: .84rem;
+    line-height: 1.6;
+    color: var(--warn);
+    margin-bottom: 1.6rem;
+  }
+  .werkzeug {
+    display: flex; gap: .6rem; flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .werkzeug button {
+    flex: 1 1 auto;
+    min-height: 48px;
+    padding: .7rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(239,232,216,.25);
+    border-radius: 10px;
+    color: rgba(239,232,216,.75);
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .werkzeug button:active { background: rgba(239,232,216,.1); }
+  .meldung {
+    font-size: .82rem; color: var(--radar);
+    min-height: 1.3em; margin-bottom: 1.4rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="kopf">
+  <div>
+    <div class="kopf__marke">Waldmomente</div>
+    <div class="kopf__station">Buhu · Übersicht</div>
+  </div>
+</header>
+
+<main class="huelle">
+
+  <p class="hinweis">Nur für dich zum Testen. Diese Seite ist nicht verlinkt und steht auf noindex. Käuferinnen bekommen sie nicht zu sehen.</p>
+
+  <ul class="liste">
+    <li>
+      <a class="eintrag eintrag--start" href="start.html">
+        <span class="eintrag__nr">Start</span>
+        <span class="eintrag__text">
+          <span class="eintrag__titel">Für die Erwachsenen</span>
+          <span class="eintrag__was">Ablauf, Freigaben, Regeln, Tour offline laden</span>
+        </span>
+        <span class="eintrag__pfeil">›</span>
+      </a>
+    </li>
+
+    <li><a class="eintrag" href="station1.html">
+      <span class="eintrag__nr">1</span>
+      <span class="eintrag__text">
+        <span class="eintrag__titel">Nebel</span>
+        <span class="eintrag__was">Nebel wegwischen, dann meldet sich Buhu</span>
+      </span><span class="eintrag__pfeil">›</span></a></li>
+
+    <li><a class="eintrag" href="station2.html">
+      <span class="eintrag__nr">2</span>
+      <span class="eintrag__text">
+        <span class="eintrag__titel">Waldgeräusche</span>
+        <span class="eintrag__was">Vier Klänge in der richtigen Reihenfolge</span>
+      </span><span class="eintrag__pfeil">›</span></a></li>
+
+    <li><a class="eintrag" href="station3.html">
+      <span class="eintrag__nr">3</span>
+      <span class="eintrag__text">
+        <span class="eintrag__titel">Waldfarben</span>
+        <span class="eintrag__was">Drei Farben, mit Kamera oder zum Antippen</span>
+      </span><span class="eintrag__pfeil">›</span></a></li>
+
+    <li><a class="eintrag" href="station4.html">
+      <span class="eintrag__nr">4</span>
+      <span class="eintrag__text">
+        <span class="eintrag__titel">Geisterecho</span>
+        <span class="eintrag__was">Drei Klopfrhythmen nachtippen</span>
+      </span><span class="eintrag__pfeil">›</span></a></li>
+
+    <li><a class="eintrag" href="station5.html">
+      <span class="eintrag__nr">5</span>
+      <span class="eintrag__text">
+        <span class="eintrag__titel">Geisterkugel</span>
+        <span class="eintrag__was">Labyrinth, mit Neigen oder mit dem Finger</span>
+      </span><span class="eintrag__pfeil">›</span></a></li>
+
+    <li><a class="eintrag" href="station6.html">
+      <span class="eintrag__nr">6</span>
+      <span class="eintrag__text">
+        <span class="eintrag__titel">Tonschloss</span>
+        <span class="eintrag__was">Drei Töne merken und nachtippen</span>
+      </span><span class="eintrag__pfeil">›</span></a></li>
+
+    <li><a class="eintrag" href="station7.html">
+      <span class="eintrag__nr">7</span>
+      <span class="eintrag__text">
+        <span class="eintrag__titel">Buhu rufen</span>
+        <span class="eintrag__was">Stille, Ruf, Finale mit dem zweiten Klopfen</span>
+      </span><span class="eintrag__pfeil">›</span></a></li>
+  </ul>
+
+  <div class="werkzeug">
+    <button id="offlineKnopf">Offline laden</button>
+    <button id="leerenKnopf">Speicher leeren</button>
+  </div>
+  <p class="meldung" id="meldung"></p>
+
+  <p class="fussnote">Zum Testen am besten der Reihe nach durchgehen. Station 7 braucht gut eine Minute, dort kommen zehn Sekunden Stille und danach das Finale.</p>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var m = document.getElementById('meldung');
+
+  document.getElementById('offlineKnopf').addEventListener('click', function () {
+    if (!('serviceWorker' in navigator)) { m.textContent = 'Dieses Handy kann das nicht.'; return; }
+    m.textContent = 'Wird geladen …';
+    navigator.serviceWorker.register('sw.js')
+      .then(function () { return navigator.serviceWorker.ready; })
+      .then(function () {
+        setTimeout(function () {
+          caches.open('buhu-v1').then(function (l) { return l.keys(); })
+            .then(function (k) { m.textContent = k.length + ' Teile liegen auf dem Handy.'; });
+        }, 1500);
+      })
+      .catch(function () { m.textContent = 'Hat nicht geklappt.'; });
+  });
+
+  document.getElementById('leerenKnopf').addEventListener('click', function () {
+    m.textContent = 'Wird geleert …';
+    var aufgaben = [caches.keys().then(function (n) {
+      return Promise.all(n.map(function (x) { return caches.delete(x); }));
+    })];
+    if ('serviceWorker' in navigator) {
+      aufgaben.push(navigator.serviceWorker.getRegistrations().then(function (r) {
+        return Promise.all(r.map(function (x) { return x.unregister(); }));
+      }));
+    }
+    Promise.all(aufgaben).then(function () {
+      m.textContent = 'Leer. Beim nächsten Besuch wird alles neu geholt.';
+    });
+  });
+})();
+</script>
+</body>
+</html>
