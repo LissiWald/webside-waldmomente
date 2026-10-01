@@ -57,7 +57,6 @@
 
   <p class="ruecksage" id="ruecksage"></p>
 
-  <button class="knopf knopf--leise" id="schwererKnopf" hidden>Schwerer, mit fünf Geräuschen</button>
 
   <div class="abschluss" id="abschluss" hidden>
     <p class="abschluss__zeile"></p>
@@ -80,33 +79,13 @@
 
   /* Echte Aufnahmen aus dem Waldmomente Klangarchiv, kurz geschnitten.
      Zusammen nur rund 50 KB, damit sie auch bei schwachem Empfang da sind. */
+  /* Echte Aufnahmen aus dem Waldmomente Klangarchiv, kurz geschnitten.
+     Die Karten sind gezeichnet und bringen Rahmen und Beschriftung mit. */
   var ALLE = {
-    wind:    { name: 'Wind',    datei: 'klang/wind.mp3',
-      bild: '<svg viewBox="0 0 48 48" fill="none" stroke="#EFE8D8" stroke-width="4.4" stroke-linecap="round">' +
-            '<path d="M6 16h18a5 5 0 10-5-6"/><path d="M6 26h24a5 5 0 115 7"/><path d="M6 36h12"/></svg>' },
-
-    laub:    { name: 'Laub',    datei: 'klang/laub.mp3',
-      bild: '<svg viewBox="0 0 48 48"><path d="M21 5c10 4 14 13 9 21-4 7-13 9-19 5-1-11 3-20 10-26z" fill="#EFE8D8"/>' +
-            '<path d="M21 5c-6 6-10 15-10 26" stroke="#2B3226" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
-            '<path d="M38 28c5 5 4 11-1 13-5 2-9 0-10-5 3-5 7-8 11-8z" fill="#C8A96E"/>' +
-            '<path d="M38 28c-4 3-7 7-9 11" stroke="#8B6847" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>' },
-
-    regen:   { name: 'Regen',   datei: 'klang/regen.mp3',
-      bild: '<svg viewBox="0 0 48 48"><path d="M14 23a8 8 0 01.6-15.6A10 10 0 0134 10a7 7 0 011 14z" fill="#EFE8D8"/>' +
-            '<path d="M14 32l-3 7M24 32l-3 7M34 32l-3 7" stroke="#C8A96E" stroke-width="4" stroke-linecap="round" fill="none"/></svg>' },
-
-    tropfen: { name: 'Tropfen', datei: 'klang/tropfen.mp3',
-      bild: '<svg viewBox="0 0 48 48"><path d="M24 6c6 9 11 14 11 20a11 11 0 01-22 0c0-6 5-11 11-20z" fill="#EFE8D8"/>' +
-            '<ellipse cx="19" cy="27" rx="3" ry="4.5" fill="#2B3226" opacity=".25"/>' +
-            '<path d="M10 42c5-3 23-3 28 0" stroke="#C8A96E" stroke-width="3" fill="none" stroke-linecap="round"/></svg>' },
-
-    voegel:  { name: 'Vögel',   datei: 'klang/voegel.mp3',
-      bild: '<svg viewBox="0 0 48 48"><ellipse cx="25" cy="26" rx="12" ry="10" fill="#EFE8D8"/>' +
-            '<circle cx="31" cy="21" r="7" fill="#EFE8D8"/>' +
-            '<path d="M38 20l6-2-6 4z" fill="#C8A96E"/>' +
-            '<circle cx="33" cy="20" r="2.2" fill="#2B3226"/>' +
-            '<path d="M20 25c5-3 10-2 13 2-5 3-11 2-13-2z" fill="#C8A96E" opacity=".65"/>' +
-            '<path d="M14 31l-7 6M16 34c-2 4-1 7 2 8" stroke="#8B6847" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>' }
+    laub:    { name: 'Laub',    datei: 'klang/laub.mp3',    karte: 'img/karte-laub.png' },
+    voegel:  { name: 'Vögel',   datei: 'klang/voegel.mp3',  karte: 'img/karte-voegel.png' },
+    tropfen: { name: 'Tropfen', datei: 'klang/tropfen.mp3', karte: 'img/karte-tropfen.png' },
+    wind:    { name: 'Wind',    datei: 'klang/wind.mp3',    karte: 'img/karte-wind.png' }
   };
 
   /* Jeder Klang einmal laden, danach ist er sofort da */
@@ -126,7 +105,6 @@
     }, (verzug || 0) * 1000);
   }
 
-  var runde = 1;
   var folge = [];
   var getippt = [];
   var sperre = false;
@@ -134,7 +112,6 @@
   var startKnopf    = document.getElementById('startKnopf');
   var hoerenKnopf   = document.getElementById('hoerenKnopf');
   var nochmalKnopf  = document.getElementById('nochmalKnopf');
-  var schwererKnopf = document.getElementById('schwererKnopf');
   var kartenFeld    = document.getElementById('karten');
   var aufgabe       = document.getElementById('aufgabe');
 
@@ -187,8 +164,7 @@
       k.className = 'karte';
       k.type = 'button';
       k.dataset.klang = n;
-      k.innerHTML = ALLE[n].bild +
-        '<span class="karte__name">' + ALLE[n].name + '</span>' +
+      k.innerHTML = '<img class="karte__bild" src="' + ALLE[n].karte + '" alt="' + ALLE[n].name + '">' +
         '<span class="karte__nr"></span>';
       k.addEventListener('click', function () { tippen(k, n); });
       kartenFeld.appendChild(k);
@@ -227,13 +203,8 @@
       BUHU.sagen('Reihenfolge stimmt');
       BuhuKlang.fundton();
       setTimeout(function () {
-        if (runde === 1) {
-          aufgabe.hidden = true;
-          BUHU.rissSchliessen(function () { schwererKnopf.hidden = false; });
-        } else {
-          BUHU.ruecksagen('Auch das noch geschafft.');
-          aufgabe.hidden = true;
-        }
+        aufgabe.hidden = true;
+        BUHU.rissSchliessen();
       }, 1100);
     }
   }
@@ -246,14 +217,6 @@
       k.querySelector('.karte__nr').textContent = '';
     });
     abspielen();
-  });
-
-  schwererKnopf.addEventListener('click', function () {
-    schwererKnopf.hidden = true;
-    runde = 2;
-    aufgabe.hidden = false;
-    document.getElementById('aufgabeText').textContent = 'Jetzt mit fünf Geräuschen. Nur wenn ihr Lust habt.';
-    neueRunde(5);
   });
 
   neueRunde(4);

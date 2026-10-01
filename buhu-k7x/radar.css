@@ -334,32 +334,37 @@ button { font-family: inherit; color: inherit; }
 }
 .karte {
   aspect-ratio: 1;
-  background: var(--moos);
-  border: 1px solid rgba(200,169,110,.3);
+  background: none;
+  border: none;
   border-radius: 14px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: .5rem;
+  padding: 0;
+  overflow: hidden;
   cursor: pointer;
   position: relative;
-  transition: border-color .2s, background .2s, transform .12s;
+  transition: transform .12s, filter .2s;
 }
 .karte:active { transform: scale(.97); }
-.karte.gewaehlt {
-  border-color: var(--gold);
-  background: rgba(200,169,110,.16);
-}
-.karte svg { width: 48%; height: auto; }
-.karte__name {
-  font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(239,232,216,.7);
+.karte__bild { width: 100%; height: 100%; object-fit: cover; display: block; }
+.karte.gewaehlt { filter: brightness(1.22); }
+.karte.gewaehlt::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 3px solid var(--gold);
+  border-radius: 14px;
+  box-shadow: inset 0 0 22px rgba(200,169,110,.35);
+  pointer-events: none;
 }
 .karte__nr {
-  position: absolute; top: 7px; right: 10px;
+  position: absolute; top: 8px; right: 10px;
+  min-width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--nacht);
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
-  color: var(--gold);
+  font-size: 1.15rem; font-weight: 600;
   opacity: 0;
+  transition: opacity .2s;
 }
 .karte.gewaehlt .karte__nr { opacity: 1; }
 
