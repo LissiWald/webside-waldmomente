@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+
+  <title>Buhu, das kleine Waldgespenst | Waldmomente</title>
+  <meta name="description" content="Die Geistertour mit Radar für Kinder von 6 bis 11 Jahren. Sieben Stationen in jedem Wald. Aktionszettel ausdrucken, QR Code scannen, losgehen.">
+  <link rel="canonical" href="https://www.waldmomente.me/buhu.html">
+
+  <meta property="og:type" content="product">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:url" content="https://www.waldmomente.me/buhu.html">
+  <meta property="og:site_name" content="Waldmomente">
+  <meta property="og:title" content="Buhu, das kleine Waldgespenst">
+  <meta property="og:description" content="Die Geistertour mit Radar für Kinder von 6 bis 11 Jahren. Sieben Stationen in jedem Wald.">
+  <meta property="og:image" content="https://www.waldmomente.me/buhu-k7x/img/buhu-1-angst.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sand: #F5F2EC;
+      --green: #2D4A35;
+      --brown: #8B6847;
+      --cream: #FDFAF5;
+      --dark: #0f1a10;
+      --text: #2D3A20;
+      --gold: #C8A96E;
+      --gold-dark: #A07840;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--sand);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Navigation wie auf der Hauptseite */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 6000; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
+      background: rgba(10,18,10,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(200,169,110,.12);
+    }
+    .nav__logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.35rem;
+      color: var(--gold); letter-spacing: .07em;
+    }
+    .nav__list { display: flex; gap: 2.2rem; list-style: none; }
+    @media (max-width: 700px) { .nav__list { display: none; } }
+    .nav__link {
+      font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+      color: #fdfaf5; transition: color .3s;
+    }
+    .nav__link:hover { color: var(--gold); }
+
+    .held {
+      margin-top: 64px;
+      position: relative;
+      max-height: 68vh;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .held img { width: 100%; object-fit: cover; max-height: 68vh; }
+
+    .inhalt {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 3.5rem clamp(1.2rem, 5vw, 2rem) 4rem;
+    }
+
+    .ruf {
+      font-family: 'Special Elite', monospace;
+      font-size: clamp(1.5rem, 6vw, 2.1rem);
+      color: var(--brown);
+      text-align: center;
+      margin-bottom: 2.4rem;
+      line-height: 1.4;
+    }
+    .ruf .luecke { color: var(--gold-dark); }
+
+    .inhalt p {
+      font-size: 1.02rem;
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+    .schreib {
+      font-family: 'Special Elite', monospace;
+      color: var(--brown);
+      font-size: 1.05rem;
+    }
+
+    .eckdaten {
+      border-top: 1px solid rgba(200,169,110,.35);
+      border-bottom: 1px solid rgba(200,169,110,.35);
+      padding: 1.5rem 0;
+      margin: 2.4rem 0;
+      text-align: center;
+    }
+    .eckdaten p { margin-bottom: .6rem; font-size: .95rem; }
+    .eckdaten p:last-child { margin-bottom: 0; }
+
+    .versprechen {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--gold-dark);
+      text-align: center;
+      margin: 2.2rem 0;
+    }
+
+    .preis {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      color: var(--brown);
+      text-align: center;
+      margin-bottom: 1.6rem;
+    }
+
+    .kaufknopf {
+      display: block;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto 1rem;
+      padding: 1.1rem 2rem;
+      background: var(--green);
+      color: var(--cream);
+      border: 1px solid var(--green);
+      text-align: center;
+      font-size: .78rem; letter-spacing: .26em; text-transform: uppercase;
+      transition: background .35s;
+    }
+    .kaufknopf:hover { background: var(--dark); }
+
+    .platzhalter {
+      display: block;
+      max-width: 340px;
+      margin: 0 auto 2.5rem;
+      padding: .7rem;
+      background: #FFF3C4;
+      border: 2px dashed #B8860B;
+      color: #6B4F00;
+      font-size: .74rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .zweitbild {
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 2.5rem;
+      box-shadow: 0 8px 36px rgba(139,104,71,.18);
+    }
+
+    footer {
+      background: var(--dark);
+      color: rgba(253,250,245,.5);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      font-size: .74rem;
+      letter-spacing: .1em;
+    }
+    footer a { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<nav id="nav" aria-label="Hauptnavigation">
+  <a href="index.html" class="nav__logo">Waldmomente</a>
+  <ul class="nav__list">
+    <li><a href="index.html" class="nav__link">Start</a></li>
+    <li><a href="index.html#produkte" class="nav__link">Produkte</a></li>
+    <li><a href="index.html#about" class="nav__link">Über mich</a></li>
+    <li><a href="index.html#contact" class="nav__link">Kontakt</a></li>
+  </ul>
+</nav>
+
+<div class="held">
+  <picture>
+    <source srcset="buhu-k7x/img/buhu-1-angst.webp" type="image/webp">
+    <img src="buhu-k7x/img/buhu-1-angst.jpg" alt="Buhu versteckt sich ängstlich hinter einem Baum im Nebel">
+  </picture>
+</div>
+
+<main class="inhalt">
+
+  <p class="ruf">H<span class="luecke">_</span>lfe. Ist da jemand?</p>
+
+  <p>Buhu, das kleine Waldgespenst, hängt in eurem Wald fest. Der Sturm hat sein Laken an sieben Stellen zerrissen. Um Hilfe rufen kann er nur noch über das Radar.</p>
+
+  <p>Dein Kind scannt den Code. Das Radar rauscht, piept. Dann bleibt es stehen.<br>
+  <span class="schreib">Mama. Da ist was.</span></p>
+
+  <p>An sieben Stationen holen die Kinder Buhu zurück. Mit jedem Riss, der sich schließt, wird er deutlicher.</p>
+
+  <p>Am Ende rufen alle zusammen. Buhu ist ganz.<br>
+  Dann klopft es noch einmal.<br>
+  <span class="schreib">Das kam nicht von mir.</span></p>
+
+  <p>Und eine kleine Hand greift nach deiner.</p>
+
+  <div class="eckdaten">
+    <p>Die Geistertour mit Radar · 6 bis 11 Jahre · in jedem Wald</p>
+    <p>Aktionszettel ausdrucken, losgehen. Keine Vorbereitung. So oft spielbar, wie ihr wollt.</p>
+  </div>
+
+  <p class="versprechen">Gänsehaut ja. Albträume nein.</p>
+
+  <p class="preis">12,90 Euro</p>
+
+  <a href="PAYHIP_LINK_HIER" class="kaufknopf">Zum Radar</a>
+  <span class="platzhalter">PAYHIP_LINK_HIER<br>Hier trägt Lissi die Adresse der Payhip Produktseite ein.</span>
+
+  <figure class="zweitbild">
+    <picture>
+      <source srcset="buhu-k7x/img/buhu-heil.webp" type="image/webp">
+      <img src="buhu-k7x/img/buhu-heil.jpg" alt="Buhu ist wieder heil und fröhlich im Herbstwald">
+    </picture>
+  </figure>
+
+</main>
+
+<footer>
+  <p>© Waldmomente · Elisabeth Müller</p>
+  <p style="margin-top:.6rem"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

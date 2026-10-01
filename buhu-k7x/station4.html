@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Station 4 · Buhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="radar.css">
+</head>
+<body>
+
+<header class="kopf">
+  <div>
+    <div class="kopf__marke">Waldmomente</div>
+    <div class="kopf__station">Station 4 von 7</div>
+  </div>
+  <button class="kopf__ton" id="tonKnopf" aria-pressed="false">Ton aus</button>
+</header>
+
+<main class="huelle">
+
+  <div class="radar-feld">
+    <canvas id="radarCanvas"></canvas>
+  </div>
+
+  <div class="signal" id="signal" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p class="statuszeile" id="statuszeile">Radar ist aus</p>
+
+  <div class="buhu-fortschritt" id="buhuFigur"></div>
+
+  <button class="knopf knopf--gold" id="startKnopf">Radar einschalten</button>
+
+  <p class="nachricht" id="nachricht" hidden></p>
+
+  <figure class="szene" id="szene" hidden>
+    <picture>
+      <source srcset="img/buhu-4-stoecke.webp" type="image/webp">
+      <img src="img/buhu-4-stoecke.jpg" alt="Buhu klopft mit zwei Stöcken" loading="lazy">
+    </picture>
+  </figure>
+
+  <section class="aufgabe" id="aufgabe" hidden>
+    <h1 class="aufgabe__titel" id="rundeTitel">Runde 1 von 3</h1>
+    <p class="aufgabe__text">Buhu klopft vor. Klopft mit euren Stöcken nach und tippt es dann auf die Taste.</p>
+
+    <div class="schlagpunkte" id="schlagpunkte"></div>
+
+    <button class="knopf knopf--gold" id="vorklopfKnopf">Buhu klopfen lassen</button>
+
+    <button class="klopftaste" id="klopftaste" hidden>Klopft hier</button>
+    <button class="knopf knopf--leise" id="nochmalKnopf" hidden>Noch mal hinhören</button>
+  </section>
+
+  <p class="ruecksage" id="ruecksage"></p>
+
+  <div class="abschluss" id="abschluss" hidden>
+    <p class="abschluss__zeile"></p>
+    <p class="abschluss__hinweis"></p>
+    <p class="abschluss__weiter">Weiter mit dem nächsten QR Code.</p>
+  </div>
+
+</main>
+
+<script src="radar.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var NACHRICHT =
+    'Psst. Hört ihr das Klopfen? Das bin ich.\n' +
+    'Wenn ich mich nicht traue zu reden, kl_pfe ich.\n' +
+    'Sucht euch zwei lose Stöcke vom Boden und klopft sie gegeneinander. Ich klopfe vor, ihr klopft nach.';
+
+  /* Abstaende in Sekunden zwischen den Schlaegen */
+  var RUNDEN = [
+    [0.45, 0.45],                 /* 3 Schlaege */
+    [0.4, 0.4, 0.4],              /* 4 Schlaege */
+    [0.35, 0.75, 0.35, 0.35]      /* 5 Schlaege mit Pause */
+  ];
+
+  BUHU.aufbauen({ station: 4 });
+
+  var el = function (id) { return document.getElementById(id); };
+  var runde = 0;
+  var tipps = [];
+  var sperre = false;
+  var warteTimer = null;
+
+  el('startKnopf').addEventListener('click', function () {
+    el('startKnopf').hidden = true;
+    BUHU.suchen(function () {
+      el('nachricht').hidden = false;
+      BUHU.nachricht(NACHRICHT, function () {
+        BUHU.bildZeigen('szene', function () {
+          el('aufgabe').hidden = false;
+          punkteSetzen();
+        });
+      });
+    });
+  });
+
+  function muster() { return RUNDEN[runde]; }
+  function schlaege() { return muster().length + 1; }
+
+  function punkteSetzen() {
+    el('rundeTitel').textContent = 'Runde ' + (runde + 1) + ' von 3';
+    var p = el('schlagpunkte');
+    p.innerHTML = '';
+    for (var i = 0; i < schlaege(); i++) p.appendChild(document.createElement('span'));
+  }
+
+  function punkteLeeren() {
+    Array.prototype.forEach.call(el('schlagpunkte').children, function (s) { s.classList.remove('an'); });
+  }
+  function punktAn(i) {
+    var s = el('schlagpunkte').children[i];
+    if (s) s.classList.add('an');
+  }
+
+  el('vorklopfKnopf').addEventListener('click', vorklopfen);
+  el('nochmalKnopf').addEventListener('click', vorklopfen);
+
+  function vorklopfen() {
+    sperre = true;
+    tipps = [];
+    punkteLeeren();
+    el('vorklopfKnopf').hidden = true;
+    el('nochmalKnopf').hidden = true;
+    el('klopftaste').hidden = true;
+    BUHU.ruecksagen('');
+    BuhuKlang.wecken();
+    BUHU.sagen('Buhu klopft');
+
+    var v = 0.5;
+    BuhuKlang.holz(v);
+    blinken(0, v);
+    muster().forEach(function (abstand, i) {
+      v += abstand;
+      BuhuKlang.holz(v);
+      blinken(i + 1, v);
+    });
+
+    setTimeout(function () {
+      sperre = false;
+      BUHU.sagen('Jetzt ihr');
+      punkteLeeren();
+      el('klopftaste').hidden = false;
+      el('nochmalKnopf').hidden = false;
+    }, (v + 0.9) * 1000);
+  }
+
+  function blinken(i, verzug) {
+    setTimeout(function () {
+      punktAn(i);
+      var t = el('klopftaste');
+      t.classList.add('schlag');
+      setTimeout(function () { t.classList.remove('schlag'); }, 110);
+    }, verzug * 1000);
+  }
+
+  el('klopftaste').addEventListener('click', function () {
+    if (sperre) return;
+    var jetzt = performance.now();
+    tipps.push(jetzt);
+    punktAn(tipps.length - 1);
+    BuhuKlang.holz(0);
+
+    clearTimeout(warteTimer);
+    if (tipps.length >= schlaege()) {
+      pruefen();
+    } else {
+      /* Wenn zu lange nichts kommt, von vorn */
+      warteTimer = setTimeout(function () {
+        if (tipps.length > 0 && tipps.length < schlaege()) {
+          BUHU.ruecksagen('Das waren zu wenige. Noch mal.');
+          tipps = [];
+          punkteLeeren();
+        }
+      }, 3200);
+    }
+  });
+
+  function pruefen() {
+    sperre = true;
+    var soll = muster();
+    var ist = [];
+    for (var i = 1; i < tipps.length; i++) ist.push((tipps[i] - tipps[i - 1]) / 1000);
+
+    /* Grosszuegige Toleranz: Verhaeltnis der Abstaende zaehlt */
+    var sollSumme = soll.reduce(function (a, b) { return a + b; }, 0);
+    var istSumme = ist.reduce(function (a, b) { return a + b; }, 0);
+    var passt = istSumme > 0.25 && istSumme < 12;
+
+    if (passt) {
+      for (var k = 0; k < soll.length; k++) {
+        var sollAnteil = soll[k] / sollSumme;
+        var istAnteil = ist[k] / istSumme;
+        if (Math.abs(sollAnteil - istAnteil) > 0.19) { passt = false; break; }
+      }
+    }
+
+    if (passt) {
+      BUHU.ruecksagen('Genau mein Rhythmus.');
+      BUHU.sagen('Echo erkannt');
+      BuhuKlang.fundton();
+      setTimeout(function () {
+        runde++;
+        if (runde >= RUNDEN.length) {
+          el('aufgabe').hidden = true;
+          BUHU.rissSchliessen();
+        } else {
+          sperre = false;
+          tipps = [];
+          punkteSetzen();
+          el('klopftaste').hidden = true;
+          el('nochmalKnopf').hidden = true;
+          el('vorklopfKnopf').hidden = false;
+          el('vorklopfKnopf').textContent = 'Nächster Rhythmus';
+          BUHU.ruecksagen('');
+        }
+      }, 1400);
+    } else {
+      BUHU.ruecksagen('Noch mal hinhören.');
+      BuhuKlang.ton(200, .4, 'sine', .12);
+      setTimeout(function () { sperre = false; vorklopfen(); }, 1400);
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

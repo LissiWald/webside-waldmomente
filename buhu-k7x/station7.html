@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Station 7 · Buhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="radar.css">
+</head>
+<body>
+
+<header class="kopf">
+  <div>
+    <div class="kopf__marke">Waldmomente</div>
+    <div class="kopf__station">Station 7 von 7</div>
+  </div>
+  <button class="kopf__ton" id="tonKnopf" aria-pressed="false">Ton aus</button>
+</header>
+
+<main class="huelle">
+
+  <div class="radar-feld" id="radarFeld">
+    <canvas id="radarCanvas"></canvas>
+    <picture id="finalBild" hidden>
+      <source srcset="img/buhu-7-finale.webp" type="image/webp">
+      <img class="radar-bild" id="finalBildImg" src="img/buhu-7-finale.jpg" alt="Buhu ist wieder ganz, im Mondlicht">
+    </picture>
+    <div class="zweite-augen" id="zweiteAugen"></div>
+  </div>
+
+  <div class="signal" id="signal" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p class="statuszeile" id="statuszeile">Radar ist aus</p>
+
+  <div class="buhu-fortschritt" id="buhuFigur"></div>
+
+  <button class="knopf knopf--gold" id="startKnopf">Radar einschalten</button>
+
+  <p class="nachricht" id="nachricht" hidden></p>
+
+  <section class="aufgabe" id="aufgabe" hidden>
+    <button class="knopf knopf--gold" id="namenKnopf">Namen stehen drauf</button>
+
+    <div id="stilleBereich" hidden>
+      <h1 class="aufgabe__titel" style="text-align:center">Ganz still</h1>
+      <p class="stillezaehler" id="zaehler"></p>
+      <p class="fussnote" id="mikroHinweis" hidden>Es wird nichts aufgenommen, nichts gespeichert und nichts gesendet. Das Handy hört nur, ob es laut ist.</p>
+    </div>
+
+    <div id="rufBereich" hidden>
+      <p class="aufgabe__text" style="text-align:center;font-size:1.1rem">Seid ihr bereit? Ruft mich.</p>
+      <button class="knopf knopf--gold knopf--riesig" id="buhKnopf">BUH!</button>
+    </div>
+  </section>
+
+  <p class="ruecksage" id="ruecksage"></p>
+
+  <div class="abschluss" id="abschluss" hidden>
+    <p class="abschluss__zeile"></p>
+    <p class="abschluss__hinweis"></p>
+    <p class="abschluss__weiter">Buhu ist ganz. Ihr habt ihn zurückgeholt.</p>
+  </div>
+
+</main>
+
+<script src="radar.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var NACHRICHT =
+    'Ihr habt meinen letzten Flicken gefunden.\n' +
+    'Jetzt bitte ganz still.\n' +
+    'Hört ihr das?\n' +
+    'Vorhin war da nur das Rauschen. Jetzt höre ich euch.\n' +
+    'Eure Stimmen. Ganz nah.\n' +
+    'Auf dem Radar fehlt noch eine Stelle. Genau hier, wo mein Herz wäre.\n' +
+    'Schreibt eure Namen auf den letzten Flicken auf eurem Zettel.';
+
+  var SCHLUSS =
+    'BUH!\n' +
+    'Da seid ihr ja.\n' +
+    'Und da bin ich.';
+
+  var NACHKLOPFEN =
+    'Moment … habt ihr eben auch das Klopfen gehört?\n' +
+    'Das kam nicht von mir.';
+
+  BUHU.aufbauen({ station: 7 });
+  var el = function (id) { return document.getElementById(id); };
+
+  var mikro = null, analyse = null, puffer = null;
+
+  el('startKnopf').addEventListener('click', function () {
+    el('startKnopf').hidden = true;
+    BUHU.suchen(function () {
+      el('nachricht').hidden = false;
+      /* langsamer tippen, Pause nach jeder Zeile */
+      BUHU.nachricht(NACHRICHT, function () {
+        el('aufgabe').hidden = false;
+      }, 58, 900);
+    });
+  });
+
+  /* ── Stille ── */
+  el('namenKnopf').addEventListener('click', function () {
+    el('namenKnopf').hidden = true;
+    el('stilleBereich').hidden = false;
+    BUHU.sagen('Buhu hört zu');
+    mikroVersuchen();
+  });
+
+  function mikroVersuchen() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { stilleOhneMikro(); return; }
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(function (s) {
+        mikro = s;
+        BuhuKlang.wecken();
+        var quelle = BuhuKlang.ctx.createMediaStreamSource(s);
+        analyse = BuhuKlang.ctx.createAnalyser();
+        analyse.fftSize = 512;
+        puffer = new Uint8Array(analyse.frequencyBinCount);
+        quelle.connect(analyse);
+        el('mikroHinweis').hidden = false;
+        stilleMitMikro();
+      })
+      .catch(stilleOhneMikro);
+  }
+
+  function lautstaerke() {
+    if (!analyse) return 0;
+    analyse.getByteTimeDomainData(puffer);
+    var summe = 0;
+    for (var i = 0; i < puffer.length; i++) {
+      var v = (puffer[i] - 128) / 128;
+      summe += v * v;
+    }
+    return Math.sqrt(summe / puffer.length);
+  }
+
+  function stilleMitMikro() {
+    var dauer = 10000, begonnen = performance.now();
+    el('zaehler').textContent = '';
+    (function schritt() {
+      var vergangen = performance.now() - begonnen;
+      var anteil = Math.min(1, vergangen / dauer);
+      var laut = lautstaerke();
+      /* Glimmen waechst mit der Zeit, sinkt bei Laerm, ohne Strafe */
+      var ziel = anteil * (laut > 0.07 ? 0.3 : 1);
+      if (BUHU.radar) BUHU.radar.glimmen += (ziel - BUHU.radar.glimmen) * 0.09;
+      el('zaehler').textContent = Math.max(0, Math.ceil((dauer - vergangen) / 1000));
+      if (vergangen < dauer) requestAnimationFrame(schritt);
+      else rufenZeigen();
+    })();
+  }
+
+  function stilleOhneMikro() {
+    var rest = 10;
+    el('zaehler').textContent = rest;
+    var t = setInterval(function () {
+      rest--;
+      el('zaehler').textContent = Math.max(0, rest);
+      if (BUHU.radar) BUHU.radar.glimmen = (10 - rest) / 10;
+      if (rest <= 0) { clearInterval(t); rufenZeigen(); }
+    }, 1000);
+  }
+
+  function rufenZeigen() {
+    el('stilleBereich').hidden = true;
+    el('rufBereich').hidden = false;
+    BUHU.sagen('Buhu wartet');
+    if (analyse) horchenAufRuf();
+  }
+
+  var rufErkannt = false;
+  function horchenAufRuf() {
+    (function schritt() {
+      if (rufErkannt) return;
+      if (lautstaerke() > 0.18) { rufen(); return; }
+      requestAnimationFrame(schritt);
+    })();
+  }
+
+  el('buhKnopf').addEventListener('click', rufen);
+
+  function rufen() {
+    if (rufErkannt) return;
+    rufErkannt = true;
+    if (mikro) { mikro.getTracks().forEach(function (t) { t.stop(); }); mikro = null; analyse = null; }
+    el('rufBereich').hidden = true;
+    el('aufgabe').hidden = true;
+    BUHU.sagen('Buhu ist ganz');
+
+    /* Letzter Riss, dann leuchten alle Naehte */
+    if (BUHU.figur) {
+      BUHU.figur.schliessen(7, function () {
+        BUHU.figur.naehteLeuchten();
+        BuhuKlang.akkord();
+        setTimeout(schlussText, BUHU.ruhig ? 200 : 1400);
+      });
+    } else {
+      setTimeout(schlussText, 600);
+    }
+  }
+
+  function schlussText() {
+    el('nachricht').hidden = false;
+    BUHU.nachricht(SCHLUSS, function () {
+      bildEinblenden();
+    }, 95, 1000);
+  }
+
+  function bildEinblenden() {
+    var p = el('finalBild');
+    p.hidden = false;
+    var bild = el('finalBildImg');
+    requestAnimationFrame(function () { bild.classList.add('sichtbar'); });
+    if (BUHU.radar) BUHU.radar.glimmen = 1;
+
+    /* Drei Sekunden Ruhe, dann das fremde Klopfen */
+    setTimeout(function () {
+      BuhuKlang.fremdesKlopfen();
+      setTimeout(function () {
+        BUHU.nachricht(NACHKLOPFEN, function () {
+          zweitesGespenst();
+        }, 62, 800);
+      }, 1800);
+    }, BUHU.ruhig ? 1000 : 3000);
+  }
+
+  function zweitesGespenst() {
+    var augen = el('zweiteAugen');
+    augen.classList.add('blitzt');
+    if (BUHU.radar) BUHU.radar.zweiterPunkt = true;
+    BUHU.sagen('Zweites Signal');
+    /* Danach Ruhe. Kein weiterer Text. */
+    setTimeout(function () {
+      augen.classList.remove('blitzt');
+      var a = el('abschluss');
+      a.querySelector('.abschluss__zeile').textContent = 'Riss geschlossen.';
+      a.querySelector('.abschluss__hinweis').textContent = 'Malt auf eurem Zettel Flicken Nummer 7 aus.';
+      a.hidden = false;
+    }, BUHU.ruhig ? 400 : 3200);
+  }
+
+})();
+</script>
+</body>
+</html>

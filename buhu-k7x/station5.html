@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Station 5 · Buhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="radar.css">
+</head>
+<body>
+
+<header class="kopf">
+  <div>
+    <div class="kopf__marke">Waldmomente</div>
+    <div class="kopf__station">Station 5 von 7</div>
+  </div>
+  <button class="kopf__ton" id="tonKnopf" aria-pressed="false">Ton aus</button>
+</header>
+
+<main class="huelle">
+
+  <div class="radar-feld">
+    <canvas id="radarCanvas"></canvas>
+  </div>
+
+  <div class="signal" id="signal" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p class="statuszeile" id="statuszeile">Radar ist aus</p>
+
+  <div class="buhu-fortschritt" id="buhuFigur"></div>
+
+  <button class="knopf knopf--gold" id="startKnopf">Radar einschalten</button>
+
+  <p class="nachricht" id="nachricht" hidden></p>
+
+  <figure class="szene" id="szene" hidden>
+    <picture>
+      <source srcset="img/buhu-5-kugel.webp" type="image/webp">
+      <img src="img/buhu-5-kugel.jpg" alt="Buhus Leuchtkugel auf einem Stein" loading="lazy">
+    </picture>
+  </figure>
+
+  <section class="aufgabe" id="aufgabe" hidden>
+    <p class="standhinweis">Im Stehen spielen</p>
+    <h1 class="aufgabe__titel">Bringt die Kugel zu Buhu</h1>
+    <p class="aufgabe__text" id="aufgabeText">Neigt das Handy ganz langsam.</p>
+
+    <button class="knopf knopf--gold" id="neigenKnopf">Mit Neigen spielen</button>
+    <button class="knopf knopf--leise" id="fingerKnopf">Lieber mit dem Finger ziehen</button>
+
+    <canvas class="labyrinth" id="labyrinth" hidden></canvas>
+
+    <p class="fussnote" id="sensorHinweis" hidden>Die Lage des Handys wird nur im Spiel benutzt. Nichts wird gespeichert oder gesendet.</p>
+  </section>
+
+  <p class="ruecksage" id="ruecksage"></p>
+
+  <div class="abschluss" id="abschluss" hidden>
+    <p class="abschluss__zeile"></p>
+    <p class="abschluss__hinweis"></p>
+    <p class="abschluss__weiter">Weiter mit dem nächsten QR Code.</p>
+  </div>
+
+</main>
+
+<script src="radar.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var NACHRICHT =
+    'Seit dem Sturm ist mir schwindelig. Mein Leuchten ist in eine Kugel gerutscht und rollt hin und her.\n' +
+    'Bleibt stehen und haltet mich ganz ruhig. Bringt die Kugel durch das Labyrinth zu meinem L_ken.';
+
+  BUHU.aufbauen({ station: 5 });
+  var el = function (id) { return document.getElementById(id); };
+
+  var feld = el('labyrinth');
+  var g, S = 0, dpr = 1;
+  var kugel = { x: 0, y: 0, vx: 0, vy: 0, r: 0 };
+  var start = { x: 0, y: 0 };
+  var ziel = { x: 0, y: 0, r: 0 };
+  var waende = [];
+  var laeuft = false;
+  var fingerModus = false;
+  var neigung = { x: 0, y: 0 };
+  var gewonnen = false;
+
+  /* Labyrinth in Einheiten von 0 bis 1, wenige Kurven */
+  var PLAN = [
+    [0.00, 0.26, 0.68, 0.045],
+    [0.32, 0.50, 0.68, 0.045],
+    [0.00, 0.74, 0.68, 0.045]
+  ];
+
+  function aufbauen() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var b = feld.getBoundingClientRect();
+    S = Math.max(b.width, 260);
+    feld.width = S * dpr;
+    feld.height = S * dpr;
+    g = feld.getContext('2d');
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    kugel.r = S * 0.038;
+    start.x = S * 0.13; start.y = S * 0.13;
+    ziel.x = S * 0.85; ziel.y = S * 0.88; ziel.r = S * 0.085;
+    kugel.x = start.x; kugel.y = start.y; kugel.vx = 0; kugel.vy = 0;
+
+    waende = PLAN.map(function (w) {
+      return { x: w[0] * S, y: w[1] * S, b: w[2] * S, h: w[3] * S };
+    });
+  }
+
+  function malen() {
+    g.clearRect(0, 0, S, S);
+
+    /* Ziel */
+    var zg = g.createRadialGradient(ziel.x, ziel.y, 0, ziel.x, ziel.y, ziel.r * 1.5);
+    zg.addColorStop(0, 'rgba(200,169,110,.45)');
+    zg.addColorStop(1, 'rgba(200,169,110,0)');
+    g.fillStyle = zg;
+    g.beginPath(); g.arc(ziel.x, ziel.y, ziel.r * 1.5, 0, Math.PI * 2); g.fill();
+    /* kleines Buhu Zeichen */
+    g.fillStyle = '#EFE8D8';
+    g.beginPath();
+    g.moveTo(ziel.x, ziel.y - ziel.r * .8);
+    g.bezierCurveTo(ziel.x + ziel.r * .8, ziel.y - ziel.r * .8, ziel.x + ziel.r * .7, ziel.y, ziel.x + ziel.r * .7, ziel.y + ziel.r * .5);
+    g.lineTo(ziel.x - ziel.r * .7, ziel.y + ziel.r * .5);
+    g.bezierCurveTo(ziel.x - ziel.r * .7, ziel.y, ziel.x - ziel.r * .8, ziel.y - ziel.r * .8, ziel.x, ziel.y - ziel.r * .8);
+    g.fill();
+    g.fillStyle = '#1C2318';
+    g.beginPath(); g.arc(ziel.x - ziel.r * .26, ziel.y - ziel.r * .12, ziel.r * .13, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.arc(ziel.x + ziel.r * .26, ziel.y - ziel.r * .12, ziel.r * .13, 0, Math.PI * 2); g.fill();
+
+    /* Waende */
+    g.fillStyle = '#2D4A35';
+    g.strokeStyle = 'rgba(200,169,110,.45)';
+    g.lineWidth = 1.5;
+    waende.forEach(function (w) {
+      g.fillRect(w.x, w.y, w.b, w.h);
+      g.strokeRect(w.x, w.y, w.b, w.h);
+    });
+
+    /* Kugel */
+    var kg = g.createRadialGradient(kugel.x, kugel.y, 0, kugel.x, kugel.y, kugel.r * 2.6);
+    kg.addColorStop(0, 'rgba(239,232,216,.95)');
+    kg.addColorStop(.4, 'rgba(200,169,110,.5)');
+    kg.addColorStop(1, 'rgba(200,169,110,0)');
+    g.fillStyle = kg;
+    g.beginPath(); g.arc(kugel.x, kugel.y, kugel.r * 2.6, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#F6F1E5';
+    g.beginPath(); g.arc(kugel.x, kugel.y, kugel.r, 0, Math.PI * 2); g.fill();
+  }
+
+  function zurueck() {
+    kugel.x = start.x; kugel.y = start.y;
+    kugel.vx = 0; kugel.vy = 0;
+    BuhuKlang.plopp();
+    BUHU.ruecksagen('Zurück zum Anfang. Ganz ruhig.');
+    setTimeout(function () { BUHU.ruecksagen(''); }, 1600);
+  }
+
+  function trifftWand(x, y) {
+    for (var i = 0; i < waende.length; i++) {
+      var w = waende[i];
+      var nx = Math.max(w.x, Math.min(x, w.x + w.b));
+      var ny = Math.max(w.y, Math.min(y, w.y + w.h));
+      if (Math.hypot(x - nx, y - ny) < kugel.r) return true;
+    }
+    return false;
+  }
+
+  function schleife() {
+    if (!laeuft) return;
+    if (!fingerModus) {
+      kugel.vx += neigung.x * 0.055;
+      kugel.vy += neigung.y * 0.055;
+      kugel.vx *= 0.955;
+      kugel.vy *= 0.955;
+      var nx = kugel.x + kugel.vx;
+      var ny = kugel.y + kugel.vy;
+      if (nx < kugel.r || nx > S - kugel.r) { kugel.vx *= -0.4; nx = kugel.x; }
+      if (ny < kugel.r || ny > S - kugel.r) { kugel.vy *= -0.4; ny = kugel.y; }
+      if (trifftWand(nx, ny)) { zurueck(); }
+      else { kugel.x = nx; kugel.y = ny; }
+    }
+    pruefeZiel();
+    malen();
+    requestAnimationFrame(schleife);
+  }
+
+  function pruefeZiel() {
+    if (gewonnen) return;
+    if (Math.hypot(kugel.x - ziel.x, kugel.y - ziel.y) < ziel.r) {
+      gewonnen = true;
+      laeuft = false;
+      BUHU.sagen('Kugel ist da');
+      BUHU.ruecksagen('Mein Leuchten ist zurück.');
+      BuhuKlang.fundton();
+      setTimeout(function () {
+        el('aufgabe').hidden = true;
+        BUHU.rissSchliessen();
+      }, 1200);
+    }
+  }
+
+  /* ── Start ── */
+  el('startKnopf').addEventListener('click', function () {
+    el('startKnopf').hidden = true;
+    BUHU.suchen(function () {
+      el('nachricht').hidden = false;
+      BUHU.nachricht(NACHRICHT, function () {
+        BUHU.bildZeigen('szene', function () { el('aufgabe').hidden = false; });
+      });
+    });
+  });
+
+  function spielStarten() {
+    el('neigenKnopf').hidden = true;
+    el('fingerKnopf').hidden = true;
+    feld.hidden = false;
+    aufbauen();
+    laeuft = true;
+    schleife();
+  }
+
+  el('neigenKnopf').addEventListener('click', function () {
+    el('sensorHinweis').hidden = false;
+    function anmelden() {
+      window.addEventListener('deviceorientation', function (e) {
+        var gamma = e.gamma || 0, beta = e.beta || 0;
+        neigung.x = Math.max(-1, Math.min(1, gamma / 26));
+        neigung.y = Math.max(-1, Math.min(1, (beta - 38) / 26));
+      });
+      el('aufgabeText').textContent = 'Neigt das Handy ganz langsam.';
+      spielStarten();
+    }
+    if (typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().then(function (a) {
+        if (a === 'granted') anmelden();
+        else fingerStarten();
+      }).catch(fingerStarten);
+    } else if (window.DeviceOrientationEvent) {
+      anmelden();
+    } else {
+      fingerStarten();
+    }
+  });
+
+  function fingerStarten() {
+    fingerModus = true;
+    el('aufgabeText').textContent = 'Zieht die Kugel mit dem Finger.';
+    spielStarten();
+  }
+  el('fingerKnopf').addEventListener('click', fingerStarten);
+
+  /* Finger ziehen */
+  function ziehen(ev) {
+    if (!fingerModus || !laeuft) return;
+    ev.preventDefault();
+    var b = feld.getBoundingClientRect();
+    var t = ev.touches ? ev.touches[0] : ev;
+    var x = t.clientX - b.left, y = t.clientY - b.top;
+    if (trifftWand(x, y)) { zurueck(); return; }
+    kugel.x = Math.max(kugel.r, Math.min(S - kugel.r, x));
+    kugel.y = Math.max(kugel.r, Math.min(S - kugel.r, y));
+  }
+  feld.addEventListener('touchmove', ziehen, { passive: false });
+  feld.addEventListener('mousemove', function (e) { if (e.buttons) ziehen(e); });
+
+})();
+</script>
+</body>
+</html>

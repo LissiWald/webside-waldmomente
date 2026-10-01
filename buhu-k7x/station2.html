@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Station 2 · Buhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="radar.css">
+</head>
+<body>
+
+<header class="kopf">
+  <div>
+    <div class="kopf__marke">Waldmomente</div>
+    <div class="kopf__station">Station 2 von 7</div>
+  </div>
+  <button class="kopf__ton" id="tonKnopf" aria-pressed="false">Ton aus</button>
+</header>
+
+<main class="huelle">
+
+  <div class="radar-feld">
+    <canvas id="radarCanvas"></canvas>
+  </div>
+
+  <div class="signal" id="signal" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p class="statuszeile" id="statuszeile">Radar ist aus</p>
+
+  <div class="buhu-fortschritt" id="buhuFigur"></div>
+
+  <button class="knopf knopf--gold" id="startKnopf">Radar einschalten</button>
+
+  <p class="nachricht" id="nachricht" hidden></p>
+
+  <figure class="szene" id="szene" hidden>
+    <picture>
+      <source srcset="img/buhu-2-lauschen.webp" type="image/webp">
+      <img src="img/buhu-2-lauschen.jpg" alt="Buhu lauscht in den Wald" loading="lazy">
+    </picture>
+  </figure>
+
+  <section class="aufgabe" id="aufgabe" hidden>
+    <h1 class="aufgabe__titel">Hört genau hin</h1>
+    <p class="aufgabe__text" id="aufgabeText">Gleich kommen die Geräusche. Merkt euch die Reihenfolge.</p>
+
+    <button class="knopf knopf--gold" id="hoerenKnopf">Geräusche abspielen</button>
+
+    <div class="kartenreihe" id="karten" hidden></div>
+
+    <button class="knopf knopf--leise" id="nochmalKnopf" hidden>Noch mal hören</button>
+  </section>
+
+  <p class="ruecksage" id="ruecksage"></p>
+
+  <button class="knopf knopf--leise" id="schwererKnopf" hidden>Schwerer, mit fünf Geräuschen</button>
+
+  <div class="abschluss" id="abschluss" hidden>
+    <p class="abschluss__zeile"></p>
+    <p class="abschluss__hinweis"></p>
+    <p class="abschluss__weiter">Weiter mit dem nächsten QR Code.</p>
+  </div>
+
+</main>
+
+<script src="radar.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var NACHRICHT =
+    'Kurz bevor der Sturm kam, habe ich vier Geräusche gehört. Ich weiß nur die Reih_nfolge nicht mehr.\n' +
+    'Hört genau hin. Wenn ihr sie in der richtigen Reihenfolge findet, weiß ich wieder, wo ich gew_sen bin.';
+
+  BUHU.aufbauen({ station: 2 });
+
+  var ALLE = {
+    eule:     { name: 'Eule',     spielen: function (v) { BuhuKlang.eule(v); },      bild: '<svg viewBox="0 0 40 40" fill="none" stroke="#EFE8D8" stroke-width="2"><ellipse cx="20" cy="23" rx="12" ry="14"/><circle cx="15" cy="18" r="4"/><circle cx="25" cy="18" r="4"/><path d="M20 22l-2 3h4z" fill="#EFE8D8"/><path d="M10 10l4 5M30 10l-4 5"/></svg>' },
+    ast:      { name: 'Ast',      spielen: function (v) { BuhuKlang.astKnackt(v); }, bild: '<svg viewBox="0 0 40 40" fill="none" stroke="#EFE8D8" stroke-width="2" stroke-linecap="round"><path d="M6 30l10-8 4 5 5-9 9-4"/><path d="M16 22l-3-6M25 18l1-7"/></svg>' },
+    wind:     { name: 'Wind',     spielen: function (v) { BuhuKlang.windstoss(v); }, bild: '<svg viewBox="0 0 40 40" fill="none" stroke="#EFE8D8" stroke-width="2" stroke-linecap="round"><path d="M4 14h20a4 4 0 100-5"/><path d="M4 22h26a4 4 0 110 6"/><path d="M4 30h14"/></svg>' },
+    rascheln: { name: 'Laub',     spielen: function (v) { BuhuKlang.rascheln(v); },  bild: '<svg viewBox="0 0 40 40" fill="none" stroke="#EFE8D8" stroke-width="2" stroke-linejoin="round"><path d="M20 6c7 4 10 10 7 17-3 6-10 8-15 5"/><path d="M20 6c-7 4-10 10-7 17"/><path d="M20 6v26"/></svg>' },
+    specht:   { name: 'Specht',   spielen: function (v) { BuhuKlang.specht(v); },    bild: '<svg viewBox="0 0 40 40" fill="none" stroke="#EFE8D8" stroke-width="2" stroke-linecap="round"><path d="M12 6v28"/><ellipse cx="24" cy="18" rx="7" ry="9"/><path d="M17 16l-6-3 6-3" fill="none"/><circle cx="26" cy="15" r="1.6" fill="#EFE8D8"/></svg>' }
+  };
+
+  var runde = 1;
+  var folge = [];
+  var getippt = [];
+  var sperre = false;
+
+  var startKnopf    = document.getElementById('startKnopf');
+  var hoerenKnopf   = document.getElementById('hoerenKnopf');
+  var nochmalKnopf  = document.getElementById('nochmalKnopf');
+  var schwererKnopf = document.getElementById('schwererKnopf');
+  var kartenFeld    = document.getElementById('karten');
+  var aufgabe       = document.getElementById('aufgabe');
+
+  startKnopf.addEventListener('click', function () {
+    startKnopf.hidden = true;
+    BUHU.suchen(function () {
+      document.getElementById('nachricht').hidden = false;
+      BUHU.nachricht(NACHRICHT, function () {
+        BUHU.bildZeigen('szene', function () { aufgabe.hidden = false; });
+      });
+    });
+  });
+
+  function neueRunde(anzahl) {
+    var namen = Object.keys(ALLE);
+    folge = BUHU.mischen(namen).slice(0, anzahl);
+    getippt = [];
+    kartenFeld.hidden = true;
+    nochmalKnopf.hidden = true;
+    BUHU.ruecksagen('');
+    hoerenKnopf.hidden = false;
+    hoerenKnopf.textContent = 'Geräusche abspielen';
+  }
+
+  function abspielen() {
+    sperre = true;
+    hoerenKnopf.hidden = true;
+    nochmalKnopf.hidden = true;
+    kartenFeld.hidden = true;
+    BuhuKlang.wecken();
+    BUHU.sagen('Hört zu');
+    var v = 0.4;
+    folge.forEach(function (n, i) {
+      setTimeout(function () { BUHU.sagen('Geräusch ' + (i + 1)); }, v * 1000);
+      ALLE[n].spielen(v);
+      v += 1.75;
+    });
+    setTimeout(function () {
+      sperre = false;
+      BUHU.sagen('Jetzt ihr');
+      kartenZeigen();
+    }, v * 1000);
+  }
+
+  function kartenZeigen() {
+    kartenFeld.innerHTML = '';
+    var reihenfolge = BUHU.mischen(folge);
+    reihenfolge.forEach(function (n) {
+      var k = document.createElement('button');
+      k.className = 'karte';
+      k.type = 'button';
+      k.dataset.klang = n;
+      k.innerHTML = ALLE[n].bild +
+        '<span class="karte__name">' + ALLE[n].name + '</span>' +
+        '<span class="karte__nr"></span>';
+      k.addEventListener('click', function () { tippen(k, n); });
+      kartenFeld.appendChild(k);
+    });
+    kartenFeld.hidden = false;
+    nochmalKnopf.hidden = false;
+  }
+
+  function tippen(karte, name) {
+    if (sperre || karte.classList.contains('gewaehlt')) return;
+    getippt.push(name);
+    karte.classList.add('gewaehlt');
+    karte.querySelector('.karte__nr').textContent = getippt.length;
+    ALLE[name].spielen(0);
+
+    var stelle = getippt.length - 1;
+    if (getippt[stelle] !== folge[stelle]) {
+      sperre = true;
+      BUHU.ruecksagen('Fast. Hört noch mal hin.');
+      BuhuKlang.ton(220, .4, 'sine', .12);
+      setTimeout(function () {
+        sperre = false;
+        getippt = [];
+        Array.prototype.forEach.call(kartenFeld.children, function (k) {
+          k.classList.remove('gewaehlt');
+          k.querySelector('.karte__nr').textContent = '';
+        });
+        abspielen();
+      }, 1500);
+      return;
+    }
+
+    if (getippt.length === folge.length) {
+      sperre = true;
+      BUHU.ruecksagen('Genau so war es.');
+      BUHU.sagen('Reihenfolge stimmt');
+      BuhuKlang.fundton();
+      setTimeout(function () {
+        if (runde === 1) {
+          aufgabe.hidden = true;
+          BUHU.rissSchliessen(function () { schwererKnopf.hidden = false; });
+        } else {
+          BUHU.ruecksagen('Auch das noch geschafft.');
+          aufgabe.hidden = true;
+        }
+      }, 1100);
+    }
+  }
+
+  hoerenKnopf.addEventListener('click', abspielen);
+  nochmalKnopf.addEventListener('click', function () {
+    getippt = [];
+    Array.prototype.forEach.call(kartenFeld.children, function (k) {
+      k.classList.remove('gewaehlt');
+      k.querySelector('.karte__nr').textContent = '';
+    });
+    abspielen();
+  });
+
+  schwererKnopf.addEventListener('click', function () {
+    schwererKnopf.hidden = true;
+    runde = 2;
+    aufgabe.hidden = false;
+    document.getElementById('aufgabeText').textContent = 'Jetzt mit fünf Geräuschen. Nur wenn ihr Lust habt.';
+    neueRunde(5);
+  });
+
+  neueRunde(4);
+
+})();
+</script>
+</body>
+</html>

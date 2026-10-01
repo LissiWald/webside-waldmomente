@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Station 3 · Buhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="radar.css">
+</head>
+<body>
+
+<header class="kopf">
+  <div>
+    <div class="kopf__marke">Waldmomente</div>
+    <div class="kopf__station">Station 3 von 7</div>
+  </div>
+  <button class="kopf__ton" id="tonKnopf" aria-pressed="false">Ton aus</button>
+</header>
+
+<main class="huelle">
+
+  <div class="radar-feld">
+    <canvas id="radarCanvas"></canvas>
+  </div>
+
+  <div class="signal" id="signal" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p class="statuszeile" id="statuszeile">Radar ist aus</p>
+
+  <div class="buhu-fortschritt" id="buhuFigur"></div>
+
+  <button class="knopf knopf--gold" id="startKnopf">Radar einschalten</button>
+
+  <p class="nachricht" id="nachricht" hidden></p>
+
+  <figure class="szene" id="szene" hidden>
+    <picture>
+      <source srcset="img/buhu-3-blaetter.webp" type="image/webp">
+      <img src="img/buhu-3-blaetter.jpg" alt="Blätter fliegen zu Buhu und werden zu Flicken" loading="lazy">
+    </picture>
+  </figure>
+
+  <section class="aufgabe" id="aufgabe" hidden>
+    <h1 class="aufgabe__titel">Fünf Waldfarben</h1>
+    <p class="aufgabe__text">Sucht fünf verschiedene Farben im Wald.</p>
+
+    <div class="farbperlen" id="perlen" aria-label="Gefundene Farben">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <button class="knopf knopf--gold" id="kameraKnopf">Kamera benutzen</button>
+    <button class="knopf knopf--leise" id="paletteKnopf">Lieber antippen statt fotografieren</button>
+
+    <div id="kameraBereich" hidden>
+      <div class="kamera-rahmen">
+        <video id="video" playsinline muted autoplay></video>
+        <div class="kamera-ziel"></div>
+      </div>
+      <p class="aufgabe__text">Haltet den Kreis auf die Farbe und tippt.</p>
+      <button class="knopf knopf--gold" id="knipsKnopf">Farbe aufnehmen</button>
+    </div>
+
+    <div id="pruefBereich" hidden>
+      <div class="farbprobe" id="farbprobe"></div>
+      <p class="aufgabe__text" style="text-align:center">Stimmt die Farbe?</p>
+      <button class="knopf knopf--gold" id="jaKnopf">Ja</button>
+      <button class="knopf knopf--leise" id="andersKnopf">Anders wählen</button>
+    </div>
+
+    <div id="paletteBereich" hidden>
+      <div class="palette" id="palette"></div>
+    </div>
+
+    <p class="fussnote">Kein Foto wird gespeichert oder gesendet. Das Bild bleibt auf eurem Handy.</p>
+  </section>
+
+  <p class="ruecksage" id="ruecksage"></p>
+
+  <div class="abschluss" id="abschluss" hidden>
+    <p class="abschluss__zeile"></p>
+    <p class="abschluss__hinweis"></p>
+    <p class="abschluss__weiter">Weiter mit dem nächsten QR Code.</p>
+  </div>
+
+</main>
+
+<canvas id="kameraBild" width="40" height="40"></canvas>
+
+<script src="radar.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var NACHRICHT =
+    'Seht ihr mein Laken? Es ist ganz grau. Der Sturm hat alle Farben herausgeblasen.\n' +
+    'Findet fünf verschiedene Waldfarben und fotografiert sie für mich. Jede Farbe gibt mir ein Stück zurück.';
+
+  var WALDFARBEN = [
+    '#4A6B3A', '#2D4A35', '#7A9A5B', '#C9A227',
+    '#B5651D', '#8B4513', '#6B4F36', '#3E2F23',
+    '#9FB8A0', '#D9C89E', '#5C6B52', '#A8341F'
+  ];
+
+  BUHU.aufbauen({ station: 3 });
+
+  var gefunden = [];
+  var kandidat = null;
+  var strom = null;
+
+  var el = function (id) { return document.getElementById(id); };
+  var video = el('video');
+  var bildFeld = el('kameraBild');
+
+  el('startKnopf').addEventListener('click', function () {
+    el('startKnopf').hidden = true;
+    BUHU.suchen(function () {
+      el('nachricht').hidden = false;
+      BUHU.nachricht(NACHRICHT, function () {
+        BUHU.bildZeigen('szene', function () { el('aufgabe').hidden = false; });
+      });
+    });
+  });
+
+  /* ── Kamera ── */
+  el('kameraKnopf').addEventListener('click', function () {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { paletteOeffnen(); return; }
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+      .then(function (s) {
+        strom = s;
+        video.srcObject = s;
+        video.play();
+        el('kameraKnopf').hidden = true;
+        el('paletteKnopf').hidden = true;
+        el('kameraBereich').hidden = false;
+      })
+      .catch(function () {
+        BUHU.ruecksagen('Kein Zugriff auf die Kamera. Tippt die Farbe einfach an.');
+        paletteOeffnen();
+      });
+  });
+
+  el('knipsKnopf').addEventListener('click', function () {
+    var g = bildFeld.getContext('2d');
+    var b = Math.min(video.videoWidth, video.videoHeight) * 0.18;
+    g.drawImage(video,
+      video.videoWidth / 2 - b / 2, video.videoHeight / 2 - b / 2, b, b,
+      0, 0, 40, 40);
+    var d = g.getImageData(14, 14, 12, 12).data;
+    var r = 0, gr = 0, bl = 0, n = 0;
+    for (var i = 0; i < d.length; i += 4) { r += d[i]; gr += d[i + 1]; bl += d[i + 2]; n++; }
+    kandidat = [Math.round(r / n), Math.round(gr / n), Math.round(bl / n)];
+    pruefenZeigen();
+    BuhuKlang.ton(880, .18, 'sine', .14);
+  });
+
+  function pruefenZeigen() {
+    el('kameraBereich').hidden = true;
+    el('pruefBereich').hidden = false;
+    el('farbprobe').style.background = 'rgb(' + kandidat.join(',') + ')';
+  }
+
+  el('jaKnopf').addEventListener('click', function () { farbeNehmen(kandidat); });
+  el('andersKnopf').addEventListener('click', function () {
+    el('pruefBereich').hidden = true;
+    paletteOeffnen();
+  });
+
+  /* ── Palette ── */
+  function paletteOeffnen() {
+    el('kameraKnopf').hidden = true;
+    el('paletteKnopf').hidden = true;
+    el('kameraBereich').hidden = true;
+    el('pruefBereich').hidden = true;
+    var p = el('palette');
+    if (!p.children.length) {
+      WALDFARBEN.forEach(function (hex) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.style.background = hex;
+        b.setAttribute('aria-label', 'Farbe auswählen');
+        b.addEventListener('click', function () {
+          if (b.classList.contains('weg')) return;
+          farbeNehmen(hexZuRgb(hex), b);
+        });
+        p.appendChild(b);
+      });
+    }
+    el('paletteBereich').hidden = false;
+  }
+  el('paletteKnopf').addEventListener('click', paletteOeffnen);
+
+  function hexZuRgb(h) {
+    return [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)];
+  }
+  function abstand(a, b) {
+    return Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2) + Math.pow(a[2] - b[2], 2));
+  }
+
+  function farbeNehmen(rgb, knopf) {
+    var zuAehnlich = gefunden.some(function (f) { return abstand(f, rgb) < 60; });
+    if (zuAehnlich) {
+      BUHU.ruecksagen('Die hab ich schon. Findet eine andere.');
+      BuhuKlang.ton(240, .3, 'sine', .11);
+      el('pruefBereich').hidden = true;
+      if (strom) { el('kameraBereich').hidden = false; } else { paletteOeffnen(); }
+      return;
+    }
+
+    gefunden.push(rgb);
+    if (knopf) knopf.classList.add('weg');
+    BUHU.ruecksagen('');
+    BuhuKlang.ton(520 + gefunden.length * 70, .35, 'sine', .16);
+
+    var perle = el('perlen').children[gefunden.length - 1];
+    if (perle) perle.style.background = 'rgb(' + rgb.join(',') + ')';
+
+    /* Ein Stueck von Buhu einfaerben */
+    var fl = document.querySelectorAll('#buhuFigur .flicken')[gefunden.length - 1];
+    if (fl) {
+      var pfad = fl.querySelector('path');
+      if (pfad) pfad.setAttribute('fill', 'rgb(' + rgb.join(',') + ')');
+    }
+
+    BUHU.sagen(gefunden.length + ' von 5 Farben');
+    el('pruefBereich').hidden = true;
+
+    if (gefunden.length >= 5) {
+      if (strom) { strom.getTracks().forEach(function (t) { t.stop(); }); strom = null; }
+      el('kameraBereich').hidden = true;
+      el('paletteBereich').hidden = true;
+      el('aufgabe').hidden = true;
+      BUHU.rissSchliessen();
+    } else {
+      if (strom) el('kameraBereich').hidden = false;
+      else paletteOeffnen();
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,557 @@
+/* ══════════════════════════════════════════
+   Buhu, das kleine Waldgespenst
+   Gemeinsame Gestaltung aller Stationen
+   ══════════════════════════════════════════ */
+
+:root {
+  --nacht:   #141a12;
+  --moos:    #2B3226;
+  --tanne:   #2D4A35;
+  --creme:   #EFE8D8;
+  --gold:    #C8A96E;
+  --radar:   #9FD4A6;
+  --warn:    #E8B96E;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--nacht);
+  color: var(--creme);
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.65;
+  min-height: 100svh;
+  overflow-x: hidden;
+  padding: 0 0 3rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img { display: block; max-width: 100%; }
+button { font-family: inherit; color: inherit; }
+
+/* ── Kopfzeile ── */
+.kopf {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .8rem;
+  padding: .7rem 1rem;
+  background: rgba(20,26,18,.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(200,169,110,.14);
+}
+.kopf__marke {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.05rem;
+  color: var(--gold); letter-spacing: .05em;
+  line-height: 1;
+}
+.kopf__station {
+  font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(239,232,216,.5);
+  margin-top: .15rem;
+}
+.kopf__ton {
+  flex-shrink: 0;
+  min-height: 44px; min-width: 44px;
+  padding: .55rem .9rem;
+  background: transparent;
+  border: 1px solid rgba(200,169,110,.4);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
+  cursor: pointer;
+}
+.kopf__ton[aria-pressed="true"] {
+  background: rgba(200,169,110,.14);
+  border-color: var(--gold);
+}
+
+/* ── Rahmen ── */
+.huelle {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 1.2rem 1rem 0;
+}
+
+/* ── Radar ── */
+.radar-feld {
+  position: relative;
+  width: min(86vw, 340px);
+  margin: 1.4rem auto .6rem;
+  aspect-ratio: 1;
+}
+.radar-feld canvas {
+  width: 100%; height: 100%;
+  display: block;
+  border-radius: 50%;
+}
+.radar-bild {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 2.4s ease;
+  pointer-events: none;
+}
+.radar-bild.sichtbar { opacity: 1; }
+
+/* ── Signalbalken ── */
+.signal {
+  display: flex; justify-content: center; align-items: flex-end;
+  gap: 6px; height: 26px;
+  margin: .2rem 0 .5rem;
+}
+.signal span {
+  width: 9px;
+  background: rgba(159,212,166,.18);
+  border-radius: 2px;
+  transition: background .25s, height .25s;
+}
+.signal span:nth-child(1) { height: 30%; }
+.signal span:nth-child(2) { height: 45%; }
+.signal span:nth-child(3) { height: 62%; }
+.signal span:nth-child(4) { height: 80%; }
+.signal span:nth-child(5) { height: 100%; }
+.signal span.an { background: var(--radar); }
+
+.statuszeile {
+  text-align: center;
+  font-size: .64rem; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(159,212,166,.65);
+  min-height: 1.3em;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Buhu als Fortschritt ── */
+.buhu-fortschritt {
+  width: 112px;
+  margin: 0 auto 1.4rem;
+}
+.buhu-fortschritt svg { width: 100%; height: auto; overflow: visible; }
+
+.riss { transition: opacity .4s ease; }
+.flicken { opacity: 0; transform-origin: center; }
+.flicken.zu { opacity: 1; }
+.flicken.schliesst { animation: flickenRein .9s cubic-bezier(.34,1.3,.5,1) forwards; }
+@keyframes flickenRein {
+  0%   { opacity: 0; transform: translateY(-9px) scale(.5) rotate(-14deg); }
+  60%  { opacity: 1; transform: translateY(0) scale(1.12) rotate(4deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+.naht-leuchten { animation: nahtGold 1.6s ease-out; }
+@keyframes nahtGold {
+  0%, 100% { filter: none; }
+  40%      { filter: drop-shadow(0 0 9px var(--gold)) drop-shadow(0 0 20px rgba(200,169,110,.6)); }
+}
+
+/* ── Buhus Nachricht ── */
+.nachricht {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 1.02rem;
+  line-height: 1.95;
+  color: var(--creme);
+  background: rgba(43,50,38,.55);
+  border: 1px solid rgba(200,169,110,.18);
+  border-radius: 12px;
+  padding: 1.1rem 1.1rem 1.2rem;
+  margin-bottom: 1.4rem;
+  white-space: pre-wrap;
+  min-height: 3em;
+}
+.nachricht .luecke {
+  color: var(--gold);
+  font-weight: 700;
+}
+.cursor {
+  display: inline-block;
+  width: .58em;
+  border-bottom: 2px solid var(--gold);
+  animation: blink 1s steps(1) infinite;
+  vertical-align: baseline;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── Aufgabe ── */
+.aufgabe { margin-bottom: 1.6rem; }
+.aufgabe[hidden] { display: none !important; }
+
+.aufgabe__titel {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: .5rem;
+  line-height: 1.25;
+}
+.aufgabe__text {
+  font-size: .96rem;
+  color: rgba(239,232,216,.82);
+  margin-bottom: 1.1rem;
+}
+
+/* ── Szenenbild ── */
+.szene {
+  margin: 0 0 1.4rem;
+  border-radius: 14px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+  box-shadow: 0 0 0 1px rgba(200,169,110,.22), 0 6px 32px rgba(200,169,110,.14);
+}
+.szene.sichtbar { opacity: 1; transform: none; }
+.szene img { width: 100%; }
+
+/* ── Knöpfe ── */
+.knopf {
+  display: block;
+  width: 100%;
+  min-height: 56px;
+  padding: 1rem 1.4rem;
+  background: var(--tanne);
+  color: var(--creme);
+  border: 1px solid rgba(200,169,110,.45);
+  border-radius: 12px;
+  font-size: .82rem; letter-spacing: .16em; text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s, transform .12s;
+}
+.knopf:active { transform: scale(.98); }
+.knopf--gold {
+  background: var(--gold);
+  color: var(--nacht);
+  border-color: var(--gold);
+  font-weight: 500;
+}
+.knopf--leise {
+  background: transparent;
+  color: rgba(239,232,216,.6);
+  border-color: rgba(239,232,216,.22);
+  font-size: .72rem;
+  min-height: 48px;
+}
+.knopf + .knopf { margin-top: .7rem; }
+.knopf[hidden] { display: none !important; }
+
+.knopf--riesig {
+  min-height: 108px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 2.1rem;
+  letter-spacing: .08em;
+  text-transform: none;
+}
+
+/* ── Abschluss einer Station ── */
+.abschluss {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid rgba(200,169,110,.2);
+  margin-top: 1.4rem;
+}
+.abschluss__zeile {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.32rem;
+  color: var(--gold);
+  margin-bottom: .5rem;
+}
+.abschluss__hinweis {
+  font-size: .9rem;
+  color: rgba(239,232,216,.75);
+  margin-bottom: 1.3rem;
+}
+.abschluss__weiter {
+  font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(159,212,166,.75);
+}
+
+/* ── Hinweise und Datenschutz ── */
+.fussnote {
+  font-size: .72rem;
+  line-height: 1.6;
+  color: rgba(239,232,216,.45);
+  text-align: center;
+  margin-top: 1rem;
+}
+.standhinweis {
+  text-align: center;
+  font-size: .74rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--warn);
+  background: rgba(232,185,110,.1);
+  border: 1px solid rgba(232,185,110,.3);
+  border-radius: 10px;
+  padding: .6rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Rückmeldung bei Fehlversuch ── */
+.ruecksage {
+  text-align: center;
+  font-family: 'Special Elite', monospace;
+  font-size: .94rem;
+  color: var(--gold);
+  min-height: 1.5em;
+  margin: .8rem 0;
+}
+
+/* ── Nebel (Station 1) ── */
+.nebel-feld { position: relative; }
+.nebel-feld canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  touch-action: none;
+  z-index: 10;
+}
+
+/* ── Karten (Station 2) ── */
+.kartenreihe {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .8rem;
+}
+.karte {
+  aspect-ratio: 1;
+  background: var(--moos);
+  border: 1px solid rgba(200,169,110,.3);
+  border-radius: 14px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: .5rem;
+  cursor: pointer;
+  position: relative;
+  transition: border-color .2s, background .2s, transform .12s;
+}
+.karte:active { transform: scale(.97); }
+.karte.gewaehlt {
+  border-color: var(--gold);
+  background: rgba(200,169,110,.16);
+}
+.karte svg { width: 48%; height: auto; }
+.karte__name {
+  font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(239,232,216,.7);
+}
+.karte__nr {
+  position: absolute; top: 7px; right: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  opacity: 0;
+}
+.karte.gewaehlt .karte__nr { opacity: 1; }
+
+/* ── Farben (Station 3) ── */
+#kameraBild { display: none; }
+.kamera-rahmen {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: var(--moos);
+}
+.kamera-rahmen video { width: 100%; display: block; }
+.kamera-ziel {
+  position: absolute; top: 50%; left: 50%;
+  width: 74px; height: 74px;
+  margin: -37px 0 0 -37px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px rgba(20,26,18,.4);
+  pointer-events: none;
+}
+.farbprobe {
+  width: 112px; height: 112px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  border: 2px solid rgba(239,232,216,.3);
+}
+.palette {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .7rem;
+  margin-bottom: 1rem;
+}
+.palette button {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(239,232,216,.2);
+  cursor: pointer;
+  transition: transform .12s, border-color .2s;
+}
+.palette button:active { transform: scale(.92); }
+.palette button.weg { opacity: .25; pointer-events: none; }
+.farbperlen {
+  display: flex; justify-content: center; gap: .55rem;
+  margin-bottom: 1rem;
+}
+.farbperlen span {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(239,232,216,.25);
+  background: rgba(239,232,216,.07);
+}
+
+/* ── Klopfen (Station 4) ── */
+.klopftaste {
+  width: min(62vw, 230px);
+  aspect-ratio: 1;
+  margin: 0 auto 1.1rem;
+  border-radius: 50%;
+  background: var(--tanne);
+  border: 3px solid var(--gold);
+  color: var(--creme);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform .08s, background .12s;
+}
+.klopftaste:active, .klopftaste.schlag {
+  transform: scale(.94);
+  background: var(--gold);
+  color: var(--nacht);
+}
+.schlagpunkte {
+  display: flex; justify-content: center; gap: .6rem;
+  margin-bottom: 1rem; min-height: 16px;
+}
+.schlagpunkte span {
+  width: 13px; height: 13px; border-radius: 50%;
+  background: rgba(200,169,110,.22);
+}
+.schlagpunkte span.an { background: var(--gold); }
+
+/* ── Labyrinth (Station 5) ── */
+.labyrinth {
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 1rem;
+  border-radius: 14px;
+  background: var(--moos);
+  border: 1px solid rgba(200,169,110,.25);
+  touch-action: none;
+  display: block;
+}
+
+/* ── Tonschloss (Station 6) ── */
+.schloesser {
+  display: flex; justify-content: center; gap: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+.schloss {
+  width: 54px; height: 62px;
+  position: relative;
+}
+.schloss svg { width: 100%; height: 100%; }
+.schloss .buegel { transition: transform .5s cubic-bezier(.34,1.3,.5,1); transform-origin: center bottom; }
+.schloss.offen .buegel { transform: translateY(-11px) rotate(-22deg); }
+.schloss.offen .korpus { fill: var(--gold); }
+
+.klangtasten {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .6rem;
+}
+.klangtaste {
+  aspect-ratio: .62;
+  border-radius: 12px;
+  border: 2px solid rgba(239,232,216,.25);
+  cursor: pointer;
+  transition: transform .1s, filter .15s;
+}
+.klangtaste:active, .klangtaste.leuchtet {
+  transform: translateY(-5px);
+  filter: brightness(1.5);
+}
+
+/* ── Finale (Station 7) ── */
+.stillezaehler {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.4rem;
+  color: var(--gold);
+  line-height: 1;
+  margin: 1rem 0;
+  min-height: 1em;
+}
+.zweite-augen {
+  position: absolute;
+  top: 17%; right: 15%;
+  width: 20%; height: 11%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(200,169,110,.85), rgba(200,169,110,0) 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+.zweite-augen.blitzt { animation: augenBlitz 1.5s ease-in-out 2; }
+@keyframes augenBlitz {
+  0%, 100% { opacity: 0; }
+  45%      { opacity: .95; }
+}
+
+/* ── Startseite ── */
+.start-held {
+  position: relative;
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  margin-bottom: 1.6rem;
+}
+.start-held img { width: 100%; }
+.start-held__ruf {
+  position: absolute; left: 0; right: 0; bottom: 1.1rem;
+  text-align: center;
+  font-family: 'Special Elite', monospace;
+  font-size: 1.25rem;
+  color: var(--creme);
+  text-shadow: 0 2px 14px rgba(0,0,0,.9), 0 0 30px rgba(0,0,0,.8);
+}
+.start-held__ruf .luecke { color: var(--gold); }
+
+.start-titel {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(2rem, 8vw, 2.8rem);
+  color: var(--gold);
+  line-height: 1.15;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+.block { margin-bottom: 1.8rem; }
+.block h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.35rem;
+  color: var(--gold);
+  margin-bottom: .6rem;
+}
+.block p { font-size: .96rem; color: rgba(239,232,216,.82); margin-bottom: .6rem; }
+.block ul { list-style: none; }
+.block li {
+  font-size: .94rem;
+  color: rgba(239,232,216,.82);
+  padding: .4rem 0 .4rem 1.4rem;
+  position: relative;
+  border-bottom: 1px solid rgba(200,169,110,.12);
+}
+.block li::before {
+  content: '·';
+  position: absolute; left: .35rem;
+  color: var(--gold);
+  font-size: 1.3rem; line-height: 1.1;
+}
+.block li:last-child { border-bottom: none; }
+
+/* ── Bewegung reduzieren ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .cursor { animation: none; opacity: 1; }
+  .szene { opacity: 1; transform: none; }
+}
