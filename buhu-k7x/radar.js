@@ -669,32 +669,53 @@
     wurzel.innerHTML = buhuSvg();
     this.wurzel = wurzel;
     this.bild = null;
+    this.stand = 0;
 
-    /* Wenn es gezeichnete Bilder gibt, zeigen wir die statt der Figur.
-       Erwartet werden img/buhu-flicken-0.jpg bis buhu-flicken-7.jpg,
-       jeweils Buhu mit so vielen Flicken. Fehlen sie, bleibt die
-       Zeichnung stehen, es geht also nichts kaputt. */
+    /* Gezeichnete Bilder bevorzugen: img/buhu-flicken-0.png bis
+       buhu-flicken-7.png, jeweils Buhu mit so vielen Flicken.
+       Geprueft wird das Bild, das diese Station gerade braucht.
+       Fehlt es, bleibt die Zeichnung stehen. So laesst sich die Reihe
+       auch Stueck fuer Stueck nachliefern.
+       Die Pruefung laeuft erst, wenn der Stand gesetzt ist. */
+  }
+
+  BuhuFigur.prototype.bildPfad = function (n) {
+    return 'img/buhu-flicken-' + n + '.png';
+  };
+
+  BuhuFigur.prototype.bilderPruefen = function () {
     var selbst = this;
     var probe = new Image();
     probe.onload = function () { selbst.bilderNutzen(); };
-    probe.onerror = function () { /* keine Bilder, Zeichnung bleibt */ };
-    probe.src = 'img/buhu-flicken-0.jpg';
-  }
+    probe.onerror = function () { /* fehlt, Zeichnung bleibt */ };
+    probe.src = this.bildPfad(this.stand);
+  };
 
   BuhuFigur.prototype.bilderNutzen = function () {
+    if (this.bild) return;
+    var selbst = this;
     var b = document.createElement('img');
     b.className = 'buhu-bild';
     b.alt = 'Buhu';
-    b.src = 'img/buhu-flicken-' + (this.stand || 0) + '.jpg';
+    b.onerror = function () { selbst.zurueckZurZeichnung(); };
+    b.src = this.bildPfad(this.stand);
     this.wurzel.innerHTML = '';
     this.wurzel.appendChild(b);
     this.wurzel.classList.add('buhu-fortschritt--bild');
     this.bild = b;
   };
 
+  /* Falls mitten in der Reihe ein Bild fehlt */
+  BuhuFigur.prototype.zurueckZurZeichnung = function () {
+    this.bild = null;
+    this.wurzel.classList.remove('buhu-fortschritt--bild');
+    this.wurzel.innerHTML = buhuSvg();
+    this.setzeGeschlossen(this.stand);
+  };
+
   BuhuFigur.prototype.setzeGeschlossen = function (anzahl) {
     this.stand = anzahl;
-    if (this.bild) { this.bild.src = 'img/buhu-flicken-' + anzahl + '.jpg'; return; }
+    if (this.bild) { this.bild.src = this.bildPfad(anzahl); return; }
     for (var n = 1; n <= 7; n++) {
       var f = this.wurzel.querySelector('[data-flicken="' + n + '"]');
       var r = this.wurzel.querySelector('[data-riss="' + n + '"]');
@@ -710,14 +731,13 @@
     this.stand = n;
 
     if (this.bild) {
-      /* Bild wechseln und kurz aufploppen lassen */
-      this.bild.src = 'img/buhu-flicken-' + n + '.jpg';
+      this.bild.src = this.bildPfad(n);
       this.bild.classList.remove('ploppt');
       void this.bild.offsetWidth;
       this.bild.classList.add('ploppt');
       Klang.flickenKlang();
       setTimeout(function () {
-        selbst.bild.classList.remove('ploppt');
+        if (selbst.bild) selbst.bild.classList.remove('ploppt');
         if (fertig) fertig();
       }, ruhig ? 60 : 900);
       return;
@@ -767,7 +787,12 @@
 
       var fig = document.getElementById('buhuFigur');
       this.figur = fig ? new BuhuFigur(fig) : null;
-      if (this.figur) this.figur.setzeGeschlossen(einst.station - 1);
+      if (this.figur) {
+        this.figur.setzeGeschlossen(einst.station - 1);
+        /* Erst jetzt nach gezeichneten Bildern suchen, denn gesucht wird
+           nach dem Bild, das diese Station braucht. */
+        this.figur.bilderPruefen();
+      }
 
       this.status = document.getElementById('statuszeile');
       this.nachrichtFeld = document.getElementById('nachricht');
