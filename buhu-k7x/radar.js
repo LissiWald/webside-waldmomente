@@ -426,28 +426,41 @@
   }
 
   /* ─────────── BUHU MIT SIEBEN RISSEN ─────────── */
-  /* Riss 7 sitzt in Brusthoehe, dort wo das Herz waere. */
+  /* Koerper im viewBox 0 0 100 140: x von 14 bis 86, y von 8 bis 109.
+     Oben ist der Kopf rund, dort muessen die Flicken weiter zur Mitte.
+     Die Augen liegen bei x 34 bis 44 und x 56 bis 66, jeweils y 45 bis 59.
+     Der Mund sitzt bei y 67. Diese Flaechen bleiben frei.
+     Der Punkt unten ist die Ecke der Form, die Mitte liegt etwa 6 weiter
+     rechts und 1 tiefer. Riss 7 sitzt in Brusthoehe, wo das Herz waere. */
   var RISSE = [
-    { x: 30,  y: 44,  d: 'M0,0 l7,-5 l6,6 l-7,4 z',       drehung: -18 },
-    { x: 68,  y: 38,  d: 'M0,0 l8,4 l-3,7 l-7,-4 z',      drehung: 12 },
-    { x: 24,  y: 72,  d: 'M0,0 l9,-3 l2,7 l-8,3 z',       drehung: 24 },
-    { x: 74,  y: 70,  d: 'M0,0 l6,6 l-6,5 l-4,-7 z',      drehung: -8 },
-    { x: 44,  y: 92,  d: 'M0,0 l9,2 l-2,8 l-8,-3 z',      drehung: 6 },
-    { x: 62,  y: 100, d: 'M0,0 l7,-4 l5,6 l-7,5 z',       drehung: -22 },
-    { x: 49,  y: 60,  d: 'M0,0 l8,-4 l5,7 l-8,5 z',       drehung: 0 }
+    { x: 26, y: 35, drehung: -16 },
+    { x: 60, y: 31, drehung: 14 },
+    { x: 19, y: 55, drehung: 22 },
+    { x: 69, y: 54, drehung: -10 },
+    { x: 25, y: 87, drehung: 8 },
+    { x: 63, y: 87, drehung: -20 },
+    { x: 44, y: 77, drehung: 0 }
   ];
+  var RISS_FORM    = 'M0,0 l8,-3 l3,6 l-7,4 z';
+  var FLICKEN_FORM = 'M-1,-1 l10,-4 l4,8 l-9,5 z';
 
   function buhuSvg() {
     var risse = '', flicken = '';
     RISSE.forEach(function (r, i) {
       var n = i + 1;
-      risse += '<g class="riss" data-riss="' + n + '" transform="translate(' + r.x + ',' + r.y + ') rotate(' + r.drehung + ')">' +
-               '<path d="' + r.d + '" fill="#141a12" opacity=".92"/>' +
-               '</g>';
-      flicken += '<g class="flicken" data-flicken="' + n + '" transform="translate(' + r.x + ',' + r.y + ') rotate(' + r.drehung + ')">' +
-                 '<path d="M-1,-2 l12,-5 l7,9 l-11,8 z" fill="#2D4A35" stroke="#C8A96E" stroke-width="1.1" stroke-linejoin="round"/>' +
-                 '<path d="M-1,-2 l12,-5 l7,9 l-11,8 z" fill="none" stroke="#C8A96E" stroke-width=".8" stroke-dasharray="2 2.4" opacity=".9"/>' +
-                 '</g>';
+      var lage = 'translate(' + r.x + ',' + r.y + ') rotate(' + r.drehung + ')';
+      /* Die Lage sitzt in einer aeusseren Gruppe. Die innere traegt die
+         Animation. Sonst wuerde transform-origin aus dem CSS auch auf das
+         SVG-Attribut wirken und den Flicken verschieben. */
+      risse += '<g transform="' + lage + '">' +
+               '<g class="riss" data-riss="' + n + '">' +
+               '<path d="' + RISS_FORM + '" fill="#141a12" opacity=".9"/>' +
+               '</g></g>';
+      flicken += '<g transform="' + lage + '">' +
+                 '<g class="flicken" data-flicken="' + n + '">' +
+                 '<path d="' + FLICKEN_FORM + '" fill="#2D4A35" stroke="#C8A96E" stroke-width="1" stroke-linejoin="round"/>' +
+                 '<path d="' + FLICKEN_FORM + '" fill="none" stroke="#C8A96E" stroke-width=".7" stroke-dasharray="1.8 2.2" opacity=".9"/>' +
+                 '</g></g>';
     });
 
     return '' +
