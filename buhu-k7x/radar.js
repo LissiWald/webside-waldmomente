@@ -301,85 +301,199 @@
   };
   Radar.prototype.stopp = function () { this.laeuft = false; };
   Radar.prototype.malen = function () {
-    var g = this.ctx, s = this.gr, m = s / 2, r = m * 0.93;
+    var g = this.ctx, s = this.gr, m = s / 2, r = m * 0.88;
+    var jetzt = Date.now();
     g.clearRect(0, 0, s, s);
 
-    /* Grund */
-    var grund = g.createRadialGradient(m, m, 0, m, m, r);
-    grund.addColorStop(0, 'rgba(45,74,53,.62)');
-    grund.addColorStop(1, 'rgba(20,26,18,.95)');
+    /* ── Aussenring mit Teilstrichen ── */
+    g.save();
+    g.translate(m, m);
+    g.rotate(this.winkel * 0.12);
+    for (var t = 0; t < 72; t++) {
+      var gross = t % 6 === 0;
+      var a = (t / 72) * Math.PI * 2;
+      var i1 = r * (gross ? 1.055 : 1.075), i2 = r * 1.105;
+      g.beginPath();
+      g.moveTo(Math.cos(a) * i1, Math.sin(a) * i1);
+      g.lineTo(Math.cos(a) * i2, Math.sin(a) * i2);
+      g.strokeStyle = gross ? 'rgba(200,169,110,.55)' : 'rgba(200,169,110,.2)';
+      g.lineWidth = gross ? 2 : 1;
+      g.stroke();
+    }
+    g.restore();
+
+    /* ── Grund mit Tiefe ── */
+    var grund = g.createRadialGradient(m, m * 0.82, 0, m, m, r);
+    grund.addColorStop(0,   'rgba(58,92,66,.72)');
+    grund.addColorStop(0.5, 'rgba(36,58,42,.85)');
+    grund.addColorStop(1,   'rgba(16,22,15,.97)');
     g.fillStyle = grund;
     g.beginPath(); g.arc(m, m, r, 0, Math.PI * 2); g.fill();
 
-    /* Glimmen (Station 7) */
+    /* ── Glimmen (Station 7) ── */
     if (this.glimmen > 0) {
       var gl = g.createRadialGradient(m, m, 0, m, m, r);
-      gl.addColorStop(0, 'rgba(200,169,110,' + (0.5 * this.glimmen) + ')');
+      gl.addColorStop(0, 'rgba(200,169,110,' + (0.6 * this.glimmen) + ')');
+      gl.addColorStop(0.6, 'rgba(200,169,110,' + (0.2 * this.glimmen) + ')');
       gl.addColorStop(1, 'rgba(200,169,110,0)');
       g.fillStyle = gl;
       g.beginPath(); g.arc(m, m, r, 0, Math.PI * 2); g.fill();
     }
 
-    /* Ringe */
-    g.strokeStyle = 'rgba(159,212,166,.26)';
-    g.lineWidth = 1;
-    for (var i = 1; i <= 4; i++) {
-      g.beginPath(); g.arc(m, m, r * i / 4, 0, Math.PI * 2); g.stroke();
-    }
-    /* Fadenkreuz */
-    g.beginPath();
-    g.moveTo(m - r, m); g.lineTo(m + r, m);
-    g.moveTo(m, m - r); g.lineTo(m, m + r);
-    g.stroke();
+    g.save();
+    g.beginPath(); g.arc(m, m, r, 0, Math.PI * 2); g.clip();
 
-    /* Suchstrahl mit Schweif */
-    if (this.laeuft) {
-      var schweif = Math.PI / 2.6;
-      for (var k = 0; k < 26; k++) {
-        var a = this.winkel - (k / 26) * schweif;
-        g.beginPath();
-        g.moveTo(m, m);
-        g.arc(m, m, r, a - 0.03, a);
-        g.closePath();
-        g.fillStyle = 'rgba(159,212,166,' + (0.17 * (1 - k / 26)) + ')';
-        g.fill();
-      }
-      g.beginPath();
-      g.moveTo(m, m);
-      g.lineTo(m + Math.cos(this.winkel) * r, m + Math.sin(this.winkel) * r);
-      g.strokeStyle = 'rgba(159,212,166,.85)';
-      g.lineWidth = 2;
+    /* ── Entfernungsringe ── */
+    for (var i = 1; i <= 4; i++) {
+      g.beginPath(); g.arc(m, m, r * i / 4, 0, Math.PI * 2);
+      g.strokeStyle = i === 4 ? 'rgba(159,212,166,.34)' : 'rgba(159,212,166,.2)';
+      g.lineWidth = 1;
       g.stroke();
     }
 
-    /* Fundpunkt */
+    /* ── Fadenkreuz mit Luecke in der Mitte ── */
+    g.strokeStyle = 'rgba(159,212,166,.26)';
+    g.lineWidth = 1;
+    var luecke = r * 0.07;
+    [[1,0],[-1,0],[0,1],[0,-1]].forEach(function (d) {
+      g.beginPath();
+      g.moveTo(m + d[0]*luecke, m + d[1]*luecke);
+      g.lineTo(m + d[0]*r, m + d[1]*r);
+      g.stroke();
+    });
+    /* Diagonalen, feiner */
+    g.strokeStyle = 'rgba(159,212,166,.12)';
+    [[0.707,0.707],[-0.707,0.707],[0.707,-0.707],[-0.707,-0.707]].forEach(function (d) {
+      g.beginPath();
+      g.moveTo(m + d[0]*luecke, m + d[1]*luecke);
+      g.lineTo(m + d[0]*r, m + d[1]*r);
+      g.stroke();
+    });
+
+    /* ── Rauschpunkte, die der Strahl aufwirbelt ── */
+    if (this.laeuft) {
+      if (!this.punkte) {
+        this.punkte = [];
+        for (var k = 0; k < 26; k++) {
+          this.punkte.push({ a: Math.random()*Math.PI*2, d: 0.2 + Math.random()*0.78, gr: 0.7 + Math.random()*1.6 });
+        }
+      }
+      var selbst = this;
+      this.punkte.forEach(function (p) {
+        /* heller, wenn der Strahl gerade vorbeikam */
+        var diff = ((selbst.winkel - p.a) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
+        var frisch = Math.max(0, 1 - diff / (Math.PI / 1.6));
+        if (frisch <= 0.02) return;
+        var px = m + Math.cos(p.a) * r * p.d;
+        var py = m + Math.sin(p.a) * r * p.d;
+        g.fillStyle = 'rgba(159,212,166,' + (0.5 * frisch) + ')';
+        g.beginPath(); g.arc(px, py, p.gr, 0, Math.PI*2); g.fill();
+      });
+    }
+
+    /* ── Suchstrahl mit langem Schweif ── */
+    if (this.laeuft) {
+      var schweif = Math.PI / 1.5;
+      var stufen = 42;
+      for (var q = 0; q < stufen; q++) {
+        var aa = this.winkel - (q / stufen) * schweif;
+        var staerke = Math.pow(1 - q / stufen, 1.7);
+        g.beginPath();
+        g.moveTo(m, m);
+        g.arc(m, m, r, aa - 0.028, aa);
+        g.closePath();
+        g.fillStyle = 'rgba(159,212,166,' + (0.2 * staerke) + ')';
+        g.fill();
+      }
+      /* Vorderkante, hell und mit Schein */
+      var ex = m + Math.cos(this.winkel) * r;
+      var ey = m + Math.sin(this.winkel) * r;
+      var kante = g.createLinearGradient(m, m, ex, ey);
+      kante.addColorStop(0,   'rgba(159,212,166,.15)');
+      kante.addColorStop(0.7, 'rgba(200,232,205,.75)');
+      kante.addColorStop(1,   'rgba(239,232,216,.95)');
+      g.strokeStyle = kante;
+      g.lineWidth = 2.4;
+      g.beginPath(); g.moveTo(m, m); g.lineTo(ex, ey); g.stroke();
+      /* Lichtpunkt am Rand */
+      var sp = g.createRadialGradient(ex, ey, 0, ex, ey, 14);
+      sp.addColorStop(0, 'rgba(239,232,216,.8)');
+      sp.addColorStop(1, 'rgba(159,212,166,0)');
+      g.fillStyle = sp;
+      g.beginPath(); g.arc(ex, ey, 14, 0, Math.PI*2); g.fill();
+    }
+
+    /* ── Fundpunkt mit auslaufenden Ringen ── */
     if (this.fund) {
       var fx = m + this.fund.x * r * 0.62;
       var fy = m + this.fund.y * r * 0.62;
-      var puls = ruhig ? 0.8 : (0.55 + 0.45 * Math.abs(Math.sin(Date.now() / 420)));
-      var leucht = g.createRadialGradient(fx, fy, 0, fx, fy, 22);
-      leucht.addColorStop(0, 'rgba(239,232,216,' + puls + ')');
-      leucht.addColorStop(0.35, 'rgba(159,212,166,' + (puls * 0.55) + ')');
-      leucht.addColorStop(1, 'rgba(159,212,166,0)');
+
+      if (!ruhig) {
+        for (var w = 0; w < 3; w++) {
+          var ph = ((jetzt / 1500) + w / 3) % 1;
+          var rad = ph * r * 0.42;
+          g.beginPath(); g.arc(fx, fy, rad, 0, Math.PI*2);
+          g.strokeStyle = 'rgba(239,232,216,' + (0.5 * (1 - ph)) + ')';
+          g.lineWidth = 1.6;
+          g.stroke();
+        }
+      }
+
+      var puls = ruhig ? 0.85 : (0.6 + 0.4 * Math.abs(Math.sin(jetzt / 380)));
+      var leucht = g.createRadialGradient(fx, fy, 0, fx, fy, 30);
+      leucht.addColorStop(0,    'rgba(255,255,255,' + puls + ')');
+      leucht.addColorStop(0.22, 'rgba(239,232,216,' + (puls * 0.8) + ')');
+      leucht.addColorStop(0.55, 'rgba(159,212,166,' + (puls * 0.35) + ')');
+      leucht.addColorStop(1,    'rgba(159,212,166,0)');
       g.fillStyle = leucht;
-      g.beginPath(); g.arc(fx, fy, 22, 0, Math.PI * 2); g.fill();
-      g.fillStyle = 'rgba(239,232,216,' + puls + ')';
-      g.beginPath(); g.arc(fx, fy, 4.5, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(fx, fy, 30, 0, Math.PI*2); g.fill();
+      g.fillStyle = 'rgba(255,255,255,' + puls + ')';
+      g.beginPath(); g.arc(fx, fy, 4.6, 0, Math.PI*2); g.fill();
     }
 
-    /* Zweiter winziger Punkt am Rand (Ende Station 7) */
+    /* ── Zweiter winziger Punkt am Rand (Ende Station 7) ── */
     if (this.zweiterPunkt) {
-      var zp = 0.4 + 0.6 * Math.abs(Math.sin(Date.now() / 700));
+      var zp = 0.35 + 0.65 * Math.abs(Math.sin(jetzt / 700));
       var zx = m + Math.cos(-0.72) * r * 0.9;
       var zy = m + Math.sin(-0.72) * r * 0.9;
+      var zg = g.createRadialGradient(zx, zy, 0, zx, zy, 11);
+      zg.addColorStop(0, 'rgba(200,169,110,' + zp + ')');
+      zg.addColorStop(1, 'rgba(200,169,110,0)');
+      g.fillStyle = zg;
+      g.beginPath(); g.arc(zx, zy, 11, 0, Math.PI*2); g.fill();
       g.fillStyle = 'rgba(200,169,110,' + zp + ')';
-      g.beginPath(); g.arc(zx, zy, 3, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(zx, zy, 2.6, 0, Math.PI*2); g.fill();
     }
 
-    /* Rand */
-    g.strokeStyle = 'rgba(200,169,110,.45)';
-    g.lineWidth = 2;
-    g.beginPath(); g.arc(m, m, r, 0, Math.PI * 2); g.stroke();
+    /* ── Feine Abtastzeilen ── */
+    if (!ruhig) {
+      g.globalAlpha = 0.055;
+      g.strokeStyle = '#9FD4A6';
+      g.lineWidth = 1;
+      for (var y = (jetzt / 55 % 4); y < s; y += 4) {
+        g.beginPath(); g.moveTo(0, y); g.lineTo(s, y); g.stroke();
+      }
+      g.globalAlpha = 1;
+    }
+
+    /* ── Abdunkeln zum Rand hin ── */
+    var vig = g.createRadialGradient(m, m, r * 0.52, m, m, r);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,.42)');
+    g.fillStyle = vig;
+    g.beginPath(); g.arc(m, m, r, 0, Math.PI*2); g.fill();
+
+    g.restore();
+
+    /* ── Glasrand ── */
+    g.beginPath(); g.arc(m, m, r, 0, Math.PI*2);
+    g.strokeStyle = 'rgba(200,169,110,.75)';
+    g.lineWidth = 2.5;
+    g.stroke();
+    g.beginPath(); g.arc(m, m, r * 0.985, 0, Math.PI*2);
+    g.strokeStyle = 'rgba(239,232,216,.18)';
+    g.lineWidth = 1;
+    g.stroke();
   };
 
   /* ─────────── SIGNALBALKEN ─────────── */
@@ -554,17 +668,61 @@
   function BuhuFigur(wurzel) {
     wurzel.innerHTML = buhuSvg();
     this.wurzel = wurzel;
+    this.bild = null;
+
+    /* Wenn es gezeichnete Bilder gibt, zeigen wir die statt der Figur.
+       Erwartet werden img/buhu-flicken-0.jpg bis buhu-flicken-7.jpg,
+       jeweils Buhu mit so vielen Flicken. Fehlen sie, bleibt die
+       Zeichnung stehen, es geht also nichts kaputt. */
+    var selbst = this;
+    var probe = new Image();
+    probe.onload = function () { selbst.bilderNutzen(); };
+    probe.onerror = function () { /* keine Bilder, Zeichnung bleibt */ };
+    probe.src = 'img/buhu-flicken-0.jpg';
   }
+
+  BuhuFigur.prototype.bilderNutzen = function () {
+    var b = document.createElement('img');
+    b.className = 'buhu-bild';
+    b.alt = 'Buhu';
+    b.src = 'img/buhu-flicken-' + (this.stand || 0) + '.jpg';
+    this.wurzel.innerHTML = '';
+    this.wurzel.appendChild(b);
+    this.wurzel.classList.add('buhu-fortschritt--bild');
+    this.bild = b;
+  };
+
   BuhuFigur.prototype.setzeGeschlossen = function (anzahl) {
+    this.stand = anzahl;
+    if (this.bild) { this.bild.src = 'img/buhu-flicken-' + anzahl + '.jpg'; return; }
     for (var n = 1; n <= 7; n++) {
       var f = this.wurzel.querySelector('[data-flicken="' + n + '"]');
       var r = this.wurzel.querySelector('[data-riss="' + n + '"]');
+      if (!f) continue;
       var zu = n <= anzahl;
       f.classList.toggle('zu', zu);
       if (r) r.style.opacity = zu ? '0' : '1';
     }
   };
+
   BuhuFigur.prototype.schliessen = function (n, fertig) {
+    var selbst = this;
+    this.stand = n;
+
+    if (this.bild) {
+      /* Bild wechseln und kurz aufploppen lassen */
+      this.bild.src = 'img/buhu-flicken-' + n + '.jpg';
+      this.bild.classList.remove('ploppt');
+      void this.bild.offsetWidth;
+      this.bild.classList.add('ploppt');
+      Klang.flickenKlang();
+      setTimeout(function () {
+        selbst.bild.classList.remove('ploppt');
+        if (fertig) fertig();
+      }, ruhig ? 60 : 900);
+      return;
+    }
+
     var f = this.wurzel.querySelector('[data-flicken="' + n + '"]');
     var r = this.wurzel.querySelector('[data-riss="' + n + '"]');
     if (!f) { if (fertig) fertig(); return; }
@@ -573,8 +731,9 @@
     Klang.flickenKlang();
     setTimeout(function () { f.classList.remove('schliesst'); if (fertig) fertig(); }, ruhig ? 60 : 950);
   };
+
   BuhuFigur.prototype.naehteLeuchten = function () {
-    var k = this.wurzel.querySelector('.buhu-koerper');
+    var k = this.wurzel.querySelector('.buhu-koerper') || this.bild;
     if (!k) return;
     k.classList.add('naht-leuchten');
     setTimeout(function () { k.classList.remove('naht-leuchten'); }, 1700);
@@ -695,8 +854,15 @@
       if (!a) return;
       var zeile = a.querySelector('.abschluss__zeile');
       var hinweis = a.querySelector('.abschluss__hinweis');
+      var offen = 7 - n;
       if (zeile) zeile.textContent = 'Riss geschlossen.';
-      if (hinweis) hinweis.textContent = 'Malt auf eurem Zettel Flicken Nummer ' + n + ' aus.';
+      if (hinweis) {
+        hinweis.textContent = offen === 0
+          ? 'Buhu ist wieder ganz.'
+          : (offen === 1
+              ? 'Noch ein Riss, dann ist Buhu wieder ganz.'
+              : 'Noch ' + offen + ' Risse, dann ist Buhu wieder ganz.');
+      }
       a.hidden = false;
       a.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'center' });
     },
