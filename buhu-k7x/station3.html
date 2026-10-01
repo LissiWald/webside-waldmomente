@@ -45,11 +45,11 @@
   </figure>
 
   <section class="aufgabe" id="aufgabe" hidden>
-    <h1 class="aufgabe__titel">Fünf Waldfarben</h1>
-    <p class="aufgabe__text">Sucht fünf verschiedene Farben im Wald.</p>
+    <h1 class="aufgabe__titel">Drei Waldfarben</h1>
+    <p class="aufgabe__text">Sucht drei verschiedene Farben im Wald.</p>
 
     <div class="farbperlen" id="perlen" aria-label="Gefundene Farben">
-      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span>
     </div>
 
     <button class="knopf knopf--gold" id="kameraKnopf">Kamera benutzen</button>
@@ -97,7 +97,7 @@
 
   var NACHRICHT =
     'Seht ihr mein Laken? Es ist ganz grau. Der Sturm hat alle Farben herausgeblasen.\n' +
-    'Findet fünf verschiedene Waldfarben und fotografiert sie für mich. Jede Farbe gibt mir ein Stück zurück.';
+    'Findet drei verschiedene Waldfarben und zeigt sie mir. Jede Farbe gibt mir ein Stück zurück.';
 
   var WALDFARBEN = [
     '#4A6B3A', '#2D4A35', '#7A9A5B', '#C9A227',
@@ -131,11 +131,22 @@
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
       .then(function (s) {
         strom = s;
-        video.srcObject = s;
-        video.play();
+        /* Erst sichtbar machen, dann abspielen. Ein verstecktes Video
+           startet auf dem iPhone nicht. */
         el('kameraKnopf').hidden = true;
         el('paletteKnopf').hidden = true;
         el('kameraBereich').hidden = false;
+        video.srcObject = s;
+        video.setAttribute('playsinline', '');
+        video.muted = true;
+        var lauf = video.play();
+        if (lauf && lauf.catch) {
+          lauf.catch(function () {
+            BUHU.ruecksagen('Die Kamera will nicht. Tippt die Farbe einfach an.');
+            if (strom) { strom.getTracks().forEach(function (t) { t.stop(); }); strom = null; }
+            paletteOeffnen();
+          });
+        }
       })
       .catch(function () {
         BUHU.ruecksagen('Kein Zugriff auf die Kamera. Tippt die Farbe einfach an.');
@@ -144,6 +155,10 @@
   });
 
   el('knipsKnopf').addEventListener('click', function () {
+    if (!video.videoWidth) {
+      BUHU.ruecksagen('Das Bild ist noch nicht da. Gleich noch mal.');
+      return;
+    }
     var g = bildFeld.getContext('2d');
     var b = Math.min(video.videoWidth, video.videoHeight) * 0.18;
     g.drawImage(video,
@@ -201,7 +216,7 @@
   }
 
   function farbeNehmen(rgb, knopf) {
-    var zuAehnlich = gefunden.some(function (f) { return abstand(f, rgb) < 60; });
+    var zuAehnlich = gefunden.some(function (f) { return abstand(f, rgb) < 48; });
     if (zuAehnlich) {
       BUHU.ruecksagen('Die hab ich schon. Findet eine andere.');
       BuhuKlang.ton(240, .3, 'sine', .11);
@@ -225,10 +240,10 @@
       if (pfad) pfad.setAttribute('fill', 'rgb(' + rgb.join(',') + ')');
     }
 
-    BUHU.sagen(gefunden.length + ' von 5 Farben');
+    BUHU.sagen(gefunden.length + ' von 3 Farben');
     el('pruefBereich').hidden = true;
 
-    if (gefunden.length >= 5) {
+    if (gefunden.length >= 3) {
       if (strom) { strom.getTracks().forEach(function (t) { t.stop(); }); strom = null; }
       el('kameraBereich').hidden = true;
       el('paletteBereich').hidden = true;

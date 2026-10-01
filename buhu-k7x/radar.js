@@ -426,23 +426,22 @@
   }
 
   /* ─────────── BUHU MIT SIEBEN RISSEN ─────────── */
-  /* Koerper im viewBox 0 0 100 140: x von 14 bis 86, y von 8 bis 109.
-     Oben ist der Kopf rund, dort muessen die Flicken weiter zur Mitte.
-     Die Augen liegen bei x 34 bis 44 und x 56 bis 66, jeweils y 45 bis 59.
-     Der Mund sitzt bei y 67. Diese Flaechen bleiben frei.
-     Der Punkt unten ist die Ecke der Form, die Mitte liegt etwa 6 weiter
-     rechts und 1 tiefer. Riss 7 sitzt in Brusthoehe, wo das Herz waere. */
+  /* Koerper im viewBox 0 0 100 140: x von 15 bis 85, y von 10 bis 100.
+     Das Gesicht belegt jetzt die Mitte: Brauen ab y 37, Augen x 32 bis 44
+     und x 56 bis 68 bei y 45 bis 59, Wangen bis y 68, Mund bis y 74.
+     Die Flicken sitzen deshalb an den Seiten und unten.
+     Riss 7 sitzt in Brusthoehe, dort wo das Herz waere. */
   var RISSE = [
-    { x: 26, y: 35, drehung: -16 },
-    { x: 60, y: 31, drehung: 14 },
-    { x: 19, y: 55, drehung: 22 },
-    { x: 69, y: 54, drehung: -10 },
-    { x: 25, y: 87, drehung: 8 },
-    { x: 63, y: 87, drehung: -20 },
-    { x: 44, y: 77, drehung: 0 }
+    { x: 18, y: 42, drehung: -16 },
+    { x: 72, y: 42, drehung: 14 },
+    { x: 19, y: 70, drehung: 22 },
+    { x: 74, y: 68, drehung: -10 },
+    { x: 26, y: 88, drehung: 8 },
+    { x: 64, y: 88, drehung: -20 },
+    { x: 42, y: 84, drehung: 0 }
   ];
-  var RISS_FORM    = 'M0,0 l8,-3 l3,6 l-7,4 z';
-  var FLICKEN_FORM = 'M-1,-1 l10,-4 l4,8 l-9,5 z';
+  var RISS_FORM    = 'M0,0 l6,-2 l2,5 l-5,3 z';
+  var FLICKEN_FORM = 'M-1,-1 l8,-3 l3,6 l-7,4 z';
 
   function buhuSvg() {
     var risse = '', flicken = '';
@@ -466,29 +465,71 @@
     return '' +
     '<svg viewBox="0 0 100 140" role="img" aria-label="Buhu, das kleine Waldgespenst">' +
       '<defs>' +
-        '<linearGradient id="laken" x1="0" y1="0" x2="0" y2="1">' +
-          '<stop offset="0" stop-color="#F6F1E5"/>' +
-          '<stop offset="1" stop-color="#C9C3B2"/>' +
+        '<radialGradient id="laken" cx="38%" cy="28%" r="78%">' +
+          '<stop offset="0" stop-color="#FFFDF6"/>' +
+          '<stop offset="55%" stop-color="#F3EDDC"/>' +
+          '<stop offset="1" stop-color="#D8CFB8"/>' +
+        '</radialGradient>' +
+        '<radialGradient id="wange" cx="50%" cy="50%" r="50%">' +
+          '<stop offset="0" stop-color="#E8A89A" stop-opacity=".55"/>' +
+          '<stop offset="1" stop-color="#E8A89A" stop-opacity="0"/>' +
+        '</radialGradient>' +
+        '<linearGradient id="blatt" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="#C2672A"/>' +
+          '<stop offset="1" stop-color="#8B4513"/>' +
         '</linearGradient>' +
+        '<filter id="schein" x="-35%" y="-35%" width="170%" height="170%">' +
+          '<feGaussianBlur stdDeviation="3.2" result="w"/>' +
+          '<feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+        '</filter>' +
       '</defs>' +
-      '<g class="buhu-koerper">' +
-        /* Laken mit gewelltem Saum */
-        '<path d="M50,8 C72,8 86,26 86,50 L86,104 ' +
-                 'q-6,10 -12,0 q-6,10 -12,0 q-6,10 -12,0 q-6,10 -12,0 q-6,10 -12,0 ' +
-                 'L14,50 C14,26 28,8 50,8 Z" fill="url(#laken)"/>' +
-        /* Eichenblatt auf dem Kopf */
-        '<g transform="translate(50,9) rotate(-16)">' +
-          '<path d="M0,0 c5,-4 10,-3 12,2 c4,-2 7,1 6,5 c3,1 3,5 0,6 c-2,4 -7,4 -10,1 ' +
-                   'c-4,2 -9,0 -9,-4 c-3,-2 -2,-8 1,-10 z" fill="#8B6847"/>' +
-          '<path d="M-1,1 L9,13" stroke="#6B4F36" stroke-width="1" fill="none"/>' +
+
+      '<g class="buhu-koerper" filter="url(#schein)">' +
+
+        /* Koerper: hohe runde Kuppe, weicher Wellensaum */
+        '<path d="M50,10 ' +
+                 'C70,10 84,25 85,46 ' +
+                 'C86,62 85,80 85,98 ' +
+                 'q-5.5,11 -11,0 q-5.5,11 -11,0 q-5.5,11 -11,0 ' +
+                 'q-5.5,11 -11,0 q-5.5,11 -11,0 q-5.5,11 -8,-2 ' +
+                 'C15,80 14,62 15,46 ' +
+                 'C16,25 30,10 50,10 Z" fill="url(#laken)"/>' +
+
+        /* Aermchen seitlich */
+        '<path d="M15,58 c-6,-2 -10,2 -9,6 c1,4 6,5 9,2 z" fill="url(#laken)"/>' +
+        '<path d="M85,58 c6,-2 10,2 9,6 c-1,4 -6,5 -9,2 z" fill="url(#laken)"/>' +
+
+        /* Eichenblatt schraeg auf dem Kopf. Bewusst einfach gehalten,
+           feine Lappen verschwinden bei dieser Groesse zu einem Klecks. */
+        '<g transform="translate(47,14) rotate(-24)">' +
+          '<path d="M0,0 C1,-7 7,-13 15,-14 C19,-10 21,-10 24,-12 ' +
+                   'C25,-7 27,-6 30,-6 C28,-2 29,1 31,3 ' +
+                   'C27,4 26,7 26,10 C22,8 19,9 17,12 ' +
+                   'C13,8 7,6 0,0 Z" fill="url(#blatt)"/>' +
+          '<path d="M0,0 C8,-2 16,-5 24,-10" stroke="#6B4F36" stroke-width="1" fill="none" stroke-linecap="round" opacity=".75"/>' +
+          '<path d="M8,-2 l2,4 M15,-4 l2,4 M21,-7 l2,4" stroke="#6B4F36" stroke-width=".7" fill="none" stroke-linecap="round" opacity=".6"/>' +
+          '<path d="M0,0 c-3,1 -5,3 -5,6" stroke="#6B4F36" stroke-width="1.3" fill="none" stroke-linecap="round"/>' +
         '</g>' +
-        /* Augen */
-        '<ellipse class="auge" cx="39" cy="52" rx="5.2" ry="6.6" fill="#1C2318"/>' +
-        '<ellipse class="auge" cx="61" cy="52" rx="5.2" ry="6.6" fill="#1C2318"/>' +
-        '<circle cx="40.6" cy="49.8" r="1.5" fill="#F6F1E5" opacity=".85"/>' +
-        '<circle cx="62.6" cy="49.8" r="1.5" fill="#F6F1E5" opacity=".85"/>' +
-        /* Mund */
-        '<path d="M45,67 q5,4 10,0" stroke="#1C2318" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+
+        /* Wangen */
+        '<ellipse cx="30" cy="63" rx="8" ry="5.5" fill="url(#wange)"/>' +
+        '<ellipse cx="70" cy="63" rx="8" ry="5.5" fill="url(#wange)"/>' +
+
+        /* Brauen */
+        '<path d="M32,41 q6,-4 12,-1" stroke="#6B5844" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+        '<path d="M56,40 q6,-3 12,1" stroke="#6B5844" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+
+        /* Augen, gross und freundlich */
+        '<ellipse class="auge" cx="38" cy="52" rx="6.4" ry="7.4" fill="#3B2A1C"/>' +
+        '<ellipse class="auge" cx="62" cy="52" rx="6.4" ry="7.4" fill="#3B2A1C"/>' +
+        '<circle cx="40.2" cy="49.2" r="2.3" fill="#FFFDF6"/>' +
+        '<circle cx="64.2" cy="49.2" r="2.3" fill="#FFFDF6"/>' +
+        '<circle cx="35.8" cy="55.2" r="1.1" fill="#FFFDF6" opacity=".6"/>' +
+        '<circle cx="59.8" cy="55.2" r="1.1" fill="#FFFDF6" opacity=".6"/>' +
+
+        /* Mund, kleines Laecheln */
+        '<path d="M44,68 q6,5.5 12,0" stroke="#3B2A1C" stroke-width="2.1" fill="none" stroke-linecap="round"/>' +
+
         risse +
         flicken +
       '</g>' +
@@ -571,6 +612,18 @@
       this.sagen('Suche Signal');
       if (this.signal) this.signal.setzen(1);
 
+      /* Jede Station findet Buhu woanders, sonst wird es langweilig. */
+      var ORTE = [
+        { x: -0.34, y:  0.26 },
+        { x:  0.42, y: -0.31 },
+        { x:  0.12, y:  0.48 },
+        { x: -0.47, y: -0.18 },
+        { x:  0.29, y:  0.39 },
+        { x: -0.21, y: -0.44 },
+        { x:  0.00, y:  0.00 }   /* zuletzt genau in der Mitte, beim Herz */
+      ];
+      var ort = ORTE[(this.station - 1) % ORTE.length];
+
       var schritte = [
         [700,  function () { if (selbst.signal) selbst.signal.setzen(2); Klang.piep(); }],
         [1500, function () { if (selbst.signal) selbst.signal.setzen(3); selbst.sagen('Etwas ist da'); Klang.piep(); }],
@@ -578,7 +631,7 @@
         [3000, function () {
           if (selbst.signal) selbst.signal.setzen(5);
           selbst.sagen('Signal gefunden');
-          if (selbst.radar) selbst.radar.fund = { x: -0.34, y: 0.26 };
+          if (selbst.radar) selbst.radar.fund = ort;
           Klang.fundton();
           Klang.funkAus(1.4);
           if (fertig) fertig();
