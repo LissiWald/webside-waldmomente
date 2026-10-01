@@ -25,7 +25,7 @@
       if (!AC) { this.an = false; return; }
       this.ctx = new AC();
       this.meister = this.ctx.createGain();
-      this.meister.gain.value = this.an ? 0.9 : 0;
+      this.meister.gain.value = this.an ? 1.0 : 0;
       this.meister.connect(this.ctx.destination);
     },
 
@@ -95,18 +95,18 @@
       o.type = art || 'sine';
       o.frequency.setValueAtTime(hz, t);
       g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(spitze === undefined ? 0.22 : spitze, t + 0.012);
+      g.gain.linearRampToValueAtTime(spitze === undefined ? 0.5 : spitze, t + 0.012);
       g.gain.exponentialRampToValueAtTime(0.0001, t + dauer);
       o.connect(g); g.connect(this.meister);
       o.start(t); o.stop(t + dauer + 0.05);
       return o;
     },
 
-    piep: function (verzug) { this.ton(1180, 0.1, 'sine', 0.13, verzug); },
+    piep: function (verzug) { this.ton(1180, 0.12, 'sine', 0.34, verzug); },
 
     fundton: function (verzug) {
-      this.ton(523.25, 0.5, 'sine', 0.2, verzug);
-      this.ton(783.99, 0.6, 'sine', 0.15, (verzug || 0) + 0.08);
+      this.ton(523.25, 0.5, 'sine', 0.46, verzug);
+      this.ton(783.99, 0.6, 'sine', 0.36, (verzug || 0) + 0.08);
     },
 
     tippKlick: function () {
@@ -117,7 +117,7 @@
       var hp = this.ctx.createBiquadFilter();
       hp.type = 'highpass'; hp.frequency.value = 2600;
       var g = this.ctx.createGain();
-      g.gain.setValueAtTime(0.035, t);
+      g.gain.setValueAtTime(0.06, t);
       g.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
       q.connect(hp); hp.connect(g); g.connect(this.meister);
       q.start(t); q.stop(t + 0.04);
@@ -127,7 +127,7 @@
     flickenKlang: function () {
       if (!this.ctx || !this.an) return;
       [392.00, 523.25, 659.25].forEach(function (hz, i) {
-        Klang.ton(hz, 1.1, 'sine', 0.16, i * 0.075);
+        Klang.ton(hz, 1.1, 'sine', 0.38, i * 0.075);
       }, this);
     },
 
@@ -140,20 +140,20 @@
       var bp = this.ctx.createBiquadFilter();
       bp.type = 'bandpass'; bp.frequency.value = 900; bp.Q.value = 5;
       var g = this.ctx.createGain();
-      g.gain.setValueAtTime(0.3, t);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.1);
+      g.gain.setValueAtTime(0.85, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
       q.connect(bp); bp.connect(g); g.connect(this.meister);
       q.start(t); q.stop(t + 0.14);
-      this.ton(230, 0.09, 'triangle', 0.14, verzug);
+      this.ton(230, 0.12, 'triangle', 0.5, verzug);
     },
 
-    plopp: function () { this.ton(180, 0.14, 'sine', 0.1); },
+    plopp: function () { this.ton(180, 0.16, 'sine', 0.32); },
 
     /* Schlussakkord */
     akkord: function () {
       if (!this.ctx || !this.an) return;
       [261.63, 329.63, 392.00, 523.25].forEach(function (hz, i) {
-        Klang.ton(hz, 2.6, 'sine', 0.14, i * 0.1);
+        Klang.ton(hz, 2.6, 'sine', 0.3, i * 0.1);
       });
     },
 
@@ -260,7 +260,7 @@
     schalten: function (an) {
       this.an = an;
       if (this.meister) {
-        this.meister.gain.setTargetAtTime(an ? 0.9 : 0, this.ctx.currentTime, 0.05);
+        this.meister.gain.setTargetAtTime(an ? 1.0 : 0, this.ctx.currentTime, 0.05);
       }
     }
   };

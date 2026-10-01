@@ -88,20 +88,37 @@
     wind:    { name: 'Wind',    datei: 'klang/wind.mp3',    karte: 'img/karte-wind.png' }
   };
 
-  /* Jeder Klang einmal laden, danach ist er sofort da */
+  /* Jeder Klang einmal laden, danach ist er sofort da.
+     Die Aufnahmen laufen ueber denselben Hauptregler wie die erzeugten
+     Toene. Sonst waeren sie deutlich lauter als alles andere und der
+     Ton-aus-Knopf wuerde sie nicht erwischen. */
   var speicher = {};
+  var verbunden = {};
   Object.keys(ALLE).forEach(function (k) {
     var a = new Audio(ALLE[k].datei);
     a.preload = 'auto';
     speicher[k] = a;
   });
 
+  function anhaengen(name) {
+    if (verbunden[name] || !BuhuKlang.ctx || !BuhuKlang.meister) return;
+    try {
+      var quelle = BuhuKlang.ctx.createMediaElementSource(speicher[name]);
+      var g = BuhuKlang.ctx.createGain();
+      g.gain.value = 1.8;
+      quelle.connect(g); g.connect(BuhuKlang.meister);
+      verbunden[name] = true;
+    } catch (e) { /* bereits verbunden */ }
+  }
+
   function klangSpielen(name, verzug) {
     setTimeout(function () {
       if (!BuhuKlang.an) return;
       var a = speicher[name];
       if (!a) return;
-      try { a.currentTime = 0; a.volume = 0.9; a.play(); } catch (e) {}
+      BuhuKlang.wecken();
+      anhaengen(name);
+      try { a.currentTime = 0; a.play(); } catch (e) {}
     }, (verzug || 0) * 1000);
   }
 
@@ -147,7 +164,7 @@
     folge.forEach(function (n, i) {
       setTimeout(function () { BUHU.sagen('Geräusch ' + (i + 1)); }, v * 1000);
       klangSpielen(n, v);
-      v += 2.4;
+      v += 3.3;
     });
     setTimeout(function () {
       sperre = false;
