@@ -232,5 +232,11 @@
 
 })();
 </script>
+<script>
+/* Macht die Tour offline lauffaehig. Siehe sw.js */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function () {});
+}
+</script>
 </body>
 </html>

@@ -65,8 +65,12 @@
   </section>
 
   <section class="block">
-    <h2>Wenn das Netz weg ist</h2>
-    <p>Im Wald gibt es Funklöcher. Deshalb stehen alle sieben Nachrichten von Buhu auch als Text auf der Notfallseite eures Zettels. Dann liest einfach jemand vor.</p>
+    <h2>Zuhause vorbereiten, damit es im Wald ohne Netz läuft</h2>
+    <p>Im Wald gibt es Funklöcher. Damit euch das nicht trifft, lädt sich die ganze Tour auf euer Handy, solange ihr noch Empfang habt. Danach funktioniert sie auch ohne.</p>
+    <p>Tippt dafür einmal hier, am besten zuhause im WLAN:</p>
+    <button class="knopf knopf--gold" id="offlineKnopf">Tour aufs Handy laden</button>
+    <p class="offline-stand" id="offlineStand">Noch nicht geladen</p>
+    <p class="fussnote" style="text-align:left">Das sind rund zwei Megabyte. Es bleibt gespeichert, auch wenn ihr die Seite schließt. Falls ihr es vergesst und im Wald kein Netz habt, stehen alle Nachrichten von Buhu zum Vorlesen auf eurem Blatt.</p>
   </section>
 
   <section class="block">
@@ -114,6 +118,70 @@
     BuhuKlang.fundton(1.7);
     setTimeout(function () { BuhuKlang.funkAus(1.2); }, 2400);
   });
+
+  /* ── Tour aufs Handy laden ── */
+  var knopf = document.getElementById('offlineKnopf');
+  var stand = document.getElementById('offlineStand');
+
+  function melden(text, fertig) {
+    stand.textContent = text;
+    stand.classList.toggle('offline-stand--fertig', !!fertig);
+  }
+
+  if (!('serviceWorker' in navigator)) {
+    knopf.hidden = true;
+    melden('Dieses Handy kann die Tour leider nicht vorab laden. Nehmt das Blatt mit.');
+  } else {
+    navigator.serviceWorker.register('sw.js').then(function (anmeldung) {
+      nachfragen();
+      /* Wenn der Worker fertig eingerichtet ist, noch einmal schauen */
+      if (anmeldung.installing) {
+        anmeldung.installing.addEventListener('statechange', function () {
+          if (this.state === 'activated') nachfragen();
+        });
+      }
+    }).catch(function () {
+      melden('Das Vorabladen hat nicht geklappt. Nehmt das Blatt mit.');
+    });
+
+    knopf.addEventListener('click', function () {
+      melden('Wird geladen …');
+      knopf.disabled = true;
+      navigator.serviceWorker.register('sw.js').then(function () {
+        return navigator.serviceWorker.ready;
+      }).then(function () {
+        setTimeout(function () { nachfragen(); knopf.disabled = false; }, 1200);
+      }).catch(function () {
+        melden('Das hat nicht geklappt. Versucht es mit WLAN noch einmal.');
+        knopf.disabled = false;
+      });
+    });
+
+    navigator.serviceWorker.addEventListener('message', function (e) {
+      if (!e.data || e.data.antwort !== 'stand') return;
+      var a = e.data.abgelegt, g = e.data.gesamt;
+      if (a >= g) {
+        melden('Alles da. Die Tour läuft jetzt auch ohne Netz.', true);
+        knopf.textContent = 'Noch einmal laden';
+      } else if (a > 0) {
+        melden(a + ' von ' + g + ' Teilen geladen');
+      } else {
+        melden('Noch nicht geladen');
+      }
+    });
+  }
+
+  function nachfragen() {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ frage: 'stand' });
+    } else {
+      setTimeout(function () {
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({ frage: 'stand' });
+        }
+      }, 900);
+    }
+  }
 
 })();
 </script>

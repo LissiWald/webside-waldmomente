@@ -571,6 +571,19 @@ button { font-family: inherit; color: inherit; }
 }
 .block li:last-child { border-bottom: none; }
 
+/* Stand des Vorabladens auf der Startseite */
+.offline-stand {
+  text-align: center;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  color: rgba(239,232,216,.6);
+  margin-top: .8rem;
+}
+.offline-stand--fertig {
+  color: var(--radar);
+  font-weight: 500;
+}
+
 /* ── Bewegung reduzieren ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
