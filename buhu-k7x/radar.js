@@ -157,20 +157,35 @@
       });
     },
 
-    /* Tiefes, langsames Klopfen des zweiten Gespensts */
+    /* Klopfen des zweiten Gespensts. Tiefer und langsamer als Buhus
+       Klopfen, aber hoch genug, damit ein Handylautsprecher es wiedergibt.
+       Unter etwa 150 Hz kommt dort nichts mehr an. */
     fremdesKlopfen: function () {
       if (!this.ctx || !this.an) return;
-      [0, 0.62, 1.3].forEach(function (v) {
+      [0, 0.72, 1.5].forEach(function (v) {
         var t = Klang.ctx.currentTime + v;
+
+        /* Anschlag: kurzer harter Impuls, der traegt */
+        var q = Klang.ctx.createBufferSource();
+        q.buffer = Klang.rauschPuffer(0.08);
+        var bp = Klang.ctx.createBiquadFilter();
+        bp.type = 'bandpass'; bp.frequency.value = 420; bp.Q.value = 3;
+        var qg = Klang.ctx.createGain();
+        qg.gain.setValueAtTime(0.5, t);
+        qg.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
+        q.connect(bp); bp.connect(qg); qg.connect(Klang.meister);
+        q.start(t); q.stop(t + 0.09);
+
+        /* Holzkoerper darunter */
         var o = Klang.ctx.createOscillator();
         var g = Klang.ctx.createGain();
-        o.type = 'sine';
-        o.frequency.setValueAtTime(96, t);
-        o.frequency.exponentialRampToValueAtTime(58, t + 0.2);
-        g.gain.setValueAtTime(0.22, t);
-        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(260, t);
+        o.frequency.exponentialRampToValueAtTime(165, t + 0.22);
+        g.gain.setValueAtTime(0.34, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
         o.connect(g); g.connect(Klang.meister);
-        o.start(t); o.stop(t + 0.35);
+        o.start(t); o.stop(t + 0.36);
       });
     },
 

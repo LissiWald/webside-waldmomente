@@ -78,38 +78,53 @@
 
   BUHU.aufbauen({ station: 2 });
 
+  /* Echte Aufnahmen aus dem Waldmomente Klangarchiv, kurz geschnitten.
+     Zusammen nur rund 50 KB, damit sie auch bei schwachem Empfang da sind. */
   var ALLE = {
-    eule:     { name: 'Eule',   spielen: function (v) { BuhuKlang.eule(v); },
-      bild: '<svg viewBox="0 0 48 48"><ellipse cx="24" cy="27" rx="15" ry="17" fill="#EFE8D8"/>' +
-            '<path d="M11 14c0-4 2-6 5-5l4 4z" fill="#EFE8D8"/><path d="M37 14c0-4-2-6-5-5l-4 4z" fill="#EFE8D8"/>' +
-            '<circle cx="18" cy="24" r="6.5" fill="#2B3226"/><circle cx="30" cy="24" r="6.5" fill="#2B3226"/>' +
-            '<circle cx="19.5" cy="22" r="2.4" fill="#EFE8D8"/><circle cx="31.5" cy="22" r="2.4" fill="#EFE8D8"/>' +
-            '<path d="M24 29l-3.5 4h7z" fill="#C8A96E"/>' +
-            '<path d="M17 40c3 2 11 2 14 0" stroke="#2B3226" stroke-width="2" fill="none" stroke-linecap="round"/></svg>' },
-
-    ast:      { name: 'Ast',    spielen: function (v) { BuhuKlang.astKnackt(v); },
-      bild: '<svg viewBox="0 0 48 48"><path d="M6 32c6-2 10-6 13-10" stroke="#EFE8D8" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-            '<path d="M29 18c4-4 8-6 13-7" stroke="#EFE8D8" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-            '<path d="M19 22l5 2-3 4 5 2" stroke="#C8A96E" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
-            '<path d="M14 26l-3-6M34 15l1-6" stroke="#EFE8D8" stroke-width="3" fill="none" stroke-linecap="round"/></svg>' },
-
-    wind:     { name: 'Wind',   spielen: function (v) { BuhuKlang.windstoss(v); },
+    wind:    { name: 'Wind',    datei: 'klang/wind.mp3',
       bild: '<svg viewBox="0 0 48 48" fill="none" stroke="#EFE8D8" stroke-width="4.4" stroke-linecap="round">' +
-            '<path d="M6 17h19a5 5 0 10-5-6"/><path d="M6 27h25a5 5 0 115 7"/><path d="M6 37h13"/></svg>' },
+            '<path d="M6 16h18a5 5 0 10-5-6"/><path d="M6 26h24a5 5 0 115 7"/><path d="M6 36h12"/></svg>' },
 
-    rascheln: { name: 'Laub',   spielen: function (v) { BuhuKlang.rascheln(v); },
-      bild: '<svg viewBox="0 0 48 48"><path d="M22 6c9 4 13 12 9 20-4 7-13 9-19 5 0-10 3-19 10-25z" fill="#EFE8D8"/>' +
-            '<path d="M22 6c-6 6-9 15-10 25" stroke="#2B3226" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-            '<path d="M38 30c4 5 3 10-2 12-4 2-8 0-9-4 3-5 7-8 11-8z" fill="#C8A96E"/></svg>' },
+    laub:    { name: 'Laub',    datei: 'klang/laub.mp3',
+      bild: '<svg viewBox="0 0 48 48"><path d="M21 5c10 4 14 13 9 21-4 7-13 9-19 5-1-11 3-20 10-26z" fill="#EFE8D8"/>' +
+            '<path d="M21 5c-6 6-10 15-10 26" stroke="#2B3226" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
+            '<path d="M38 28c5 5 4 11-1 13-5 2-9 0-10-5 3-5 7-8 11-8z" fill="#C8A96E"/>' +
+            '<path d="M38 28c-4 3-7 7-9 11" stroke="#8B6847" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>' },
 
-    specht:   { name: 'Specht', spielen: function (v) { BuhuKlang.specht(v); },
-      bild: '<svg viewBox="0 0 48 48"><rect x="6" y="4" width="9" height="40" rx="3" fill="#8B6847"/>' +
-            '<ellipse cx="29" cy="25" rx="11" ry="13" fill="#EFE8D8"/>' +
-            '<path d="M29 12c0-4 3-6 6-5-1 3-2 4-2 6z" fill="#C8A96E"/>' +
-            '<path d="M18 20l-7-3 7-3z" fill="#C8A96E"/>' +
-            '<circle cx="26" cy="19" r="2.4" fill="#2B3226"/>' +
-            '<path d="M33 31c4 2 6 6 5 10" stroke="#8B6847" stroke-width="3" fill="none" stroke-linecap="round"/></svg>' }
+    regen:   { name: 'Regen',   datei: 'klang/regen.mp3',
+      bild: '<svg viewBox="0 0 48 48"><path d="M14 23a8 8 0 01.6-15.6A10 10 0 0134 10a7 7 0 011 14z" fill="#EFE8D8"/>' +
+            '<path d="M14 32l-3 7M24 32l-3 7M34 32l-3 7" stroke="#C8A96E" stroke-width="4" stroke-linecap="round" fill="none"/></svg>' },
+
+    tropfen: { name: 'Tropfen', datei: 'klang/tropfen.mp3',
+      bild: '<svg viewBox="0 0 48 48"><path d="M24 6c6 9 11 14 11 20a11 11 0 01-22 0c0-6 5-11 11-20z" fill="#EFE8D8"/>' +
+            '<ellipse cx="19" cy="27" rx="3" ry="4.5" fill="#2B3226" opacity=".25"/>' +
+            '<path d="M10 42c5-3 23-3 28 0" stroke="#C8A96E" stroke-width="3" fill="none" stroke-linecap="round"/></svg>' },
+
+    voegel:  { name: 'Vögel',   datei: 'klang/voegel.mp3',
+      bild: '<svg viewBox="0 0 48 48"><ellipse cx="25" cy="26" rx="12" ry="10" fill="#EFE8D8"/>' +
+            '<circle cx="31" cy="21" r="7" fill="#EFE8D8"/>' +
+            '<path d="M38 20l6-2-6 4z" fill="#C8A96E"/>' +
+            '<circle cx="33" cy="20" r="2.2" fill="#2B3226"/>' +
+            '<path d="M20 25c5-3 10-2 13 2-5 3-11 2-13-2z" fill="#C8A96E" opacity=".65"/>' +
+            '<path d="M14 31l-7 6M16 34c-2 4-1 7 2 8" stroke="#8B6847" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>' }
   };
+
+  /* Jeder Klang einmal laden, danach ist er sofort da */
+  var speicher = {};
+  Object.keys(ALLE).forEach(function (k) {
+    var a = new Audio(ALLE[k].datei);
+    a.preload = 'auto';
+    speicher[k] = a;
+  });
+
+  function klangSpielen(name, verzug) {
+    setTimeout(function () {
+      if (!BuhuKlang.an) return;
+      var a = speicher[name];
+      if (!a) return;
+      try { a.currentTime = 0; a.volume = 0.9; a.play(); } catch (e) {}
+    }, (verzug || 0) * 1000);
+  }
 
   var runde = 1;
   var folge = [];
@@ -154,8 +169,8 @@
     var v = 0.4;
     folge.forEach(function (n, i) {
       setTimeout(function () { BUHU.sagen('Geräusch ' + (i + 1)); }, v * 1000);
-      ALLE[n].spielen(v);
-      v += 1.75;
+      klangSpielen(n, v);
+      v += 2.4;
     });
     setTimeout(function () {
       sperre = false;
@@ -187,7 +202,7 @@
     getippt.push(name);
     karte.classList.add('gewaehlt');
     karte.querySelector('.karte__nr').textContent = getippt.length;
-    ALLE[name].spielen(0);
+    klangSpielen(name, 0);
 
     var stelle = getippt.length - 1;
     if (getippt[stelle] !== folge[stelle]) {
