@@ -45,7 +45,7 @@
   </figure>
 
   <section class="aufgabe" id="aufgabe" hidden>
-    <h1 class="aufgabe__titel">Drei Töne öffnen die Kiste</h1>
+    <h1 class="aufgabe__titel">Vier Töne öffnen die Kiste</h1>
     <p class="aufgabe__text">Hört zu und tippt die Töne in der richtigen Reihenfolge. Mitsummen hilft.</p>
 
     <div class="schloesser" id="schloesser"></div>
@@ -96,7 +96,7 @@
   /* Drei Schloesser zeichnen */
   (function () {
     var s = el('schloesser');
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 4; i++) {
       var d = document.createElement('div');
       d.className = 'schloss';
       d.dataset.nr = i;
@@ -112,7 +112,7 @@
 
   function neuesGeheimnis() {
     geheim = [];
-    for (var i = 0; i < 3; i++) geheim.push(Math.floor(Math.random() * TOENE.length));
+    for (var i = 0; i < 4; i++) geheim.push(Math.floor(Math.random() * TOENE.length));
     getippt = [];
   }
 
@@ -154,7 +154,7 @@
     el('klangtasten').hidden = false;
 
     var v = 0.4;
-    geheim.forEach(function (i) { tonSpielen(i, v); v += 1.0; });
+    geheim.forEach(function (i) { tonSpielen(i, v); v += 0.82; });
 
     setTimeout(function () {
       sperre = false;

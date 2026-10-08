@@ -76,11 +76,13 @@
     'Wenn ich mich nicht traue zu reden, kl_pfe ich.\n' +
     'Sucht euch zwei lose Stöcke vom Boden und klopft sie gegeneinander. Ich klopfe vor, ihr klopft nach.';
 
-  /* Abstaende in Sekunden zwischen den Schlaegen */
+  /* Abstaende in Sekunden zwischen den Schlaegen.
+     Gleich lange Abstaende sind kein Rhythmus, sondern Zaehlen.
+     Deshalb echte Muster mit Pausen, die man sich merken muss. */
   var RUNDEN = [
-    [0.45, 0.45],                 /* 3 Schlaege */
-    [0.4, 0.4, 0.4],              /* 4 Schlaege */
-    [0.35, 0.75, 0.35, 0.35]      /* 5 Schlaege mit Pause */
+    [0.32, 0.70, 0.32],                     /* 4 Schlaege: kurz kurz, Pause, kurz */
+    [0.28, 0.28, 0.68, 0.28, 0.28],         /* 6 Schlaege, Pause in der Mitte */
+    [0.26, 0.60, 0.26, 0.26, 0.60, 0.26]    /* 7 Schlaege, zwei Pausen */
   ];
 
   BUHU.aufbauen({ station: 4 });
@@ -181,7 +183,7 @@
           tipps = [];
           punkteLeeren();
         }
-      }, 3200);
+      }, 4200);
     }
   });
 
@@ -200,7 +202,7 @@
       for (var k = 0; k < soll.length; k++) {
         var sollAnteil = soll[k] / sollSumme;
         var istAnteil = ist[k] / istSumme;
-        if (Math.abs(sollAnteil - istAnteil) > 0.19) { passt = false; break; }
+        if (Math.abs(sollAnteil - istAnteil) > 0.145) { passt = false; break; }
       }
     }
 

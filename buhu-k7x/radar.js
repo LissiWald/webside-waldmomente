@@ -147,6 +147,17 @@
       this.ton(230, 0.12, 'triangle', 0.5, verzug);
     },
 
+    /* Ein Ton je geschlossenem Riss, Pentatonik aufwaerts.
+       Nach sieben Stationen hat man die ganze Leiter gehoert. */
+    stufenton: function (n) {
+      if (!this.ctx || !this.an) return;
+      var leiter = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33];
+      var hz = leiter[Math.max(0, Math.min(6, n - 1))];
+      this.ton(hz, 1.4, 'sine', 0.5);
+      this.ton(hz * 2, 1.0, 'sine', 0.18, 0.04);
+      this.ton(hz * 1.5, 1.2, 'sine', 0.22, 0.09);
+    },
+
     plopp: function () { this.ton(180, 0.16, 'sine', 0.32); },
 
     /* Schlussakkord */
@@ -271,13 +282,57 @@
     this.ctx = leinwand.getContext('2d');
     this.winkel = 0;
     this.laeuft = false;
-    this.fund = null;     /* {x, y} in Einheiten von -1 bis 1 */
-    this.glimmen = 0;     /* 0 bis 1, fuer Station 7 */
+    this.fund = null;
+    this.glimmen = 0;
     this.zweiterPunkt = false;
+
+    /* Fortschritt: wie viele Risse schon zu sind. Faerbt das Radar von
+       kaltem Gruen ins Goldene und schliesst einen Ring nach dem anderen. */
+    this.stufe = 0;
+    this.stufeWeich = 0;      /* laeuft der Stufe weich hinterher */
+    this.feierRing = -1;      /* welcher Ring gerade aufleuchtet */
+    this.feierAb = 0;
+
     this.skalieren();
     var selbst = this;
     window.addEventListener('resize', function () { selbst.skalieren(); });
   }
+
+  /* Mischt zwischen Radargruen und Gold, je nach Fortschritt */
+  Radar.prototype.farbe = function (deckkraft, extra) {
+    var t = Math.min(1, (this.stufeWeich + (extra || 0)) / 7);
+    var r = Math.round(159 + (200 - 159) * t);
+    var g = Math.round(212 + (169 - 212) * t);
+    var b = Math.round(166 + (110 - 166) * t);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + deckkraft + ')';
+  };
+
+  /* Nach gelöster Aufgabe: Ring schliesst sich, Punkt rutscht zur Mitte */
+  Radar.prototype.stufeHoch = function (n, fertig) {
+    var selbst = this;
+    this.stufe = n;
+    this.feierRing = n;
+    this.feierAb = Date.now();
+    if (!this.laeuft) this.start();
+
+    /* Fundpunkt gleitet Richtung Mitte */
+    if (this.fund) {
+      var start = { x: this.fund.x, y: this.fund.y };
+      var ziel = { x: start.x * 0.25, y: start.y * 0.25 };
+      var t0 = Date.now(), dauer = ruhig ? 100 : 1400;
+      (function gleiten() {
+        var t = Math.min(1, (Date.now() - t0) / dauer);
+        var w = 1 - Math.pow(1 - t, 3);
+        selbst.fund = { x: start.x + (ziel.x - start.x) * w,
+                        y: start.y + (ziel.y - start.y) * w };
+        if (t < 1) requestAnimationFrame(gleiten);
+      })();
+    }
+
+    Klang.stufenton(n);
+    setTimeout(function () { if (fertig) fertig(); }, ruhig ? 120 : 1500);
+  };
+
   Radar.prototype.skalieren = function () {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var b = this.c.getBoundingClientRect();
@@ -343,16 +398,37 @@
     g.save();
     g.beginPath(); g.arc(m, m, r, 0, Math.PI * 2); g.clip();
 
-    /* ── Entfernungsringe ── */
-    for (var i = 1; i <= 4; i++) {
-      g.beginPath(); g.arc(m, m, r * i / 4, 0, Math.PI * 2);
-      g.strokeStyle = i === 4 ? 'rgba(159,212,166,.34)' : 'rgba(159,212,166,.2)';
-      g.lineWidth = 1;
+    /* Stufe laeuft der Zielstufe weich hinterher */
+    this.stufeWeich += (this.stufe - this.stufeWeich) * 0.06;
+
+    /* ── Sieben Ringe, einer je Station. Geschlossene leuchten. ── */
+    for (var i = 1; i <= 7; i++) {
+      var rr = r * (0.2 + 0.8 * i / 7);
+      var zu = i <= this.stufe;
+      g.beginPath(); g.arc(m, m, rr, 0, Math.PI * 2);
+      if (zu) {
+        g.strokeStyle = this.farbe(0.62, 2);
+        g.lineWidth = 2.2;
+      } else {
+        g.strokeStyle = this.farbe(0.16);
+        g.lineWidth = 1;
+      }
       g.stroke();
+
+      /* Der gerade geschlossene Ring blitzt kurz auf */
+      if (i === this.feierRing) {
+        var alter = (Date.now() - this.feierAb) / 1400;
+        if (alter < 1) {
+          g.beginPath(); g.arc(m, m, rr, 0, Math.PI * 2);
+          g.strokeStyle = 'rgba(255,247,225,' + (0.95 * (1 - alter)) + ')';
+          g.lineWidth = 2 + 7 * (1 - alter);
+          g.stroke();
+        } else { this.feierRing = -1; }
+      }
     }
 
     /* ── Fadenkreuz mit Luecke in der Mitte ── */
-    g.strokeStyle = 'rgba(159,212,166,.26)';
+    g.strokeStyle = this.farbe(0.26);
     g.lineWidth = 1;
     var luecke = r * 0.07;
     [[1,0],[-1,0],[0,1],[0,-1]].forEach(function (d) {
@@ -361,8 +437,7 @@
       g.lineTo(m + d[0]*r, m + d[1]*r);
       g.stroke();
     });
-    /* Diagonalen, feiner */
-    g.strokeStyle = 'rgba(159,212,166,.12)';
+    g.strokeStyle = this.farbe(0.12);
     [[0.707,0.707],[-0.707,0.707],[0.707,-0.707],[-0.707,-0.707]].forEach(function (d) {
       g.beginPath();
       g.moveTo(m + d[0]*luecke, m + d[1]*luecke);
@@ -386,7 +461,7 @@
         if (frisch <= 0.02) return;
         var px = m + Math.cos(p.a) * r * p.d;
         var py = m + Math.sin(p.a) * r * p.d;
-        g.fillStyle = 'rgba(159,212,166,' + (0.5 * frisch) + ')';
+        g.fillStyle = selbst.farbe(0.5 * frisch);
         g.beginPath(); g.arc(px, py, p.gr, 0, Math.PI*2); g.fill();
       });
     }
@@ -402,14 +477,14 @@
         g.moveTo(m, m);
         g.arc(m, m, r, aa - 0.028, aa);
         g.closePath();
-        g.fillStyle = 'rgba(159,212,166,' + (0.2 * staerke) + ')';
+        g.fillStyle = this.farbe(0.2 * staerke);
         g.fill();
       }
       /* Vorderkante, hell und mit Schein */
       var ex = m + Math.cos(this.winkel) * r;
       var ey = m + Math.sin(this.winkel) * r;
       var kante = g.createLinearGradient(m, m, ex, ey);
-      kante.addColorStop(0,   'rgba(159,212,166,.15)');
+      kante.addColorStop(0,   this.farbe(0.15));
       kante.addColorStop(0.7, 'rgba(200,232,205,.75)');
       kante.addColorStop(1,   'rgba(239,232,216,.95)');
       g.strokeStyle = kante;
@@ -418,7 +493,7 @@
       /* Lichtpunkt am Rand */
       var sp = g.createRadialGradient(ex, ey, 0, ex, ey, 14);
       sp.addColorStop(0, 'rgba(239,232,216,.8)');
-      sp.addColorStop(1, 'rgba(159,212,166,0)');
+      sp.addColorStop(1, this.farbe(0));
       g.fillStyle = sp;
       g.beginPath(); g.arc(ex, ey, 14, 0, Math.PI*2); g.fill();
     }
@@ -443,8 +518,8 @@
       var leucht = g.createRadialGradient(fx, fy, 0, fx, fy, 30);
       leucht.addColorStop(0,    'rgba(255,255,255,' + puls + ')');
       leucht.addColorStop(0.22, 'rgba(239,232,216,' + (puls * 0.8) + ')');
-      leucht.addColorStop(0.55, 'rgba(159,212,166,' + (puls * 0.35) + ')');
-      leucht.addColorStop(1,    'rgba(159,212,166,0)');
+      leucht.addColorStop(0.55, this.farbe(puls * 0.35));
+      leucht.addColorStop(1,    this.farbe(0));
       g.fillStyle = leucht;
       g.beginPath(); g.arc(fx, fy, 30, 0, Math.PI*2); g.fill();
       g.fillStyle = 'rgba(255,255,255,' + puls + ')';
@@ -487,7 +562,7 @@
 
     /* ── Glasrand ── */
     g.beginPath(); g.arc(m, m, r, 0, Math.PI*2);
-    g.strokeStyle = 'rgba(200,169,110,.75)';
+    g.strokeStyle = this.farbe(0.75, 3);
     g.lineWidth = 2.5;
     g.stroke();
     g.beginPath(); g.arc(m, m, r * 0.985, 0, Math.PI*2);
@@ -781,6 +856,11 @@
 
       var feld = document.getElementById('radarCanvas');
       this.radar = feld ? new Radar(feld) : null;
+      if (this.radar) {
+        /* Was vorher geschafft wurde, ist schon zu sehen */
+        this.radar.stufe = einst.station - 1;
+        this.radar.stufeWeich = einst.station - 1;
+      }
 
       var sig = document.getElementById('signal');
       this.signal = sig ? new Signal(sig) : null;
@@ -863,14 +943,27 @@
     rissSchliessen: function (fertig) {
       var selbst = this;
       var n = this.station;
-      if (this.figur) {
-        this.figur.schliessen(n, function () {
+
+      function dannFigur() {
+        if (selbst.figur) {
+          selbst.figur.schliessen(n, function () {
+            selbst.abschlussZeigen(n);
+            if (fertig) fertig();
+          });
+        } else {
           selbst.abschlussZeigen(n);
           if (fertig) fertig();
-        });
+        }
+      }
+
+      /* Erst passiert etwas am Radar: Ring schliesst sich, Punkt
+         rutscht zur Mitte, ein Ton erklingt. Danach der Flicken. */
+      if (this.radar) {
+        this.sagen('Riss ' + n + ' von 7 geschlossen');
+        if (this.signal) this.signal.setzen(Math.min(5, 1 + Math.round(n * 4 / 7)));
+        this.radar.stufeHoch(n, dannFigur);
       } else {
-        this.abschlussZeigen(n);
-        if (fertig) fertig();
+        dannFigur();
       }
     },
 
