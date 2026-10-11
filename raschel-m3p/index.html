@@ -228,7 +228,7 @@
     <button id="parent-close" class="secondary" type="button">Schließen ✕</button>
     <h2>Für eure Erwachsenen</h2>
     <p>
-      Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.
+      Für Kinder von 6 bis 11 Jahren mit erwachsener Begleitung.
       Erwachsene übernehmen Lesen, Schreiben und die Handybedienung.
       Die Kinder entdecken. Zeichnen ist freiwillig.
     </p>
@@ -510,7 +510,7 @@
     const PAYHIP_TITLE =
       "Raschel, das Waldgespenst · Die sieben verlorenen Flicken";
     const PAYHIP_SHORT =
-      "Eine schaurig schöne Waldrallye für Kinder von 4 bis 7 Jahren " +
+      "Eine schaurig schöne Waldrallye für Kinder von 6 bis 11 Jahren " +
       "mit erwachsener Begleitung. Sieben Waldaufgaben, ein QR-Code " +
       "und eine gemeinsame Mission.";
     const PAYHIP_DESCRIPTION = `Der Spaziergang beginnt. Und schon kommt die Frage: „Wie weit noch?“
@@ -534,7 +534,7 @@ Spielkarte ausdrucken. Bleistift und geladenes Handy einpacken. Einen sicheren W
 Das Handy spielt Raschels Nachricht ab und prüft eure Lösung. Die Aufgaben erlebt ihr draußen.
 Ihr entscheidet selbst, an welchen passenden Stellen ihr stehen bleibt und weiterspielt. Vorher müsst ihr im Wald nichts verstecken oder an Bäume hängen.
 FÜR WEN IST DIE RALLYE?
-Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.
+Für Kinder von 6 bis 11 Jahren mit erwachsener Begleitung.
 Erwachsene übernehmen Lesen, Schreiben und die Handybedienung. Die Kinder suchen, zeigen und entdecken. Zeichnen bleibt freiwillig.
 Gemeinsam als Familie, mit Freunden oder beim Kindergeburtstag.
 Ein bisschen geheimnisvoll, ein bisschen gruselig. Und mittendrin ein kleines Gespenst, das eure Hilfe braucht.
@@ -596,7 +596,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
     function audioMarkup(slug, knopfText = "Nachricht hören") {
       return `
         <audio controls preload="metadata"
-          src="${escapeHTML(media(slug + ".m4a"))}"
+          src="${escapeHTML(media(slug + ".mp3"))}"
           aria-label="Raschels Nachricht"></audio>
         <button class="secondary play-audio" type="button">
           ${escapeHTML(knopfText)}
@@ -706,7 +706,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
           <h1>Die sieben verlorenen Flicken</h1>
           <img class="ghost" src="${media("raschel.jpg")}"
                alt="Raschel, das Waldgespenst">
-          <p>Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.</p>
+          <p>Für Kinder von 6 bis 11 Jahren mit erwachsener Begleitung.</p>
           <div class="card">
             <h3>Raschel meldet sich</h3>
             ${audioMarkup("start")}
@@ -812,7 +812,9 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
           <p class="eyebrow">Das letzte Schloss</p>
           <h2>Sieben Buchstaben. Ein Wort.</h2>
           <div class="card">
-            <p>${escapeHTML(LOCK_STORY)}</p>
+            ${audioMarkup("schloss")}
+            <details><summary>Raschels Nachricht lesen</summary>
+              <p>${escapeHTML(LOCK_STORY)}</p></details>
             <p class="codeword">${CHAPTERS.map(k => k.letter).join(" ")}</p>
           </div>
           <form id="lock-form">
@@ -828,6 +830,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
           </details>
         `;
         app.innerHTML = inhalt;
+        bindAudio();
         document.getElementById("lock-form").onsubmit = ev => {
           ev.preventDefault();
           const antwort = document.getElementById("lock-input").value;
@@ -875,7 +878,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
             <p class="eyebrow">Dein Spielpaket</p>
             <h1>Raschel und die sieben verlorenen Flicken</h1>
             <p>Eine Waldrallye für Kinder von
-              <strong>4 bis 7 Jahren</strong> mit ihren Erwachsenen.</p>
+              <strong>6 bis 11 Jahren</strong> mit ihren Erwachsenen.</p>
             <a class="button" href="#spiel">Spiel starten →</a>
           </div>
           <img class="ghost" src="${media("raschel.jpg")}"
@@ -1017,7 +1020,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
           <p class="eyebrow">Waldmomente · Raschel, das Waldgespenst</p>
           <h1>So begleitet ihr die Rallye.</h1>
           <h3>Für wen?</h3>
-          <p>Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.
+          <p>Für Kinder von 6 bis 11 Jahren mit erwachsener Begleitung.
              Erwachsene übernehmen Lesen, Schreiben und Handybedienung.
              Die Kinder entdecken. Zeichnen ist freiwillig.</p>
           <h3>Vorbereiten</h3>
@@ -1118,11 +1121,11 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
         <p class="eyebrow">Eine Waldmission für eure Familie</p>
         <h1>Raschel, das Waldgespenst</h1>
         <img class="banner" src="${media("raschel-verkaufsbild.jpg")}"
-             alt="Raschels Waldrallye für Kinder von 4 bis 7 Jahren">
+             alt="Raschels Waldrallye für Kinder von 6 bis 11 Jahren">
         <p>Sieben verlorene Flicken. Ein geheimnisvolles Wort.
            Und Kinder, die den Wald nach Hinweisen absuchen.</p>
         <p>Eine schaurig schöne Waldrallye für Kinder von
-           <strong>4 bis 7 Jahren mit erwachsener Begleitung.</strong></p>
+           <strong>6 bis 11 Jahren mit erwachsener Begleitung.</strong></p>
         <div class="card">
           <h2>Letzte Nacht hat es ordentlich geraschelt.</h2>
           <p>Der Sturm hat Raschels Laken zerrissen.
@@ -1211,7 +1214,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
       app.innerHTML = `
         <p class="eyebrow">Für Lissi</p>
         <h1>Raschel für Payhip</h1>
-        <p>Produkttexte für Kinder von 4 bis 7 Jahren
+        <p>Produkttexte für Kinder von 6 bis 11 Jahren
            mit erwachsener Begleitung.</p>
         <img class="banner" src="${media("raschel-verkaufsbild.jpg")}"
              alt="Raschels Verkaufsbild">
@@ -1308,8 +1311,9 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
        steht auch im Text. Fehlt eine, wird sie beim Namen genannt,
        das Spiel liegt aber trotzdem auf dem Geraet. */
     const OFFLINE_TON = [
-      "start.m4a", "fuchs.m4a", "viereck.m4a", "rinde.m4a",
-      "specht.m4a", "waldboden.m4a", "stein.m4a", "krone.m4a", "danke.m4a"
+      "start.mp3", "fuchs.mp3", "viereck.mp3", "rinde.mp3",
+      "specht.mp3", "waldboden.mp3", "stein.mp3", "krone.mp3",
+      "schloss.mp3", "danke.mp3"
     ];
 
     document.getElementById("offline-button").onclick = async () => {
