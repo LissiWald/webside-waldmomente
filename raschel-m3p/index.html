@@ -205,13 +205,22 @@
       body { background: white; font-size: 11pt; line-height: 1.45; }
       header, .no-print, dialog { display: none !important; }
       main { width: 100%; margin: 0; }
-      h1 { font-size: 25pt; }
-      h2 { font-size: 20pt; }
-      h3 { font-size: 14pt; }
+      /* Die Abstaende sind fuer den Bildschirm gemacht. Auf Papier
+         rutscht damit jede Seite zwei Zeilen ueber den Rand und
+         erzeugt ein fast leeres Folgeblatt. Deshalb hier enger. */
+      h1 { font-size: 25pt; margin: 0 0 4mm; }
+      h2 { font-size: 20pt; margin: 0 0 4mm; }
+      h3 { font-size: 14pt; margin: 5mm 0 1.5mm; }
+      p { margin: 0 0 3mm; }
+      .eyebrow { margin: 0 0 2mm; }
       .print-page { margin: 0; padding: 0; border: 0; break-after: page; }
       .print-page:last-child { break-after: auto; }
-      .draw-box { min-height: 48mm; }
-      .write-line { min-height: 9mm; }
+      .draw-box { min-height: 42mm; margin: 3mm 0; }
+      .write-line { min-height: 8mm; margin-bottom: 3mm; }
+      .drawing-pair { gap: 6mm; }
+      .letter-box { width: 9mm; height: 9mm; margin-left: 4mm; }
+      .word-boxes { gap: 3mm; margin: 4mm 0 6mm; }
+      .word-boxes span { width: 11mm; height: 14mm; }
       .ghost { max-height: 70mm; }
       input[type="text"] { border: 0; border-bottom: 1px solid #aaa; border-radius: 0; padding: 3mm 0; }
     }
