@@ -96,18 +96,12 @@ p {
   border-radius:48% 52% 47% 53%;
   transform:rotate(-8deg);
   z-index:-1}
+/* Raschel bewegt sich im Bild selbst. Eine zusaetzliche
+   Bewegung per CSS waere eine Bewegung zu viel. */
 .hero-art img {
-  height:590px;
+  height:540px;
   width:100%;
-  object-fit:contain;
-  animation:schweben 7s ease-in-out infinite;
-  will-change:transform}
-@keyframes schweben {
-  0%,100% { transform:translateY(0) rotate(-1.2deg) }
-  50%     { transform:translateY(-18px) rotate(1.2deg) }}
-/* Wer Bewegung im Betriebssystem abgestellt hat, bekommt keine. */
-@media (prefers-reduced-motion:reduce) {
-  .hero-art img { animation:none }}
+  object-fit:contain}
 .scribble {
   font:italic 22px Georgia,serif;
   color:var(--rust);
@@ -354,11 +348,7 @@ h1 {
 .hero-art {
   padding:0}
 .hero-art img {
-  height:370px;
-  animation-name:schweben-klein}
-@keyframes schweben-klein {
-  0%,100% { transform:translateY(0) rotate(-1deg) }
-  50%     { transform:translateY(-11px) rotate(1deg) }}
+  height:370px}
 .scribble {
   font-size:19px}
 .strip {

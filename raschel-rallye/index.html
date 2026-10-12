@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#243f32">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Raschel, das Waldgespenst</title>
+  <style>
+    :root {
+      --papier: #f5f0e6;
+      --hell: #fffcf6;
+      --gruen: #243f32;
+      --rost: #975339;
+      --linie: #d6cdbd;
+      --moos: #d4dbc9;
+      --text: #27372c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--papier);
+      color: var(--text);
+      font: 18px/1.65 system-ui, -apple-system, sans-serif;
+    }
+    header {
+      max-width: 1050px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--linie);
+    }
+    .marke {
+      color: var(--gruen);
+      font: italic 26px Georgia, serif;
+      text-decoration: none;
+    }
+    main { width: min(950px, calc(100% - 40px)); margin: 30px auto 70px; }
+    h1, h2, h3 {
+      color: var(--gruen);
+      font-family: Georgia, serif;
+      font-weight: normal;
+      line-height: 1.15;
+    }
+    h1 { font-size: clamp(38px, 7vw, 64px); margin: 16px 0 24px; }
+    h2 { font-size: clamp(32px, 5vw, 43px); margin: 20px 0; }
+    h3 { font-size: 25px; margin: 16px 0; }
+    p { margin: 12px 0 20px; }
+    a { color: var(--gruen); }
+    button, .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 13px 22px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--gruen);
+      color: white;
+      font: 600 17px/1.4 system-ui, sans-serif;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    button:disabled { opacity: .55; cursor: default; }
+    .secondary {
+      border: 1px solid var(--linie);
+      background: transparent;
+      color: var(--gruen);
+    }
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    textarea:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--rost);
+      outline-offset: 4px;
+    }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .eyebrow {
+      color: var(--rost);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .note { color: #65705f; font-size: 15px; }
+    .card {
+      margin: 24px 0;
+      padding: 25px;
+      border: 1px solid var(--linie);
+      border-radius: 8px;
+      background: var(--hell);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      align-items: center;
+      gap: 30px;
+    }
+    .ghost {
+      display: block;
+      width: 100%;
+      max-height: 340px;
+      object-fit: contain;
+      margin: 15px auto;
+      border-radius: 8px;
+    }
+    .banner {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 25px 0;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid .card { margin: 0; }
+    .task { margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--rost); }
+    audio { display: block; width: 100%; margin: 18px 0; }
+    details { margin: 18px 0; }
+    summary { min-height: 44px; padding: 8px 0; cursor: pointer; font-weight: 600; }
+    form label { display: block; margin: 18px 0 8px; }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid var(--linie);
+      border-radius: 5px;
+      background: white;
+      color: var(--text);
+      font: 20px/1.5 system-ui, sans-serif;
+    }
+    .code-input { text-transform: uppercase; }
+    textarea { min-height: 110px; resize: vertical; font-size: 16px; }
+    .check { display: flex; align-items: flex-start; gap: 12px; font-size: 16px; }
+    input[type="checkbox"] { width: 24px; height: 24px; flex-shrink: 0; margin-top: 3px; }
+    .feedback { min-height: 30px; color: var(--rost); }
+    .patches { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 25px; }
+    .patch {
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      border: 1px dashed #aa9980;
+      border-radius: 5px;
+      background: #e7dfd1;
+      font-weight: 700;
+    }
+    .patch.done { border: 1px solid #758d67; background: var(--moos); }
+    .letter {
+      display: inline-block;
+      padding: 10px 24px;
+      border-radius: 6px;
+      background: #eee3cb;
+      color: var(--rost);
+      font: 64px Georgia, serif;
+    }
+    .codeword { font-size: 25px; letter-spacing: 4px; overflow-wrap: anywhere; }
+    .codeword mark { padding: 3px; background: #d4b072; color: var(--gruen); }
+    .image-button {
+      display: block; width: 100%; padding: 0;
+      border: 0; background: transparent; cursor: zoom-in;
+    }
+    .reward-image { display: block; width: 100%; height: auto; border-radius: 7px; }
+    dialog {
+      width: min(780px, 94vw);
+      max-height: 92dvh;
+      padding: 24px;
+      overflow: auto;
+      border: 1px solid var(--linie);
+      border-radius: 10px;
+      background: var(--papier);
+      color: var(--text);
+    }
+    dialog::backdrop { background: rgba(12,25,17,.84); }
+    #picture-dialog { width: min(1350px, 96vw); padding: 12px; }
+    #picture-dialog img {
+      display: block; width: 100%;
+      max-height: 78dvh; object-fit: contain; margin-top: 12px;
+    }
+    .print-page { margin: 25px 0; padding: 30px; border: 1px solid var(--linie); background: white; }
+    .write-line { min-height: 38px; margin-bottom: 14px; border-bottom: 1px solid #aaa; }
+    .draw-box { min-height: 170px; margin: 15px 0; border: 1px solid #aaa; border-radius: 4px; }
+    .drawing-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .letter-box {
+      display: inline-block; width: 40px; height: 40px;
+      border: 1px solid #aaa; vertical-align: middle; margin-left: 15px;
+    }
+    .word-boxes { display: flex; gap: 10px; margin: 20px 0 30px; }
+    .word-boxes span { display: block; width: 45px; height: 55px; border: 1px solid #aaa; }
+    .price { color: var(--gruen); font: 48px Georgia, serif; }
+    .warnung {
+      border: 1px solid #c9a227;
+      background: #fdf6e0;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 20px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    @media (max-width: 650px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .hero .ghost { max-height: 250px; }
+      .card, .print-page { padding: 20px; }
+      .row > button, .row > .button { flex-grow: 1; }
+      .patch { width: 34px; height: 34px; }
+    }
+    @media print {
+      @page { size: A4; margin: 16mm; }
+      body { background: white; font-size: 11pt; line-height: 1.45; }
+      header, .no-print, dialog { display: none !important; }
+      main { width: 100%; margin: 0; }
+      /* Die Abstaende sind fuer den Bildschirm gemacht. Auf Papier
+         rutscht damit jede Seite zwei Zeilen ueber den Rand und
+         erzeugt ein fast leeres Folgeblatt. Deshalb hier enger. */
+      h1 { font-size: 25pt; margin: 0 0 4mm; }
+      h2 { font-size: 20pt; margin: 0 0 4mm; }
+      h3 { font-size: 14pt; margin: 5mm 0 1.5mm; }
+      p { margin: 0 0 3mm; }
+      .eyebrow { margin: 0 0 2mm; }
+      .print-page { margin: 0; padding: 0; border: 0; break-after: page; }
+      .print-page:last-child { break-after: auto; }
+      .draw-box { min-height: 42mm; margin: 3mm 0; }
+      .write-line { min-height: 8mm; margin-bottom: 3mm; }
+      .drawing-pair { gap: 6mm; }
+      .letter-box { width: 9mm; height: 9mm; margin-left: 4mm; }
+      .word-boxes { gap: 3mm; margin: 4mm 0 6mm; }
+      .word-boxes span { width: 11mm; height: 14mm; }
+      .ghost { max-height: 70mm; }
+      input[type="text"] { border: 0; border-bottom: 1px solid #aaa; border-radius: 0; padding: 3mm 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="marke" href="#produkt">Waldmomente</a>
+    <button id="parent-button" class="secondary" type="button">Elterninfos</button>
+  </header>
+  <main><div id="app"></div></main>
+
+  <dialog id="parent-dialog">
+    <button id="parent-close" class="secondary" type="button">Schließen ✕</button>
+    <h2>Für eure Erwachsenen</h2>
+    <p>
+      Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.
+      Erwachsene übernehmen Lesen, Schreiben und die Handybedienung.
+      Die Kinder entdecken. Zeichnen ist freiwillig.
+    </p>
+    <p>
+      Gemeinsam auf einem sicheren Waldweg spielen.
+      Zum Hören und Eingeben stehen bleiben.
+      Beim Weitergehen kommt das Handy in die Tasche.
+      Nur lose Funde benutzen und anschließend zurücklegen.
+      Nichts essen, abbrechen, abschälen oder ausgraben.
+      Nicht klettern und bei Sturm nicht spielen.
+    </p>
+    <h3>Vor dem Ausflug</h3>
+    <p>
+      Den Ton prüfen und die Spielkarte ausdrucken.
+      „Für den Wald speichern“ lädt Spiel, Bilder und Aufnahmen
+      auf dieses Gerät. Wartet auf die Bestätigung und testet
+      danach einmal ohne Netz.
+    </p>
+    <button id="offline-button" type="button">Für den Wald speichern</button>
+    <p id="offline-status" role="status" class="note"></p>
+    <div class="row">
+      <a class="button secondary" href="#karte">Spielkarte</a>
+      <a class="button secondary" href="#eltern">Elternanleitung</a>
+      <a class="button secondary" href="#urkunde">Urkunde</a>
+    </div>
+    <details>
+      <summary>Spiel neu beginnen</summary>
+      <p>Alle gefundenen Flicken werden zurückgesetzt.</p>
+      <button id="reset-button" class="secondary" type="button">Fortschritt zurücksetzen</button>
+    </details>
+  </dialog>
+
+  <dialog id="picture-dialog">
+    <button id="picture-close" type="button">Schließen ✕</button>
+    <img id="picture-image" alt="">
+  </dialog>
+
+  <script>
+    "use strict";
+
+    /* Alles liegt auf waldmomente.me im selben Ordner. Dadurch bleibt das
+       Spiel auch dann heil, wenn eine fremde Vorschauadresse verschwindet,
+       und ein fehlgeschlagener Download faellt beim Speichern wirklich auf. */
+    const MEDIA_BASE = "assets/";
+    const media = datei => MEDIA_BASE + datei;
+
+    const STORAGE_KEY = "raschel-rally-v1";
+
+    const INTRO =
+      "Letzte Nacht hat der Sturm Raschels Laken zerrissen. " +
+      "Sieben Flicken sind zwischen die Bäume geflogen. " +
+      "Auf jedem steht ein Buchstabe. Jetzt friert das kleine " +
+      "Waldgespenst und braucht eure Hilfe. Hört seine Nachrichten, " +
+      "löst die Waldaufgaben und gebt die Lösungswörter ein. " +
+      "Erst dann erscheint das Geschichtenbild und ihr bekommt " +
+      "einen Buchstaben. Am Ende öffnen die sieben Buchstaben " +
+      "Raschels Wortschloss.";
+
+    const CHAPTERS = [
+      {
+        slug: "fuchs", title: "Der leise Pelz", code: "FUCHS",
+        letter: "F", letterIndex: 0,
+        story:
+          "Hallo? Könnt ihr mich hören? Ich bin Raschel. " +
+          "Das Waldgespenst. Durch das Loch am Bauch zieht es " +
+          "fürchterlich. Den ersten Flicken hat ein Tier mitgenommen. " +
+          "Es hat einen roten Pelz und einen buschigen Schwanz. " +
+          "Es schleicht so leise, dass kaum ein Ast knackt. " +
+          "Könnt ihr euch genauso leise bewegen? " +
+          "Wer ist mit meinem Flicken davongeschlichen?",
+        task:
+          "Schleicht gemeinsam 20 Schritte auf eurem sicheren " +
+          "Waldweg. Zählt jedes Knacken unter euren Füßen. " +
+          "Probiert danach fünf besonders leise Schritte. " +
+          "Ihr müsst nicht von vorne anfangen. Ein Erwachsener " +
+          "schreibt die Anzahl der Knackgeräusche und den Tiernamen " +
+          "auf eure Karte.",
+        question: "Welches Tier suchen wir?",
+        hints: [
+          "Es ist ein Wildtier mit rotbraunem Fell und einem buschigen Schwanz.",
+          "Das Wort hat fünf Buchstaben und beginnt mit F."
+        ],
+        after:
+          "Der erste Flicken sitzt! Ein leises Rascheln zieht " +
+          "zwischen den Stämmen weiter. Kommt, wir folgen ihm."
+      },
+      {
+        slug: "viereck", title: "Die zerbrochenen Fenster", code: "VIERECK",
+        letter: "K", letterIndex: 6,
+        story:
+          "Ein Flicken ist zurück. Sechs fehlen noch. " +
+          "Im Sturm sind meine beiden Gespensterfenster zerbrochen. " +
+          "Der zweite Flicken flüstert: Baut mir zwei Fenster. " +
+          "Jedes hat vier Ecken und vier Seiten. In einem Fenster " +
+          "soll etwas aus dem Wald zu sehen sein. Das andere " +
+          "bleibt leer. Könnt ihr sie wieder zusammensetzen? " +
+          "Wie heißt die Form meiner Fenster?",
+        task:
+          "Sucht acht lose Zweige. Legt daraus zwei getrennte Fenster " +
+          "mit je vier Seiten. Sammelt drei unterschiedliche lose " +
+          "Waldstücke und legt sie in eines der Fenster. Lasst " +
+          "das andere leer. Zählt die Ecken eines Fensters. " +
+          "Wenn ihr möchtet, zeichnet beide Fenster auf die Karte. " +
+          "Lasst alles anschließend im Wald zurück. Fehlen lose " +
+          "Zweige, könnt ihr die Fenster gemeinsam zeichnen.",
+        question: "Wie heißt eine Form mit vier Ecken?",
+        hints: [
+          "Zählt die Ecken eines einzelnen Fensters. Gesucht ist der allgemeine Name der Form.",
+          "Das Wort beginnt mit VIER und endet mit ECK."
+        ],
+        after:
+          "Zwei Flicken! Durch das neue Fenster sehe ich euch wieder " +
+          "deutlicher. Hinter dem nächsten Baum hat gerade etwas geflüstert."
+      },
+      {
+        slug: "rinde", title: "Die Haut ohne Fell", code: "RINDE",
+        letter: "I", letterIndex: 1,
+        story:
+          "Im Dunkeln habe ich mich an einen Riesen gelehnt. " +
+          "Seine Haut war ganz anders als meine. Der dritte Flicken " +
+          "hat dieses Rätsel hinterlassen: Ich schütze den Stamm. " +
+          "Ich kann glatt sein oder rau. Ein Fell bin ich nicht. " +
+          "Findet diese Haut und untersucht sie mit euren Händen. " +
+          "Wie heißt sie?",
+        task:
+          "Wählt zwei erreichbare Bäume am Weg. Streicht vorsichtig " +
+          "mit der flachen Hand über ihre Oberfläche und vergleicht. " +
+          "Wenn ihr möchtet, legt eure Karte an eine trockene Stelle " +
+          "am Stamm und reibt mit der flachen Seite des Bleistifts " +
+          "darüber. Macht zwei Abdrücke. Erwachsene können helfen. " +
+          "Ist die Oberfläche nass oder ungeeignet, zeichnet ihre " +
+          "Muster oder beschreibt sie. Nichts abschälen oder abbrechen.",
+        question: "Wie heißt die schützende Haut des Baumstamms?",
+        hints: [
+          "Sie umgibt den Stamm von außen.",
+          "Fünf Buchstaben. Das Wort beginnt mit R."
+        ],
+        after:
+          "Der dritte Flicken schließt sich. Jetzt kann kein kalter " +
+          "Wind mehr durch diese Stelle pfeifen. Aber pssst … " +
+          "hört ihr das auch?"
+      },
+      {
+        slug: "specht", title: "Mucksmäuschenstill", code: "SPECHT",
+        letter: "C", letterIndex: 3,
+        story:
+          "Pssst. Drei Flicken sind zurück. Den vierten habe ich " +
+          "verloren, als es plötzlich laut wurde. Jemand hat mit " +
+          "dem Schnabel an einen Baum gehämmert. Mein Rätsel: " +
+          "Ich hämmere mit dem Schnabel an Bäume. Manche von uns " +
+          "tragen etwas Rot am Kopf. Wer bin ich? Wenn ich still " +
+          "bin, bleibt ihr stehen. Mucksmäuschenstill. " +
+          "Was erzählt euch der Wald?",
+        task:
+          "Hört 30 Sekunden still zu. Ein Erwachsener achtet auf " +
+          "die Zeit. Zählt verschiedene Geräuscharten an euren " +
+          "Fingern, zum Beispiel Wind, Vogelstimmen oder Schritte. " +
+          "Wiederholt sich ein Geräusch, zählt es nicht noch einmal. " +
+          "Ein Erwachsener schreibt eure Anzahl und ein auffälliges " +
+          "Geräusch auf die Karte. Ihr müsst den gesuchten Vogel " +
+          "nicht wirklich hören oder sehen.",
+        question: "Welcher Vogel hämmert mit dem Schnabel an Bäume?",
+        hints: [
+          "Er sucht unter anderem Nahrung an Baumstämmen.",
+          "Sechs Buchstaben. Das Wort beginnt mit S."
+        ],
+        after:
+          "Vier Flicken. Das große Loch wird kleiner. Eben hat es " +
+          "neben mir geraschelt. Vielleicht ist der nächste Flicken " +
+          "näher, als wir denken."
+      },
+      {
+        slug: "waldboden", title: "Die Nachricht unter der Nase", code: "WALDBODEN",
+        letter: "L", letterIndex: 2,
+        story:
+          "Den fünften Flicken konnte ich im Dunkeln nicht sehen. " +
+          "Aber ich habe etwas gerochen. Sucht ein heruntergefallenes " +
+          "Blatt, einen losen Zweig oder ein paar abgefallene Nadeln. " +
+          "Dann geht in die Hocke und riecht an der Luft dicht über " +
+          "dem Boden. Riecht das gleich? Mein Rätsel: Auf mir liegen " +
+          "Blätter und Nadeln. In mir wachsen viele Wurzeln. " +
+          "Ihr steht gerade auf mir. Wie heiße ich?",
+        task:
+          "Sucht ein loses Blatt, einen Zweig oder abgefallene " +
+          "Nadeln. Haltet euren Fund mit etwas Abstand vor die Nase " +
+          "und riecht vorsichtig daran. Geht in die Hocke und " +
+          "vergleicht mit der Luft über dem Boden. Erzählt eure " +
+          "Eindrücke. Ein Erwachsener schreibt sie auf; zeichnen " +
+          "dürft ihr ebenfalls. Ihr müsst keinen bestimmten Geruch " +
+          "erkennen. Nichts probieren, keine Pilze oder unbekannten " +
+          "Pflanzen anfassen.",
+        question: "Worauf steht ihr im Wald?",
+        hints: [
+          "Gesucht ist ein zusammengesetztes Wort für die Fläche unter euren Füßen.",
+          "Das Wort beginnt mit WALD. Danach kommt BODEN."
+        ],
+        after:
+          "Fünf Flicken zurückgeholt. Meine Nase hat euch tatsächlich " +
+          "auf die Spur gebracht. Jetzt warten vier Verdächtige auf uns."
+      },
+      {
+        slug: "stein", title: "Vier Verdächtige", code: "STEIN",
+        letter: "E", letterIndex: 2,
+        story:
+          "Den sechsten Flicken hält einer von vier Verdächtigen " +
+          "fest: ein Blatt, eine Nadel, ein Zweig und ein Stein. " +
+          "Drei davon wachsen an einem Baum. Einer nicht. Ruft " +
+          "die vier nacheinander auf. Wächst er am Baum, springt " +
+          "ihr hoch. Wächst er nicht am Baum, bleibt ihr stehen " +
+          "wie versteinert. Wer ist der falsche Verdächtige?",
+        task:
+          "Sucht zwei unterschiedliche lose Baumfunde am Weg. " +
+          "Zeigt sie einander. Ein Erwachsener liest dann vor: " +
+          "Blatt, Stein, Zweig, Nadel. Springt einmal auf einer " +
+          "ebenen freien Stelle, wenn etwas am Baum wächst. " +
+          "Bleibt sonst stehen. Wer nicht springen möchte, " +
+          "streckt die Arme hoch. Ein Erwachsener schreibt " +
+          "den falschen Verdächtigen auf die Karte.",
+        question: "Welcher Verdächtige wächst nicht am Baum?",
+        hints: [
+          "Blatt, Nadel und Zweig können direkt zu einem Baum gehören.",
+          "Bei diesem Wort seid ihr wie versteinert stehen geblieben."
+        ],
+        after:
+          "Sechs Flicken. Nur einer fehlt. Ich habe ihn gesehen! " +
+          "Ganz oben. Bleibt auf dem Boden, wir brauchen eure Augen."
+      },
+      {
+        slug: "krone", title: "Ganz oben", code: "KRONE",
+        aliases: ["BAUMKRONE"],
+        letter: "N", letterIndex: 3,
+        story:
+          "Der letzte Flicken hängt ganz oben. Ich sehe ihn, aber " +
+          "ich komme nicht ran. Sucht einen Baum, dessen obere Äste " +
+          "ihr vom Weg gut sehen könnt. Schaut am Stamm hinauf und " +
+          "dann weiter bis ganz oben. Mein Rätsel: Ein König trägt " +
+          "sie auf dem Kopf. Ein Baum auch. Wie heißt das Dach " +
+          "des Baumes?",
+        task:
+          "Bleibt auf dem sicheren Weg und schaut mit etwas Abstand " +
+          "nach oben. Beobachtet, wie sich die Äste ausbreiten. " +
+          "Zeigt und beschreibt die Form des Baumdachs. Wenn ihr " +
+          "möchtet, skizziert den Umriss auf eure Karte. Erwachsene " +
+          "können helfen. Niemand muss klettern, ein Blatt fangen " +
+          "oder den Weg verlassen.",
+        question: "Wie heißt das Dach des Baumes?",
+        hints: [
+          "Dasselbe Wort bezeichnet den Kopfschmuck eines Königs.",
+          "Fünf Buchstaben. Das Wort beginnt mit K."
+        ],
+        after:
+          "Sieben Flicken! Schreibt den letzten Buchstaben auf eure " +
+          "Karte. Jetzt können wir gemeinsam mein Wortschloss öffnen."
+      }
+    ];
+
+    const LOCK_STORY =
+      "Sieben Buchstaben. Ich kann mein Laken schon fühlen. " +
+      "Aber an meinem Laken hängt ein Schloss. Es öffnet sich " +
+      "mit einem einzigen Wort. Was hat der Sturm aus meinem " +
+      "Laken gerissen? Legt eure sieben Buchstaben in die richtige " +
+      "Reihenfolge. Dann gebt das Wort ein. Ich halte mein Laken " +
+      "fest. Diesmal fliegt mir nichts mehr davon.";
+
+    const THANK_YOU = [
+      "Geschafft! Schaut mal: Alle sieben Flicken sind wieder an " +
+      "meinem Laken. Kein Loch mehr am Bauch. Endlich zieht es nicht mehr!",
+      "Ihr habt gesucht, geschnuppert, gelauscht und gerätselt. " +
+      "Und ihr habt mir alle meine Flicken zurückgebracht.",
+      "Danke, meine Flickenretter!",
+      "Jetzt kann ich wieder zwischen den Bäumen schweben, ohne zu frieren.",
+      "Wenn ihr das nächste Mal im Wald seid, hört genau hin. " +
+      "Vielleicht raschelt es hinter einem Baum.",
+      "Dann bin ich das.",
+      "Euer Raschel.",
+      "Buh!"
+    ];
+
+    const PAYHIP_TITLE =
+      "Raschel, das Waldgespenst · Die sieben verlorenen Flicken";
+    const PAYHIP_SHORT =
+      "Eine schaurig schöne Waldrallye für Kinder von 4 bis 7 Jahren " +
+      "mit erwachsener Begleitung. Sieben Waldaufgaben, ein QR-Code " +
+      "und eine gemeinsame Mission.";
+    const PAYHIP_DESCRIPTION = `Der Spaziergang beginnt. Und schon kommt die Frage: „Wie weit noch?“
+Diesmal wartet zwischen den Bäumen eine Mission.
+Letzte Nacht hat der Sturm Raschels Laken zerrissen. Sieben Flicken sind in den Wald geflogen. Jetzt braucht das kleine Waldgespenst eure Hilfe.
+Ihr hört seine Nachricht und zieht los. Ihr sucht, sammelt, zählt, skizziert, riecht, schaut und fühlt. Auch Schleichen, Hüpfen und stilles Lauschen gehören dazu.
+Für jede Aufgabe gibt es ein Lösungswort. Der richtige Code bringt einen Flicken zurück und öffnet den nächsten Teil der Geschichte.
+Erst nach der gelösten Aufgabe erscheint das passende Geschichtenbild. Dazu bekommt ihr einen Buchstaben. Am Ende setzt ihr die sieben Buchstaben zusammen und öffnet Raschels Wortschloss.
+Im Finale zeigt Raschel seine sieben Flicken und bedankt sich mit einer gesprochenen Nachricht bei euren Kindern.
+DAS GEHÖRT DAZU
+• Eine Geschichte mit Einstieg und sieben gesprochenen Waldaufgaben.
+• Hinweise und Codeprüfung für jede Aufgabe.
+• Sieben gezeichnete Aufgabenbilder als Belohnung nach dem Lösen.
+• Ein eigenes Schlussbild und Raschels gesprochene Dankesnachricht.
+• Eine Spielkarte für Entdeckungen, Antworten und Buchstaben.
+• Elterninfos zur Vorbereitung und zum Ablauf.
+• Eine Urkunde für eure Flickenretter.
+• Ein QR-Code als Zugang zur gesamten Rallye.
+SO SPIELT IHR
+Spielkarte ausdrucken. Bleistift und geladenes Handy einpacken. Einen sicheren Waldweg wählen und den QR-Code öffnen.
+Das Handy spielt Raschels Nachricht ab und prüft eure Lösung. Die Aufgaben erlebt ihr draußen.
+Ihr entscheidet selbst, an welchen passenden Stellen ihr stehen bleibt und weiterspielt. Vorher müsst ihr im Wald nichts verstecken oder an Bäume hängen.
+FÜR WEN IST DIE RALLYE?
+Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.
+Erwachsene übernehmen Lesen, Schreiben und die Handybedienung. Die Kinder suchen, zeigen und entdecken. Zeichnen bleibt freiwillig.
+Gemeinsam als Familie, mit Freunden oder beim Kindergeburtstag.
+Ein bisschen geheimnisvoll, ein bisschen gruselig. Und mittendrin ein kleines Gespenst, das eure Hilfe braucht.
+WAS BRAUCHT IHR?
+Die Spielkarte, einen Bleistift und ein geladenes Handy mit Ton.
+Vor dem Ausflug den Ton und die Speicherung auf eurem Gerät prüfen. Bei feuchtem Wetter schützt eine Klarsichthülle die Karte. Wählt einen sicheren Weg bei geeignetem Wetter.
+12,90 € · Einmaliger Kauf für die Familie.
+Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
+
+    /* Erst mit dem echten Payhip-Link befuellen. */
+    const PAYHIP_BUY_URL = "";
+
+    const app = document.getElementById("app");
+
+    function escapeHTML(wert) {
+      return String(wert).replace(/[&<>"']/g, z => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[z]));
+    }
+    function normalize(wert) {
+      return String(wert ?? "").normalize("NFD")
+        .replace(/[̀-ͯ]/g, "")
+        .toUpperCase().replace(/[^A-Z]/g, "");
+    }
+    function isCorrect(kapitel, antwort) {
+      return [kapitel.code, ...(kapitel.aliases || [])]
+        .some(code => normalize(code) === normalize(antwort));
+    }
+
+    function restoreState(roh) {
+      try {
+        const g = JSON.parse(roh);
+        if (g && Number.isInteger(g.solved) && g.solved >= 0 && g.solved <= 7 && (
+          (g.phase === "intro" && g.solved === 0) ||
+          (g.phase === "task" && g.solved < 7) ||
+          (g.phase === "reward" && g.solved > 0) ||
+          (["lock", "end"].includes(g.phase) && g.solved === 7)
+        )) {
+          return { solved: g.solved, phase: g.phase };
+        }
+      } catch (e) { /* beschaedigter Stand, sauber neu starten */ }
+      return { solved: 0, phase: "intro" };
+    }
+
+    let state = restoreState(null);
+    let storageAvailable = true;
+    try { state = restoreState(localStorage.getItem(STORAGE_KEY)); }
+    catch (e) { storageAvailable = false; }
+
+    function saveState() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+      catch (e) { storageAvailable = false; }
+    }
+
+    function stopAudio() {
+      document.querySelectorAll("audio").forEach(p => p.pause());
+    }
+
+    function audioMarkup(slug, knopfText = "Nachricht hören") {
+      return `
+        <audio controls preload="metadata"
+          src="${escapeHTML(media(slug + ".mp3"))}"
+          aria-label="Raschels Nachricht"></audio>
+        <button class="secondary play-audio" type="button">
+          ${escapeHTML(knopfText)}
+        </button>
+        <p class="audio-status note" role="status"></p>
+      `;
+    }
+    function bindAudio() {
+      const player = app.querySelector("audio");
+      const knopf = app.querySelector(".play-audio");
+      const status = app.querySelector(".audio-status");
+      if (!player || !knopf || !status) return;
+      knopf.onclick = async () => {
+        try {
+          player.currentTime = 0;
+          await player.play();
+          status.textContent = "";
+        } catch (e) {
+          status.textContent =
+            "Der Ton konnte nicht gestartet werden. " +
+            "Ihr könnt die Nachricht auch lesen.";
+        }
+      };
+      player.addEventListener("error", () => {
+        status.textContent =
+          "Ton gerade nicht verfügbar. Die Nachricht steht auch im Text.";
+      });
+    }
+
+    function pictureMarkup(slug, alt) {
+      const quelle = media(slug + "-illustration.jpg");
+      return `
+        <button class="image-button" type="button"
+          data-picture="${escapeHTML(quelle)}"
+          aria-label="Geschichtenbild groß öffnen">
+          <img class="reward-image" src="${escapeHTML(quelle)}"
+               alt="${escapeHTML(alt)}">
+        </button>
+        <p class="note">Antippen öffnet das Bild groß.</p>
+      `;
+    }
+    function bindPictures() {
+      app.querySelectorAll("[data-picture]").forEach(knopf => {
+        knopf.onclick = () => {
+          const dialog = document.getElementById("picture-dialog");
+          const bild = document.getElementById("picture-image");
+          bild.src = knopf.dataset.picture;
+          bild.alt = knopf.querySelector("img").alt;
+          if (typeof dialog.showModal === "function") dialog.showModal();
+          else window.open(bild.src, "_blank", "noopener");
+        };
+      });
+    }
+
+    function successSound() {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        const ctx = new AC();
+        [523, 659, 784].forEach((hz, i) => {
+          const o = ctx.createOscillator();
+          const g = ctx.createGain();
+          const t = ctx.currentTime + i * 0.15;
+          o.frequency.value = hz;
+          o.connect(g); g.connect(ctx.destination);
+          g.gain.setValueAtTime(0, t);
+          g.gain.linearRampToValueAtTime(0.18, t + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+          o.start(t); o.stop(t + 0.38);
+        });
+        setTimeout(() => ctx.close(), 1200);
+      } catch (e) { /* laeuft auch ohne Ton */ }
+    }
+
+    function progressMarkup() {
+      return `
+        <p class="note">${state.solved} von 7 Flicken zurückgeholt</p>
+        <div class="patches" aria-label="Gefundene Flicken">
+          ${CHAPTERS.map((k, i) => `
+            <span class="patch ${i < state.solved ? "done" : ""}"
+              aria-label="Flicken ${i + 1} ${i < state.solved ? "gefunden" : "fehlt"}">
+              ${i < state.solved ? k.letter : "·"}
+            </span>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function changePhase(phase) {
+      stopAudio();
+      state.phase = phase;
+      saveState();
+      renderGame();
+      window.scrollTo(0, 0);
+    }
+
+    function renderGame() {
+      let inhalt = progressMarkup();
+      if (!storageAvailable) {
+        inhalt += `<p class="note">Der Browser speichert euren Fortschritt
+          nicht. Lasst diese Seite während des Spiels geöffnet.</p>`;
+      }
+
+      if (state.phase === "intro") {
+        inhalt += `
+          <p class="eyebrow">Raschel, das Waldgespenst</p>
+          <h1>Die sieben verlorenen Flicken</h1>
+          <img class="ghost" src="${media("raschel.jpg")}"
+               alt="Raschel, das Waldgespenst">
+          <p>Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.</p>
+          <div class="card">
+            <h3>Raschel meldet sich</h3>
+            ${audioMarkup("start")}
+            <details><summary>Nachricht lesen</summary>
+              <p>${escapeHTML(INTRO)}</p></details>
+          </div>
+          <p>Spielkarte und Bleistift bereit? Hört zu und schaut dann in den Wald.</p>
+          <button id="begin-button" type="button">Raschel, wir helfen dir!</button>
+          <p class="note">Beim ersten Mal unter Elterninfos den Ton
+            und die Speicherung für den Wald prüfen.</p>
+        `;
+        app.innerHTML = inhalt;
+        bindAudio();
+        document.getElementById("begin-button").onclick = () => changePhase("task");
+        return;
+      }
+
+      if (state.phase === "task") {
+        const k = CHAPTERS[state.solved];
+        inhalt += `
+          <p class="eyebrow">Aufgabe ${state.solved + 1} von 7</p>
+          <h2>${escapeHTML(k.title)}</h2>
+          <div class="card">
+            ${audioMarkup(k.slug)}
+            <details><summary>Raschels Nachricht lesen</summary>
+              <p>${escapeHTML(k.story)}</p></details>
+          </div>
+          <div class="task">
+            <h3>Euer Waldauftrag</h3>
+            <p>${escapeHTML(k.task)}</p>
+          </div>
+          <form id="answer-form">
+            <label class="check">
+              <input id="task-done" type="checkbox" required>
+              <span>Wir haben den Waldauftrag gemeinsam gemacht.</span>
+            </label>
+            <label for="answer-input">${escapeHTML(k.question)}</label>
+            <input id="answer-input" class="code-input" type="text" required
+              maxlength="40" autocomplete="off" autocapitalize="characters"
+              spellcheck="false">
+            <p id="answer-feedback" class="feedback" role="status"></p>
+            <button type="submit">Code prüfen</button>
+          </form>
+          <details><summary>Raschel, ein Hinweis!</summary>
+            <p>${escapeHTML(k.hints[0])}</p>
+            <details><summary>Noch ein Hinweis</summary>
+              <p>${escapeHTML(k.hints[1])}</p></details>
+          </details>
+          <p class="note">Erwachsene helfen beim Schreiben und bei der Eingabe.</p>
+        `;
+        app.innerHTML = inhalt;
+        bindAudio();
+        document.getElementById("answer-form").onsubmit = ev => {
+          ev.preventDefault();
+          const fertig = document.getElementById("task-done");
+          const feld = document.getElementById("answer-input");
+          const rueck = document.getElementById("answer-feedback");
+          if (!fertig.checked) return;
+          if (isCorrect(k, feld.value)) {
+            state.solved += 1;
+            successSound();
+            changePhase("reward");
+          } else {
+            rueck.textContent =
+              "Das Schloss bleibt zu. Prüft eure Antwort noch einmal. " +
+              "Ein Hinweis hilft euch weiter.";
+            feld.focus();
+          }
+        };
+        return;
+      }
+
+      if (state.phase === "reward") {
+        const k = CHAPTERS[state.solved - 1];
+        const wort = [...k.code].map((b, i) =>
+          i === k.letterIndex ? `<mark>${b}</mark>` : b).join("");
+        inhalt += `
+          <p class="eyebrow">Flicken ${state.solved} zurückgeholt</p>
+          <h2>Ein Flicken ist zurück!</h2>
+          ${pictureMarkup(k.slug, "Raschel im Geschichtenbild zur gelösten Aufgabe")}
+          <div class="card">
+            <p>${escapeHTML(k.after)}</p>
+            <p class="codeword">${wort}</p>
+            <p>Euer Buchstabe:</p>
+            <span class="letter">${k.letter}</span>
+            <p>Schreibt ihn in das passende Feld eurer Spielkarte.</p>
+          </div>
+          <p>Geht gemeinsam ein Stück auf eurem Waldweg weiter.
+             Ihr wählt den nächsten Platz selbst.</p>
+          <button id="next-button" type="button">
+            ${state.solved === 7 ? "Zum Wortschloss" : "Zum nächsten Flicken"}
+          </button>
+        `;
+        app.innerHTML = inhalt;
+        bindPictures();
+        document.getElementById("next-button").onclick = () =>
+          changePhase(state.solved === 7 ? "lock" : "task");
+        return;
+      }
+
+      if (state.phase === "lock") {
+        inhalt += `
+          <p class="eyebrow">Das letzte Schloss</p>
+          <h2>Sieben Buchstaben. Ein Wort.</h2>
+          <div class="card">
+            ${audioMarkup("schloss")}
+            <details><summary>Raschels Nachricht lesen</summary>
+              <p>${escapeHTML(LOCK_STORY)}</p></details>
+            <p class="codeword">${CHAPTERS.map(k => k.letter).join(" ")}</p>
+          </div>
+          <form id="lock-form">
+            <label for="lock-input">Ordnet die Buchstaben und gebt das Lösungswort ein:</label>
+            <input id="lock-input" class="code-input" type="text" required
+              maxlength="40" autocomplete="off" autocapitalize="characters"
+              spellcheck="false">
+            <p id="lock-feedback" class="feedback" role="status"></p>
+            <button type="submit">Wortschloss öffnen</button>
+          </form>
+          <details><summary>Raschel, ein letzter Hinweis!</summary>
+            <p>Was fehlt an Raschels Laken? Das Wort beginnt mit F.</p>
+          </details>
+        `;
+        app.innerHTML = inhalt;
+        bindAudio();
+        document.getElementById("lock-form").onsubmit = ev => {
+          ev.preventDefault();
+          const antwort = document.getElementById("lock-input").value;
+          if (normalize(antwort) === "FLICKEN") {
+            successSound();
+            changePhase("end");
+          } else {
+            document.getElementById("lock-feedback").textContent =
+              "Noch bleibt das Schloss zu. " +
+              "Verwendet alle sieben Buchstaben genau einmal.";
+          }
+        };
+        return;
+      }
+
+      inhalt += `
+        <p class="eyebrow">Abenteuer geschafft</p>
+        <h1>Raschel ist wieder ganz!</h1>
+        ${pictureMarkup("finale", "Raschel zeigt seine sieben wiedergefundenen Flicken")}
+        <div class="card">
+          <h3>Raschel sagt Danke</h3>
+          ${audioMarkup("danke", "Raschels Danke hören")}
+          ${THANK_YOU.map(a => `<p>${escapeHTML(a)}</p>`).join("")}
+        </div>
+        <h3>Ihr seid Raschels Flickenretter.</h3>
+        <p>Was war eure schönste Entdeckung? Erzählt es einander.</p>
+        <div class="row">
+          <a class="button" href="#urkunde">Urkunde öffnen</a>
+          <button id="thanks-again" class="secondary" type="button">
+            Danke noch einmal hören
+          </button>
+        </div>
+      `;
+      app.innerHTML = inhalt;
+      bindPictures();
+      bindAudio();
+      document.getElementById("thanks-again").onclick = () =>
+        app.querySelector(".play-audio").click();
+    }
+
+    function renderProduct() {
+      app.innerHTML = `
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Dein Spielpaket</p>
+            <h1>Raschel und die sieben verlorenen Flicken</h1>
+            <p>Eine Waldrallye für Kinder von
+              <strong>4 bis 7 Jahren</strong> mit ihren Erwachsenen.</p>
+            <a class="button" href="#spiel">Spiel starten →</a>
+          </div>
+          <img class="ghost" src="${media("raschel.jpg")}"
+               alt="Raschel, das Waldgespenst">
+        </section>
+        <div class="card">
+          <h2>Vor dem Losziehen</h2>
+          <ol>
+            <li>Spielkarte öffnen und ausdrucken.</li>
+            <li>Elternanleitung lesen und einen Bleistift einpacken.</li>
+            <li>Spiel starten und den Ton prüfen.</li>
+            <li>Unter Elterninfos für den Wald speichern.
+                Auf die Bestätigung warten und ohne Netz testen.</li>
+          </ol>
+          <p class="note">Erwachsene bedienen das Handy und schreiben.
+            Die Kinder suchen, lauschen, fühlen und entdecken.
+            Zeichnen ist freiwillig.</p>
+        </div>
+        <h2>Deine Unterlagen</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Spielkarte</h3>
+            <p>Für Entdeckungen, Antworten und sieben Buchstaben.</p>
+            <a class="button secondary" href="#karte">Spielkarte öffnen</a>
+          </div>
+          <div class="card">
+            <h3>Elternanleitung</h3>
+            <p>Vorbereitung, Ablauf und alle Lösungen.</p>
+            <a class="button secondary" href="#eltern">Elternanleitung öffnen</a>
+          </div>
+          <div class="card">
+            <h3>Urkunde</h3>
+            <p>Für eure Flickenretter nach dem Abenteuer.</p>
+            <a class="button secondary" href="#urkunde">Urkunde öffnen</a>
+          </div>
+          <div class="card">
+            <h3>Verkaufsmaterial</h3>
+            <p>Verkaufsseite und Payhip-Texte.</p>
+            <div class="row">
+              <a class="button secondary" href="#verkauf">Verkaufsseite</a>
+              <a class="button secondary" href="#payhip">Payhip-Texte</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function writingLine(label) {
+      return `<p>${escapeHTML(label)}</p><div class="write-line"></div>`;
+    }
+    function patchField(nummer) {
+      return `<p>Flicken ${nummer} · Unser Buchstabe:
+        <span class="letter-box"></span></p>`;
+    }
+    function wordBoxes() {
+      return `<div class="word-boxes">
+        ${Array.from({ length: 7 }, () => "<span></span>").join("")}</div>`;
+    }
+    function printControls(titel) {
+      return `<div class="no-print row">
+        <a class="button secondary" href="#produkt">Zurück</a>
+        <button class="print-button" type="button">${escapeHTML(titel)} drucken</button>
+      </div>`;
+    }
+    function bindPrint() {
+      app.querySelectorAll(".print-button").forEach(b => b.onclick = () => window.print());
+    }
+
+    function renderCard() {
+      app.innerHTML = `
+        ${printControls("Spielkarte")}
+        <section class="print-page">
+          <p class="eyebrow">Waldmomente · Raschels Flickenkarte</p>
+          <h1>Unsere Flickenkarte</h1>
+          ${writingLine("Unser Team:")}
+          <h3>1 · Der leise Pelz</h3>
+          ${writingLine("So oft hat es geknackt:")}
+          ${writingLine("Das gesuchte Tier:")}
+          ${patchField(1)}
+          <h3>2 · Die zerbrochenen Fenster</h3>
+          ${writingLine("So viele Ecken hat ein Fenster:")}
+          <p>Unsere beiden Fenster und drei unterschiedliche Waldstücke:</p>
+          <div class="draw-box"></div>
+          ${writingLine("Die Form heißt:")}
+          ${patchField(2)}
+        </section>
+        <section class="print-page">
+          <p class="eyebrow">Waldmomente · Raschels Flickenkarte</p>
+          <h2>Fühlen und lauschen</h2>
+          <h3>3 · Die Haut ohne Fell</h3>
+          <p>Zwei Abdrücke oder Musterzeichnungen:</p>
+          <div class="drawing-pair"><div class="draw-box"></div><div class="draw-box"></div></div>
+          ${writingLine("So fühlen sie sich an:")}
+          ${writingLine("Die schützende Haut heißt:")}
+          ${patchField(3)}
+          <h3>4 · Mucksmäuschenstill</h3>
+          ${writingLine("So viele unterschiedliche Geräuscharten:")}
+          ${writingLine("Dieses Geräusch ist uns aufgefallen:")}
+          ${writingLine("Der gesuchte Vogel heißt:")}
+          ${patchField(4)}
+        </section>
+        <section class="print-page">
+          <p class="eyebrow">Waldmomente · Raschels Flickenkarte</p>
+          <h2>Die letzten drei Flicken</h2>
+          <h3>5 · Die Nachricht unter der Nase</h3>
+          ${writingLine("Unser Fund riecht nach:")}
+          ${writingLine("Die Luft über dem Boden riecht nach:")}
+          ${writingLine("Worauf stehen wir?")}
+          ${patchField(5)}
+          <h3>6 · Vier Verdächtige</h3>
+          ${writingLine("Unsere zwei Baumfunde:")}
+          ${writingLine("Der falsche Verdächtige:")}
+          ${patchField(6)}
+          <h3>7 · Ganz oben</h3>
+          <p>Unsere Skizze vom Baumdach:</p>
+          <div class="draw-box" style="min-height:100px"></div>
+          ${writingLine("Das Baumdach heißt:")}
+          ${patchField(7)}
+        </section>
+        <section class="print-page">
+          <p class="eyebrow">Waldmomente · Raschels Flickenkarte</p>
+          <h2>Das Wortschloss</h2>
+          <p>Unsere sieben gesammelten Buchstaben:</p>
+          ${wordBoxes()}
+          <p>Ordnet alle sieben Buchstaben zu einem Wort.
+             Was fehlt an Raschels Laken?</p>
+          ${wordBoxes()}
+          <h3>Unsere schönste Waldentdeckung:</h3>
+          <div class="draw-box" style="min-height:240px"></div>
+        </section>
+      `;
+      bindPrint();
+    }
+
+    function renderParents() {
+      app.innerHTML = `
+        ${printControls("Elternanleitung")}
+        <section class="print-page">
+          <p class="eyebrow">Waldmomente · Raschel, das Waldgespenst</p>
+          <h1>So begleitet ihr die Rallye.</h1>
+          <h3>Für wen?</h3>
+          <p>Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.
+             Erwachsene übernehmen Lesen, Schreiben und Handybedienung.
+             Die Kinder entdecken. Zeichnen ist freiwillig.</p>
+          <h3>Vorbereiten</h3>
+          <p>Spielkarte möglichst einseitig ausdrucken.
+             Bleistift und eine feste Schreibunterlage einpacken.
+             Bei feuchtem Wetter schützt eine Klarsichthülle die Karte.
+             Pro Team genügt ein Handy.</p>
+          <h3>Das Handy vorbereiten</h3>
+          <p>Spiel mit Empfang öffnen und den Ton prüfen.
+             Unter Elterninfos für den Wald speichern.
+             Erst nach der Bestätigung ohne Netz testen.
+             Den Browser und seine gespeicherten Website-Daten behalten.</p>
+          <h3>Gemeinsam spielen</h3>
+          <p>Raschel spricht pro Aufgabe einmal; Wiederholen ist möglich.
+             Den Waldauftrag erledigen und gemeinsam die Antwort finden.
+             Erwachsene schreiben sie auf die Karte und geben den Code ein.
+             Der richtige Code gibt Bild, Flicken und Buchstaben frei.
+             Nach dem siebten Flicken folgt das Wortschloss.</p>
+          <h3>Im Wald</h3>
+          <p>Einen geeigneten sicheren Weg wählen und zusammenbleiben.
+             Zum Hören und Bedienen stehen bleiben.
+             Nur lose Funde nutzen und alles zurücklegen.
+             Nichts essen, abbrechen, abschälen oder ausgraben.
+             Nicht klettern. Bei Sturm nicht spielen.</p>
+          <h3>Wenn etwas fehlt</h3>
+          <p>Die Tiere müssen nicht wirklich auftauchen.
+             Zweigfenster können gezeichnet werden.
+             Statt Rindenabdrücken dürfen Muster beschrieben werden.
+             Wer nicht hüpft, hebt die Arme.
+             Ein schwacher oder fehlender Geruch ist ebenfalls eine Beobachtung.</p>
+        </section>
+        <section class="print-page">
+          <p class="eyebrow">Nur für Erwachsene</p>
+          <h2>Alle Codes und Buchstaben</h2>
+          <p>Diese Seite den Kindern nicht vorab zeigen.</p>
+          ${CHAPTERS.map((k, i) => `
+            <h3>${i + 1} · ${escapeHTML(k.title)}</h3>
+            <p>Code: <strong>${k.code}</strong><br>
+               Buchstabe: <strong>${k.letter}</strong>
+               ${k.aliases ? "<br>BAUMKRONE wird ebenfalls angenommen." : ""}</p>
+          `).join("")}
+          <h3>Wortschloss</h3>
+          <p>Gesammelte Reihenfolge: <strong>F K I C L E N</strong><br>
+             Lösung: <strong>FLICKEN</strong></p>
+          <p>Groß- und Kleinschreibung sowie Leerzeichen
+             spielen bei den Codes keine Rolle.
+             Ein falscher Code kostet keinen Flicken.</p>
+        </section>
+        <details class="no-print">
+          <summary>Alle Geschichten zum Lesen</summary>
+          <h3>Einstieg</h3>
+          <p>${escapeHTML(INTRO)}</p>
+          ${CHAPTERS.map((k, i) => `
+            <h3>${i + 1} · ${escapeHTML(k.title)}</h3>
+            <p>${escapeHTML(k.story)}</p>
+            <p><strong>Waldauftrag:</strong> ${escapeHTML(k.task)}</p>
+            <p><strong>Nach der Lösung:</strong> ${escapeHTML(k.after)}</p>
+          `).join("")}
+          <h3>Wortschloss</h3>
+          <p>${escapeHTML(LOCK_STORY)}</p>
+          <h3>Raschels Danke</h3>
+          ${THANK_YOU.map(t => `<p>${escapeHTML(t)}</p>`).join("")}
+        </details>
+      `;
+      bindPrint();
+    }
+
+    function renderCertificate() {
+      app.innerHTML = `
+        ${printControls("Urkunde")}
+        <section class="print-page">
+          <p class="eyebrow">Waldmomente</p>
+          <h1>Raschels Flickenretter</h1>
+          <img class="ghost" src="${media("raschel.jpg")}"
+               alt="Raschel, das Waldgespenst">
+          <label for="certificate-name">Diese Urkunde gehört:</label>
+          <input id="certificate-name" type="text">
+          <p>Ihr habt Raschels sieben Flicken zurückgeholt
+             und sein Wortschloss geöffnet.</p>
+          <p>Ihr habt gesucht, gezählt, gezeichnet,
+             gelauscht, geschnuppert und gefühlt.</p>
+          <label for="certificate-date">Gespielt am:</label>
+          <input id="certificate-date" type="text">
+          <h3>„Danke! Mein Laken ist wieder ganz. Buh!“</h3>
+          <p>Raschel, das Waldgespenst</p>
+        </section>
+      `;
+      bindPrint();
+    }
+
+    function renderSales() {
+      const kaufKnopf = PAYHIP_BUY_URL
+        ? `<a class="button" href="${escapeHTML(PAYHIP_BUY_URL)}"
+             target="_blank" rel="noopener">Raschels Waldrallye kaufen</a>`
+        : `<p><strong>Bald erhältlich</strong></p>
+           <p class="note">Der Verkauf ist noch nicht geöffnet.</p>`;
+      app.innerHTML = `
+        <p class="eyebrow">Eine Waldmission für eure Familie</p>
+        <h1>Raschel, das Waldgespenst</h1>
+        <img class="banner" src="${media("raschel-verkaufsbild.jpg")}"
+             alt="Raschels Waldrallye für Kinder von 4 bis 7 Jahren">
+        <p>Sieben verlorene Flicken. Ein geheimnisvolles Wort.
+           Und Kinder, die den Wald nach Hinweisen absuchen.</p>
+        <p>Eine schaurig schöne Waldrallye für Kinder von
+           <strong>4 bis 7 Jahren mit erwachsener Begleitung.</strong></p>
+        <div class="card">
+          <h2>Letzte Nacht hat es ordentlich geraschelt.</h2>
+          <p>Der Sturm hat Raschels Laken zerrissen.
+             Sieben Flicken sind zwischen die Bäume geflogen.
+             Und mit ihnen die Buchstaben für ein geheimnisvolles Schloss.</p>
+          <p>Jetzt braucht das kleine Waldgespenst eure Hilfe.
+             Ihr folgt seinen Nachrichten, sucht gemeinsam nach Hinweisen
+             und entdeckt den Wald mit Händen, Füßen, Nase und Ohren.</p>
+          <p>Jede gelöste Aufgabe bringt einen Flicken zurück.
+             Erst danach erscheint das passende Geschichtenbild.
+             Am Ende setzt ihr die sieben Buchstaben zusammen
+             und öffnet Raschels Wortschloss.</p>
+        </div>
+        <div class="card">
+          <h2>Hör Raschels Geschichte</h2>
+          ${audioMarkup("start", "Hörprobe starten")}
+        </div>
+        <h2>So spielt ihr</h2>
+        <div class="grid">
+          <div class="card"><h3>Vorbereiten</h3>
+            <p>Spielkarte ausdrucken, Bleistift und geladenes Handy einpacken.
+               Ein QR-Code öffnet das ganze Abenteuer.</p></div>
+          <div class="card"><h3>Raschel helfen</h3>
+            <p>Seine Nachricht hören, den Waldauftrag erledigen
+               und gemeinsam das Lösungswort finden.
+               Erwachsene schreiben und bedienen das Handy.</p></div>
+          <div class="card"><h3>Flicken zurückholen</h3>
+            <p>Der richtige Code bringt einen Flicken zurück.
+               Ein großes Geschichtenbild und ein Buchstabe
+               warten als Belohnung.</p></div>
+          <div class="card"><h3>Das Schloss öffnen</h3>
+            <p>Aus sieben Buchstaben entsteht das letzte Lösungswort.
+               Raschel zeigt sein repariertes Laken
+               und bedankt sich bei euren Kindern.</p></div>
+        </div>
+        <div class="card">
+          <h2>Der Wald muss nicht vorbereitet werden.</h2>
+          <p>Ihr versteckt keine Gegenstände und hängt keine Zettel an Bäume.
+             Ihr wählt einen sicheren Waldweg und entscheidet selbst,
+             an welchen passenden Stellen ihr die Aufgaben löst.</p>
+        </div>
+        <div class="card">
+          <h2>Das gehört dazu</h2>
+          <ul>
+            <li>Einstieg und sieben gesprochene Waldaufgaben</li>
+            <li>Hinweise und Codeprüfung</li>
+            <li>Geschichtenbilder nach den richtigen Lösungen</li>
+            <li>Finale mit Schlussbild und gesprochenem Danke</li>
+            <li>Spielkarte und Elternanleitung</li>
+            <li>Urkunde für eure Flickenretter</li>
+          </ul>
+          <p class="price">12,90 €</p>
+          <p>Einmaliger Kauf für die Familie.</p>
+          ${kaufKnopf}
+        </div>
+        <details><summary>Kann mein Kind mit vier Jahren mitspielen?</summary>
+          <p>Die Rallye ist für gemeinsames Spielen mit Erwachsenen gedacht.
+             Erwachsene lesen, schreiben und bedienen das Handy.
+             Die Kinder suchen, zeigen, lauschen und fühlen.
+             Zeichnen ist freiwillig.</p></details>
+        <details><summary>Brauchen wir einen bestimmten Wald?</summary>
+          <p>Die Aufgaben brauchen keine bestimmte Baumart
+             und keinen tatsächlichen Tierfund.
+             Wählt einen sicheren Waldweg mit Bäumen
+             und gewöhnlichen losen Waldstücken.</p></details>
+        <details><summary>Funktioniert das Spiel ohne Empfang?</summary>
+          <p>Bereitet das Gerät vorher mit Empfang vor.
+             Nutzt die Speicherung für den Wald,
+             wartet auf die Bestätigung und testet den Zugang
+             anschließend einmal ohne Netz.</p></details>
+        <p class="no-print"><a href="#produkt">Zum Spielpaket</a></p>
+      `;
+      bindAudio();
+    }
+
+    function copyField(label, wert, zeilen = 4) {
+      return `<section class="card copy-section">
+        <h3>${escapeHTML(label)}</h3>
+        <textarea readonly rows="${zeilen}">${escapeHTML(wert)}</textarea>
+        <button class="copy-button" type="button">${escapeHTML(label)} kopieren</button>
+        <p class="copy-status note" role="status"></p>
+      </section>`;
+    }
+
+    function renderPayhip() {
+      app.innerHTML = `
+        <p class="eyebrow">Für Lissi</p>
+        <h1>Raschel für Payhip</h1>
+        <p>Produkttexte für Kinder von 4 bis 7 Jahren
+           mit erwachsener Begleitung.</p>
+        <img class="banner" src="${media("raschel-verkaufsbild.jpg")}"
+             alt="Raschels Verkaufsbild">
+        ${copyField("Produkttitel", PAYHIP_TITLE, 3)}
+        ${copyField("Preis", "12,90 €", 2)}
+        ${copyField("Kurzbeschreibung", PAYHIP_SHORT, 5)}
+        ${copyField("Produktbeschreibung", PAYHIP_DESCRIPTION, 32)}
+        <p class="note">Diese Seite stellt die Texte bereit.
+           Sie erstellt keinen Payhip-Shop und keinen Checkout.
+           Den echten Kauflink im Code unter PAYHIP_BUY_URL eintragen.</p>
+        <a class="button secondary" href="#produkt">Zurück</a>
+      `;
+      app.querySelectorAll(".copy-button").forEach(knopf => {
+        knopf.onclick = async () => {
+          const abschnitt = knopf.closest(".copy-section");
+          const feld = abschnitt.querySelector("textarea");
+          const status = abschnitt.querySelector(".copy-status");
+          try {
+            await navigator.clipboard.writeText(feld.value);
+            status.textContent = "Kopiert.";
+          } catch (e) {
+            feld.focus(); feld.select();
+            feld.setSelectionRange(0, feld.value.length);
+            status.textContent = "Text markiert. Bitte im Auswahlmenü kopieren.";
+          }
+        };
+      });
+    }
+
+    function closeDialog(dialog) {
+      if (typeof dialog.close === "function") dialog.close();
+      else dialog.removeAttribute("open");
+    }
+
+    function renderRoute() {
+      stopAudio();
+      closeDialog(document.getElementById("parent-dialog"));
+      const route = location.hash.replace("#", "") || "produkt";
+      switch (route) {
+        case "spiel": renderGame(); break;
+        case "karte": renderCard(); break;
+        case "eltern": renderParents(); break;
+        case "urkunde": renderCertificate(); break;
+        case "verkauf": renderSales(); break;
+        case "payhip": renderPayhip(); break;
+        default: renderProduct();
+      }
+      window.scrollTo(0, 0);
+    }
+
+    const parentDialog = document.getElementById("parent-dialog");
+    const pictureDialog = document.getElementById("picture-dialog");
+
+    document.getElementById("parent-button").onclick = () => {
+      if (typeof parentDialog.showModal === "function") parentDialog.showModal();
+      else parentDialog.setAttribute("open", "");
+    };
+    document.getElementById("parent-close").onclick = () => closeDialog(parentDialog);
+    document.getElementById("picture-close").onclick = () => closeDialog(pictureDialog);
+    pictureDialog.addEventListener("click", ev => {
+      if (ev.target === pictureDialog) closeDialog(pictureDialog);
+    });
+
+    document.getElementById("reset-button").onclick = () => {
+      if (!confirm("Alle Flicken zurücksetzen und neu beginnen?")) return;
+      state = { solved: 0, phase: "intro" };
+      saveState();
+      closeDialog(parentDialog);
+      if (location.hash === "#spiel") renderGame();
+      else location.hash = "spiel";
+    };
+
+    /* ── Offline speichern ── */
+    let workerRegistration = null;
+    if ("serviceWorker" in navigator &&
+        ["https:", "http:"].includes(location.protocol) &&
+        window.isSecureContext) {
+      workerRegistration = navigator.serviceWorker.register("sw.js");
+      workerRegistration.catch(() => {});
+    }
+
+    /* Ohne diese Dateien ist das Spiel im Wald unbrauchbar.
+       Fehlt eine, muss die Speicherung scheitern und es sagen. */
+    const OFFLINE_PFLICHT = [
+      "raschel.jpg",
+      "raschel-verkaufsbild.jpg",
+      "fuchs-illustration.jpg", "viereck-illustration.jpg",
+      "rinde-illustration.jpg", "specht-illustration.jpg",
+      "waldboden-illustration.jpg", "stein-illustration.jpg",
+      "krone-illustration.jpg", "finale-illustration.jpg"
+    ];
+
+    /* Die Tonspuren sind schoen, aber nicht notwendig: jede Nachricht
+       steht auch im Text. Fehlt eine, wird sie beim Namen genannt,
+       das Spiel liegt aber trotzdem auf dem Geraet. */
+    const OFFLINE_TON = [
+      "start.mp3", "fuchs.mp3", "viereck.mp3", "rinde.mp3",
+      "specht.mp3", "waldboden.mp3", "stein.mp3", "krone.mp3",
+      "schloss.mp3", "danke.mp3"
+    ];
+
+    document.getElementById("offline-button").onclick = async () => {
+      const knopf = document.getElementById("offline-button");
+      const status = document.getElementById("offline-status");
+      if (!workerRegistration) {
+        status.textContent =
+          "Die Speicherung braucht einen unterstützten Browser " +
+          "und eine sicher bereitgestellte Spielseite.";
+        return;
+      }
+      knopf.disabled = true;
+      status.textContent = "Spiel wird gespeichert. Bitte warten.";
+      try {
+        await workerRegistration;
+        const registration = await navigator.serviceWorker.ready;
+        const kanal = new MessageChannel();
+        const seite = new URL(location.href);
+        seite.hash = ""; seite.search = "";
+        const absolut = p => new URL(media(p), location.href).href;
+        const urls = [seite.href, ...OFFLINE_PFLICHT.map(absolut)];
+        const kuer = OFFLINE_TON.map(absolut);
+
+        const fehlendeToene = await new Promise((fertig, fehler) => {
+          const uhr = setTimeout(() => fehler(new Error("Speichern hat zu lange gedauert.")), 300000);
+          kanal.port1.onmessage = ev => {
+            const m = ev.data;
+            if (m.type === "progress") {
+              status.textContent = `Gespeichert: ${m.done} von ${m.total} Dateien.`;
+            }
+            if (m.type === "done") { clearTimeout(uhr); fertig(m.fehlendeKuer || []); }
+            if (m.type === "error") { clearTimeout(uhr); fehler(new Error(m.message)); }
+          };
+          registration.active.postMessage(
+            { type: "CACHE_RASCHEL", urls, kuer }, [kanal.port2]
+          );
+        });
+
+        status.textContent = fehlendeToene.length
+          ? "Das Spiel ist gespeichert, aber " + fehlendeToene.length +
+            " von " + OFFLINE_TON.length + " Tonspuren fehlen auf dem Server (" +
+            fehlendeToene.slice(0, 3).join(", ") +
+            "). Jede Nachricht steht auch im Text, das Spiel läuft also. " +
+            "Testet jetzt dieselbe Spieladresse einmal mit ausgeschaltetem Netz."
+          : "Das Spiel ist gespeichert. Testet jetzt dieselbe " +
+            "Spieladresse einmal mit ausgeschaltetem Netz.";
+      } catch (fehler) {
+        status.textContent =
+          "Die Speicherung ist nicht vollständig: " + fehler.message +
+          " Prüft Empfang und freien Speicher und versucht es erneut. " +
+          "Bis dahin bitte mit Empfang spielen.";
+      } finally {
+        knopf.disabled = false;
+      }
+    };
+
+    window.addEventListener("hashchange", renderRoute);
+    renderRoute();
+  </script>
+</body>
+</html>
