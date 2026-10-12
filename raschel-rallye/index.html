@@ -713,7 +713,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
         inhalt += `
           <p class="eyebrow">Raschel, das Waldgespenst</p>
           <h1>Die sieben verlorenen Flicken</h1>
-          <img class="ghost" src="${media("raschel.jpg")}"
+          <img class="ghost" src="${media("raschel-wald.jpg")}"
                alt="Raschel, das Waldgespenst">
           <p>Für Kinder von 4 bis 7 Jahren mit erwachsener Begleitung.</p>
           <div class="card">
@@ -858,7 +858,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
       inhalt += `
         <p class="eyebrow">Abenteuer geschafft</p>
         <h1>Raschel ist wieder ganz!</h1>
-        ${pictureMarkup("finale", "Raschel zeigt seine sieben wiedergefundenen Flicken")}
+        ${pictureMarkup("finale-wald", "Raschel zeigt seine sieben wiedergefundenen Flicken")}
         <div class="card">
           <h3>Raschel sagt Danke</h3>
           ${audioMarkup("danke", "Raschels Danke hören")}
@@ -890,7 +890,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
               <strong>4 bis 7 Jahren</strong> mit ihren Erwachsenen.</p>
             <a class="button" href="#spiel">Spiel starten →</a>
           </div>
-          <img class="ghost" src="${media("raschel.jpg")}"
+          <img class="ghost" src="${media("raschel-wald.jpg")}"
                alt="Raschel, das Waldgespenst">
         </section>
         <div class="card">
@@ -1103,7 +1103,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
         <section class="print-page">
           <p class="eyebrow">Waldmomente</p>
           <h1>Raschels Flickenretter</h1>
-          <img class="ghost" src="${media("raschel.jpg")}"
+          <img class="ghost" src="${media("raschel-wald.jpg")}"
                alt="Raschel, das Waldgespenst">
           <label for="certificate-name">Diese Urkunde gehört:</label>
           <input id="certificate-name" type="text">
@@ -1308,12 +1308,12 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
     /* Ohne diese Dateien ist das Spiel im Wald unbrauchbar.
        Fehlt eine, muss die Speicherung scheitern und es sagen. */
     const OFFLINE_PFLICHT = [
-      "raschel.jpg",
+      "raschel-wald.jpg",
       "raschel-verkaufsbild.jpg",
       "fuchs-illustration.jpg", "viereck-illustration.jpg",
       "rinde-illustration.jpg", "specht-illustration.jpg",
       "waldboden-illustration.jpg", "stein-illustration.jpg",
-      "krone-illustration.jpg", "finale-illustration.jpg"
+      "krone-illustration.jpg", "finale-wald-illustration.jpg"
     ];
 
     /* Die Tonspuren sind schoen, aber nicht notwendig: jede Nachricht
