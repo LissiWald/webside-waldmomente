@@ -252,15 +252,15 @@
     <h3>Vor dem Ausflug</h3>
     <p>
       Den Ton prüfen und die Spielkarte ausdrucken.
-      „Für den Wald speichern“ versucht, Spiel, Bilder und Aufnahmen
-      auf dieses Gerät zu legen. Ob der Browser sie behält, entscheidet
-      er selbst. Testet es deshalb zu Hause: Flugmodus an, Seite
-      schließen, dieselbe Adresse noch einmal öffnen.
-      <strong>Plant euren Ausflug so, dass ihr Empfang habt.</strong>
-      Ohne bestätigten Test verlasst euch nicht darauf.
+      <strong>Wählt einen Weg, auf dem ihr Empfang habt.</strong>
+      Das Handy lädt Raschels Nachrichten unterwegs nach.
     </p>
-    <button id="offline-button" type="button">Für den Wald speichern</button>
-    <p id="offline-status" role="status" class="note"></p>
+    <h3>Wenn der Ton nicht kommt</h3>
+    <p>
+      Bei schwachem Empfang startet eine Aufnahme manchmal nicht.
+      Tippt dann auf „Nachricht lesen“. Dort steht alles,
+      was Raschel sagt. Ihr verpasst nichts.
+    </p>
     <div class="row">
       <a class="button secondary" href="#karte">Spielkarte</a>
       <a class="button secondary" href="#eltern">Elternanleitung</a>
@@ -899,9 +899,8 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
             <li>Spielkarte öffnen und ausdrucken.</li>
             <li>Elternanleitung lesen und einen Bleistift einpacken.</li>
             <li>Spiel starten und den Ton prüfen.</li>
-            <li>Wenn ihr mögt, unter Elterninfos für den Wald speichern
-                und zu Hause im Flugmodus testen. Plant den Ausflug
-                trotzdem mit Empfang.</li>
+            <li>Einen Weg mit Empfang wählen. Kommt der Ton einmal nicht,
+                tippt auf „Nachricht lesen“.</li>
           </ol>
           <p class="note">Erwachsene bedienen das Handy und schreiben.
             Die Kinder suchen, lauschen, fühlen und entdecken.
@@ -1031,13 +1030,12 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
              Bei feuchtem Wetter schützt eine Klarsichthülle die Karte.
              Pro Team genügt ein Handy.</p>
           <h3>Das Handy vorbereiten</h3>
-          <p>Spiel mit Empfang öffnen und den Ton prüfen.
-             Wählt einen Weg, auf dem ihr Empfang habt.
-             Wer möchte, speichert unter Elterninfos für den Wald und
-             testet das zu Hause im Flugmodus. Behaltet dafür den
-             Browser und seine gespeicherten Website-Daten.
-             Klappt der Test nicht, spielt mit Empfang. Es geht nichts
-             verloren: jede Nachricht steht auch im Text.</p>
+          <p>Spiel zu Hause mit Empfang öffnen und den Ton prüfen.
+             Wählt einen Weg, auf dem ihr Empfang habt: das Handy lädt
+             Raschels Nachrichten unterwegs nach.
+             Startet eine Aufnahme einmal nicht, tippt auf
+             „Nachricht lesen“. Dort steht alles, was Raschel sagt.
+             Ihr verpasst nichts.</p>
           <h3>Gemeinsam spielen</h3>
           <p>Raschel spricht pro Aufgabe einmal; Wiederholen ist möglich.
              Den Waldauftrag erledigen und gemeinsam die Antwort finden.
@@ -1201,116 +1199,14 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
       else location.hash = "spiel";
     };
 
-    /* ── Offline speichern ── */
-    let workerRegistration = null;
-    if ("serviceWorker" in navigator &&
-        ["https:", "http:"].includes(location.protocol) &&
-        window.isSecureContext) {
-      workerRegistration = navigator.serviceWorker.register("sw.js");
-      workerRegistration.catch(() => {});
+    /* Der Browser bekommt weiter einen Service Worker gemeldet, aber
+       nur einen, der sich selbst abraeumt. Ohne ihn wuerde ein Geraet,
+       das die Rallye frueher schon gespeichert hat, weiter die alten
+       Dateien ausliefern. */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
     }
 
-    /* Ohne diese Dateien ist das Spiel im Wald unbrauchbar.
-       Fehlt eine, muss die Speicherung scheitern und es sagen. */
-    const OFFLINE_PFLICHT = [
-      "raschel-wald.jpg",
-      "raschel-loecher.jpg",
-      "fuchs-illustration.jpg", "viereck-illustration.jpg",
-      "rinde-illustration.jpg", "specht-illustration.jpg",
-      "waldboden-illustration.jpg", "stein-illustration.jpg",
-      "krone-illustration.jpg", "finale-wald-illustration.jpg"
-    ];
-
-    /* Die Tonspuren sind schoen, aber nicht notwendig: jede Nachricht
-       steht auch im Text. Fehlt eine, wird sie beim Namen genannt,
-       das Spiel liegt aber trotzdem auf dem Geraet. */
-    const OFFLINE_TON = [
-      "start.mp3", "fuchs.mp3", "viereck.mp3", "rinde.mp3",
-      "specht.mp3", "waldboden.mp3", "stein.mp3", "krone.mp3",
-      "schloss.mp3", "danke.mp3"
-    ];
-
-    document.getElementById("offline-button").onclick = async () => {
-      const knopf = document.getElementById("offline-button");
-      const status = document.getElementById("offline-status");
-      if (!workerRegistration) {
-        status.textContent =
-          "Die Speicherung braucht einen unterstützten Browser " +
-          "und eine sicher bereitgestellte Spielseite.";
-        return;
-      }
-      knopf.disabled = true;
-      status.textContent = "Spiel wird gespeichert. Bitte warten.";
-      try {
-        await workerRegistration;
-        const registration = await navigator.serviceWorker.ready;
-        const kanal = new MessageChannel();
-        const seite = new URL(location.href);
-        seite.hash = ""; seite.search = "";
-        const absolut = p => new URL(media(p), location.href).href;
-        /* Die Seite unter beiden Schreibweisen ablegen. Wer den Link
-           spaeter mit index.html am Ende oeffnet, soll nicht vor
-           einer leeren Seite stehen. */
-        const ordner = seite.href.replace(/[^/]*$/, "");
-        const seiten = [...new Set([seite.href, ordner, ordner + "index.html"])];
-        const urls = [...seiten, ...OFFLINE_PFLICHT.map(absolut)];
-        const kuer = OFFLINE_TON.map(absolut);
-
-        const fehlendeToene = await new Promise((fertig, fehler) => {
-          const uhr = setTimeout(() => fehler(new Error("Speichern hat zu lange gedauert.")), 300000);
-          kanal.port1.onmessage = ev => {
-            const m = ev.data;
-            if (m.type === "progress") {
-              status.textContent = `Gespeichert: ${m.done} von ${m.total} Dateien.`;
-            }
-            if (m.type === "done") { clearTimeout(uhr); fertig(m.fehlendeKuer || []); }
-            if (m.type === "error") { clearTimeout(uhr); fehler(new Error(m.message)); }
-          };
-          registration.active.postMessage(
-            { type: "CACHE_RASCHEL", urls, kuer }, [kanal.port2]
-          );
-        });
-
-        /* Nachzaehlen statt glauben: gemeldet ist nicht abgelegt.
-           Manche Browser werfen den Speicher sofort wieder weg. */
-        let abgelegt = 0;
-        try {
-          const namen = await caches.keys();
-          for (const n of namen) {
-            if (!n.startsWith("raschel-")) continue;
-            abgelegt += (await (await caches.open(n)).keys()).length;
-          }
-        } catch (e) { abgelegt = -1; }
-
-        const soll = urls.length + kuer.length - fehlendeToene.length;
-        if (abgelegt === 0) {
-          throw new Error("Der Browser hat nichts behalten. " +
-            "Das passiert im privaten Modus und in Browsern, die in " +
-            "anderen Apps eingebaut sind, etwa in Instagram. " +
-            "Öffnet die Seite in Safari oder Chrome und versucht es dort.");
-        }
-        const wald = abgelegt > 0 && abgelegt < soll
-          ? " Von " + soll + " Dateien liegen " + abgelegt + " auf dem Gerät."
-          : "";
-        status.textContent =
-          (fehlendeToene.length
-            ? "Gespeichert, aber " + fehlendeToene.length + " von " +
-              OFFLINE_TON.length + " Tonspuren fehlen (" +
-              fehlendeToene.slice(0, 3).join(", ") +
-              "). Jede Nachricht steht auch im Text."
-            : "Gespeichert.") + wald +
-          " Testet es jetzt: Flugmodus einschalten, die Seite schließen und " +
-          "dieselbe Adresse noch einmal öffnen. Erst wenn das klappt, " +
-          "könnt ihr euch im Wald darauf verlassen.";
-      } catch (fehler) {
-        status.textContent =
-          "Die Speicherung ist nicht vollständig: " + fehler.message +
-          " Prüft Empfang und freien Speicher und versucht es erneut. " +
-          "Bis dahin bitte mit Empfang spielen.";
-      } finally {
-        knopf.disabled = false;
-      }
-    };
 
     window.addEventListener("hashchange", renderRoute);
     renderRoute();
