@@ -5,7 +5,7 @@
    ohne Empfang laeuft.
    ══════════════════════════════════════════ */
 
-const CACHE_VERSION = "raschel-v4";
+const CACHE_VERSION = "raschel-v5";
 const CACHE_NAME = CACHE_VERSION + "-offline";
 
 self.addEventListener("install", event => {
@@ -99,10 +99,22 @@ async function ausliefern(request) {
   sauber.hash = "";
 
   let abgelegt = await cache.match(sauber.href);
+
+  /* Beim Aufruf der Seite selbst darf die Adresse ruhig etwas anders
+     aussehen als beim Speichern: mit index.html am Ende, mit einem
+     Anhaengsel hinter dem Fragezeichen, mit oder ohne Schraegstrich.
+     Sonst steht jemand im Wald vor einer leeren Seite, nur weil er
+     den Link anders geoeffnet hat als zu Hause. */
   if (!abgelegt && request.mode === "navigate") {
     sauber.search = "";
     abgelegt = await cache.match(sauber.href);
+    if (!abgelegt) {
+      const ordner = sauber.href.replace(/[^/]*$/, "");
+      abgelegt = await cache.match(ordner)
+              || await cache.match(ordner + "index.html");
+    }
   }
+
   if (!abgelegt) {
     try { return await fetch(request); }
     catch (e) { return Response.error(); }
