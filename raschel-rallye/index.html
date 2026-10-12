@@ -553,9 +553,6 @@ Vor dem Ausflug den Ton und die Speicherung auf eurem Gerät prüfen. Bei feucht
 12,90 € · Einmaliger Kauf für die Familie.
 Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
 
-    /* Erst mit dem echten Payhip-Link befuellen. */
-    const PAYHIP_BUY_URL = "";
-
     const app = document.getElementById("app");
 
     function escapeHTML(wert) {
@@ -1112,96 +1109,6 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
       bindPrint();
     }
 
-    function renderSales() {
-      const kaufKnopf = PAYHIP_BUY_URL
-        ? `<a class="button" href="${escapeHTML(PAYHIP_BUY_URL)}"
-             target="_blank" rel="noopener">Raschels Waldrallye kaufen</a>`
-        : `<p><strong>Bald erhältlich</strong></p>
-           <p class="note">Der Verkauf ist noch nicht geöffnet.</p>`;
-      app.innerHTML = `
-        <p class="eyebrow">Eine Waldmission für eure Familie</p>
-        <h1>Raschel, das Waldgespenst</h1>
-        <img class="banner" src="${media("raschel-verkaufsbild.jpg")}"
-             alt="Raschels Waldrallye für Kinder von 4 bis 7 Jahren">
-        <p>Sieben verlorene Flicken. Ein geheimnisvolles Wort.
-           Und Kinder, die den Wald nach Hinweisen absuchen.</p>
-        <p>Eine schaurig schöne Waldrallye für Kinder von
-           <strong>4 bis 7 Jahren mit erwachsener Begleitung.</strong></p>
-        <div class="card">
-          <h2>Letzte Nacht hat es ordentlich geraschelt.</h2>
-          <p>Der Sturm hat Raschels Laken zerrissen.
-             Sieben Flicken sind zwischen die Bäume geflogen.
-             Und mit ihnen die Buchstaben für ein geheimnisvolles Schloss.</p>
-          <p>Jetzt braucht das kleine Waldgespenst eure Hilfe.
-             Ihr folgt seinen Nachrichten, sucht gemeinsam nach Hinweisen
-             und entdeckt den Wald mit Händen, Füßen, Nase und Ohren.</p>
-          <p>Jede gelöste Aufgabe bringt einen Flicken zurück.
-             Erst danach erscheint das passende Geschichtenbild.
-             Am Ende setzt ihr die sieben Buchstaben zusammen
-             und öffnet Raschels Wortschloss.</p>
-        </div>
-        <div class="card">
-          <h2>Hör Raschels Geschichte</h2>
-          ${audioMarkup("start", "Hörprobe starten")}
-        </div>
-        <h2>So spielt ihr</h2>
-        <div class="grid">
-          <div class="card"><h3>Vorbereiten</h3>
-            <p>Spielkarte ausdrucken, Bleistift und geladenes Handy einpacken.
-               Ein QR-Code öffnet das ganze Abenteuer.</p></div>
-          <div class="card"><h3>Raschel helfen</h3>
-            <p>Seine Nachricht hören, den Waldauftrag erledigen
-               und gemeinsam das Lösungswort finden.
-               Erwachsene schreiben und bedienen das Handy.</p></div>
-          <div class="card"><h3>Flicken zurückholen</h3>
-            <p>Der richtige Code bringt einen Flicken zurück.
-               Ein großes Geschichtenbild und ein Buchstabe
-               warten als Belohnung.</p></div>
-          <div class="card"><h3>Das Schloss öffnen</h3>
-            <p>Aus sieben Buchstaben entsteht das letzte Lösungswort.
-               Raschel zeigt sein repariertes Laken
-               und bedankt sich bei euren Kindern.</p></div>
-        </div>
-        <div class="card">
-          <h2>Der Wald muss nicht vorbereitet werden.</h2>
-          <p>Ihr versteckt keine Gegenstände und hängt keine Zettel an Bäume.
-             Ihr wählt einen sicheren Waldweg und entscheidet selbst,
-             an welchen passenden Stellen ihr die Aufgaben löst.</p>
-        </div>
-        <div class="card">
-          <h2>Das gehört dazu</h2>
-          <ul>
-            <li>Einstieg und sieben gesprochene Waldaufgaben</li>
-            <li>Hinweise und Codeprüfung</li>
-            <li>Geschichtenbilder nach den richtigen Lösungen</li>
-            <li>Finale mit Schlussbild und gesprochenem Danke</li>
-            <li>Spielkarte und Elternanleitung</li>
-            <li>Urkunde für eure Flickenretter</li>
-          </ul>
-          <p class="price">12,90 €</p>
-          <p>Einmaliger Kauf für die Familie.</p>
-          ${kaufKnopf}
-        </div>
-        <details><summary>Kann mein Kind mit vier Jahren mitspielen?</summary>
-          <p>Die Rallye ist für gemeinsames Spielen mit Erwachsenen gedacht.
-             Erwachsene lesen, schreiben und bedienen das Handy.
-             Die Kinder suchen, zeigen, lauschen und fühlen.
-             Zeichnen ist freiwillig.</p></details>
-        <details><summary>Brauchen wir einen bestimmten Wald?</summary>
-          <p>Die Aufgaben brauchen keine bestimmte Baumart
-             und keinen tatsächlichen Tierfund.
-             Wählt einen sicheren Waldweg mit Bäumen
-             und gewöhnlichen losen Waldstücken.</p></details>
-        <details><summary>Funktioniert das Spiel ohne Empfang?</summary>
-          <p>Bereitet das Gerät vorher mit Empfang vor.
-             Nutzt die Speicherung für den Wald,
-             wartet auf die Bestätigung und testet den Zugang
-             anschließend einmal ohne Netz.</p></details>
-        <p class="no-print"><a href="#produkt">Zum Spielpaket</a></p>
-      `;
-      bindAudio();
-    }
-
     function copyField(label, wert, zeilen = 4) {
       return `<section class="card copy-section">
         <h3>${escapeHTML(label)}</h3>
@@ -1225,7 +1132,7 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
         ${copyField("Produktbeschreibung", PAYHIP_DESCRIPTION, 32)}
         <p class="note">Diese Seite stellt die Texte bereit.
            Sie erstellt keinen Payhip-Shop und keinen Checkout.
-           Den echten Kauflink im Code unter PAYHIP_BUY_URL eintragen.</p>
+           Der Kauflink wird bei Payhip selbst gesetzt.</p>
         <a class="button secondary" href="#produkt">Zurück</a>
       `;
       app.querySelectorAll(".copy-button").forEach(knopf => {
@@ -1259,7 +1166,6 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
         case "karte": renderCard(); break;
         case "eltern": renderParents(); break;
         case "urkunde": renderCertificate(); break;
-        case "verkauf": renderSales(); break;
         case "payhip": renderPayhip(); break;
         default: renderProduct();
       }
@@ -1301,7 +1207,6 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
        Fehlt eine, muss die Speicherung scheitern und es sagen. */
     const OFFLINE_PFLICHT = [
       "raschel-wald.jpg",
-      "raschel-verkaufsbild.jpg",
       "fuchs-illustration.jpg", "viereck-illustration.jpg",
       "rinde-illustration.jpg", "specht-illustration.jpg",
       "waldboden-illustration.jpg", "stein-illustration.jpg",
