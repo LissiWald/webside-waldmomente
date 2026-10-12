@@ -5,7 +5,7 @@
    ohne Empfang laeuft.
    ══════════════════════════════════════════ */
 
-const CACHE_VERSION = "raschel-v3";
+const CACHE_VERSION = "raschel-v4";
 const CACHE_NAME = CACHE_VERSION + "-offline";
 
 self.addEventListener("install", event => {
