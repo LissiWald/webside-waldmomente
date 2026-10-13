@@ -577,72 +577,83 @@
  /* Ankuendigung ueber der Hero-Zeile. Zurueckhaltend, damit sie die
     Ueberschrift nicht ueberstimmt, aber mit einem ruhigen Puls, der
     das Auge einmal hinzieht. */
- /* Die Ankuendigung soll auffallen, nicht fluestern: heller Riegel
-    auf dem dunklen Waldbild, mit Raschel vorn und dem Preis dabei. */
+ /* Die Ankuendigung. Nicht laut, sondern wertig: heller Karton auf
+    dem dunklen Waldbild, feine Goldlinie, Hausschrift. Die erste
+    Zeile stellt eine Frage, ohne sie zu stellen, und macht neugierig.
+    Der Preis steht leise darunter, nicht als Schild davor. */
  .hero__neu {
- display: inline-flex; align-items: center; gap: 1rem;
- margin: 0 0 2.2rem; padding: .55rem 1.5rem .55rem .55rem;
- border: 0; border-radius: 999px;
- background: linear-gradient(135deg, #e6cf9b 0%, var(--gold) 48%, #b8974f 100%);
+ position: relative; overflow: hidden;
+ display: inline-flex; align-items: center; gap: 1.15rem;
+ margin: 0 0 2.4rem; padding: 1rem 1.6rem 1rem 1rem;
+ border: 1px solid rgba(200,169,110,.55);
+ border-radius: 3px;
+ background: linear-gradient(180deg, #fbf8f1 0%, #f3eee2 100%);
  text-decoration: none; max-width: 100%;
- box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.25) inset;
- animation: neu-schein 2.8s ease-in-out infinite;
- transition: transform .35s;
+ box-shadow: 0 2px 4px rgba(0,0,0,.18), 0 18px 48px rgba(0,0,0,.42);
+ transition: transform .5s cubic-bezier(.2,.7,.3,1), box-shadow .5s;
  }
- .hero__neu:hover { transform: translateY(-3px) scale(1.015); }
- @keyframes neu-schein {
- 0%, 100% { box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.25) inset, 0 0 0 0 rgba(200,169,110,.5); }
- 50% { box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.25) inset, 0 0 0 14px rgba(200,169,110,0); }
+ .hero__neu:hover {
+ transform: translateY(-3px);
+ box-shadow: 0 2px 4px rgba(0,0,0,.18), 0 26px 60px rgba(0,0,0,.5);
  }
+ /* Ein langsamer Lichtstreif, wie wenn man Papier ins Licht dreht. */
+ .hero__neu-schimmer {
+ position: absolute; inset: 0; pointer-events: none;
+ background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.72) 50%, transparent 62%);
+ transform: translateX(-130%);
+ animation: neu-schimmer 6.5s ease-in-out infinite 1.5s;
+ }
+ @keyframes neu-schimmer { 0% { transform: translateX(-130%); } 55%, 100% { transform: translateX(130%); } }
+
  .hero__neu-bild { display: block; flex-shrink: 0; line-height: 0; }
  .hero__neu-bild img {
- width: 68px; height: 68px; border-radius: 50%; display: block;
- background: var(--paper, #f5f0e6);
- box-shadow: 0 0 0 2px rgba(255,255,255,.65);
+ width: 76px; height: 76px; border-radius: 50%; display: block;
+ background: #f5f0e6;
+ box-shadow: 0 0 0 1px rgba(200,169,110,.5);
+ }
+ .hero__neu-strich {
+ width: 1px; align-self: stretch; margin: .2rem 0;
+ background: linear-gradient(180deg, transparent, rgba(200,169,110,.6) 18%, rgba(200,169,110,.6) 82%, transparent);
+ flex-shrink: 0;
  }
  .hero__neu-inhalt {
  display: flex; flex-direction: column; align-items: flex-start;
- gap: .18rem; min-width: 0; text-align: left;
+ gap: .34rem; min-width: 0; text-align: left;
  }
  .hero__neu-wort {
- display: inline-flex; align-items: center; gap: .4rem;
- font-family: 'Jost', sans-serif; font-size: .6rem; font-weight: 500;
- letter-spacing: .3em; text-transform: uppercase; color: #1b2a1d;
- opacity: .78;
- }
- .hero__neu-punkt {
- width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
- background: #7a1f12; animation: neu-puls 1.8s ease-in-out infinite;
- }
- @keyframes neu-puls {
- 0%, 100% { box-shadow: 0 0 0 0 rgba(122,31,18,.65); }
- 50% { box-shadow: 0 0 0 6px rgba(122,31,18,0); }
+ font-family: 'Jost', sans-serif; font-size: .55rem; font-weight: 500;
+ letter-spacing: .42em; text-transform: uppercase; color: #9a7f45;
  }
  .hero__neu-titel {
  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
- font-size: 1.6rem; line-height: 1.05; color: #16241a; white-space: nowrap;
+ font-size: 1.62rem; line-height: 1.12; color: #22331f;
  }
  .hero__neu-zusatz {
- font-family: 'Jost', sans-serif; font-size: .74rem; font-weight: 400;
- letter-spacing: .05em; color: #2c3f2d; white-space: nowrap;
+ font-family: 'Jost', sans-serif; font-size: .7rem; font-weight: 300;
+ letter-spacing: .12em; text-transform: uppercase; color: #6c7a63;
+ white-space: nowrap;
  }
- .hero__neu-pfeil { color: #16241a; font-size: 1.5rem; flex-shrink: 0; line-height: 1; }
- @media (prefers-reduced-motion: reduce) {
- .hero__neu, .hero__neu-punkt { animation: none; }
+ .hero__neu-pfeil {
+ color: #9a7f45; font-size: 1.35rem; flex-shrink: 0; line-height: 1;
+ transition: transform .5s cubic-bezier(.2,.7,.3,1);
  }
+ .hero__neu:hover .hero__neu-pfeil { transform: translateX(5px); }
+ @media (prefers-reduced-motion: reduce) { .hero__neu-schimmer { animation: none; opacity: 0; } }
+
  @media (max-width: 760px) {
- .hero__neu { gap: .75rem; padding: .45rem 1.1rem .45rem .45rem; margin-bottom: 1.6rem; }
- .hero__neu-bild img { width: 54px; height: 54px; }
- .hero__neu-titel { font-size: 1.25rem; }
- .hero__neu-zusatz { font-size: .66rem; }
- .hero__neu-wort { font-size: .52rem; letter-spacing: .24em; }
- .hero__neu-pfeil { font-size: 1.2rem; }
+ .hero__neu { gap: .85rem; padding: .8rem 1.1rem .8rem .8rem; margin-bottom: 1.7rem; }
+ .hero__neu-bild img { width: 60px; height: 60px; }
+ .hero__neu-titel { font-size: 1.3rem; }
+ .hero__neu-zusatz { font-size: .62rem; letter-spacing: .09em; }
+ .hero__neu-wort { font-size: .5rem; letter-spacing: .34em; }
+ .hero__neu-lang { display: none; }
+ .hero__neu-pfeil { font-size: 1.15rem; }
  }
  @media (max-width: 400px) {
- .hero__neu { gap: .6rem; padding: .4rem .9rem .4rem .4rem; }
- .hero__neu-bild img { width: 46px; height: 46px; }
- .hero__neu-titel { font-size: 1.08rem; }
- .hero__neu-zusatz { font-size: .6rem; letter-spacing: .02em; }
+ .hero__neu { gap: .7rem; padding: .7rem .9rem .7rem .7rem; }
+ .hero__neu-bild img { width: 52px; height: 52px; }
+ .hero__neu-titel { font-size: 1.14rem; }
+ .hero__neu-zusatz { font-size: .57rem; letter-spacing: .06em; }
  .hero__neu-pfeil { display: none; }
  }
 
@@ -1709,14 +1720,16 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="hero__slide"></div>
  <div class="hero__overlay"></div>
  <div class="hero__content">
- <a href="raschel.html" class="hero__neu reveal">
+ <a href="raschel.html" class="hero__neu reveal" aria-label="Raschels Waldrallye entdecken">
  <picture class="hero__neu-bild"><source srcset="assets/raschel-knopf.webp" type="image/webp"><img src="assets/raschel-knopf.jpg" width="132" height="132" alt="" loading="eager"></picture>
+ <span class="hero__neu-strich" aria-hidden="true"></span>
  <span class="hero__neu-inhalt">
- <span class="hero__neu-wort"><span class="hero__neu-punkt" aria-hidden="true"></span>Neu</span>
- <span class="hero__neu-titel">Raschel, das Waldgespenst</span>
- <span class="hero__neu-zusatz">Waldrallye für 4 bis 7 Jahre · 12,90 €</span>
+ <span class="hero__neu-wort">Neu</span>
+ <span class="hero__neu-titel">Sieben Flicken.<br>Ein Waldgespenst.</span>
+ <span class="hero__neu-zusatz">Raschels Waldrallye<span class="hero__neu-lang"> für 4 bis 7 Jahre</span> · 12,90 €</span>
  </span>
  <span class="hero__neu-pfeil" aria-hidden="true">→</span>
+ <span class="hero__neu-schimmer" aria-hidden="true"></span>
  </a>
  <h1 class="hero__title">
  <span class="w">Derselbe</span>&nbsp;<span class="w">Weg</span>&nbsp;<span class="w">wie</span>&nbsp;<span class="w">immer.</span><br>
