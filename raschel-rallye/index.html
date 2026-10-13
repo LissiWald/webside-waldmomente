@@ -285,7 +285,13 @@
        Spiel auch dann heil, wenn eine fremde Vorschauadresse verschwindet,
        und ein fehlgeschlagener Download faellt beim Speichern wirklich auf. */
     const MEDIA_BASE = "assets/";
-    const media = datei => MEDIA_BASE + datei;
+    /* Die Nummer haengt an jeder Bild- und Tondatei. Wird eine Datei
+       ausgetauscht, aendert sich mit der Nummer auch die Adresse, und
+       jeder Browser muss sie neu holen. Ohne das zeigt ein Geraet,
+       das die Seite schon einmal offen hatte, weiter die alte. Bei
+       jedem Austausch hochzaehlen. */
+    const MEDIA_VERSION = "2";
+    const media = datei => MEDIA_BASE + datei + "?v=" + MEDIA_VERSION;
 
     const STORAGE_KEY = "raschel-rally-v1";
 
