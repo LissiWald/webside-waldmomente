@@ -577,77 +577,73 @@
  /* Ankuendigung ueber der Hero-Zeile. Zurueckhaltend, damit sie die
     Ueberschrift nicht ueberstimmt, aber mit einem ruhigen Puls, der
     das Auge einmal hinzieht. */
+ /* Die Ankuendigung soll auffallen, nicht fluestern: heller Riegel
+    auf dem dunklen Waldbild, mit Raschel vorn und dem Preis dabei. */
  .hero__neu {
- display: inline-flex; align-items: center; gap: .75rem;
- margin: 0 0 2rem; padding: .32rem 1.3rem .32rem .32rem;
- border: 1px solid rgba(200,169,110,.75);
- border-radius: 999px;
- background: rgba(22,32,24,.72);
- backdrop-filter: blur(4px);
+ display: inline-flex; align-items: center; gap: 1rem;
+ margin: 0 0 2.2rem; padding: .55rem 1.5rem .55rem .55rem;
+ border: 0; border-radius: 999px;
+ background: linear-gradient(135deg, #e6cf9b 0%, var(--gold) 48%, #b8974f 100%);
  text-decoration: none; max-width: 100%;
- animation: neu-schein 3s ease-in-out infinite;
- transition: border-color .4s, background .4s, transform .4s;
+ box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.25) inset;
+ animation: neu-schein 2.8s ease-in-out infinite;
+ transition: transform .35s;
  }
- .hero__neu:hover { border-color: var(--gold); background: rgba(22,32,24,.9); transform: translateY(-2px); }
+ .hero__neu:hover { transform: translateY(-3px) scale(1.015); }
  @keyframes neu-schein {
- 0%, 100% { box-shadow: 0 0 0 1px rgba(200,169,110,.18), 0 0 18px rgba(200,169,110,.14); }
- 50% { box-shadow: 0 0 0 1px rgba(200,169,110,.5), 0 0 34px rgba(200,169,110,.34); }
+ 0%, 100% { box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.25) inset, 0 0 0 0 rgba(200,169,110,.5); }
+ 50% { box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.25) inset, 0 0 0 14px rgba(200,169,110,0); }
  }
- /* Raschel selbst sitzt vorn in der Kapsel und wiegt sich dort
-    weiter, wie auf seiner eigenen Seite. */
  .hero__neu-bild { display: block; flex-shrink: 0; line-height: 0; }
  .hero__neu-bild img {
- width: 42px; height: 42px; border-radius: 50%; display: block;
+ width: 68px; height: 68px; border-radius: 50%; display: block;
  background: var(--paper, #f5f0e6);
- box-shadow: 0 0 0 1px rgba(200,169,110,.55);
+ box-shadow: 0 0 0 2px rgba(255,255,255,.65);
  }
-
- /* Das Wort sitzt in einer gefuellten Kapsel, damit die Ankuendigung
-    nicht im Bild untergeht. */
+ .hero__neu-inhalt {
+ display: flex; flex-direction: column; align-items: flex-start;
+ gap: .18rem; min-width: 0; text-align: left;
+ }
  .hero__neu-wort {
  display: inline-flex; align-items: center; gap: .4rem;
- background: var(--gold); color: #1b2a1d;
- padding: .33rem .75rem .3rem .6rem; border-radius: 999px;
- font-family: 'Jost', sans-serif; font-size: .62rem; font-weight: 500;
- letter-spacing: .22em; text-transform: uppercase; flex-shrink: 0;
+ font-family: 'Jost', sans-serif; font-size: .6rem; font-weight: 500;
+ letter-spacing: .3em; text-transform: uppercase; color: #1b2a1d;
+ opacity: .78;
  }
  .hero__neu-punkt {
- width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
- background: #1b2a1d; animation: neu-puls 2.2s ease-in-out infinite;
+ width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+ background: #7a1f12; animation: neu-puls 1.8s ease-in-out infinite;
  }
  @keyframes neu-puls {
- 0%, 100% { box-shadow: 0 0 0 0 rgba(27,42,29,.6); opacity: .9; }
- 50% { box-shadow: 0 0 0 5px rgba(27,42,29,0); opacity: 1; }
+ 0%, 100% { box-shadow: 0 0 0 0 rgba(122,31,18,.65); }
+ 50% { box-shadow: 0 0 0 6px rgba(122,31,18,0); }
  }
- .hero__neu-text {
- font-family: 'Jost', sans-serif; font-size: .92rem; font-weight: 400;
- letter-spacing: .035em; color: var(--cream); line-height: 1.35;
+ .hero__neu-titel {
+ font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+ font-size: 1.6rem; line-height: 1.05; color: #16241a; white-space: nowrap;
  }
- .hero__neu-zusatz { color: rgba(253,250,245,.72); }
- .hero__neu-pfeil { color: var(--gold); font-size: 1rem; flex-shrink: 0; }
+ .hero__neu-zusatz {
+ font-family: 'Jost', sans-serif; font-size: .74rem; font-weight: 400;
+ letter-spacing: .05em; color: #2c3f2d; white-space: nowrap;
+ }
+ .hero__neu-pfeil { color: #16241a; font-size: 1.5rem; flex-shrink: 0; line-height: 1; }
  @media (prefers-reduced-motion: reduce) {
- .hero__neu-punkt, .hero__neu { animation: none; }
+ .hero__neu, .hero__neu-punkt { animation: none; }
  }
- @media (max-width: 620px) {
- .hero__neu { gap: .5rem; padding: .28rem .95rem .28rem .28rem; margin-bottom: 1.5rem; }
- .hero__neu-bild img { width: 34px; height: 34px; }
- .hero__neu-wort { font-size: .54rem; letter-spacing: .18em; padding: .3rem .6rem .28rem .5rem; }
- .hero__neu-text { font-size: .82rem; letter-spacing: .02em; white-space: nowrap;
- /* Sicherheitsnetz fuer sehr schmale Geraete: lieber kuerzen als
-    aus der Kapsel herausragen. */
- min-width: 0; overflow: hidden; text-overflow: ellipsis; }
- /* Auf dem Handy bricht die lange Zeile um und die Kapsel steht
-    dann neben zwei Zeilen. Kurzfassung statt Umbruch. */
- .hero__neu-zusatz { display: none; }
+ @media (max-width: 760px) {
+ .hero__neu { gap: .75rem; padding: .45rem 1.1rem .45rem .45rem; margin-bottom: 1.6rem; }
+ .hero__neu-bild img { width: 54px; height: 54px; }
+ .hero__neu-titel { font-size: 1.25rem; }
+ .hero__neu-zusatz { font-size: .66rem; }
+ .hero__neu-wort { font-size: .52rem; letter-spacing: .24em; }
+ .hero__neu-pfeil { font-size: 1.2rem; }
+ }
+ @media (max-width: 400px) {
+ .hero__neu { gap: .6rem; padding: .4rem .9rem .4rem .4rem; }
+ .hero__neu-bild img { width: 46px; height: 46px; }
+ .hero__neu-titel { font-size: 1.08rem; }
+ .hero__neu-zusatz { font-size: .6rem; letter-spacing: .02em; }
  .hero__neu-pfeil { display: none; }
- }
- /* Auf den schmalsten Geraeten, etwa einem alten iPhone SE, ragte
-    der Name sonst aus der Kapsel heraus. */
- @media (max-width: 359px) {
- .hero__neu { gap: .4rem; padding: .25rem .8rem .25rem .25rem; }
- .hero__neu-bild img { width: 30px; height: 30px; }
- .hero__neu-wort { font-size: .5rem; letter-spacing: .14em; padding: .26rem .5rem .24rem .42rem; }
- .hero__neu-text { font-size: .72rem; }
  }
 
  .d1 { transition-delay: .15s; }
@@ -723,13 +719,13 @@
  /* Oben mehr Luft: die Leiste und die Navigation liegen fest ueber
     dem Bild. Ohne das rutscht die oberste Zeile dahinter, auf
     flachen Bildschirmen sogar ganz. */
- padding: 7.4rem 2rem 2rem;
+ padding: 8.2rem 2rem 2rem;
  }
 
  /* Auf flachen Bildschirmen, etwa einem Laptop oder einem kleinen
     Handy, passt der Inhalt nicht in eine Bildschirmhoehe. Statt oben
     abzuschneiden darf das Bild dann mitwachsen. */
- @media (max-height: 800px) {
+ @media (max-height: 940px) {
  #hero { height: auto; min-height: 100svh; }
  .hero__content { position: relative; inset: auto; min-height: 100svh; }
  }
@@ -1715,8 +1711,11 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="hero__content">
  <a href="raschel.html" class="hero__neu reveal">
  <picture class="hero__neu-bild"><source srcset="assets/raschel-knopf.webp" type="image/webp"><img src="assets/raschel-knopf.jpg" width="132" height="132" alt="" loading="eager"></picture>
+ <span class="hero__neu-inhalt">
  <span class="hero__neu-wort"><span class="hero__neu-punkt" aria-hidden="true"></span>Neu</span>
- <span class="hero__neu-text">Raschel, das Waldgespenst<span class="hero__neu-zusatz"> · Eine Waldrallye für 4 bis 7</span></span>
+ <span class="hero__neu-titel">Raschel, das Waldgespenst</span>
+ <span class="hero__neu-zusatz">Waldrallye für 4 bis 7 Jahre · 12,90 €</span>
+ </span>
  <span class="hero__neu-pfeil" aria-hidden="true">→</span>
  </a>
  <h1 class="hero__title">
