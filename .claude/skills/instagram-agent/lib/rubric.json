@@ -1,0 +1,89 @@
+{
+  "total": 100,
+  "parts": [
+    {
+      "id": "name-field",
+      "points": 8,
+      "title": {"de": "Name", "en": "Name"},
+      "check": {"de": "Der Name nennt das Angebot oder die Person, nicht einen Werbespruch.", "en": "The name states the offer or the person, not a slogan."},
+      "fix": {"de": "Setze das, was du tust, in den Namen. Den Spruch streichen.", "en": "Put what you do in the name. Drop the slogan."}
+    },
+    {
+      "id": "handle",
+      "points": 4,
+      "title": {"de": "Nutzername", "en": "Handle"},
+      "check": {"de": "Der Nutzername ist laut lesbar und suchbar.", "en": "The handle can be said out loud and searched."},
+      "fix": {"de": "Unterstriche und Zahlenfolgen entfernen, die niemand diktiert.", "en": "Remove underscores and digit runs nobody would dictate."}
+    },
+    {
+      "id": "bio-promise",
+      "points": 12,
+      "title": {"de": "Bio-Versprechen", "en": "Bio promise"},
+      "check": {"de": "In 150 Zeichen steht, für wen du da bist und was die Person bekommt.", "en": "Inside 150 characters it says who it is for and what they get."},
+      "fix": {"de": "Ein Satz: Person, Ergebnis. Kein Manifest.", "en": "One sentence: person, result. Not a manifesto."}
+    },
+    {
+      "id": "bio-proof",
+      "points": 10,
+      "title": {"de": "Beweis in der Bio", "en": "Proof in the bio"},
+      "check": {"de": "Ein wahrer Beleg aus der Stimme, oder ausdrücklich keiner.", "en": "One true proof from the voice file, or an honest gap."},
+      "fix": {"de": "Einen Beleg einsetzen, den du belegen kannst. Sonst die Stelle leer lassen.", "en": "Use a proof you can stand behind. Otherwise leave the slot empty."}
+    },
+    {
+      "id": "bio-cta",
+      "points": 8,
+      "title": {"de": "Eine Handlungsaufforderung", "en": "One ask"},
+      "check": {"de": "Die Bio hat genau einen nächsten Schritt.", "en": "The bio has exactly one next step."},
+      "fix": {"de": "Link, Kommentarwort oder Antwort. Nicht alle drei.", "en": "Link, comment word, or reply. Not all three."}
+    },
+    {
+      "id": "link",
+      "points": 6,
+      "title": {"de": "Link", "en": "Link"},
+      "check": {"de": "Das Ziel des Links ist derselbe Schritt wie in der Bio.", "en": "The link destination is the same step the bio names."},
+      "fix": {"de": "Die Startseite durch die Seite ersetzen, die der Satz verspricht.", "en": "Replace the homepage with the page the sentence promises."}
+    },
+    {
+      "id": "highlights",
+      "points": 10,
+      "title": {"de": "Highlights", "en": "Highlights"},
+      "check": {"de": "Die Highlights beantworten die Fragen eines neuen Besuchs: Angebot, Ablauf, Beweis, Einwände.", "en": "Highlights answer a new visitor: offer, process, proof, objections."},
+      "fix": {"de": "Cover benennen wie ein Register, nicht wie eine Stimmung.", "en": "Name covers like a filing tab, not like a mood."}
+    },
+    {
+      "id": "grid-niche",
+      "points": 10,
+      "title": {"de": "Raster, ein Thema", "en": "Grid, one subject"},
+      "check": {"de": "Die letzten neun Beiträge lesen sich als ein Thema.", "en": "The last nine posts read as one subject."},
+      "fix": {"de": "Beiträge, die ein zweites Geschäft zeigen, aus dem Raster nehmen oder in Highlights legen.", "en": "Move posts that show a second business into highlights or off the grid."}
+    },
+    {
+      "id": "grid-mix",
+      "points": 6,
+      "title": {"de": "Formate", "en": "Formats"},
+      "check": {"de": "Im Raster liegen nicht nur Reels oder nur Standbilder.", "en": "The grid is not only Reels or only stills."},
+      "fix": {"de": "Ein zweites Format einplanen, das dasselbe Thema trägt.", "en": "Plan a second format that carries the same subject."}
+    },
+    {
+      "id": "pinned",
+      "points": 8,
+      "title": {"de": "Angeheftet", "en": "Pinned"},
+      "check": {"de": "Angeheftete Beiträge sind noch wahr und noch nützlich.", "en": "Pinned posts are still true and still useful."},
+      "fix": {"de": "Veraltete Preise, Daten und Angebote ablösen.", "en": "Replace stale prices, dates, and offers."}
+    },
+    {
+      "id": "offer-clarity",
+      "points": 10,
+      "title": {"de": "Angebot erkennbar", "en": "Offer a stranger can name"},
+      "check": {"de": "Eine fremde Person kann nach zehn Sekunden sagen, was du verkaufst.", "en": "A stranger can say what you sell after ten seconds."},
+      "fix": {"de": "Das Angebot in Name, Bio und erstes Highlight schreiben. Denselben Satz.", "en": "Put the offer in the name, the bio, and the first highlight. The same sentence."}
+    },
+    {
+      "id": "voice-match",
+      "points": 8,
+      "title": {"de": "Stimme", "en": "Voice"},
+      "check": {"de": "Die Bio klingt wie die Reels, nicht wie eine zweite Person.", "en": "The bio sounds like the Reels, not like a second person."},
+      "fix": {"de": "Sätze aus den Reels in die Bio kürzen, statt einen neuen Ton zu erfinden.", "en": "Shorten lines from the Reels into the bio instead of inventing a new tone."}
+    }
+  ]
+}
