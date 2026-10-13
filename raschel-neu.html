@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Raschel aufräumen</title>
+<!--
+  Diese Seite liegt bewusst ausserhalb von /raschel-rallye/.
+  Ein frueher einmal gespeicherter Service Worker gilt nur fuer
+  diesen Ordner und faengt dort jede Adresse ab, auch eine mit
+  Anhaengsel. Von hier aus kommt man an ihn heran.
+-->
+<style>
+  :root { --papier:#f5f0e6; --gruen:#243f32; --text:#27372c; --linie:#d6cdbd; --rost:#975339; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100dvh; display:flex; align-items:center;
+         justify-content:center; padding:24px; background:var(--papier);
+         color:var(--text); font:17px/1.6 system-ui,-apple-system,sans-serif; }
+  main { width:min(520px,100%); }
+  h1 { font:600 27px/1.2 Georgia,serif; color:var(--gruen); margin:0 0 6px; }
+  .marke { font-size:11px; letter-spacing:3px; text-transform:uppercase;
+           color:#8a7a52; margin-bottom:14px; }
+  ul { list-style:none; margin:22px 0; padding:0; }
+  li { padding:11px 0; border-bottom:1px solid var(--linie); display:flex;
+       align-items:center; gap:12px; }
+  li:last-child { border-bottom:0; }
+  .zeichen { width:22px; flex-shrink:0; text-align:center; font-size:17px; }
+  .laeuft { color:#8a7a52; }
+  .fertig { color:var(--gruen); }
+  .schief { color:var(--rost); }
+  a.knopf, button { display:block; width:100%; min-height:52px; margin-top:8px;
+         border:0; border-radius:6px; background:var(--gruen); color:#fff;
+         font:500 17px system-ui,-apple-system,sans-serif; text-align:center;
+         line-height:52px; text-decoration:none; cursor:pointer; }
+  a.knopf[hidden] { display:none; }
+  .note { font-size:14px; color:#5d6b5f; margin-top:18px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="marke">Waldmomente</div>
+  <h1>Raschel aufräumen</h1>
+  <p>Diese Seite entfernt alles, was dein Gerät von früheren Fassungen
+     der Rallye behalten hat, und setzt den Spielstand zurück.</p>
+
+  <ul id="liste">
+    <li><span class="zeichen laeuft" data-z="sw">·</span><span>Alte Hintergrundprogramme abmelden</span></li>
+    <li><span class="zeichen laeuft" data-z="cache">·</span><span>Zwischenspeicher leeren</span></li>
+    <li><span class="zeichen laeuft" data-z="stand">·</span><span>Spielstand zurücksetzen</span></li>
+  </ul>
+
+  <p id="ergebnis" class="note">Läuft …</p>
+  <a class="knopf" id="weiter" href="raschel-rallye/" hidden>Raschel öffnen</a>
+  <p class="note">Danach hält sich die Rallye von selbst aktuell.
+     Diese Seite brauchst du nur dieses eine Mal.</p>
+</main>
+
+<script>
+"use strict";
+(async () => {
+  const setze = (name, zeichen, art) => {
+    const e = document.querySelector('[data-z="' + name + '"]');
+    e.textContent = zeichen;
+    e.className = "zeichen " + art;
+  };
+  const meldungen = [];
+
+  /* 1. Jedes Hintergrundprogramm dieser Domain abmelden */
+  try {
+    if ("serviceWorker" in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+      setze("sw", "✓", "fertig");
+      meldungen.push(regs.length + " abgemeldet");
+    } else {
+      setze("sw", "–", "fertig");
+      meldungen.push("keine vorhanden");
+    }
+  } catch (e) { setze("sw", "!", "schief"); meldungen.push("Abmelden ging nicht"); }
+
+  /* 2. Jeden Zwischenspeicher dieser Domain loeschen */
+  try {
+    if ("caches" in window) {
+      const namen = await caches.keys();
+      await Promise.all(namen.map(n => caches.delete(n)));
+      setze("cache", "✓", "fertig");
+      meldungen.push(namen.length + " Speicher geleert");
+    } else {
+      setze("cache", "–", "fertig");
+    }
+  } catch (e) { setze("cache", "!", "schief"); meldungen.push("Speicher blieb"); }
+
+  /* 3. Spielstand weg */
+  try {
+    localStorage.removeItem("raschel-rally-v1");
+    sessionStorage.removeItem("raschel-frisch");
+    setze("stand", "✓", "fertig");
+    meldungen.push("Spielstand auf null");
+  } catch (e) { setze("stand", "!", "schief"); meldungen.push("Spielstand blieb"); }
+
+  document.getElementById("ergebnis").textContent = meldungen.join(" · ") + ".";
+  const weiter = document.getElementById("weiter");
+  /* Das Anhaengsel sorgt dafuer, dass auch die Seite selbst frisch
+     geholt wird und nicht aus dem Zwischenspeicher kommt. */
+  weiter.href = "raschel-rallye/?frisch=" + Date.now();
+  weiter.hidden = false;
+})();
+</script>
+</body>
+</html>
