@@ -316,7 +316,7 @@
        auf einer alten Fassung haengen, weil der Browser die Seite
        aus seinem Zwischenspeicher nimmt. Bei jeder Aenderung am
        Spiel hochzaehlen. */
-    const SPIEL_VERSION = "2026-10-13-c";
+    const SPIEL_VERSION = "2026-10-13-d";
 
     (async () => {
       let schonGeladen = false;
@@ -341,7 +341,7 @@
        jeder Browser muss sie neu holen. Ohne das zeigt ein Geraet,
        das die Seite schon einmal offen hatte, weiter die alte. Bei
        jedem Austausch hochzaehlen. */
-    const MEDIA_VERSION = "3";
+    const MEDIA_VERSION = "4";
     const media = datei => MEDIA_BASE + datei + "?v=" + MEDIA_VERSION;
 
     const STORAGE_KEY = "raschel-rally-v1";
