@@ -311,6 +311,30 @@
     /* Alles liegt auf waldmomente.me im selben Ordner. Dadurch bleibt das
        Spiel auch dann heil, wenn eine fremde Vorschauadresse verschwindet,
        und ein fehlgeschlagener Download faellt beim Speichern wirklich auf. */
+    /* Steht auf dem Server eine neuere Fassung, laedt die Seite sich
+       einmal selbst neu. Ohne das bleibt ein Geraet beliebig lange
+       auf einer alten Fassung haengen, weil der Browser die Seite
+       aus seinem Zwischenspeicher nimmt. Bei jeder Aenderung am
+       Spiel hochzaehlen. */
+    const SPIEL_VERSION = "2026-10-13-a";
+
+    (async () => {
+      let schonGeladen = false;
+      try { schonGeladen = sessionStorage.getItem("raschel-frisch") === SPIEL_VERSION; }
+      catch (e) { schonGeladen = true; }       /* ohne Speicher kein Neuladen */
+      if (schonGeladen) return;
+      try {
+        const antwort = await fetch(location.pathname + "?stand=" + Date.now(),
+                                    { cache: "reload" });
+        if (!antwort.ok) return;
+        const text = await antwort.text();
+        const treffer = text.match(/SPIEL_VERSION = "([^"]+)"/);
+        if (!treffer || treffer[1] === SPIEL_VERSION) return;
+        sessionStorage.setItem("raschel-frisch", treffer[1]);
+        location.reload();
+      } catch (e) { /* kein Netz, dann eben nicht */ }
+    })();
+
     const MEDIA_BASE = "assets/";
     /* Die Nummer haengt an jeder Bild- und Tondatei. Wird eine Datei
        ausgetauscht, aendert sich mit der Nummer auch die Adresse, und
@@ -1255,10 +1279,13 @@ Digitales Spielmaterial. Es wird kein gedrucktes Produkt verschickt.`;
         }
         entschaerfen();
         state = { solved: 0, phase: "intro" };
+        /* Erst wegwerfen, dann neu schreiben. Schlaegt das Schreiben
+           fehl, ist wenigstens der alte Stand weg. */
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
         saveState();
         closeDialog(parentDialog);
-        if (location.hash === "#spiel") renderGame();
-        else location.hash = "spiel";
+        if (location.hash !== "#spiel") location.hash = "spiel";
+        renderGame();
       };
 
       /* Schliesst jemand den Kasten mittendrin, soll der Knopf beim
