@@ -1,0 +1,244 @@
+{
+  "formulas": [
+    {
+      "id": "costly-miss",
+      "name": {"de": "Der teure Aussetzer", "en": "The Costly Miss"},
+      "template": {"de": "Ich habe {Zahl} verloren, weil {eine konkrete Ursache}.", "en": "I lost {amount} because {one concrete cause}."},
+      "example": {"de": "Ich habe 600 Euro verloren, weil die Anzahlung nicht auf der Rechnung stand.", "en": "I lost 600 euro because the deposit never made it onto the invoice."},
+      "on_screen": {"de": "600 € fehlten", "en": "600 euro missing"},
+      "use_for": {"de": "Ein echter Verlust mit einer Ursache, die man in einem Satz sagen kann.", "en": "A real loss with a cause you can say in one sentence."},
+      "ruined_by": {"de": "Eine runde Fantasiezahl oder drei Ursachen auf einmal.", "en": "A round made-up figure, or three causes at once."},
+      "match": ["i lost \\w+", "ich habe .{3,48} verloren", "kostete mich", "cost me "]
+    },
+    {
+      "id": "quiet-rule",
+      "name": {"de": "Die leise Regel", "en": "The Quiet Rule"},
+      "template": {"de": "Niemand sagt dir, dass {Regel aus der Praxis}.", "en": "Nobody mentions that {rule from the work}."},
+      "example": {"de": "Niemand sagt dir, dass die zweite Mahnung freundlicher klingen muss als die erste.", "en": "Nobody mentions that the second reminder has to sound calmer than the first."},
+      "on_screen": {"de": "2. Mahnung, ruhiger", "en": "2nd reminder, calmer"},
+      "use_for": {"de": "Eine Regel, die Profis kennen und Anfänger nie ausgesprochen hören.", "en": "A rule practitioners know and beginners never hear said out loud."},
+      "ruined_by": {"de": "Eine Platitude, die jeder schon auf einem Poster gelesen hat.", "en": "A platitude everyone has already read on a poster."},
+      "match": ["nobody (?:tells|mentions|says)", "niemand (?:sagt|erzählt|erzaehlt|erwähnt|erwaehnt)", "was niemand"]
+    },
+    {
+      "id": "borrowed-line",
+      "name": {"de": "Der Satz zum Mitnehmen", "en": "The Line to Take"},
+      "template": {"de": "Nimm diesen Satz: {der Satz}.", "en": "Steal this line: {the line}."},
+      "example": {"de": "Nimm diesen Satz: Die Probe hängt bis Freitag, danach berechne ich den Termin.", "en": "Steal this line: The sample stays until Friday, then I bill the session."},
+      "on_screen": {"de": "bis Freitag", "en": "until Friday"},
+      "use_for": {"de": "Ein Satz, den jemand morgen so abschicken kann.", "en": "A sentence someone can send tomorrow as-is."},
+      "ruined_by": {"de": "Ein Satz, der nur in deinem Kopf funktioniert.", "en": "A line that only works inside your own head."},
+      "match": ["steal this", "nimm diesen satz", "nimm dir diesen", "use this line"]
+    },
+    {
+      "id": "counted-tries",
+      "name": {"de": "Nach n Versuchen", "en": "After N Tries"},
+      "template": {"de": "Nach {n} Versuchen habe ich {eine Änderung} gemacht.", "en": "After {n} tries I changed {one thing}."},
+      "example": {"de": "Nach 14 Probearbeiten habe ich die Farbwahl aus dem Angebot gestrichen.", "en": "After 14 test shoots I took color choice out of the quote."},
+      "on_screen": {"de": "14 Proben", "en": "14 test shoots"},
+      "use_for": {"de": "Ein Prozess, dessen Dauer du wirklich gezählt hast.", "en": "A process whose length you actually counted."},
+      "ruined_by": {"de": "Nach vielen Versuchen, ohne Zahl.", "en": "After many tries, with no number."},
+      "match": ["after \\d+", "nach \\d+", "it took me \\d+", "nach (?:drei|vier|fünf|fuenf|sechs|sieben|acht|neun|zehn|zwanzig)"]
+    },
+    {
+      "id": "wrong-default",
+      "name": {"de": "Der übliche Weg", "en": "The Usual Way"},
+      "template": {"de": "Alle machen {X}. Ich habe damit aufgehört, weil {Grund}.", "en": "Everyone does {X}. I stopped, because {reason}."},
+      "example": {"de": "Alle schicken drei Entwürfe. Ich habe damit aufgehört, weil der zweite immer gewonnen hat.", "en": "Everyone sends three drafts. I stopped, because the second one always won."},
+      "on_screen": {"de": "Entwurf 2 gewinnt", "en": "draft 2 wins"},
+      "use_for": {"de": "Eine Gewohnheit der Branche, die du mit einem Grund abgelegt hast.", "en": "An industry habit you dropped, with one reason."},
+      "ruined_by": {"de": "Alle machen es falsch, ohne zu sagen, was du stattdessen tust.", "en": "Everyone is wrong, and you never say what you do instead."},
+      "match": ["everyone (?:does|keeps|says)", "alle machen", "ich habe aufgehört", "ich habe aufgehoert", "i stopped"]
+    },
+    {
+      "id": "single-figure",
+      "name": {"de": "Die eine Zahl", "en": "The Single Figure"},
+      "template": {"de": "{Zahl} {Einheit} {was das bedeutet}.", "en": "{number} {unit} {what it means}."},
+      "example": {"de": "11 Minuten dauert bei uns die Übergabe, nicht die Politur.", "en": "11 minutes is our handover, not the polish."},
+      "on_screen": {"de": "11 Minuten", "en": "11 minutes"},
+      "use_for": {"de": "Eine Zahl, die allein schon die Szene erklärt.", "en": "A number that explains the scene by itself."},
+      "ruined_by": {"de": "Eine Zahl ohne Einheit oder ohne Gegenstand.", "en": "A number with no unit and no object."},
+      "match": ["^\\s*[$€£]?\\d[\\d.,]*\\s+\\S+"]
+    },
+    {
+      "id": "almost-unsaid",
+      "name": {"de": "Fast nicht gesagt", "en": "Almost Unsaid"},
+      "template": {"de": "Fast hätte ich {die unbequeme Sache} weggelassen.", "en": "I almost didn't say {the uncomfortable part}."},
+      "example": {"de": "Fast hätte ich verschwiegen, dass der Rabatt nur für den ersten Standort gilt.", "en": "I almost didn't say the discount applies to the first location only."},
+      "on_screen": {"de": "nur Standort 1", "en": "first location only"},
+      "use_for": {"de": "Ein Detail, das peinlich oder unvorteilhaft ist und trotzdem stimmt.", "en": "A detail that is awkward and still true."},
+      "ruined_by": {"de": "Ein vorgetäuschtes Geheimnis ohne Inhalt.", "en": "A fake secret with nothing inside it."},
+      "match": ["i almost (?:didn't|did not)", "fast hätte ich", "fast haette ich", "beinahe hätte ich", "beinahe haette ich"]
+    },
+    {
+      "id": "other-result",
+      "name": {"de": "Das Ergebnis einer anderen Person", "en": "Someone Else's Result"},
+      "template": {"de": "{Person} hat {Ergebnis} gemacht, nachdem {eine Änderung}.", "en": "{person} got {result} after {one change}."},
+      "example": {"de": "Meine Kundin hat die Warteliste auf 9 Namen gekürzt, nachdem die Samstage dicht waren.", "en": "My client cut the waitlist to 9 names after Saturdays were full."},
+      "on_screen": {"de": "Warteliste: 9", "en": "waitlist: 9"},
+      "use_for": {"de": "Ein Ergebnis, das du belegen kannst und das nicht deins ist.", "en": "A result you can vouch for that is not your own trophy."},
+      "ruined_by": {"de": "Ein Kunde, den es nicht gibt.", "en": "A client who does not exist."},
+      "match": ["my client", "mein kunde", "meine kundin", "eine kundin", "a client of mine"]
+    },
+    {
+      "id": "superlative",
+      "name": {"de": "Das Extrem", "en": "The Extreme"},
+      "template": {"de": "Das {teuerste/langsamste} {Ding} in {Kontext} ist {konkret}.", "en": "The {most expensive/slowest} {thing} in {context} is {concrete}."},
+      "example": {"de": "Der teuerste Fehler in der Werkstatt ist ein Ersatzteil ohne Lagerplatz.", "en": "The most expensive mistake in the shop is a spare part with no shelf."},
+      "on_screen": {"de": "ohne Lagerplatz", "en": "no shelf"},
+      "use_for": {"de": "Ein Extrem, das du an einem Gegenstand festmachst.", "en": "An extreme you pin to one object."},
+      "ruined_by": {"de": "Das Beste ever, ohne Gegenstand.", "en": "The best ever, with no object."},
+      "match": ["the (?:hardest|most expensive|cheapest|worst|slowest)", "der (?:teuerste|schwerste|langsamste)", "das (?:teuerste|härteste|haerteste)"]
+    },
+    {
+      "id": "time-box",
+      "name": {"de": "Im Zeitfenster", "en": "Inside the Clock"},
+      "template": {"de": "In {n} Sekunden {eine Handlung}.", "en": "In {n} seconds {one action}."},
+      "example": {"de": "In 8 Sekunden sieht die Empfangskraft, ob der Termin bezahlt ist.", "en": "In 8 seconds the front desk can see whether the visit is paid."},
+      "on_screen": {"de": "8 Sekunden", "en": "8 seconds"},
+      "use_for": {"de": "Ein Handgriff, dessen Dauer du kennst.", "en": "A move whose duration you know."},
+      "ruined_by": {"de": "In wenigen Sekunden, ohne Zahl.", "en": "In a few seconds, with no number."},
+      "match": ["in \\d+ seconds", "in \\d+ sekunden", "in (?:drei|fünf|fuenf|zehn) sekunden"]
+    },
+    {
+      "id": "before-after",
+      "name": {"de": "Vorher, jetzt", "en": "Before, Now"},
+      "template": {"de": "Vorher {alter Zustand}. Jetzt {neuer Zustand}.", "en": "I used to {old}. Now I {new}."},
+      "example": {"de": "Vorher lag die Preisliste im Ordner. Jetzt steht sie an der Theke.", "en": "I used to keep the price list in a binder. Now I keep it on the counter."},
+      "on_screen": {"de": "Theke, nicht Ordner", "en": "counter, not binder"},
+      "use_for": {"de": "Eine Änderung, die man filmen kann.", "en": "A change you can film."},
+      "ruined_by": {"de": "Vorher chaotisch, jetzt erfolgreich, ohne Bild.", "en": "Before messy, now successful, with no picture."},
+      "match": ["before this", "i used to .{0,60} now i", "vorher .{0,48} jetzt"]
+    },
+    {
+      "id": "named-objection",
+      "name": {"de": "Der Einwand", "en": "The Objection"},
+      "template": {"de": "Wenn du glaubst, {Einwand}, dann {die Einschränkung}.", "en": "If you think {objection}, {the catch}."},
+      "example": {"de": "Wenn du glaubst, eine Pauschale sei einfacher, fehlt dir der Satz zur Nacharbeit.", "en": "If you think a flat fee is simpler, you are missing the line about revisions."},
+      "on_screen": {"de": "Nacharbeit fehlt", "en": "revisions missing"},
+      "use_for": {"de": "Ein Einwand, den du diese Woche wirklich gehört hast.", "en": "An objection you actually heard this week."},
+      "ruined_by": {"de": "Ein Strohmann, den niemand sagt.", "en": "A straw man nobody says."},
+      "match": ["if you think", "wenn du glaubst", "falls du denkst"]
+    },
+    {
+      "id": "exact-receipt",
+      "name": {"de": "Die Zeile aus dem Beleg", "en": "The Line on the Slip"},
+      "template": {"de": "Hier ist die Zeile: {Zitat}.", "en": "Here is the line: {quote}."},
+      "example": {"de": "Hier ist die Zeile: Material am Abholtag, nicht bei Auftragserteilung.", "en": "Here is the line: materials on pickup day, not when the job is booked."},
+      "on_screen": {"de": "am Abholtag", "en": "on pickup day"},
+      "use_for": {"de": "Ein Satz aus einem echten Dokument, den du vorlesen darfst.", "en": "A sentence from a real document you are allowed to read aloud."},
+      "ruined_by": {"de": "Eine Paraphrase, die du als Zitat ausgibst.", "en": "A paraphrase you present as a quote."},
+      "match": ["the exact (?:line|clause|step|sentence|wording)", "der genaue satz", "die genaue zeile", "hier ist die zeile", "here is the line"]
+    },
+    {
+      "id": "waiting-cost",
+      "name": {"de": "Was Warten kostet", "en": "What Waiting Costs"},
+      "template": {"de": "Jede Woche {Warten} kostet {konkreter Preis}.", "en": "Every week you wait costs {a concrete price}."},
+      "example": {"de": "Jede Woche warten kostet uns einen Samstagsplatz, den wir nicht nachbesetzen.", "en": "Every week you wait costs us one Saturday chair we do not refill."},
+      "on_screen": {"de": "1 Samstag weg", "en": "1 Saturday gone"},
+      "use_for": {"de": "Ein Aufschub mit einem Preis, den du benennen kannst.", "en": "A delay with a price you can name."},
+      "ruined_by": {"de": "Warten ist teuer, ohne zu sagen, was weg ist.", "en": "Waiting is expensive, and you never say what is gone."},
+      "match": ["every week you wait", "jede woche warten", "jeden monat kostet", "each month this costs"]
+    },
+    {
+      "id": "feeling-vs-fact",
+      "name": {"de": "Gefühl gegen Fakt", "en": "Feeling Against Fact"},
+      "template": {"de": "{A} ist ein Gefühl. {B} ist {ein prüfbares Ding}.", "en": "{A} is a feeling. {B} is {a checkable thing}."},
+      "example": {"de": "Fertig ist ein Gefühl. Unterschrieben ist ein PDF mit Datum.", "en": "Done is a feeling. Signed is a PDF with a date."},
+      "on_screen": {"de": "PDF mit Datum", "en": "PDF with a date"},
+      "use_for": {"de": "Zwei Wörter, von denen nur eines in der Ablage landet.", "en": "Two words, and only one of them lands in the filing cabinet."},
+      "ruined_by": {"de": "Zwei Abstrakta ohne Gegenstand.", "en": "Two abstractions and no object."},
+      "match": ["is a feeling", "ist ein gefühl", "ist ein gefuehl", "is a calendar"]
+    },
+    {
+      "id": "stake-question",
+      "name": {"de": "Die Frage mit Einsatz", "en": "The Question With a Stake"},
+      "template": {"de": "Was passiert, wenn {konkretes Ereignis}?", "en": "What happens when {concrete event}?"},
+      "example": {"de": "Was passiert, wenn die Lieferung Donnerstag kommt und der Termin Freitag ist?", "en": "What happens when the delivery lands Thursday and the job is Friday?"},
+      "on_screen": {"de": "Do → Fr", "en": "Thu → Fri"},
+      "use_for": {"de": "Eine Frage, deren Antwort du im selben Reel gibst.", "en": "A question you answer inside the same reel."},
+      "ruined_by": {"de": "Eine Frage, die offen bleibt, weil dir die Antwort fehlt.", "en": "A question you leave open because you do not have the answer."},
+      "match": ["what happens when", "was passiert wenn", "was passiert, wenn"]
+    },
+    {
+      "id": "bad-advice",
+      "name": {"de": "Der schlechte Rat", "en": "The Bad Advice"},
+      "template": {"de": "Der Rat, {X} zu tun, ist der Grund für {Y}.", "en": "The advice to {X} is why {Y} happens."},
+      "example": {"de": "Der Ratschlag, immer erreichbar zu sein, ist der Grund für die Abendtermine.", "en": "The advice to stay reachable is why the evening slots exist."},
+      "on_screen": {"de": "Abendtermine", "en": "evening slots"},
+      "use_for": {"de": "Ein Rat, den du selbst befolgt hast und dessen Folge du kennst.", "en": "Advice you followed, and a consequence you can point at."},
+      "ruined_by": {"de": "Ein Rat, den du nur lächerlich machen willst.", "en": "Advice you only want to mock."},
+      "match": ["the advice to", "der ratschlag", "that tip is why", "dieser tipp ist der grund"]
+    },
+    {
+      "id": "audience-filter",
+      "name": {"de": "Für genau diese Leute", "en": "For These People"},
+      "template": {"de": "Wenn du {konkrete Tätigkeit}, gehört {dieses Detail} in {diesen Ort}.", "en": "If you {concrete job}, this {detail} belongs in {place}."},
+      "example": {"de": "Wenn du Rechnungen schreibst, gehört die Frist in die Betreffzeile, nicht in den Anhang.", "en": "If you invoice clients, the due date belongs in the subject line, not the attachment."},
+      "on_screen": {"de": "Frist in die Betreffzeile", "en": "due date in the subject"},
+      "use_for": {"de": "Ein Zuschnitt, der Unbeteiligte in der ersten Sekunde verliert und die Richtigen hält.", "en": "A cut that loses the wrong people in the first second."},
+      "ruined_by": {"de": "Wenn du erfolgreich sein willst.", "en": "If you want to be successful."},
+      "match": ["if you invoice", "if you sell", "wenn du rechnungen", "wenn du verkaufst"]
+    },
+    {
+      "id": "day-found-out",
+      "name": {"de": "Der Tag, an dem es klar wurde", "en": "The Day It Became Clear"},
+      "template": {"de": "An dem Tag, als {Ereignis}, habe ich {Änderung} gemacht.", "en": "The day I {event}, I {change}."},
+      "example": {"de": "An dem Tag, als die Kasse um 19 Uhr nicht aufging, habe ich die Schichtliste an die Tür gehängt.", "en": "The day I could not open the till at 7, I put the shift list on the door."},
+      "on_screen": {"de": "Schichtliste an der Tür", "en": "shift list on the door"},
+      "use_for": {"de": "Ein Tag, den du noch vor dir siehst.", "en": "A day you can still see."},
+      "ruined_by": {"de": "Eines Tages, ohne Ort und ohne Uhrzeit.", "en": "One day, with no place and no time."},
+      "match": ["the day i", "der tag, an dem ich", "an dem tag, als"]
+    },
+    {
+      "id": "tool-swap",
+      "name": {"de": "Das ausgetauschte Werkzeug", "en": "The Swapped Tool"},
+      "template": {"de": "Ich habe {A} durch {B} ersetzt. Danach {beobachtbare Folge}.", "en": "I replaced {A} with {B}. After that, {observable result}."},
+      "example": {"de": "Ich habe die WhatsApp-Liste durch eine Tafel an der Tür ersetzt. Die Doppelbuchungen waren weg.", "en": "I replaced the chat list with a board on the door. The double bookings stopped."},
+      "on_screen": {"de": "Tafel statt Chat", "en": "board, not chat"},
+      "use_for": {"de": "Ein Tausch, den man im Bild zeigen kann.", "en": "A swap you can show on camera."},
+      "ruined_by": {"de": "Ich habe mein Mindset getauscht.", "en": "I replaced my mindset."},
+      "match": ["i replaced", "ich habe .{3,40} ersetzt", "swapped .{3,40} for"]
+    },
+    {
+      "id": "price-of-free",
+      "name": {"de": "Was kostenlos gekostet hat", "en": "What Free Cost"},
+      "template": {"de": "Das kostenlose {Ding} hat mich {Preis} gekostet.", "en": "The free {thing} cost me {price}."},
+      "example": {"de": "Das kostenlose Muster hat mich einen Samstag gekostet, weil niemand es abgeholt hat.", "en": "The free sample cost me a Saturday because nobody picked it up."},
+      "on_screen": {"de": "Muster, Samstag weg", "en": "sample, Saturday gone"},
+      "use_for": {"de": "Ein Geschenk oder eine Gratisprobe mit einer echten Folgekosten.", "en": "A freebie with a real downstream cost."},
+      "ruined_by": {"de": "Nichts ist umsonst, als Lebensweisheit.", "en": "Nothing is free, offered as a proverb."},
+      "match": ["the free .{3,40} cost", "das kostenlose .{3,48} gekostet", "free version cost"]
+    },
+    {
+      "id": "closing-number",
+      "name": {"de": "Die Zahl am Ende", "en": "The Number at the End"},
+      "template": {"de": "{Szene}. Und die Zahl war {Zahl}.", "en": "{scene}. And the number was {number}."},
+      "example": {"de": "Wir haben die offenen Lieferscheine gezählt. Und die Zahl war 23.", "en": "We counted the open delivery notes. And the number was 23."},
+      "on_screen": {"de": "23 offen", "en": "23 open"},
+      "use_for": {"de": "Eine Zählung, deren Ergebnis erst im letzten Satz kommt.", "en": "A count whose result arrives in the last clause."},
+      "ruined_by": {"de": "Eine Zahl, die du schon im ersten Wort verraten hast.", "en": "A number you already spent in the first word."},
+      "match": ["and the number was", "und die zahl war", "the figure was"]
+    },
+    {
+      "id": "local-constraint",
+      "name": {"de": "Die örtliche Grenze", "en": "The Local Constraint"},
+      "template": {"de": "In {dieser Nische oder Stadt} gilt {eine Grenze}.", "en": "In {this niche or city} the limit is {concrete}."},
+      "example": {"de": "In dieser Nische schließen die Lieferanten um 15 Uhr, nicht um 18.", "en": "In this niche the suppliers close at 3, not at 6."},
+      "on_screen": {"de": "zu um 15", "en": "closed at 3"},
+      "use_for": {"de": "Eine Grenze, die nur an deinem Ort oder in deinem Handwerk gilt.", "en": "A limit that is true in your place or your trade."},
+      "ruined_by": {"de": "Überall auf der Welt, ohne Ort.", "en": "Everywhere in the world, with no place."},
+      "match": ["in my city", "in meiner stadt", "in this niche", "in dieser nische"]
+    },
+    {
+      "id": "one-word-change",
+      "name": {"de": "Ein Wort anders", "en": "One Word Different"},
+      "template": {"de": "Ein einziges Wort, {alt} statt {neu}, hat {Folge}.", "en": "One word, {old} instead of {new}, changed {result}."},
+      "example": {"de": "Ein einziges Wort, Abholung statt Fertigstellung, hat die Streitfälle halbiert.", "en": "One word, pickup instead of completion, cut the disputes in half."},
+      "on_screen": {"de": "Abholung", "en": "pickup"},
+      "use_for": {"de": "Ein Wortpaar, das du nebeneinander zeigen kannst.", "en": "A pair of words you can put on screen side by side."},
+      "ruined_by": {"de": "Ich habe meine Sprache geändert, ohne die beiden Wörter zu nennen.", "en": "I changed my language and never name the two words."},
+      "match": ["one word", "ein einziges wort", "changed one word", "nur ein wort"]
+    }
+  ]
+}
