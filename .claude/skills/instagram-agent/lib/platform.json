@@ -1,0 +1,18 @@
+{
+  "checked": "2026-10-09",
+  "caption_max": 2200,
+  "hashtag_max": 5,
+  "feed_preview_chars": 125,
+  "bio_max": 150,
+  "mention_max": 20,
+  "carousel_ratio": "4:5",
+  "carousel_pixels": "1080x1350",
+  "notes": {
+    "caption_max": "Meta developer docs state 2200 characters for a caption.",
+    "hashtag_max": "Instagram capped posts and Reels at 5 hashtags on 18 December 2025. The API reference still mentions 30. The app limit is 5.",
+    "feed_preview_chars": "Instagram does not publish the exact feed cut. 125 is the usual desktop window before ... more. Treat it as a guide.",
+    "bio_max": "Profile bio is 150 characters.",
+    "mention_max": "Meta developer docs state 20 @ mentions in a caption.",
+    "stale": "If Instagram disagrees with this file, Instagram is right. Update the numbers and the checked date."
+  }
+}
