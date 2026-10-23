@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Welcher Waldtyp bist du? | Waldmomente</title>
+<meta name="description" content="Acht Fragen, ein Ergebnis und ein Auftrag für deinen nächsten Spaziergang. Kostenlos und ohne Anmeldung.">
+<meta name="theme-color" content="#2D4A35">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand:#F5F2EC; --green:#2D4A35; --brown:#8B6847; --cream:#FDFAF5;
+    --dark:#0f1a10; --text:#2D3A20; --gold:#C8A96E; --gold-dark:#A07840;
+    --linie:rgba(139,104,71,.22);
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    margin:0; background:var(--sand); color:var(--text);
+    font:400 17px/1.7 'Jost',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .huelle { width:min(680px,100%); margin:0 auto; padding:2rem 1.3rem 4rem; }
+
+  .kopf { text-align:center; padding:1.4rem 0 2.2rem; }
+  .marke {
+    display:inline-block; font-size:.58rem; letter-spacing:.42em;
+    text-transform:uppercase; color:var(--gold-dark); text-decoration:none;
+  }
+  h1 {
+    font-family:'Cormorant Garamond',Georgia,serif; font-style:italic;
+    font-weight:500; font-size:clamp(2rem,6vw,2.9rem); line-height:1.15;
+    color:var(--green); margin:1.1rem 0 .7rem;
+  }
+  .unter { font-size:.98rem; line-height:1.75; color:var(--text); opacity:.85; margin:0; }
+
+  /* Fortschritt */
+  .balken { height:2px; background:var(--linie); margin:0 0 2rem; }
+  .balken span { display:block; height:2px; background:var(--gold-dark); width:0; transition:width .45s cubic-bezier(.3,.7,.3,1); }
+  .zaehler {
+    font-size:.56rem; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--gold-dark); text-align:center; margin:0 0 .8rem;
+  }
+
+  /* Frage */
+  .frage { background:var(--cream); border:1px solid var(--linie); padding:2rem 1.6rem 1.6rem; }
+  .frage h2 {
+    font-family:'Cormorant Garamond',Georgia,serif; font-style:italic;
+    font-weight:500; font-size:clamp(1.4rem,4.4vw,1.85rem); line-height:1.25;
+    color:var(--green); margin:0 0 1.5rem;
+  }
+  .wahl { display:flex; flex-direction:column; gap:.7rem; }
+  .wahl button {
+    display:block; width:100%; text-align:left; cursor:pointer;
+    font:400 1rem/1.55 'Jost',sans-serif; color:var(--text);
+    background:#fff; border:1px solid var(--linie); border-radius:2px;
+    padding:1rem 1.1rem;
+    transition:border-color .25s, background .25s, transform .25s;
+  }
+  .wahl button:hover, .wahl button:focus-visible {
+    border-color:var(--gold-dark); background:#fffdf8; transform:translateX(3px);
+    outline:none;
+  }
+
+  .zurueck {
+    display:inline-block; margin-top:1.3rem; background:none; border:0; cursor:pointer;
+    font:400 .68rem/1 'Jost',sans-serif; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--brown); opacity:.7; padding:.4rem 0;
+  }
+  .zurueck:hover { opacity:1; }
+
+  /* Ergebnis */
+  .ergebnis { background:var(--cream); border:1px solid var(--linie); padding:2.4rem 1.7rem 2rem; text-align:center; }
+  .ergebnis .kicker { font-size:.56rem; letter-spacing:.4em; text-transform:uppercase; color:var(--gold-dark); display:block; margin-bottom:1rem; }
+  .ergebnis h2 {
+    font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-weight:600;
+    font-size:clamp(2.1rem,7vw,3.1rem); line-height:1.1; color:var(--green); margin:0 0 1rem;
+  }
+  .ergebnis .satz { font-size:1.02rem; line-height:1.8; margin:0 0 1.6rem; }
+  .auftrag {
+    text-align:left; border-left:3px solid var(--gold); background:#fffdf8;
+    padding:1.2rem 1.3rem; margin:0 0 1.8rem;
+  }
+  .auftrag .titel {
+    font-size:.58rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--gold-dark); display:block; margin-bottom:.55rem;
+  }
+  .auftrag p { margin:0; font-size:1rem; line-height:1.75; }
+
+  .tipp { text-align:left; border-top:1px solid var(--linie); padding-top:1.6rem; margin-top:.4rem; }
+  .tipp h3 {
+    font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-weight:500;
+    font-size:1.4rem; color:var(--green); margin:0 0 .6rem;
+  }
+  .tipp p { margin:0 0 1rem; font-size:.97rem; line-height:1.75; }
+
+  .knopf {
+    display:inline-flex; align-items:center; justify-content:center; width:100%;
+    min-height:52px; padding:.9rem 1.4rem; border:0; cursor:pointer;
+    font:500 .68rem/1 'Jost',sans-serif; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--cream); background:var(--green); text-decoration:none;
+    transition:background .3s;
+  }
+  .knopf:hover { background:var(--dark); }
+  .knopf { text-align:center; }
+  .knopf--leise { background:transparent; color:var(--green); border:1px solid var(--linie); }
+  .knopf--leise:hover { background:#fff; border-color:var(--gold-dark); }
+
+  /* Anmeldung */
+  .post { background:var(--green); color:var(--cream); padding:2rem 1.7rem; margin-top:1.4rem; }
+  .post .kicker { font-size:.56rem; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:.8rem; }
+  .post h3 {
+    font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-weight:500;
+    font-size:1.6rem; line-height:1.25; margin:0 0 .7rem; color:var(--cream);
+  }
+  .post p { margin:0 0 1.2rem; font-size:.96rem; line-height:1.7; color:rgba(253,250,245,.86); }
+  .post input {
+    width:100%; padding:.9rem 1rem; margin-bottom:.7rem; border:1px solid rgba(253,250,245,.3);
+    background:rgba(253,250,245,.08); color:var(--cream);
+    font:400 1rem 'Jost',sans-serif; border-radius:2px;
+  }
+  .post input::placeholder { color:rgba(253,250,245,.5); }
+  .post input:focus { outline:none; border-color:var(--gold); }
+  .post button {
+    width:100%; min-height:52px; border:0; cursor:pointer; background:var(--gold);
+    color:var(--dark); font:500 .68rem/1 'Jost',sans-serif; letter-spacing:.24em;
+    text-transform:uppercase; transition:background .3s;
+  }
+  .post button:hover { background:var(--gold-light,#E8D5A3); }
+  .post .fein { font-size:.74rem; line-height:1.6; color:rgba(253,250,245,.6); margin:.9rem 0 0; }
+  .post .fein a { color:rgba(253,250,245,.8); }
+
+  .fuss { text-align:center; margin-top:2.6rem; font-size:.8rem; color:var(--brown); opacity:.75; }
+  .fuss a { color:var(--brown); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .balken span, .wahl button { transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="huelle">
+
+  <header class="kopf">
+    <a class="marke" href="/">Waldmomente</a>
+    <h1>Welcher Waldtyp bist du?</h1>
+    <p class="unter">Acht Fragen. Am Ende weißt du, worauf dein Wald dich zuerst anspricht, und bekommst einen Auftrag für deinen nächsten Spaziergang.</p>
+  </header>
+
+  <p class="zaehler" id="zaehler">Frage 1 von 8</p>
+  <div class="balken"><span id="balken"></span></div>
+
+  <main id="buehne"></main>
+
+  <p class="fuss">
+    Kostenlos und ohne Anmeldung. <a href="/">Zurück zu Waldmomente</a>
+  </p>
+
+</div>
+
+<iframe name="wt-sink" title="Formularziel" style="display:none" aria-hidden="true"></iframe>
+
+<script>
+"use strict";
+(function () {
+
+  /* Die Fragen. Jede Antwort zeigt auf einen der vier Typen:
+     h = Haende, o = Ohren, b = Blick nach oben, w = Weitergehen.
+     Bewusst keine Fragen nach Befinden, nur nach Verhalten draussen. */
+  var FRAGEN = [
+    { text: "Du kommst an einen umgestürzten Baum.", antworten: [
+      ["Du fährst mit der Hand über die Rinde.", "h"],
+      ["Du bleibst stehen und horchst, ob darin etwas raschelt.", "o"],
+      ["Du schaust in die Lücke, die er oben hinterlassen hat.", "b"],
+      ["Du steigst drüber und gehst weiter.", "w"]
+    ]},
+    { text: "Es fängt an zu regnen.", antworten: [
+      ["Du hältst die Hand auf.", "h"],
+      ["Du hörst zu, wie es auf die Blätter trifft.", "o"],
+      ["Du schaust, wo es durch die Kronen kommt.", "b"],
+      ["Du gehst ein Stück schneller.", "w"]
+    ]},
+    { text: "Jemand fragt dich, wie der Wald heute war.", antworten: [
+      ["„Der Boden war ganz weich.“", "h"],
+      ["„Es war ungewöhnlich still.“", "o"],
+      ["„Das Licht war anders als sonst.“", "b"],
+      ["„Ich bin weit gekommen.“", "w"]
+    ]},
+    { text: "Vor dir liegt eine Gabelung. Links ist der Weg schmaler.", antworten: [
+      ["Links. Am schmalen Rand wächst mehr.", "h"],
+      ["Du horchst kurz in beide Richtungen.", "o"],
+      ["Links. Da sieht man mehr Himmel.", "b"],
+      ["Rechts. Da kommt man besser durch.", "w"]
+    ]},
+    { text: "Was nimmst du am ehesten mit nach Hause?", antworten: [
+      ["Einen Zapfen oder ein Blatt in der Jackentasche.", "h"],
+      ["Ein Geräusch, das du nachmachen kannst.", "o"],
+      ["Ein Bild von etwas weit oben.", "b"],
+      ["Müde Beine.", "w"]
+    ]},
+    { text: "Du hast genau zwanzig Minuten.", antworten: [
+      ["Du suchst dir eine Stelle und schaust genau hin.", "h"],
+      ["Du setzt dich hin und bist still.", "o"],
+      ["Du suchst den Platz mit der besten Sicht nach oben.", "b"],
+      ["Du gehst eine schnelle Runde.", "w"]
+    ]},
+    { text: "Ein Kind fragt: „Was ist das für ein Baum?“", antworten: [
+      ["Du lässt es die Rinde anfassen und vergleichen.", "h"],
+      ["Du fragst, wie er klingt, wenn der Wind geht.", "o"],
+      ["Ihr schaut gemeinsam hinauf zur Krone.", "b"],
+      ["Du sagst den Namen und geht weiter.", "w"]
+    ]},
+    { text: "Wann war ein Waldspaziergang für dich gelungen?", antworten: [
+      ["Wenn du etwas in der Hand hattest.", "h"],
+      ["Wenn es irgendwann ganz still war.", "o"],
+      ["Wenn du etwas gesehen hast, das du sonst übersiehst.", "b"],
+      ["Wenn der Kopf unterwegs leichter geworden ist.", "w"]
+    ]}
+  ];
+
+  var TYPEN = {
+    h: {
+      name: "Anfassen",
+      satz: "Du erkennst den Wald mit den Händen. Rinde, Moos, nasses Laub: Was du anfassen kannst, bleibt dir im Gedächtnis. Deshalb kommst du selten mit leeren Taschen nach Hause.",
+      auftrag: "Sammle auf deiner nächsten Runde drei Dinge, die sich völlig unterschiedlich anfühlen. Leg sie nebeneinander und beschreibe jedes mit einem einzigen Wort. Dann leg sie zurück.",
+      tippTitel: "Waldmomente auf der Spur",
+      tippText: "Zwölf Beobachtungsaufgaben für deine eigene Runde. Mehrere davon gehen genau so: hinsehen, anfassen, vergleichen.",
+      tippLink: "https://payhip.com/b/nNLAI",
+      tippKnopf: "Auf der Spur ansehen · 7,90 €"
+    },
+    o: {
+      name: "Zuhören",
+      satz: "Du bleibst stehen, wenn es still wird. Während andere weitergehen, merkst du, dass gerade kein Vogel singt. Der Wald erzählt dir am meisten, wenn du nichts tust.",
+      auftrag: "Bleib auf deiner nächsten Runde einmal eine volle Minute stehen und zähle an den Fingern, wie viele verschiedene Arten von Geräuschen du unterscheiden kannst. Wiederholt sich eines, zählt es nicht noch einmal.",
+      tippTitel: "Waldmomente auf der Spur",
+      tippText: "Zwölf Beobachtungsaufgaben, bei denen Stehenbleiben keine Pause ist, sondern die Aufgabe.",
+      tippLink: "https://payhip.com/b/nNLAI",
+      tippKnopf: "Auf der Spur ansehen · 7,90 €"
+    },
+    b: {
+      name: "Hinaufschauen",
+      satz: "Dein Blick geht nach oben. Kronen, Lücken, Licht zwischen den Ästen. Du siehst im Wald Dinge, an denen die meisten vorbeilaufen, weil sie auf den Weg schauen.",
+      auftrag: "Such dir auf deiner nächsten Runde einen Baum und schau am Stamm hinauf, langsam, bis ganz nach oben. Dann beschreib die Form seines Daches, als müsstest du sie jemandem am Telefon erklären.",
+      tippTitel: "Waldmomente auf der Spur",
+      tippText: "Zwölf Beobachtungsaufgaben zum Mitnehmen. Genau für Leute, die ohnehin genauer hinschauen.",
+      tippLink: "https://payhip.com/b/nNLAI",
+      tippKnopf: "Auf der Spur ansehen · 7,90 €"
+    },
+    w: {
+      name: "Weitergehen",
+      satz: "Du denkst im Schritt. Stehenbleiben ist nicht dein Weg in den Wald, das Gehen ist es. Nach einer Stunde ist im Kopf aufgeräumt, und das ist ein guter Grund rauszugehen.",
+      auftrag: "Nimm dir für die nächste Runde einen Abzweig vor, den du noch nie gegangen bist. Nicht langsamer gehen, nur woanders.",
+      tippTitel: "Waldmomente auf der Spur",
+      tippText: "Zwölf Beobachtungsaufgaben für unterwegs. Du musst dafür nicht stehen bleiben, nur den Blick kurz woanders hinlenken.",
+      tippLink: "https://payhip.com/b/nNLAI",
+      tippKnopf: "Auf der Spur ansehen · 7,90 €"
+    }
+  };
+
+  var buehne = document.getElementById("buehne");
+  var balken = document.getElementById("balken");
+  var zaehler = document.getElementById("zaehler");
+
+  var stand = 0;
+  var antworten = [];
+
+  function escape(t) {
+    return String(t).replace(/[&<>"']/g, function (z) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[z];
+    });
+  }
+
+  function fortschritt(anteil, text) {
+    balken.style.width = Math.round(anteil * 100) + "%";
+    zaehler.textContent = text;
+  }
+
+  function zeigeFrage() {
+    var f = FRAGEN[stand];
+    fortschritt(stand / FRAGEN.length, "Frage " + (stand + 1) + " von " + FRAGEN.length);
+
+    var knoepfe = f.antworten.map(function (a, i) {
+      return '<button type="button" data-wahl="' + a[1] + '">' + escape(a[0]) + "</button>";
+    }).join("");
+
+    buehne.innerHTML =
+      '<section class="frage">' +
+        "<h2>" + escape(f.text) + "</h2>" +
+        '<div class="wahl">' + knoepfe + "</div>" +
+      "</section>" +
+      (stand > 0 ? '<button class="zurueck" type="button" id="zurueck">← eine Frage zurück</button>' : "");
+
+    Array.prototype.forEach.call(buehne.querySelectorAll("[data-wahl]"), function (b) {
+      b.addEventListener("click", function () {
+        antworten[stand] = b.getAttribute("data-wahl");
+        stand++;
+        if (stand >= FRAGEN.length) zeigeErgebnis();
+        else zeigeFrage();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    var zur = document.getElementById("zurueck");
+    if (zur) zur.addEventListener("click", function () {
+      stand--; zeigeFrage();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  function auswerten() {
+    var punkte = { h: 0, o: 0, b: 0, w: 0 };
+    antworten.forEach(function (a) { punkte[a]++; });
+    /* Bei Gleichstand entscheidet die letzte Frage: die zaehlt am
+       ehesten, weil sie nach dem eigenen Massstab fragt. */
+    var best = Object.keys(punkte).sort(function (x, y) {
+      if (punkte[y] !== punkte[x]) return punkte[y] - punkte[x];
+      if (antworten[antworten.length - 1] === x) return -1;
+      if (antworten[antworten.length - 1] === y) return 1;
+      return 0;
+    })[0];
+    return best;
+  }
+
+  function zeigeErgebnis() {
+    var t = TYPEN[auswerten()];
+    fortschritt(1, "Dein Ergebnis");
+
+    buehne.innerHTML =
+      '<section class="ergebnis">' +
+        '<span class="kicker">Dein Waldtyp</span>' +
+        "<h2>" + escape(t.name) + "</h2>" +
+        '<p class="satz">' + escape(t.satz) + "</p>" +
+        '<div class="auftrag">' +
+          '<span class="titel">Dein Auftrag für den nächsten Spaziergang</span>' +
+          "<p>" + escape(t.auftrag) + "</p>" +
+        "</div>" +
+        '<div class="tipp">' +
+          "<h3>" + escape(t.tippTitel) + "</h3>" +
+          "<p>" + escape(t.tippText) + "</p>" +
+          '<a class="knopf" href="' + t.tippLink + '" target="_blank" rel="noopener">' + escape(t.tippKnopf) + "</a>" +
+        "</div>" +
+      "</section>" +
+
+      '<section class="post" id="post">' +
+        '<div id="post-form">' +
+          '<span class="kicker">Kostenlos dazu</span>' +
+          "<h3>Waldmomente to go</h3>" +
+          "<p>Vier kleine Waldideen als PDF: Waldbingo, Waldmemory, Waldmandala und Waldsprüche. Zum Ausdrucken oder aufs Handy laden.</p>" +
+          '<form id="wt-form" action="https://assets.mailerlite.com/jsonp/2587270/forms/198406643568870499/subscribe" method="post" target="wt-sink">' +
+            '<input type="hidden" name="ml-submit" value="1">' +
+            '<input type="email" name="fields[email]" required placeholder="deine@email.de" autocomplete="email" aria-label="E-Mail-Adresse">' +
+            "<button type=\"submit\">Schick mir das PDF</button>" +
+          "</form>" +
+          '<p class="fein">Danach bekommst du ab und zu Post von mir aus dem Wald. Abmelden geht jederzeit mit einem Klick. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>' +
+        "</div>" +
+        '<div id="post-fertig" hidden>' +
+          '<span class="kicker">Fertig</span>' +
+          "<h3>Schau in dein Postfach.</h3>" +
+          "<p>Dort liegt eine Mail, mit der du deine Anmeldung bestätigst. Erst danach bist du dabei. Das PDF kannst du schon jetzt öffnen.</p>" +
+          '<a class="knopf" href="Waldmomente%20to%20go.pdf" target="_blank" rel="noopener" style="background:var(--gold);color:var(--dark);">PDF öffnen</a>' +
+        "</div>" +
+      "</section>" +
+
+      '<button class="knopf knopf--leise" type="button" id="nochmal" style="margin-top:1.4rem;">Test noch einmal machen</button>';
+
+    var form = document.getElementById("wt-form");
+    form.addEventListener("submit", function () {
+      /* Das Formular schickt an MailerLite, die Antwort landet im
+         unsichtbaren Rahmen. Deshalb hier nur die Ansicht wechseln. */
+      setTimeout(function () {
+        document.getElementById("post-form").hidden = true;
+        document.getElementById("post-fertig").hidden = false;
+      }, 400);
+    });
+
+    document.getElementById("nochmal").addEventListener("click", function () {
+      stand = 0; antworten = []; zeigeFrage();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  zeigeFrage();
+})();
+</script>
+</body>
+</html>
