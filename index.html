@@ -1957,11 +1957,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <!-- Waldpaket, Spur und Raschel zusammen -->
  <div class="produkt-card produkt-card--feat reveal d3">
  <img src="assets/waldpaket-cover.jpg" alt="Waldpaket mit Waldspur und Raschel" class="produkt-cover" loading="lazy">
- <span class="produkt-badge" id="paket-badge" style="background:var(--gold);color:var(--dark);">Nur im Herbst</span>
+ <span class="produkt-badge" style="background:var(--gold);color:var(--dark);">Beides zusammen</span>
  <h3 class="produkt-name">Waldpaket</h3>
  <p class="produkt-desc">Deine Waldrunde. Euer Waldabenteuer. Zwölf Beobachtungsaufgaben für dich und Raschels Waldrallye für die Kinder, zusammen in einem Paket.</p>
  <div class="produkt-price">17,90 € <span style="font-size:.72rem;font-weight:400;opacity:.6;text-decoration:line-through;margin-left:.35rem;">20,80 €</span></div>
- <p id="paket-frist" style="margin:-.3rem 0 .2rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.85;">Bis 30. November</p>
  <a href="https://payhip.com/b/gZnaG" class="btn reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;background:var(--gold);color:var(--dark);border-color:var(--gold);">
  <span>Jetzt kaufen</span>
  </a>
@@ -1971,20 +1970,6 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </div>
  </div>
 
- <script>
- /* Das Herbstangebot endet am 30. November wirklich. Ab dem 1.
-    Dezember nimmt die Seite den Hinweis selbst heraus, damit hier
-    keine Frist steht, die laengst vorbei ist. Den Preis bei Payhip
-    muss Lissi am 30. November selbst wieder anheben. */
- (function () {
- var ende = new Date('2026-12-01T00:00:00+01:00');
- if (new Date() < ende) return;
- var badge = document.getElementById('paket-badge');
- var frist = document.getElementById('paket-frist');
- if (badge) badge.textContent = 'Beides zusammen';
- if (frist && frist.parentNode) frist.parentNode.removeChild(frist);
- })();
- </script>
  </section>
 
 
