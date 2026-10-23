@@ -1827,6 +1827,23 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </section>
 
 
+ <!-- ══════════ WALDTYP-TEST ══════════ -->
+ <section id="waldtyp-einstieg" aria-label="Waldtyp-Test">
+ <div class="wt__inner">
+ <span class="wt__kicker reveal">Fang hier an · Kostenlos</span>
+ <h2 class="wt__title reveal d1">Welcher Waldtyp bist du?</h2>
+ <p class="wt__text reveal d2">Acht Fragen darüber, was dich draußen zuerst anspricht. Am Ende weißt du es, und bekommst einen Auftrag für deinen nächsten Spaziergang.</p>
+ <div class="wt__typen reveal d2" aria-hidden="true">
+ <span>Anfassen</span><span>Zuhören</span><span>Hinaufschauen</span><span>Weitergehen</span>
+ </div>
+ <a href="waldtyp.html" class="wt__knopf reveal d3">
+ <span class="wt__knopf-gross">Test starten</span>
+ <span class="wt__knopf-klein">Acht Fragen · zwei Minuten</span>
+ </a>
+ <p class="wt__fein reveal d3">Ohne Anmeldung. Das Ergebnis siehst du sofort.</p>
+ </div>
+ </section>
+
  <span class="gold-sep"></span>
 
  <!-- ══════════ EINLEITUNG ══════════ -->
@@ -1891,6 +1908,59 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </section>
 
  <style>
+ /* Der Einstieg ins Geschaeft: der Test steht direkt unter dem Bild
+    und ist das Erste, was man nach dem Hero liest. */
+ #waldtyp-einstieg {
+ background: var(--green);
+ padding: 5.5rem 1.5rem;
+ text-align: center;
+ position: relative;
+ }
+ .wt__inner { max-width: 760px; margin: 0 auto; }
+ .wt__kicker {
+ display: block; font-size: .58rem; letter-spacing: .42em;
+ text-transform: uppercase; color: var(--gold); margin-bottom: 1.6rem;
+ }
+ .wt__title {
+ font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
+ font-size: clamp(2.4rem, 7.5vw, 4.2rem); line-height: 1.08;
+ color: var(--cream); margin: 0 0 1.4rem;
+ }
+ .wt__text {
+ font-size: clamp(1rem, 2.4vw, 1.14rem); line-height: 1.8;
+ color: rgba(253,250,245,.82); max-width: 33em; margin: 0 auto 2rem;
+ }
+ .wt__typen {
+ display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem;
+ margin: 0 0 2.4rem;
+ }
+ .wt__typen span {
+ font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+ color: rgba(200,169,110,.9); border: 1px solid rgba(200,169,110,.35);
+ padding: .5rem .9rem; border-radius: 999px;
+ }
+ .wt__knopf {
+ display: inline-flex; flex-direction: column; align-items: center; gap: .3rem;
+ background: var(--gold); color: var(--dark); text-decoration: none;
+ padding: 1.1rem 3rem 1rem; transition: transform .4s, background .4s;
+ }
+ .wt__knopf:hover { background: var(--gold-light); transform: translateY(-2px); }
+ .wt__knopf-gross {
+ font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600;
+ font-size: 1.5rem; line-height: 1;
+ }
+ .wt__knopf-klein {
+ font-size: .54rem; letter-spacing: .28em; text-transform: uppercase; opacity: .72;
+ }
+ .wt__fein {
+ font-size: .78rem; color: rgba(253,250,245,.5); margin: 1.3rem 0 0;
+ }
+ @media (max-width: 560px) {
+ #waldtyp-einstieg { padding: 4rem 1.2rem; }
+ .wt__typen span { font-size: .56rem; letter-spacing: .14em; padding: .42rem .7rem; }
+ .wt__knopf { padding: 1rem 2.2rem .9rem; }
+ }
+
  /* Der Textspalte reicht weniger Platz. Die beiden Vorschauen brauchen
     mehr, sonst kann man das Waldbingo nicht lesen. */
  .togo-raster {
