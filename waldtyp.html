@@ -59,7 +59,15 @@
     padding:1rem 1.1rem;
     transition:border-color .25s, background .25s, transform .25s;
   }
-  .wahl button:hover, .wahl button:focus-visible {
+  /* Nur dort hervorheben, wo wirklich ein Mauszeiger darueberfaehrt. Auf dem
+     Handy bleibt der Zustand sonst an der zuletzt angetippten Stelle haengen,
+     und die naechste Frage sieht aus, als waere eine Antwort schon gewaehlt. */
+  @media (hover: hover) and (pointer: fine) {
+    .wahl button:hover {
+      border-color:var(--gold-dark); background:#fffdf8; transform:translateX(3px);
+    }
+  }
+  .wahl button:focus-visible {
     border-color:var(--gold-dark); background:#fffdf8; transform:translateX(3px);
     outline:none;
   }
@@ -207,10 +215,10 @@
       ["Du suchst den Platz mit der besten Sicht nach oben.", "b"],
       ["Du gehst eine schnelle Runde.", "w"]
     ]},
-    { text: "Du kommst an ein Polster Moos.", antworten: [
-      ["Du gehst in die Hocke und fährst mit der Hand darüber.", "h"],
-      ["Du bleibst stehen, weil es hier plötzlich leiser klingt.", "o"],
-      ["Du schaust von schräg oben, wie das Licht durch die Halme fällt.", "b"],
+    { text: "Du kommst an ein dickes Polster Moos. Es ist über Wurzeln und einen Stein gewachsen.", antworten: [
+      ["Du gehst in die Hocke und drückst die Hand hinein, bis es nachgibt.", "h"],
+      ["Du bleibst stehen, weil deine Schritte hier mit einem Mal leiser klingen.", "o"],
+      ["Du schaust zum Stamm daneben und verfolgst, wie weit das Moos dort hinaufwächst.", "b"],
       ["Du siehst es im Vorbeigehen und gehst weiter.", "w"]
     ]},
     { text: "Wann war ein Waldspaziergang für dich gelungen?", antworten: [
