@@ -359,6 +359,10 @@
           "<p>Vier kleine Waldideen als PDF: Waldbingo, Waldmemory, Waldmandala und Waldsprüche. Zum Ausdrucken oder aufs Handy laden.</p>" +
           '<form id="wt-form" action="https://assets.mailerlite.com/jsonp/2587270/forms/198406643568870499/subscribe" method="post" target="wt-sink">' +
             '<input type="hidden" name="ml-submit" value="1">' +
+            /* Damit in MailerLite sichtbar wird, wer ueber den Test gekommen
+               ist und welches Ergebnis er hatte. Die Anmeldung laeuft
+               unveraendert ueber dasselbe Formular wie auf der Startseite. */
+            '<input type="hidden" name="fields[waldtyp]" value="' + escape(t.name) + '">' +
             '<input type="email" name="fields[email]" required placeholder="deine@email.de" autocomplete="email" aria-label="E-Mail-Adresse">' +
             "<button type=\"submit\">Schick mir das PDF</button>" +
           "</form>" +
