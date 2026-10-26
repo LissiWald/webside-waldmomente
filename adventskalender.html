@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Der Adventswald | Waldmomente</title>
+<meta name="description" content="Vierundzwanzig Türen zwischen den Bäumen. Hinter jeder steht jemand, der draußen zu Hause ist. Der Adventskalender von Waldmomente.">
+<meta name="theme-color" content="#0b1510">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://www.waldmomente.me/adventskalender.html">
+<meta property="og:site_name" content="Waldmomente">
+<meta property="og:title" content="Der Adventswald | Waldmomente">
+<meta property="og:description" content="Vierundzwanzig Türen zwischen den Bäumen. Jeden Tag öffnet sich eine.">
+<meta property="og:image" content="https://www.waldmomente.me/lissi-herbst.jpeg">
+<link rel="canonical" href="https://www.waldmomente.me/adventskalender.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Farben der Hauptseite, in die Nacht gezogen */
+    --green:#2D4A35; --gold:#C8A96E; --gold-light:#E8D5A3; --gold-dark:#A07840;
+    --cream:#FDFAF5; --sand:#F5F2EC;
+    --nacht:#08110c; --nacht2:#0d1a13; --tanne:#12241a; --moos:#1c3324;
+    --text:rgba(253,250,245,.86); --leise:rgba(253,250,245,.58);
+    --holz1:#5a3c26; --holz2:#3e2817; --holz3:#2a1a0f;
+  }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { background:var(--nacht); }
+  body {
+    margin:0; min-height:100vh; overflow-x:hidden;
+    background:var(--nacht); color:var(--text);
+    font:300 17px/1.7 'Jost',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  body.zu { overflow:hidden; }
+  .serif { font-family:'Cormorant Garamond',Georgia,serif; }
+  button { font:inherit; color:inherit; }
+
+  /* ───────── Die Waldszene (fest im Hintergrund) ───────── */
+  #szene {
+    position:fixed; inset:0; z-index:0; overflow:hidden;
+    background:
+      radial-gradient(120% 70% at 75% 8%, #1a2c2a 0%, transparent 60%),
+      linear-gradient(#071009 0%, #0c1a14 45%, #0e1d15 70%, #0a140e 100%);
+  }
+  #szene svg { position:absolute; left:0; width:100%; height:100%; }
+  .ebene { position:absolute; inset:0; will-change:transform; transition:transform 1.6s cubic-bezier(.2,.7,.2,1); }
+  .stern { animation:funkeln var(--d,4s) ease-in-out infinite; animation-delay:var(--v,0s); }
+  @keyframes funkeln { 0%,100% { opacity:var(--o,.7); } 50% { opacity:.12; } }
+  .mond-hof { animation:atmen 9s ease-in-out infinite; transform-origin:center; transform-box:fill-box; }
+  @keyframes atmen { 0%,100% { opacity:.55; } 50% { opacity:.8; } }
+
+  .eule-auge { transform-box:fill-box; transform-origin:center; animation:blinzeln 7s infinite; }
+  @keyframes blinzeln { 0%,92%,100% { transform:scaleY(1); } 95% { transform:scaleY(.05); } }
+  #eule { cursor:pointer; pointer-events:all; }
+  #eule.ruft .eule-auge { animation:none; transform:scale(1.35); transition:transform .3s; }
+
+  #fuchs { opacity:0; }
+  #fuchs.laeuft { animation:fuchsweg 26s linear forwards; }
+  @keyframes fuchsweg {
+    0% { transform:translateX(-12%); opacity:0; }
+    4% { opacity:1; } 96% { opacity:1; }
+    100% { transform:translateX(112%); opacity:0; }
+  }
+  .fuchs-bein { animation:trab .5s ease-in-out infinite alternate; transform-box:fill-box; transform-origin:top center; }
+  .fuchs-bein.b { animation-delay:-.25s; }
+  @keyframes trab { from { transform:rotate(16deg); } to { transform:rotate(-16deg); } }
+
+  /* Schnee, Glühwürmchen, Funken */
+  #funken { position:fixed; inset:0; z-index:3; pointer-events:none; width:100%; height:100%; }
+
+  /* ───────── Tannengirlande mit 24 Lichtern ───────── */
+  #girlande {
+    position:fixed; left:0; right:0; top:0; z-index:4; pointer-events:none;
+    height:clamp(64px,11vw,110px);
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));
+    transition:transform 1.8s cubic-bezier(.2,.8,.2,1);
+    transform:translateY(-110%);
+  }
+  body.drin #girlande { transform:translateY(0); }
+  #girlande svg { width:100%; height:100%; display:block; overflow:visible; }
+  .licht .glas { fill:#3b3a2c; transition:fill 1.2s; }
+  .licht .schein { opacity:0; transition:opacity 1.4s; }
+  .licht.an .glas { fill:url(#glut); }
+  .licht.an .schein { opacity:1; animation:flackern var(--f,3.2s) ease-in-out infinite; }
+  @keyframes flackern { 0%,100% { opacity:.95; } 40% { opacity:.7; } 60% { opacity:1; } 75% { opacity:.8; } }
+  .licht.neu .schein { animation:aufgluehen 2.4s ease-out; }
+  @keyframes aufgluehen { 0% { opacity:0; transform:scale(.3); } 30% { opacity:1; transform:scale(2.6); } 100% { opacity:1; transform:scale(1); } }
+  .licht .schein { transform-box:fill-box; transform-origin:center; }
+
+  /* ───────── Vorhang aus Tannenzweigen ───────── */
+  #vorhang {
+    position:fixed; inset:0; z-index:20; display:grid; place-items:center;
+    text-align:center; padding:2rem 1.4rem;
+  }
+  #vorhang .seite {
+    position:absolute; top:-5%; bottom:-5%; width:56%;
+    background-color:#0c1a11;
+    background-image:var(--zweige);
+    background-size:320px 260px;
+    transition:transform 2.6s cubic-bezier(.65,0,.2,1), opacity 2.6s;
+    box-shadow:0 0 80px 30px rgba(0,0,0,.8);
+  }
+  #vorhang .seite.l { left:-3%; transform-origin:left center; }
+  #vorhang .seite.r { right:-3%; transform-origin:right center; background-position:160px 130px; }
+  #vorhang.offen .seite.l { transform:translateX(-105%) rotate(-4deg); }
+  #vorhang.offen .seite.r { transform:translateX(105%) rotate(4deg); }
+  #vorhang.offen { pointer-events:none; }
+  #vorhang.weg { display:none; }
+  .einladung {
+    position:relative; z-index:2; max-width:30rem;
+    transition:opacity 1s, transform 1.4s;
+  }
+  #vorhang.offen .einladung { opacity:0; transform:scale(1.08); }
+  .einladung::before {
+    content:""; position:absolute; inset:-5rem -3rem; z-index:-1;
+    background:radial-gradient(closest-side, rgba(8,17,12,.96), rgba(8,17,12,.75) 60%, transparent);
+  }
+  .marke {
+    display:inline-block; font-size:.6rem; letter-spacing:.46em; text-transform:uppercase;
+    color:var(--gold); text-decoration:none; font-weight:400;
+  }
+  .einladung h1 {
+    font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-style:italic;
+    font-size:clamp(2.8rem,11vw,5rem); line-height:1; margin:1.2rem 0 1rem; color:var(--cream);
+  }
+  .einladung h1 em { color:var(--gold); }
+  .einladung p { margin:0 auto 2rem; max-width:22rem; color:var(--leise); font-size:.98rem; }
+  .eintreten { display:flex; flex-direction:column; gap:.8rem; align-items:center; }
+  .knopf {
+    display:inline-flex; align-items:center; justify-content:center; gap:.7rem;
+    min-height:54px; padding:.95rem 2rem; cursor:pointer; text-decoration:none;
+    font:500 .68rem/1 'Jost',sans-serif; letter-spacing:.26em; text-transform:uppercase;
+    color:var(--nacht); background:linear-gradient(180deg,var(--gold-light),var(--gold));
+    border:0; border-radius:999px; position:relative; overflow:hidden;
+    box-shadow:0 0 0 1px rgba(232,213,163,.4), 0 10px 40px -8px rgba(200,169,110,.55);
+    transition:transform .3s, box-shadow .3s;
+  }
+  .knopf::after {
+    content:""; position:absolute; inset:0; transform:translateX(-120%);
+    background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);
+    animation:glanz 4.5s ease-in-out infinite 1.5s;
+  }
+  @keyframes glanz { 0%,60% { transform:translateX(-120%); } 85%,100% { transform:translateX(120%); } }
+  .knopf:hover { transform:translateY(-2px); box-shadow:0 0 0 1px rgba(232,213,163,.6), 0 16px 50px -8px rgba(200,169,110,.7); }
+  .knopf--leise {
+    background:transparent; color:var(--leise); box-shadow:none; min-height:44px;
+    font-size:.6rem; padding:.6rem 1rem;
+  }
+  .knopf--leise::after { display:none; }
+  .knopf--leise:hover { color:var(--cream); box-shadow:none; }
+  .knopf--rand { background:transparent; color:var(--gold-light); box-shadow:inset 0 0 0 1px rgba(200,169,110,.5); }
+  .knopf--rand::after { display:none; }
+  .knopf--rand:hover { background:rgba(200,169,110,.1); box-shadow:inset 0 0 0 1px var(--gold); }
+
+  /* ───────── Inhalt ───────── */
+  main { position:relative; z-index:2; }
+  .buehne {
+    min-height:100vh; min-height:100svh; display:flex; flex-direction:column;
+    align-items:center; justify-content:flex-start; text-align:center;
+    padding:calc(clamp(64px,11vw,110px) + 9vh) 1.3rem 2rem; pointer-events:none;
+  }
+  .buehne > * { pointer-events:auto; }
+  .titel { opacity:0; transform:translateY(18px); transition:opacity 2s 1.2s, transform 2s 1.2s; }
+  body.drin .titel { opacity:1; transform:none; }
+  .titel h2 {
+    font-family:'Cormorant Garamond',Georgia,serif; font-weight:300;
+    font-size:clamp(3rem,12vw,6.4rem); line-height:.95; margin:.9rem 0 1.1rem; color:var(--cream);
+    text-shadow:0 2px 30px rgba(0,0,0,.6);
+  }
+  .titel h2 em { font-style:italic; color:var(--gold); display:block; }
+  .titel p { margin:0 auto; max-width:27rem; font-size:1.02rem; color:var(--text); text-shadow:0 1px 12px rgba(0,0,0,.8); }
+  .stand {
+    margin-top:1.6rem; font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.25rem; color:var(--gold-light); min-height:1.6em;
+  }
+  .runter {
+    margin-top:auto; padding-top:2rem; background:none; border:0; cursor:pointer;
+    font-size:.58rem; letter-spacing:.4em; text-transform:uppercase; color:var(--leise);
+    display:flex; flex-direction:column; align-items:center; gap:.6rem;
+    opacity:0; transition:opacity 2s 2.6s;
+  }
+  body.drin .runter { opacity:1; }
+  .runter span { width:1px; height:44px; background:linear-gradient(var(--gold),transparent); animation:tropfen 2.4s ease-in-out infinite; transform-origin:top; }
+  @keyframes tropfen { 0% { transform:scaleY(0); opacity:1; } 60% { transform:scaleY(1); opacity:1; } 100% { transform:scaleY(1); opacity:0; } }
+
+  /* ───────── Die Türen ───────── */
+  .lichtung {
+    position:relative; padding:4rem 1rem 5rem;
+    background:linear-gradient(transparent, rgba(6,12,8,.72) 9rem, rgba(6,12,8,.78));
+  }
+  .lichtung-kopf { text-align:center; margin:0 auto 2.6rem; max-width:32rem; }
+  .lichtung-kopf h3 {
+    font-family:'Cormorant Garamond',serif; font-weight:400; font-style:italic;
+    font-size:clamp(1.8rem,6vw,2.6rem); line-height:1.15; margin:.7rem 0 .5rem; color:var(--cream);
+  }
+  .lichtung-kopf p { margin:0; color:var(--leise); font-size:.95rem; }
+
+  .tueren {
+    display:grid; gap:clamp(.9rem,2.6vw,1.8rem) clamp(.7rem,2vw,1.5rem);
+    grid-template-columns:repeat(4,1fr);
+    max-width:1040px; margin:0 auto;
+  }
+  @media (min-width:720px) { .tueren { grid-template-columns:repeat(6,1fr); } }
+
+  .tuer {
+    position:relative; aspect-ratio:3/4.1; border:0; padding:0; background:none; cursor:pointer;
+    border-radius:50% 50% 6px 6px / 34% 34% 6px 6px;
+    perspective:900px;
+    opacity:0; transform:translateY(30px) scale(.96);
+    transition:opacity 1.1s, transform 1.1s cubic-bezier(.2,.8,.2,1);
+  }
+  .tuer.da { opacity:1; transform:none; }
+  .tuer.gross { grid-column:span 2; aspect-ratio:auto; perspective:2600px; }
+  @media (min-width:720px) { .tuer.gross { grid-row:span 2; } }
+  .tuer:focus-visible { outline:2px solid var(--gold); outline-offset:6px; }
+
+  /* Die Nische, in die man hineinsieht */
+  .nische {
+    position:absolute; inset:0; border-radius:inherit; overflow:hidden;
+    background:radial-gradient(70% 60% at 50% 62%, #ffe8b0 0%, #e4b866 22%, #7a5426 58%, #241508 100%);
+    box-shadow:inset 0 0 0 3px #1a0f07, inset 0 10px 30px rgba(0,0,0,.6);
+  }
+  .nische .portrait {
+    position:absolute; left:50%; top:54%; width:62%; aspect-ratio:1; transform:translate(-50%,-50%);
+    border-radius:50%; background-size:cover; background-position:center;
+    box-shadow:0 0 0 2px rgba(255,236,190,.85), 0 0 26px 6px rgba(255,210,130,.6);
+  }
+  .nische .zeichen { position:absolute; left:50%; top:54%; width:52%; transform:translate(-50%,-50%); color:#4a2e12; opacity:.75; }
+  .strahlen {
+    position:absolute; left:50%; top:58%; width:240%; aspect-ratio:1; transform:translate(-50%,-50%);
+    background:repeating-conic-gradient(from 0deg, rgba(255,240,200,.38) 0deg 5deg, transparent 5deg 18deg);
+    -webkit-mask:radial-gradient(closest-side, #000 10%, transparent 70%);
+            mask:radial-gradient(closest-side, #000 10%, transparent 70%);
+    opacity:0; transition:opacity 1s;
+  }
+  .tuer.offen .strahlen, .tuer.oeffnet .strahlen { opacity:1; animation:drehen 30s linear infinite; }
+  @keyframes drehen { to { transform:translate(-50%,-50%) rotate(360deg); } }
+
+  /* Das Türblatt aus Holz */
+  .blatt {
+    position:absolute; inset:0; border-radius:inherit; transform-origin:0% 50%;
+    transform-style:preserve-3d;
+    transition:transform 1.6s cubic-bezier(.5,0,.15,1);
+    background:
+      radial-gradient(ellipse 6% 3% at 32% 40%, rgba(20,10,4,.7), transparent 70%),
+      radial-gradient(ellipse 4% 2.4% at 70% 72%, rgba(20,10,4,.6), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(0,0,0,.0) 0 7px, rgba(0,0,0,.22) 7px 8px, rgba(255,220,170,.05) 8px 10px, rgba(0,0,0,0) 10px 19px),
+      repeating-linear-gradient(90deg, transparent 0 23%, rgba(0,0,0,.45) 23% calc(23% + 2px), transparent calc(23% + 2px) 50%),
+      linear-gradient(100deg, var(--holz1), var(--holz2) 45%, #4a3020 70%, var(--holz3));
+    box-shadow:
+      inset 0 0 0 2px rgba(255,214,150,.16),
+      inset 0 0 0 7px rgba(30,18,8,.5),
+      inset 0 0 0 8px rgba(200,169,110,.35),
+      inset -10px 0 24px rgba(0,0,0,.45),
+      0 14px 30px -10px rgba(0,0,0,.85);
+  }
+  .blatt::before { /* Schnee auf dem Bogen */
+    content:""; position:absolute; left:6%; right:6%; top:-3%; height:16%;
+    border-radius:50% 50% 40% 40% / 100% 100% 30% 30%;
+    background:radial-gradient(ellipse at 50% 20%, #fff, #dfe8e4 60%, #b7c7c1);
+    -webkit-mask:linear-gradient(#000 55%, transparent);
+            mask:linear-gradient(#000 55%, transparent);
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));
+    opacity:.92;
+  }
+  .blatt::after { /* Moos am Fuss */
+    content:""; position:absolute; left:-6%; right:-6%; bottom:-7%; height:16%;
+    background:
+      radial-gradient(circle at 10% 70%, #3f6b3a 0 18%, transparent 19%),
+      radial-gradient(circle at 24% 60%, #2f5530 0 20%, transparent 21%),
+      radial-gradient(circle at 40% 75%, #4a7a40 0 17%, transparent 18%),
+      radial-gradient(circle at 58% 62%, #2c4f2d 0 21%, transparent 22%),
+      radial-gradient(circle at 75% 72%, #436f3b 0 18%, transparent 19%),
+      radial-gradient(circle at 90% 64%, #30562f 0 20%, transparent 21%);
+    background-size:60% 100%; background-repeat:repeat-x;
+    filter:drop-shadow(0 -1px 0 rgba(160,200,120,.25));
+  }
+  .zahl {
+    position:absolute; left:0; right:0; top:44%; transform:translateY(-50%);
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500;
+    font-size:clamp(1.7rem,6.5vw,2.7rem); line-height:1;
+    color:var(--gold-light);
+    text-shadow:0 1px 0 rgba(0,0,0,.6), 0 0 18px rgba(232,213,163,.35);
+    backface-visibility:hidden;
+  }
+  .tuer.gross .zahl { font-size:clamp(2.6rem,10vw,4.6rem); }
+  .knauf {
+    position:absolute; right:13%; top:58%; width:9%; aspect-ratio:1; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff3cf, var(--gold) 40%, #6b4a1f 100%);
+    box-shadow:0 2px 4px rgba(0,0,0,.6);
+  }
+  .fenster {
+    position:absolute; left:50%; top:16%; width:26%; aspect-ratio:1; transform:translateX(-50%);
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,226,160,.18), rgba(0,0,0,.35));
+    box-shadow:inset 0 0 0 2px rgba(200,169,110,.35), inset 0 2px 6px rgba(0,0,0,.7);
+  }
+  .tuer.heute .fenster { background:radial-gradient(circle, #ffe9b8, #d99d45 60%, #5a3610); animation:warm 2.6s ease-in-out infinite; }
+  @keyframes warm { 0%,100% { box-shadow:inset 0 0 0 2px rgba(200,169,110,.5), 0 0 12px 2px rgba(255,200,120,.5); } 50% { box-shadow:inset 0 0 0 2px rgba(200,169,110,.5), 0 0 22px 6px rgba(255,200,120,.75); } }
+
+  /* Zustände */
+  .tuer.zu .blatt { filter:saturate(.55) brightness(.78); }
+  .tuer.zu .frost {
+    position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(220,235,240,.42), transparent 30%),
+      radial-gradient(circle at 92% 88%, rgba(220,235,240,.35), transparent 32%),
+      radial-gradient(circle at 90% 10%, rgba(220,235,240,.22), transparent 25%);
+    mix-blend-mode:screen;
+  }
+  .tuer.heute { animation:ruf 3s ease-in-out infinite; }
+  @keyframes ruf { 0%,100% { filter:drop-shadow(0 0 6px rgba(232,213,163,.25)); } 50% { filter:drop-shadow(0 0 22px rgba(232,213,163,.7)); } }
+  .tuer.wackelt { animation:wackeln .55s; }
+  @keyframes wackeln { 0%,100% { transform:none; } 20% { transform:rotate(-3deg); } 40% { transform:rotate(2.5deg); } 60% { transform:rotate(-1.5deg); } 80% { transform:rotate(1deg); } }
+  .tuer.offen .blatt { transform:rotateY(-74deg); }
+  .tuer.oeffnet .blatt { transform:rotateY(-80deg); }
+  .tuer.offen .blatt, .tuer.oeffnet .blatt { box-shadow:inset 0 0 0 8px rgba(200,169,110,.35), 20px 0 30px rgba(0,0,0,.6); }
+  .tuer .beschriftung {
+    position:absolute; left:0; right:0; bottom:9%; z-index:1;
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(.78rem,2.4vw,1rem);
+    color:#2a1806; opacity:0; transition:opacity .8s .9s; text-shadow:0 0 8px rgba(255,236,190,.9);
+  }
+  .tuer.offen .beschriftung { opacity:1; }
+
+  .hinweis {
+    position:fixed; left:50%; bottom:calc(1.4rem + env(safe-area-inset-bottom)); z-index:12;
+    transform:translate(-50%,20px); opacity:0; pointer-events:none;
+    max-width:min(26rem,calc(100% - 2rem)); text-align:center;
+    background:rgba(10,20,14,.92); border:1px solid rgba(200,169,110,.35);
+    color:var(--cream); border-radius:22px; padding:.8rem 1.4rem;
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.12rem; line-height:1.35;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    transition:opacity .5s, transform .5s;
+  }
+  .hinweis.da { opacity:1; transform:translate(-50%,0); }
+
+  .abspann { text-align:center; padding:4rem 1.3rem 5rem; max-width:34rem; margin:0 auto; }
+  .abspann h4 { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400; font-size:1.8rem; color:var(--cream); margin:.8rem 0 .7rem; line-height:1.2; }
+  .abspann p { color:var(--leise); margin:0 0 1.8rem; }
+  .fuss { font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--leise); padding-bottom:2rem; text-align:center; position:relative; z-index:2; }
+  .fuss a { color:var(--leise); text-decoration:none; margin:0 .7rem; }
+  .fuss a:hover { color:var(--gold); }
+
+  /* Tonknopf */
+  #ton {
+    position:fixed; right:calc(.9rem + env(safe-area-inset-right)); bottom:calc(.9rem + env(safe-area-inset-bottom)); z-index:11;
+    width:46px; height:46px; border-radius:50%; border:1px solid rgba(200,169,110,.45);
+    background:rgba(10,20,14,.75); color:var(--gold-light); cursor:pointer;
+    display:grid; place-items:center; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    opacity:0; transition:opacity 1s 2s, background .3s;
+  }
+  body.drin #ton { opacity:1; }
+  #ton:hover { background:rgba(30,50,36,.9); }
+  #ton svg { width:20px; height:20px; }
+  #ton .aus { display:none; }
+  #ton.stumm .an { display:none; }
+  #ton.stumm .aus { display:block; }
+
+  /* ───────── Das Innere einer Tür ───────── */
+  #innen {
+    position:fixed; inset:0; z-index:10; display:flex; align-items:center; justify-content:center;
+    padding:1rem; visibility:hidden;
+  }
+  #innen.da { visibility:visible; }
+  #innen .dunkel {
+    position:absolute; inset:0; background:radial-gradient(circle at 50% 40%, rgba(40,30,10,.55), rgba(3,7,5,.92) 70%);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    opacity:0; transition:opacity .9s;
+  }
+  #innen.da .dunkel { opacity:1; }
+  .karte {
+    position:relative; width:min(560px,100%); max-height:calc(100vh - 2rem); max-height:calc(100dvh - 2rem);
+    overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:rgba(200,169,110,.4) transparent;
+    background:
+      radial-gradient(120% 50% at 50% 0%, rgba(232,213,163,.16), transparent 60%),
+      linear-gradient(#13261b, #0c1912 60%, #0a150f);
+    border-radius:220px 220px 14px 14px / 120px 120px 14px 14px;
+    box-shadow:0 0 0 1px rgba(200,169,110,.45), 0 0 0 7px rgba(10,20,14,.9), 0 0 0 8px rgba(200,169,110,.25), 0 40px 120px rgba(0,0,0,.8), 0 0 120px rgba(232,200,130,.18);
+    padding:4.4rem 1.6rem 2rem; text-align:center;
+    transform:scale(.2); opacity:0;
+    transition:transform 1s cubic-bezier(.2,1.1,.25,1), opacity .6s;
+  }
+  #innen.da .karte { transform:none; opacity:1; }
+  .karte > * { opacity:0; transform:translateY(12px); transition:opacity .8s, transform .8s; }
+  #innen.da .karte > * { opacity:1; transform:none; }
+  #innen.da .karte > *:nth-child(2) { transition-delay:.35s; }
+  #innen.da .karte > *:nth-child(3) { transition-delay:.5s; }
+  #innen.da .karte > *:nth-child(4) { transition-delay:.65s; }
+  #innen.da .karte > *:nth-child(5) { transition-delay:.8s; }
+  #innen.da .karte > *:nth-child(6) { transition-delay:.95s; }
+  #innen.da .karte > *:nth-child(7) { transition-delay:1.1s; }
+  #innen.da .karte > *:nth-child(n+8) { transition-delay:1.25s; }
+  .schliessen {
+    position:absolute; top:.9rem; left:50%; margin-left:-21px; width:42px; height:42px; border-radius:50%; cursor:pointer;
+    border:1px solid rgba(200,169,110,.35); background:rgba(0,0,0,.25); color:var(--gold-light);
+    display:grid; place-items:center; z-index:2;
+  }
+  .schliessen:hover { background:rgba(200,169,110,.15); }
+  .karte .kicker { display:block; font-size:.58rem; letter-spacing:.42em; text-transform:uppercase; color:var(--gold); }
+  .karte .tag {
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; color:var(--gold-light);
+    font-size:4.4rem; line-height:1; margin:.3rem 0 .2rem; text-shadow:0 0 30px rgba(232,213,163,.45);
+  }
+  .medium {
+    margin:1.2rem auto 1.4rem; width:100%; max-width:380px; border-radius:180px 180px 10px 10px / 120px 120px 10px 10px;
+    overflow:hidden; background:#07100b; box-shadow:0 0 0 1px rgba(200,169,110,.45), 0 18px 50px rgba(0,0,0,.6);
+    aspect-ratio:4/5; position:relative;
+  }
+  .medium img, .medium video { width:100%; height:100%; object-fit:cover; display:block; }
+  .medium.leer { display:grid; place-items:center; color:#5a3a16; aspect-ratio:1; max-width:220px; border-radius:50%; background:radial-gradient(circle at 50% 55%, #ffe8b0, #d9a656 45%, #5b3a16 100%); box-shadow:0 0 0 1px rgba(200,169,110,.5), 0 0 60px 10px rgba(232,190,110,.25); }
+  .medium.leer svg { width:46%; opacity:.6; }
+  .karte h5 {
+    font-family:'Cormorant Garamond',serif; font-weight:400; font-size:clamp(2rem,7vw,2.6rem); line-height:1.1;
+    margin:.2rem 0 .2rem; color:var(--cream);
+  }
+  .karte .rolle { font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold); font-size:1.3rem; }
+  .karte .konto { display:block; color:var(--leise); font-size:.85rem; letter-spacing:.06em; margin-top:.2rem; text-decoration:none; }
+  .karte .konto:hover { color:var(--gold-light); }
+  .karte .text { text-align:left; margin:1.4rem 0 0; }
+  .karte .text p { margin:0 0 1rem; font-size:1rem; line-height:1.8; color:var(--text); }
+  .karte blockquote {
+    margin:1.2rem 0 0; padding:1.1rem 1.2rem; border-left:2px solid var(--gold);
+    background:rgba(200,169,110,.07); text-align:left;
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.3rem; line-height:1.45; color:var(--gold-light);
+  }
+  .karte .geschenk {
+    margin:1.3rem 0 0; padding:1rem 1.2rem; border:1px dashed rgba(200,169,110,.5); border-radius:10px;
+    font-size:.95rem; color:var(--cream); text-align:left;
+  }
+  .karte .geschenk b { display:block; font-weight:500; font-size:.58rem; letter-spacing:.34em; text-transform:uppercase; color:var(--gold); margin-bottom:.35rem; }
+  .karte .wege { display:flex; flex-direction:column; gap:.7rem; margin-top:1.8rem; }
+  .karte .wege .knopf { width:100%; }
+  .karte .frei p { color:var(--leise); }
+  .karte .zumachen { margin-top:1.6rem; background:none; border:0; cursor:pointer; font-size:.6rem; letter-spacing:.32em; text-transform:uppercase; color:var(--leise); padding:.8rem 1rem; }
+  .karte .zumachen:hover { color:var(--gold-light); }
+
+  .finale-text {
+    position:fixed; inset:0; z-index:9; display:grid; place-items:center; pointer-events:none; text-align:center; padding:1rem;
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; color:var(--gold-light);
+    font-size:clamp(2.2rem,9vw,4.6rem); line-height:1.1; text-shadow:0 0 40px rgba(232,213,163,.6);
+    opacity:0; transition:opacity 2.5s;
+  }
+  .finale-text.da { opacity:1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.3s !important; }
+  }
+</style>
+</head>
+<body class="zu">
+
+<!-- Die Waldszene wird per Skript gezeichnet, passend zur Bildschirmform -->
+<div id="szene" aria-hidden="true"></div>
+<canvas id="funken" aria-hidden="true"></canvas>
+<div id="girlande" aria-hidden="true"></div>
+
+<div id="vorhang">
+  <div class="seite l"></div>
+  <div class="seite r"></div>
+  <div class="einladung">
+    <a class="marke" href="index.html">Waldmomente</a>
+    <h1>Der <em>Advents</em>wald</h1>
+    <p>Mach den Ton an, wenn du kannst. Der Wald klingt heute Abend.</p>
+    <div class="eintreten">
+      <button class="knopf" id="mitTon" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>
+        Mit Ton eintreten
+      </button>
+      <button class="knopf knopf--leise" id="ohneTon" type="button">Leise eintreten</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="buehne">
+    <div class="titel">
+      <span class="marke">Waldmomente · Advent <span data-jahr></span></span>
+      <h2>Der <em>Adventswald</em></h2>
+      <p>Vierundzwanzig Türen zwischen den Bäumen. Hinter jeder steht jemand, der draußen zu Hause ist. Jeden Tag geht eine auf, und oben an der Girlande brennt dann ein Licht mehr.</p>
+      <div class="stand" id="stand"></div>
+    </div>
+    <button class="runter" type="button" id="runter">Zu den Türen<span></span></button>
+  </section>
+
+  <section class="lichtung" id="lichtung" aria-labelledby="lichtungTitel">
+    <div class="lichtung-kopf">
+      <span class="marke">Vierundzwanzig Türen</span>
+      <h3 id="lichtungTitel">Welche ist heute dran?</h3>
+      <p>Die Tür mit dem warmen Fenster. Die anderen sind noch zugefroren.</p>
+    </div>
+    <div class="tueren" id="tueren"></div>
+  </section>
+
+  <section class="abspann">
+    <span class="marke">Hinter den Türen</span>
+    <h4>Frauen, die mit dem Wald arbeiten, über ihn schreiben oder aus ihm etwas machen.</h4>
+    <p>Schau bei ihnen vorbei. Jede Tür führt zu einem Menschen, den du vielleicht noch nicht kennst.</p>
+    <a class="knopf knopf--rand" href="index.html">Zurück zu Waldmomente</a>
+  </section>
+  <p class="fuss"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></p>
+</main>
+
+<div id="innen" role="dialog" aria-modal="true" aria-labelledby="innenName">
+  <div class="dunkel" data-zu></div>
+  <article class="karte" id="karte"></article>
+</div>
+
+<div class="hinweis" id="hinweis" role="status" aria-live="polite"></div>
+<div class="finale-text" id="finale">Alle Lichter brennen.<br>Frohe Weihnachten.</div>
+
+<button id="ton" type="button" aria-label="Ton aus">
+  <svg class="an" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>
+  <svg class="aus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>
+</button>
+
+<script src="adventskalender/tuerchen.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const DATEN = window.ADVENTSWALD || { jahr: new Date().getFullYear(), tueren: [] };
+  const JAHR = DATEN.jahr;
+  const PARAM = new URLSearchParams(location.search);
+  const VORSCHAU = PARAM.has('vorschau');
+  const RUHIG = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SPEICHER = 'wm-adventswald-' + JAHR;
+  const NS = 'http://www.w3.org/2000/svg';
+  const $ = s => document.querySelector(s);
+
+  document.querySelectorAll('[data-jahr]').forEach(e => e.textContent = JAHR);
+
+  /* ───────── Zufall mit festem Samen, damit der Wald gleich bleibt ───────── */
+  function zufall(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ───────── Datum in Deutschland ───────── */
+  function heute() {
+    const teile = new Intl.DateTimeFormat('de-DE', { timeZone: 'Europe/Berlin', year: 'numeric', month: 'numeric', day: 'numeric' })
+      .formatToParts(new Date());
+    const w = t => +teile.find(p => p.type === t).value;
+    return { j: w('year'), m: w('month'), t: w('day') };
+  }
+  const H = heute();
+  function istFrei(tag) {
+    if (VORSCHAU) return true;
+    if (H.j > JAHR) return true;
+    if (H.j < JAHR) return false;
+    return H.m === 12 && H.t >= tag;
+  }
+  const HEUTE_TAG = (H.j === JAHR && H.m === 12 && H.t <= 24) ? H.t : 0;
+
+  let geoeffnet = new Set();
+  try { if (!VORSCHAU) geoeffnet = new Set(JSON.parse(localStorage.getItem(SPEICHER) || '[]')); } catch (e) {}
+  function merken() { if (VORSCHAU) return; try { localStorage.setItem(SPEICHER, JSON.stringify([...geoeffnet])); } catch (e) {} }
+
+  /* ═════════════════════════ KLANG ═════════════════════════
+     Alles wird live erzeugt: Spieluhr, Holzknarren, Frostklirren, Eule.
+     Nur der Wind kommt aus einer Aufnahme. */
+  const Ton = {
+    ctx: null, an: false, master: null, hall: null, wind: null,
+    starten() {
+      try {
+        const C = window.AudioContext || window.webkitAudioContext;
+        this.ctx = new C();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        this.master = this.ctx.createGain(); this.master.gain.value = .55;
+        const komp = this.ctx.createDynamicsCompressor();
+        this.master.connect(komp); komp.connect(this.ctx.destination);
+        this.hall = this.ctx.createConvolver(); this.hall.buffer = this.raum(3.2);
+        const hallPegel = this.ctx.createGain(); hallPegel.gain.value = .55;
+        this.hall.connect(hallPegel); hallPegel.connect(this.master);
+        this.an = true;
+        this.wind = new Audio('sounds/wind.mp3');
+        this.wind.loop = true; this.wind.volume = 0;
+        this.wind.play().then(() => this.windAuf(.16)).catch(() => {});
+      } catch (e) { this.an = false; }
+    },
+    windAuf(ziel) {
+      if (!this.wind) return;
+      const w = this.wind; clearInterval(this._wi);
+      this._wi = setInterval(() => {
+        const d = ziel - w.volume;
+        if (Math.abs(d) < .01) { w.volume = Math.max(0, ziel); clearInterval(this._wi); return; }
+        w.volume = Math.min(1, Math.max(0, w.volume + d * .08));
+      }, 50);
+    },
+    umschalten() {
+      if (!this.ctx) { this.starten(); return true; }
+      this.an = !this.an;
+      this.master.gain.setTargetAtTime(this.an ? .55 : 0, this.ctx.currentTime, .15);
+      if (this.wind) { if (this.an) { this.wind.play().catch(() => {}); this.windAuf(.16); } else this.windAuf(0); }
+      return this.an;
+    },
+    raum(sek) {
+      const r = this.ctx.sampleRate, l = r * sek, b = this.ctx.createBuffer(2, l, r);
+      for (let k = 0; k < 2; k++) { const d = b.getChannelData(k); for (let i = 0; i < l; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / l, 2.6); }
+      return b;
+    },
+    ziel(trocken, nass) {
+      const g = this.ctx.createGain(), h = this.ctx.createGain();
+      g.gain.value = trocken; h.gain.value = nass;
+      g.connect(this.master); h.connect(this.hall);
+      const e = this.ctx.createGain(); e.connect(g); e.connect(h);
+      return e;
+    },
+    /* Spieluhr: ein heller, glockiger Ton */
+    glocke(freq, wann = 0, laut = .22, lang = 2.6) {
+      if (!this.an || !this.ctx) return;
+      const c = this.ctx, t = c.currentTime + wann, aus = this.ziel(.6, .7);
+      [[1, 1], [2.756, .32], [5.404, .12], [4.0, .05]].forEach(([m, a]) => {
+        const o = c.createOscillator(), g = c.createGain();
+        o.type = 'sine'; o.frequency.value = freq * m;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(laut * a, t + .004);
+        g.gain.exponentialRampToValueAtTime(.0001, t + lang / (m > 1 ? m * .7 : 1));
+        o.connect(g); g.connect(aus); o.start(t); o.stop(t + lang + .1);
+      });
+    },
+    note(n) { return 440 * Math.pow(2, (n - 69) / 12); },
+    /* eine kleine, eigene Melodie zum Eintreten (Dreiertakt, D-Dur) */
+    willkommen() {
+      const m = [[74, 0], [78, .42], [81, .84], [86, 1.26], [85, 1.9], [81, 2.32], [83, 2.74], [78, 3.4], [81, 3.82], [74, 4.24], [86, 5.0]];
+      m.forEach(([n, z]) => this.glocke(this.note(n), z + .3, .18, 3.2));
+      this.glocke(this.note(50), .3, .12, 6); this.glocke(this.note(57), 2.0, .08, 5);
+    },
+    /* Arpeggio aufwärts, wenn eine Tür aufgeht */
+    zauber() {
+      const reihe = [62, 66, 69, 74, 78, 81, 86, 90, 93, 98];
+      reihe.forEach((n, i) => this.glocke(this.note(n), .55 + i * .075, .13, 2.4));
+      this.glocke(this.note(50), .55, .14, 4); this.glocke(this.note(57), .55, .1, 4);
+      this.schimmer(1.2);
+    },
+    schimmer(wann) {
+      if (!this.an || !this.ctx) return;
+      for (let i = 0; i < 14; i++) this.glocke(this.note(86 + [0, 3, 5, 7, 10, 12][i % 6] + (i > 6 ? 12 : 0)), wann + Math.random() * 1.4, .04, 1.6);
+    },
+    tupf() {
+      const p = [74, 76, 78, 81, 83, 86, 88, 90, 93];
+      this.glocke(this.note(p[Math.floor(Math.random() * p.length)]), 0, .09, 1.8);
+    },
+    /* Holz knarrt: gefiltertes Rauschen mit zitternder Tonhöhe */
+    knarren() {
+      if (!this.an || !this.ctx) return;
+      const c = this.ctx, t = c.currentTime, aus = this.ziel(.5, .3);
+      const o = c.createOscillator(), f = c.createBiquadFilter(), g = c.createGain(), lfo = c.createOscillator(), lg = c.createGain();
+      o.type = 'sawtooth'; o.frequency.setValueAtTime(70, t); o.frequency.linearRampToValueAtTime(120, t + .5); o.frequency.linearRampToValueAtTime(90, t + .9);
+      lfo.frequency.value = 23; lg.gain.value = 18; lfo.connect(lg); lg.connect(o.frequency);
+      f.type = 'bandpass'; f.frequency.value = 900; f.Q.value = 6;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.09, t + .08); g.gain.linearRampToValueAtTime(.05, t + .5); g.gain.linearRampToValueAtTime(0, t + .95);
+      o.connect(f); f.connect(g); g.connect(aus);
+      o.start(t); lfo.start(t); o.stop(t + 1); lfo.stop(t + 1);
+    },
+    /* Frost klirrt */
+    frost() {
+      if (!this.an || !this.ctx) return;
+      [96, 101, 99].forEach((n, i) => this.glocke(this.note(n) * (1 + (Math.random() - .5) * .01), i * .06, .05, .7));
+    },
+    /* Die Eule */
+    eule() {
+      if (!this.an || !this.ctx) return;
+      const c = this.ctx, aus = this.ziel(.5, .6);
+      [[0, .45], [.62, .25], [.95, .9]].forEach(([w, d]) => {
+        const t = c.currentTime + w, o = c.createOscillator(), g = c.createGain();
+        o.type = 'sine'; o.frequency.setValueAtTime(390, t); o.frequency.linearRampToValueAtTime(420, t + .06); o.frequency.exponentialRampToValueAtTime(330, t + d);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.2, t + .05); g.gain.exponentialRampToValueAtTime(.001, t + d);
+        o.connect(g); g.connect(aus); o.start(t); o.stop(t + d + .05);
+      });
+    },
+    /* ganz selten ein Ton aus der Spieluhr, wie von weit weg */
+    leise() {
+      const p = [62, 66, 69, 71, 74, 78, 81];
+      const lauf = () => {
+        if (this.an && document.visibilityState === 'visible' && !document.body.classList.contains('innen-offen')) {
+          const n = p[Math.floor(Math.random() * p.length)];
+          this.glocke(this.note(n), 0, .05, 3.4);
+          if (Math.random() < .4) this.glocke(this.note(n + 7), .45, .035, 3);
+        }
+        setTimeout(lauf, 3500 + Math.random() * 6500);
+      };
+      setTimeout(lauf, 7000);
+    }
+  };
+
+  /* ═════════════════════════ DER WALD ═════════════════════════ */
+  const szene = $('#szene');
+  let lagen = [];
+  let eulePos = null;
+
+  function tanne(r, cx, fuss, h, b) {
+    const stufen = 5 + Math.floor(r() * 3);
+    const spitze = fuss - h;
+    let L = [], R = [];
+    for (let i = 1; i <= stufen; i++) {
+      const y = spitze + h * .9 * i / stufen;
+      const w = b / 2 * Math.pow(i / stufen, .9) * (.9 + r() * .2);
+      L.push([cx - w, y]); R.push([cx + w, y]);
+      if (i < stufen) { const iy = y - h * .05; L.push([cx - w * .45, iy]); R.push([cx + w * .45, iy]); }
+    }
+    const stamm = b * .06;
+    let d = `M${cx},${spitze}`;
+    L.forEach(p => d += `L${p[0].toFixed(1)},${p[1].toFixed(1)}`);
+    d += `L${cx - stamm},${spitze + h * .9}L${cx - stamm},${fuss}L${cx + stamm},${fuss}L${cx + stamm},${spitze + h * .9}`;
+    R.reverse().forEach(p => d += `L${p[0].toFixed(1)},${p[1].toFixed(1)}`);
+    return d + 'Z';
+  }
+  function schneekappen(r, cx, fuss, h, b) {
+    // Schnee liegt auf den Spitzen der Stufen, rechts etwas mehr, weil der Mond von dort scheint
+    const stufen = 6, spitze = fuss - h; let d = '';
+    for (let i = 1; i <= stufen; i++) {
+      const y = spitze + h * .9 * i / stufen;
+      const w = b / 2 * Math.pow(i / stufen, .9);
+      const dick = h * (.012 + r() * .01);
+      d += `M${(cx + w * .15).toFixed(1)},${(y - h * .045).toFixed(1)}Q${(cx + w * .7).toFixed(1)},${(y - h * .02 - dick).toFixed(1)} ${(cx + w * .98).toFixed(1)},${(y - dick * .2).toFixed(1)}Q${(cx + w * .6).toFixed(1)},${(y - h * .02).toFixed(1)} ${(cx + w * .15).toFixed(1)},${(y - h * .045 + dick * .6).toFixed(1)}Z`;
+      if (r() < .7) d += `M${(cx - w * .95).toFixed(1)},${y.toFixed(1)}Q${(cx - w * .6).toFixed(1)},${(y - h * .02 - dick * .6).toFixed(1)} ${(cx - w * .25).toFixed(1)},${(y - h * .04).toFixed(1)}Q${(cx - w * .6).toFixed(1)},${(y - h * .018).toFixed(1)} ${(cx - w * .95).toFixed(1)},${y.toFixed(1)}Z`;
+    }
+    return d;
+  }
+
+  function el(n, a, kind) { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (kind) kind.forEach(x => e.appendChild(x)); return e; }
+
+  function waldZeichnen() {
+    const B = innerWidth, Hh = innerHeight;
+    const VH = 1000, VB = Math.round(VH * B / Hh);
+    szene.innerHTML = '';
+    lagen = [];
+    const r = zufall(1224);
+    const hoch = VB < VH; // Handy hochkant
+
+    function lage(tiefe) {
+      const d = document.createElement('div'); d.className = 'ebene'; d.dataset.t = tiefe;
+      const s = el('svg', { viewBox: `0 0 ${VB} ${VH}`, preserveAspectRatio: 'xMidYMax slice' });
+      d.appendChild(s); szene.appendChild(d); lagen.push(d); return s;
+    }
+
+    // Himmel mit Sternen und Mond
+    const himmel = lage(.03);
+    const defs = el('defs');
+    defs.innerHTML = `
+      <radialGradient id="mondhof"><stop offset="0" stop-color="#f6efd6" stop-opacity=".55"/><stop offset=".35" stop-color="#d8d3b4" stop-opacity=".16"/><stop offset="1" stop-color="#d8d3b4" stop-opacity="0"/></radialGradient>
+      <radialGradient id="mondflaeche" cx=".4" cy=".38"><stop offset="0" stop-color="#fffaf0"/><stop offset=".7" stop-color="#ece4c8"/><stop offset="1" stop-color="#cfc59f"/></radialGradient>
+      <linearGradient id="boden" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7f908a"/><stop offset=".4" stop-color="#47554f"/><stop offset="1" stop-color="#1b2621"/></linearGradient>
+      <linearGradient id="nebel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fb3ab" stop-opacity="0"/><stop offset=".6" stop-color="#9fb3ab" stop-opacity=".16"/><stop offset="1" stop-color="#9fb3ab" stop-opacity="0"/></linearGradient>`;
+    himmel.appendChild(defs);
+    const sterne = Math.round(VB / 8);
+    for (let i = 0; i < sterne; i++) {
+      const c = el('circle', { cx: (r() * VB).toFixed(1), cy: (r() * VH * .55).toFixed(1), r: (r() * 1.6 + .4).toFixed(2), fill: '#fdf6e0', class: 'stern' });
+      c.style.setProperty('--d', (3 + r() * 5).toFixed(1) + 's');
+      c.style.setProperty('--v', (-r() * 6).toFixed(1) + 's');
+      c.style.setProperty('--o', (.35 + r() * .6).toFixed(2));
+      himmel.appendChild(c);
+    }
+    const mx = hoch ? VB * .84 : VB * .78, my = hoch ? 128 : 210, mr = hoch ? 30 : 58;
+    himmel.appendChild(el('circle', { cx: mx, cy: my, r: mr * 6, fill: 'url(#mondhof)', class: 'mond-hof' }));
+    himmel.appendChild(el('circle', { cx: mx, cy: my, r: mr, fill: 'url(#mondflaeche)' }));
+    [[-.3, -.2, .18], [.25, .1, .12], [-.05, .35, .09], [.35, -.35, .07]].forEach(([a, b2, s]) =>
+      himmel.appendChild(el('circle', { cx: mx + a * mr, cy: my + b2 * mr, r: s * mr, fill: '#c9bf9a', opacity: '.35' })));
+
+    // Hügel ganz hinten
+    const huegel = lage(.06);
+    let hd = `M0,${VH * .72}`;
+    for (let x = 0; x <= VB; x += 40) hd += `L${x},${(VH * .7 + Math.sin(x / 260) * 26 + Math.sin(x / 90) * 8).toFixed(1)}`;
+    huegel.appendChild(el('path', { d: hd + `L${VB},${VH}L0,${VH}Z`, fill: '#16272a', opacity: '.9' }));
+    huegel.appendChild(el('rect', { x: 0, y: VH * .6, width: VB, height: VH * .25, fill: 'url(#nebel)' }));
+
+    // drei Baumreihen
+    const reihen = [
+      { t: .12, fuss: VH * .8, h: [150, 260], dichte: 34, farbe: '#14261f', schnee: '#8a9c94', so: .45 },
+      { t: .22, fuss: VH * .88, h: [260, 420], dichte: 70, farbe: '#0f1e17', schnee: '#a9b8b1', so: .5 },
+      { t: .4, fuss: VH * 1.0, h: [440, 700], dichte: 150, farbe: '#08120d', schnee: '#c3cfca', so: .42 }
+    ];
+    const lichtungMitte = VB / 2, lichtungBreite = hoch ? VB * .18 : VB * .2;
+    reihen.forEach((rh, ri) => {
+      const s = lage(rh.t);
+      let x = -40;
+      while (x < VB + 60) {
+        const h = rh.h[0] + r() * (rh.h[1] - rh.h[0]);
+        const b = h * (.42 + r() * .12);
+        const inLichtung = Math.abs(x - lichtungMitte) < lichtungBreite;
+        if (!(ri === 2 && inLichtung)) {
+          const hh = ri === 2 && Math.abs(x - lichtungMitte) < lichtungBreite * 2.2 ? h * .7 : h;
+          const fuss = rh.fuss + r() * 30;
+          s.appendChild(el('path', { d: tanne(r, x, fuss, hh, b), fill: rh.farbe }));
+          s.appendChild(el('path', { d: schneekappen(r, x, fuss, hh, b), fill: rh.schnee, opacity: rh.so }));
+          if (ri === 1 && !eulePos && x > VB * (hoch ? .08 : .14) && x < VB * .4) eulePos = { s, x, y: fuss - hh * .62 };
+        }
+        x += rh.dichte * (.6 + r() * .8);
+      }
+      let gd = `M0,${rh.fuss}`;
+      for (let gx = 0; gx <= VB; gx += 50) gd += `L${gx},${(rh.fuss - 4 + Math.sin(gx / 110 + ri) * 6).toFixed(1)}`;
+      s.appendChild(el('path', { d: gd + `L${VB},${VH}L0,${VH}Z`, fill: rh.farbe }));
+      if (ri < 2) s.appendChild(el('rect', { x: 0, y: rh.fuss - VH * .06, width: VB, height: VH * .12, fill: 'url(#nebel)' }));
+    });
+
+    // Schneeboden
+    const boden = lage(.5);
+    let bd = `M0,${VH * .93}`;
+    for (let x = 0; x <= VB; x += 30) bd += `L${x},${(VH * .925 + Math.sin(x / 140) * 10 + Math.sin(x / 47) * 4).toFixed(1)}`;
+    boden.appendChild(el('path', { d: bd + `L${VB},${VH}L0,${VH}Z`, fill: 'url(#boden)' }));
+
+    // Fuchs
+    const fuchs = el('g', { id: 'fuchs' });
+    fuchs.innerHTML = `
+      <g transform="translate(0 ${VH * .925 - 46}) scale(1.1)" fill="#0a0f0c">
+        <path d="M8 22 C2 14 2 6 12 4 C6 10 12 16 20 20 Z" opacity=".95"/>
+        <path d="M14 18 C22 8 50 8 62 14 L70 6 L72 14 L80 14 L82 6 L86 16 C90 20 92 24 88 26 L76 26 C70 30 60 30 52 28 L22 28 C16 28 12 24 14 18 Z"/>
+        <rect class="fuchs-bein" x="24" y="26" width="3" height="16" rx="1.5"/>
+        <rect class="fuchs-bein b" x="31" y="26" width="3" height="16" rx="1.5"/>
+        <rect class="fuchs-bein b" x="56" y="26" width="3" height="16" rx="1.5"/>
+        <rect class="fuchs-bein" x="63" y="26" width="3" height="16" rx="1.5"/>
+        <path d="M2 21 C-4 18 -6 26 4 26 Z" fill="#e9e2cf" opacity=".55"/>
+      </g>`;
+    boden.appendChild(fuchs);
+
+    // Eule
+    if (eulePos) {
+      const { s, x, y } = eulePos;
+      const g = el('g', { id: 'eule', transform: `translate(${x - 22} ${y - 30})` });
+      g.innerHTML = `
+        <rect x="-20" y="46" width="84" height="6" rx="3" fill="#0a140e"/>
+        <path d="M6 48 C2 30 4 8 10 2 L16 12 C20 9 24 9 28 12 L34 2 C40 8 42 30 38 48 Z" fill="#0b1510"/>
+        <circle class="eule-auge" cx="15" cy="22" r="4.2" fill="#e8c46a"/>
+        <circle class="eule-auge" cx="29" cy="22" r="4.2" fill="#e8c46a"/>
+        <circle cx="15" cy="22" r="1.6" fill="#120b02"/><circle cx="29" cy="22" r="1.6" fill="#120b02"/>
+        <rect x="-10" y="-10" width="64" height="70" fill="transparent"/>`;
+      s.appendChild(g);
+      s.style.pointerEvents = 'none';
+      g.addEventListener('click', e => { e.stopPropagation(); eulerufen(); });
+    }
+  }
+
+  function eulerufen() {
+    const e = $('#eule'); if (!e) return;
+    Ton.eule(); e.classList.add('ruft');
+    setTimeout(() => e.classList.remove('ruft'), 1600);
+    sagen(['Huhu.', 'Die Eule hat dich gesehen.', 'Sie passt auf die Türen auf.'][Math.floor(Math.random() * 3)]);
+  }
+
+  function fuchsLos() {
+    const f = $('#fuchs'); if (!f || RUHIG) return;
+    f.classList.remove('laeuft'); void f.getBoundingClientRect(); f.classList.add('laeuft');
+  }
+
+  // sanftes Mitbewegen mit Maus oder Neigung
+  let zielX = 0, zielY = 0;
+  function schieben() {
+    const sy = scrollY / innerHeight;
+    lagen.forEach(l => {
+      const t = +l.dataset.t;
+      l.style.transform = `translate3d(${(-zielX * t * 40).toFixed(1)}px, ${(sy * t * 60 + zielY * t * 14).toFixed(1)}px, 0)`;
+    });
+  }
+  if (!RUHIG) {
+    addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; zielX = e.clientX / innerWidth - .5; zielY = e.clientY / innerHeight - .5; schieben(); }, { passive: true });
+    addEventListener('deviceorientation', e => { if (e.gamma == null) return; zielX = Math.max(-1, Math.min(1, e.gamma / 30)) * .5; zielY = Math.max(-1, Math.min(1, (e.beta - 40) / 40)) * .3; schieben(); }, { passive: true });
+    addEventListener('scroll', schieben, { passive: true });
+  }
+
+  /* ═════════════════════════ GIRLANDE ═════════════════════════ */
+  const girlande = $('#girlande');
+  let lichter = [];
+  function girlandeZeichnen() {
+    const B = 1000, Hh = 110;
+    const s = el('svg', { viewBox: `0 0 ${B} ${Hh}`, preserveAspectRatio: 'none' });
+    const r = zufall(77);
+    s.innerHTML = `<defs>
+      <radialGradient id="glut" cx=".45" cy=".4"><stop offset="0" stop-color="#fff8dc"/><stop offset=".5" stop-color="#ffd77e"/><stop offset="1" stop-color="#c98a2c"/></radialGradient>
+      <radialGradient id="hof"><stop offset="0" stop-color="#ffdd99" stop-opacity=".85"/><stop offset=".4" stop-color="#ffc062" stop-opacity=".25"/><stop offset="1" stop-color="#ffc062" stop-opacity="0"/></radialGradient>
+    </defs>`;
+    // drei Bögen, die zwischen vier Punkten durchhängen
+    const ankerY = 6, bogen = [[0, 333], [333, 667], [667, 1000]], tief = 58;
+    const y = x => {
+      for (const [a, b] of bogen) if (x >= a && x <= b) { const u = (x - a) / (b - a); return ankerY + tief * 4 * u * (1 - u); }
+      return ankerY;
+    };
+    // Zweige: viele kleine Nadelbüschel entlang der Kurve
+    const zweige = el('g', {});
+    for (let x = -10; x <= B + 10; x += 5) {
+      const yy = y(Math.max(0, Math.min(B, x)));
+      for (let k = 0; k < 3; k++) {
+        const a = (r() * 2 - 1) * 1.2 + (k - 1) * .9, l = 10 + r() * 16;
+        const farbe = ['#16301f', '#1d3b27', '#244a30', '#11261a'][Math.floor(r() * 4)];
+        zweige.appendChild(el('path', { d: `M${x} ${yy} l${(Math.sin(a) * l).toFixed(1)} ${(Math.cos(a) * l * .6 + 2).toFixed(1)}`, stroke: farbe, 'stroke-width': 2.6, 'stroke-linecap': 'round' }));
+      }
+    }
+    s.appendChild(el('path', { d: Array.from({ length: 101 }, (_, i) => `${i ? 'L' : 'M'}${i * 10},${y(i * 10).toFixed(1)}`).join(''), stroke: '#2b1d10', 'stroke-width': 3, fill: 'none' }));
+    s.appendChild(zweige);
+    // kleine Zapfen an den Ankerpunkten
+    [0, 333, 667, 1000].forEach(x => {
+      s.appendChild(el('ellipse', { cx: x, cy: ankerY + 16, rx: 6, ry: 11, fill: '#5a3a1e' }));
+      s.appendChild(el('path', { d: `M${x - 5} ${ankerY + 12}h10M${x - 5} ${ankerY + 18}h10M${x - 4} ${ankerY + 24}h8`, stroke: '#3a2410', 'stroke-width': 1.4 }));
+    });
+    // 24 Lichter
+    lichter = [];
+    for (let i = 0; i < 24; i++) {
+      const x = 22 + i * (B - 44) / 23 + (r() - .5) * 6;
+      const yy = y(x) + 8 + r() * 6;
+      const g = el('g', { class: 'licht', 'data-tag': i + 1 });
+      g.style.setProperty('--f', (2.4 + r() * 2).toFixed(2) + 's');
+      g.innerHTML = `
+        <circle class="schein" cx="${x}" cy="${yy + 9}" r="26" fill="url(#hof)"/>
+        <line x1="${x}" y1="${yy - 8}" x2="${x}" y2="${yy}" stroke="#2b1d10" stroke-width="1.2"/>
+        <rect x="${x - 2.6}" y="${yy - 1}" width="5.2" height="3.4" rx="1" fill="#8a6a3a"/>
+        <ellipse class="glas" cx="${x}" cy="${yy + 9}" rx="5" ry="7.5"/>`;
+      s.appendChild(g); lichter.push({ g, x, y: yy + 9 });
+    }
+    girlande.innerHTML = ''; girlande.appendChild(s);
+    geoeffnet.forEach(t => lichtAn(t, false));
+  }
+  function lichtAn(tag, neu) {
+    const l = lichter[tag - 1]; if (!l) return;
+    l.g.classList.add('an');
+    if (neu) { l.g.classList.add('neu'); setTimeout(() => l.g.classList.remove('neu'), 2500); }
+  }
+  function lichtPunkt(tag) {
+    const l = lichter[tag - 1], rc = girlande.getBoundingClientRect();
+    return { x: rc.left + l.x / 1000 * rc.width, y: rc.top + l.y / 110 * rc.height };
+  }
+
+  /* ═════════════════════════ SCHNEE, GLÜHWÜRMCHEN, FUNKEN ═════════════════════════ */
+  const cv = $('#funken'), cx = cv.getContext('2d');
+  let W = 0, HH = 0, dpr = 1, flocken = [], wuermchen = [], funken = [], reisen = [];
+  let zeiger = { x: -999, y: -999 };
+  function mass() {
+    dpr = Math.min(2, devicePixelRatio || 1);
+    W = innerWidth; HH = innerHeight;
+    cv.width = W * dpr; cv.height = HH * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(Math.min(220, W * HH / 7000)) * (RUHIG ? .3 : 1);
+    flocken = Array.from({ length: n }, () => neueFlocke(true));
+    wuermchen = Array.from({ length: RUHIG ? 4 : Math.round(Math.min(26, W / 50)) }, () => ({
+      x: Math.random() * W, y: HH * (.45 + Math.random() * .5), vx: 0, vy: 0, p: Math.random() * 6.28, s: .6 + Math.random() * .8
+    }));
+  }
+  function neueFlocke(irgendwo) {
+    const z = Math.random();
+    return { x: Math.random() * W, y: irgendwo ? Math.random() * HH : -10, z, r: .6 + z * 2.6, v: .25 + z * .9, p: Math.random() * 6.28, a: .35 + z * .55 };
+  }
+  function streuen(x, y, n, farbe, kraft = 1) {
+    for (let i = 0; i < n; i++) {
+      const w = Math.random() * 6.283, v = (Math.random() * 3 + .6) * kraft;
+      funken.push({ x, y, vx: Math.cos(w) * v, vy: Math.sin(w) * v - kraft, l: 1, d: .008 + Math.random() * .016, r: Math.random() * 2.2 + .6, f: farbe || (Math.random() < .7 ? '255,226,160' : '255,255,255'), stern: Math.random() < .25 });
+    }
+  }
+  function reise(von, nach, fertig) { reisen.push({ x0: von.x, y0: von.y, x1: nach.x, y1: nach.y, t: 0, fertig, spur: [] }); }
+  function sternchen(x, y, r) {
+    cx.beginPath();
+    for (let i = 0; i < 8; i++) { const w = i * Math.PI / 4, l = i % 2 ? r * .28 : r; cx.lineTo(x + Math.cos(w) * l, y + Math.sin(w) * l); }
+    cx.closePath(); cx.fill();
+  }
+  let wind = 0, zeit = 0, letzte = performance.now();
+  function malen(jetzt) {
+    const dt = Math.min(3, (jetzt - letzte) / 16.7); letzte = jetzt; zeit += dt;
+    cx.clearRect(0, 0, W, HH);
+    wind = Math.sin(zeit / 400) * .6 + Math.sin(zeit / 130) * .25;
+
+    // Schnee
+    cx.fillStyle = '#fff';
+    for (const f of flocken) {
+      f.p += .02 * dt;
+      f.y += f.v * dt; f.x += (Math.sin(f.p) * .4 + wind * f.z) * dt;
+      const dx = f.x - zeiger.x, dy = f.y - zeiger.y, d2 = dx * dx + dy * dy;
+      if (d2 < 6400) { const k = (1 - d2 / 6400) * 2.2; f.x += dx / 80 * k; f.y += dy / 80 * k; }
+      if (f.y > HH + 10 || f.x < -20 || f.x > W + 20) Object.assign(f, neueFlocke(false), { x: Math.random() * W });
+      cx.globalAlpha = f.a; cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 6.283); cx.fill();
+    }
+
+    // Glühwürmchen, sie weichen dem Finger aus
+    cx.globalCompositeOperation = 'lighter';
+    for (const w of wuermchen) {
+      w.p += .03 * dt;
+      w.vx += (Math.sin(w.p * .7 + w.s * 9) * .03); w.vy += (Math.cos(w.p * .5) * .025);
+      const dx = w.x - zeiger.x, dy = w.y - zeiger.y, d2 = dx * dx + dy * dy;
+      if (d2 < 14000) { w.vx += dx / 900; w.vy += dy / 900; }
+      w.vx *= .96; w.vy *= .96; w.x += w.vx * dt; w.y += w.vy * dt;
+      if (w.x < -20) w.x = W + 20; if (w.x > W + 20) w.x = -20;
+      if (w.y < HH * .25) w.vy += .05; if (w.y > HH - 10) w.vy -= .05;
+      const glanz = (Math.sin(w.p * 1.7) * .5 + .5) * .8 + .2;
+      const g = cx.createRadialGradient(w.x, w.y, 0, w.x, w.y, 14 * w.s);
+      g.addColorStop(0, `rgba(255,236,170,${.9 * glanz})`); g.addColorStop(.25, `rgba(230,200,110,${.35 * glanz})`); g.addColorStop(1, 'rgba(230,200,110,0)');
+      cx.globalAlpha = 1; cx.fillStyle = g; cx.beginPath(); cx.arc(w.x, w.y, 14 * w.s, 0, 6.283); cx.fill();
+    }
+
+    // Funken
+    for (let i = funken.length - 1; i >= 0; i--) {
+      const f = funken[i];
+      f.vx *= .975; f.vy = f.vy * .975 + .035; f.x += f.vx * dt; f.y += f.vy * dt; f.l -= f.d * dt;
+      if (f.l <= 0) { funken.splice(i, 1); continue; }
+      cx.globalAlpha = f.l; cx.fillStyle = `rgb(${f.f})`;
+      if (f.stern) sternchen(f.x, f.y, f.r * 3.2); else { cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 6.283); cx.fill(); }
+    }
+
+    // Ein Licht fliegt von der Tür hinauf zur Girlande
+    for (let i = reisen.length - 1; i >= 0; i--) {
+      const r = reisen[i];
+      r.t += .011 * dt;
+      const u = Math.min(1, r.t), e = u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+      const bx = r.x0 + (r.x1 - r.x0) * e + Math.sin(u * Math.PI * 2) * 60 * (1 - u);
+      const by = r.y0 + (r.y1 - r.y0) * e - Math.sin(u * Math.PI) * 120;
+      r.spur.push([bx, by]); if (r.spur.length > 26) r.spur.shift();
+      r.spur.forEach(([sx, sy], k) => { cx.globalAlpha = k / r.spur.length * .6; cx.fillStyle = '#ffe3a0'; cx.beginPath(); cx.arc(sx, sy, 1 + k / 8, 0, 6.283); cx.fill(); });
+      const g = cx.createRadialGradient(bx, by, 0, bx, by, 26);
+      g.addColorStop(0, 'rgba(255,248,220,1)'); g.addColorStop(.3, 'rgba(255,210,120,.6)'); g.addColorStop(1, 'rgba(255,210,120,0)');
+      cx.globalAlpha = 1; cx.fillStyle = g; cx.beginPath(); cx.arc(bx, by, 26, 0, 6.283); cx.fill();
+      if (Math.random() < .5) funken.push({ x: bx, y: by, vx: (Math.random() - .5), vy: Math.random(), l: .8, d: .03, r: 1.2, f: '255,236,180' });
+      if (u >= 1) { reisen.splice(i, 1); streuen(r.x1, r.y1, 30, null, .7); r.fertig && r.fertig(); }
+    }
+    cx.globalCompositeOperation = 'source-over'; cx.globalAlpha = 1;
+    requestAnimationFrame(malen);
+  }
+
+  /* Sternschnuppe, ganz selten */
+  function schnuppe() {
+    if (document.visibilityState === 'visible' && !RUHIG) {
+      const x = W * (.2 + Math.random() * .6), y = HH * (.05 + Math.random() * .2);
+      let n = 0; const iv = setInterval(() => {
+        funken.push({ x: x + n * 9, y: y + n * 3.5, vx: -.3, vy: 0, l: 1, d: .03, r: 1.6 - n * .03, f: '255,255,240' });
+        if (++n > 34) clearInterval(iv);
+      }, 16);
+    }
+    setTimeout(schnuppe, 14000 + Math.random() * 22000);
+  }
+
+  /* ═════════════════════════ TÜREN ═════════════════════════ */
+  const reihenfolge = [7, 18, 2, 13, 21, 9, 15, 4, 11, 24, 19, 1, 6, 23, 16, 3, 10, 20, 12, 5, 17, 22, 8, 14];
+  const zeichen = {
+    zapfen: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 4c-6 4-9 11-9 18 0 7 4 13 9 14 5-1 9-7 9-14 0-7-3-14-9-18z" opacity=".5"/><path d="M14 16h12M12 22h16M13 28h14" stroke="currentColor" stroke-width="2" fill="none"/></svg>',
+    eichel: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M10 16c0-5 4-8 10-8s10 3 10 8z"/><path d="M12 17c0 9 4 15 8 16 4-1 8-7 8-16z" opacity=".55"/><path d="M20 8V4" stroke="currentColor" stroke-width="2"/></svg>',
+    stern: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 3l4 12h12l-10 7 4 13-10-8-10 8 4-13-10-7h12z" opacity=".65"/></svg>',
+    blatt: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M6 34C6 16 18 6 34 6c0 18-10 28-28 28z" opacity=".55"/><path d="M6 34L26 14" stroke="currentColor" stroke-width="2"/></svg>',
+    pilz: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M4 20C4 11 11 6 20 6s16 5 16 14z" opacity=".6"/><path d="M15 20h10l-1 14h-8z"/></svg>',
+    feder: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M32 4C18 6 8 16 8 30l2 2c14 0 24-10 26-24z" opacity=".5"/><path d="M6 36L28 12" stroke="currentColor" stroke-width="2"/></svg>'
+  };
+  const zeichenListe = Object.values(zeichen);
+  const tuerenBox = $('#tueren');
+  const tuerEl = {};
+
+  function datenFuer(tag) { return (DATEN.tueren || []).find(t => t.tag === tag) || { tag }; }
+
+  function tuerenBauen() {
+    reihenfolge.forEach((tag, i) => {
+      const d = datenFuer(tag);
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'tuer'; b.dataset.tag = tag;
+      if (tag === 24) b.classList.add('gross');
+      const frei = istFrei(tag);
+      b.classList.add(frei ? 'frei' : 'zu');
+      if (tag === HEUTE_TAG && !geoeffnet.has(tag)) b.classList.add('heute');
+      if (geoeffnet.has(tag) || (VORSCHAU && false)) b.classList.add('offen');
+      b.setAttribute('aria-label', `Tür ${tag}` + (frei ? (d.name ? `, ${d.name}` : '') : `, öffnet sich am ${tag}. Dezember`));
+      const bild = d.bild || d.poster;
+      b.innerHTML = `
+        <span class="nische">
+          <span class="strahlen"></span>
+          ${bild ? `<span class="portrait" style="background-image:url('${encodeURI(bild)}')"></span>` : `<span class="zeichen">${zeichenListe[tag % zeichenListe.length]}</span>`}
+        </span>
+        <span class="beschriftung">${d.name ? esc(d.name) : ''}</span>
+        <span class="blatt">
+          <span class="fenster"></span>
+          <span class="zahl">${tag}</span>
+          <span class="knauf"></span>
+          <span class="frost"></span>
+        </span>`;
+      b.addEventListener('click', () => klopfen(tag));
+      tuerenBox.appendChild(b);
+      tuerEl[tag] = b;
+    });
+    const beob = new IntersectionObserver(eintraege => {
+      eintraege.forEach(e => { if (e.isIntersecting) { const t = e.target; setTimeout(() => t.classList.add('da'), (+t.dataset.i % 6) * 90); beob.unobserve(t); } });
+    }, { threshold: .15 });
+    Object.values(tuerEl).forEach((t, i) => { t.dataset.i = i; beob.observe(t); });
+  }
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+  function sicher(url) { return /^(https?:|mailto:)/i.test(url) || /^[\w./-]+$/.test(url) ? url : '#'; }
+
+  const zuSprueche = [
+    t => `Die ${t} öffnet sich am ${t}. Dezember.`,
+    t => `Noch zugefroren. Am ${t}. Dezember taut sie auf.`,
+    t => `Die Eule sagt: erst am ${t}. Dezember.`,
+    t => `Hinter der ${t} wird noch geräumt. Am ${t}. Dezember ist es so weit.`
+  ];
+  let spruch = 0;
+
+  function klopfen(tag) {
+    const b = tuerEl[tag];
+    if (!istFrei(tag)) {
+      Ton.frost(); b.classList.remove('wackelt'); void b.offsetWidth; b.classList.add('wackelt');
+      const rc = b.getBoundingClientRect();
+      streuen(rc.left + rc.width / 2, rc.top + rc.height * .3, 14, '220,235,245', .5);
+      sagen(H.j === JAHR && H.m < 12 || H.j < JAHR ? `Noch schläft der Wald. Die ${tag} öffnet sich am ${tag}. Dezember.` : zuSprueche[spruch++ % zuSprueche.length](tag));
+      return;
+    }
+    if (b.classList.contains('offen')) { innenZeigen(tag, b); return; }
+    oeffnen(tag);
+  }
+
+  function oeffnen(tag) {
+    const b = tuerEl[tag];
+    b.classList.remove('heute');
+    Ton.knarren(); Ton.zauber();
+    b.classList.add('oeffnet');
+    const rc = b.getBoundingClientRect();
+    const mitte = { x: rc.left + rc.width / 2, y: rc.top + rc.height * .55 };
+    setTimeout(() => { streuen(mitte.x, mitte.y, 70, null, 1.3); }, 650);
+    const neu = !geoeffnet.has(tag);
+    geoeffnet.add(tag); merken();
+    setTimeout(() => {
+      b.classList.add('offen'); b.classList.remove('oeffnet');
+      if (neu) reise(mitte, lichtPunkt(tag), () => { lichtAn(tag, true); Ton.glocke(Ton.note(93), 0, .08, 2); standZeigen(); if (geoeffnet.size === 24) finale(); });
+      else lichtAn(tag, false);
+      innenZeigen(tag, b);
+    }, 1500);
+  }
+
+  /* ───────── Das Innere ───────── */
+  const innen = $('#innen'), karte = $('#karte');
+  let letzteTuer = null;
+  function innenZeigen(tag, b) {
+    letzteTuer = b;
+    const d = datenFuer(tag);
+    const rc = b.getBoundingClientRect();
+    karte.style.transformOrigin = `${rc.left + rc.width / 2 - innerWidth / 2 + karte.offsetWidth / 2}px ${rc.top + rc.height / 2 - innerHeight / 2 + 200}px`;
+    let medium = '';
+    if (d.video) medium = `<div class="medium"><video src="${encodeURI(d.video)}" ${d.poster ? `poster="${encodeURI(d.poster)}"` : ''} controls playsinline preload="metadata"></video></div>`;
+    else if (d.bild) medium = `<div class="medium"><img src="${encodeURI(d.bild)}" alt="${esc(d.name || '')}"></div>`;
+    else medium = `<div class="medium leer">${zeichenListe[tag % zeichenListe.length]}</div>`;
+    const absaetze = (d.text || '').split(/\n\s*\n/).filter(Boolean).map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('');
+    const wege = [];
+    if (d.instagram) wege.push(`<a class="knopf" href="${esc(sicher(d.instagram))}" target="_blank" rel="noopener">Zu ${esc(d.account || 'Instagram')}</a>`);
+    if (d.link && d.link.url) wege.push(`<a class="knopf knopf--rand" href="${esc(sicher(d.link.url))}" ${/^https?:/.test(d.link.url) ? 'target="_blank" rel="noopener"' : ''}>${esc(d.link.text || 'Mehr ansehen')}</a>`);
+    const frei = !d.name;
+    karte.innerHTML = `
+      <button class="schliessen" type="button" data-zu aria-label="Tür schließen"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      <span class="kicker">Tür ${tag} · ${tag}. Dezember</span>
+      <div class="tag">${tag}</div>
+      ${medium}
+      <h5 id="innenName">${frei ? 'Hier zieht bald jemand ein.' : esc(d.name)}</h5>
+      ${d.rolle ? `<span class="rolle">${esc(d.rolle)}</span>` : ''}
+      ${d.account && d.instagram ? `<a class="konto" href="${esc(sicher(d.instagram))}" target="_blank" rel="noopener">${esc(d.account)}</a>` : (d.account ? `<span class="konto">${esc(d.account)}</span>` : '')}
+      ${frei ? `<div class="text frei"><p>Die Tür ist schon offen, nur der Platz dahinter ist noch leer. Schau später noch mal rein.</p></div>` : `<div class="text">${absaetze}</div>`}
+      ${d.gruss ? `<blockquote>${esc(d.gruss)}</blockquote>` : ''}
+      ${d.geschenk ? `<div class="geschenk"><b>Hinter dieser Tür</b>${esc(d.geschenk)}</div>` : ''}
+      ${wege.length ? `<div class="wege">${wege.join('')}</div>` : ''}
+      <button class="zumachen" type="button" data-zu>Tür schließen</button>`;
+    karte.scrollTop = 0;
+    innen.classList.add('da'); document.body.classList.add('zu', 'innen-offen');
+    Ton.windAuf(Ton.an ? .06 : 0);
+    const v = karte.querySelector('video');
+    if (v) { v.addEventListener('play', () => Ton.windAuf(0)); v.addEventListener('pause', () => Ton.an && Ton.windAuf(.06)); }
+    setTimeout(() => karte.querySelector('.schliessen').focus({ preventScroll: true }), 400);
+    history.replaceState(null, '', location.pathname + '?' + (VORSCHAU ? 'vorschau=1&' : '') + 'tuer=' + tag);
+  }
+  function innenZu() {
+    if (!innen.classList.contains('da')) return;
+    const v = karte.querySelector('video'); if (v) v.pause();
+    innen.classList.remove('da'); document.body.classList.remove('zu', 'innen-offen');
+    if (Ton.an) Ton.windAuf(.16);
+    Ton.glocke(Ton.note(81), 0, .06, 1.6);
+    if (letzteTuer) letzteTuer.focus({ preventScroll: true });
+    history.replaceState(null, '', location.pathname + (VORSCHAU ? '?vorschau=1' : ''));
+  }
+  innen.addEventListener('click', e => { if (e.target.closest('[data-zu]')) innenZu(); });
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape') innenZu();
+    if (e.key === 'Tab' && innen.classList.contains('da')) {
+      const f = [...karte.querySelectorAll('button,a,video')]; if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  /* ───────── kleine Hinweise unten ───────── */
+  let hinweisZeit;
+  function sagen(text) {
+    const h = $('#hinweis'); h.textContent = text; h.classList.add('da');
+    clearTimeout(hinweisZeit); hinweisZeit = setTimeout(() => h.classList.remove('da'), 3200);
+  }
+
+  function standZeigen() {
+    const s = $('#stand');
+    if (VORSCHAU) { s.textContent = 'Vorschau: alle Türen sind offen.'; return; }
+    if (H.j < JAHR || (H.j === JAHR && H.m < 12)) {
+      const ziel = Date.UTC(JAHR, 11, 1), jetzt = Date.UTC(H.j, H.m - 1, H.t);
+      const tage = Math.round((ziel - jetzt) / 864e5);
+      s.textContent = tage === 1 ? 'Morgen geht die erste Tür auf.' : `Noch ${tage} Nächte, dann geht die erste Tür auf.`;
+      return;
+    }
+    const n = geoeffnet.size;
+    if (n === 24) s.textContent = 'Alle vierundzwanzig Lichter brennen.';
+    else if (HEUTE_TAG && !geoeffnet.has(HEUTE_TAG)) s.textContent = `Heute ist die ${HEUTE_TAG} dran.`;
+    else if (n) s.textContent = n === 1 ? 'Ein Licht brennt schon.' : `${n} Lichter brennen schon.`;
+    else s.textContent = '';
+  }
+
+  function finale() {
+    if (VORSCHAU && geoeffnet.size < 24) return;
+    setTimeout(() => {
+      Ton.willkommen();
+      $('#finale').classList.add('da');
+      for (let i = 0; i < 24; i++) setTimeout(() => { const p = lichtPunkt(i + 1); streuen(p.x, p.y, 16, null, .8); }, i * 90);
+      setTimeout(() => $('#finale').classList.remove('da'), 6500);
+    }, 1200);
+  }
+
+  /* ───────── Antippen irgendwo: ein Funke und ein Ton ───────── */
+  addEventListener('pointerdown', e => {
+    zeiger.x = e.clientX; zeiger.y = e.clientY;
+    if (!document.body.classList.contains('drin') || innen.classList.contains('da')) return;
+    if (e.target.closest('button,a,#eule')) return;
+    streuen(e.clientX, e.clientY, 18, null, .7); Ton.tupf();
+  });
+  addEventListener('pointermove', e => { zeiger.x = e.clientX; zeiger.y = e.clientY; }, { passive: true });
+  addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') setTimeout(() => { zeiger.x = zeiger.y = -999; }, 400); });
+  addEventListener('pointerleave', () => { zeiger.x = zeiger.y = -999; });
+
+  /* ───────── Eintreten ───────── */
+  function zweigMuster() {
+    const r = zufall(5), B = 320, Hh = 260; let p = '';
+    const farben = ['%23173320', '%231e3f28', '%23112818', '%23285234', '%23214a2d'];
+    for (let k = 0; k < 7; k++) {
+      const ox = r() * B, oy = r() * Hh, w = -.25 + r() * .5 + (k % 2 ? Math.PI : 0) * 0, len = 150 + r() * 90;
+      const ex = ox + Math.cos(w) * len, ey = oy + Math.sin(w) * len * .5 + 40;
+      for (const dx of [-B, 0, B]) for (const dy of [-Hh, 0, Hh]) {
+        const sx = ox + dx, sy = oy + dy, tx = ex + dx, ty = ey + dy;
+        p += `<path d='M${sx.toFixed(0)} ${sy.toFixed(0)} L${tx.toFixed(0)} ${ty.toFixed(0)}' stroke='%232a1b0e' stroke-width='2.4'/>`;
+        const n = 34;
+        for (let i = 0; i < n; i++) {
+          const u = i / n, x = sx + (tx - sx) * u, y = sy + (ty - sy) * u;
+          const l = 20 * (1 - u * .55), a = Math.atan2(ty - sy, tx - sx);
+          const c = farben[(i + k) % farben.length];
+          const a1 = a + .9, a2 = a - .9;
+          p += `<path d='M${x.toFixed(0)} ${y.toFixed(0)}l${(Math.cos(a1) * l).toFixed(0)} ${(Math.sin(a1) * l).toFixed(0)}M${x.toFixed(0)} ${y.toFixed(0)}l${(Math.cos(a2) * l).toFixed(0)} ${(Math.sin(a2) * l).toFixed(0)}' stroke='${c}' stroke-width='2' stroke-linecap='round'/>`;
+        }
+      }
+    }
+    return `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='${B}' height='${Hh}'>${p}</svg>")`;
+  }
+  $('#vorhang').style.setProperty('--zweige', zweigMuster());
+
+  function eintreten(mitTon) {
+    if (mitTon) { Ton.starten(); Ton.willkommen(); Ton._leiseLaeuft = true; Ton.leise(); }
+    else $('#ton').classList.add('stumm');
+    $('#ton').setAttribute('aria-label', mitTon ? 'Ton aus' : 'Ton an');
+    const v = $('#vorhang'); v.classList.add('offen');
+    document.body.classList.add('drin'); document.body.classList.remove('zu');
+    setTimeout(() => v.classList.add('weg'), 2700);
+    setTimeout(fuchsLos, 3500); setInterval(fuchsLos, 60000);
+    setTimeout(schnuppe, 6000);
+    const ziel = +PARAM.get('tuer');
+    if (ziel >= 1 && ziel <= 24) setTimeout(() => {
+      tuerEl[ziel].scrollIntoView({ behavior: RUHIG ? 'auto' : 'smooth', block: 'center' });
+      setTimeout(() => klopfen(ziel), 1100);
+    }, 2200);
+  }
+  $('#mitTon').addEventListener('click', () => eintreten(true));
+  $('#ohneTon').addEventListener('click', () => eintreten(false));
+  $('#ton').addEventListener('click', () => {
+    const an = Ton.umschalten();
+    if (an && !Ton._leiseLaeuft) { Ton._leiseLaeuft = true; Ton.leise(); }
+    if (an) Ton.glocke(Ton.note(81), 0, .1, 1.8);
+    $('#ton').classList.toggle('stumm', !an);
+    $('#ton').setAttribute('aria-label', an ? 'Ton aus' : 'Ton an');
+  });
+  $('#runter').addEventListener('click', () => $('#lichtung').scrollIntoView({ behavior: 'smooth' }));
+  document.addEventListener('visibilitychange', () => {
+    if (!Ton.wind) return;
+    if (document.visibilityState === 'hidden') Ton.wind.pause(); else if (Ton.an) Ton.wind.play().catch(() => {});
+  });
+
+  /* ───────── Los ───────── */
+  waldZeichnen(); girlandeZeichnen(); tuerenBauen(); standZeigen(); mass();
+  requestAnimationFrame(malen);
+  let alteB = innerWidth;
+  addEventListener('resize', () => {
+    mass();
+    if (Math.abs(innerWidth - alteB) > 60) { alteB = innerWidth; eulePos = null; waldZeichnen(); }
+  });
+})();
+</script>
+</body>
+</html>
