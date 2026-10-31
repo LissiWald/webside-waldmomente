@@ -58,9 +58,9 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 </style>
 <style>
 /* Nachtrag Waldmomente: Fotos in den Tuerchen, eckige Form.
-   Die Fotos liegen in assets/ und werden reihum verteilt. Kommen neue
-   dazu, hier eine weitere nth-child-Zeile ergaenzen und den Teiler
-   erhoehen: bei vier Fotos 4n+1, 4n+2, 4n+3, 4n.
+   Vierzehn Fotos liegen in assets/ als tuer-01 bis tuer-14 und werden
+   reihum auf die vierundzwanzig Tuerchen verteilt. Kommen neue dazu,
+   die Zahl 14 in allen Zeilen erhoehen und eine Zeile anhaengen.
    background-image steht mit !important da, damit das Foto auch dann
    liegen bleibt, wenn ein Tuerchen geoeffnet oder ueberfahren wird. */
 .door-photo { border-radius: 5px; background: #1b3528; }
@@ -68,15 +68,24 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 .door-unpictured {
   background-size: cover;
   background-position: 50% 45%;
-  filter: saturate(.55) brightness(.66);
+  filter: saturate(.64) brightness(.78);
 }
-.door:nth-child(2n+1) .door-unpictured { background-image: url(assets/DSC07929.webp) !important; }
-.door:nth-child(2n)   .door-unpictured { background-image: url(assets/IMG_9131.webp) !important; }
-/* damit sich die wenigen Fotos nicht sichtbar wiederholen */
-.door:nth-child(3n)   .door-unpictured { background-position: 22% 30%; }
-.door:nth-child(3n+1) .door-unpictured { background-position: 74% 62%; }
+.door:nth-child(14n+1) .door-unpictured { background-image: url(assets/tuer-01.webp) !important; }
+.door:nth-child(14n+2) .door-unpictured { background-image: url(assets/tuer-02.webp) !important; }
+.door:nth-child(14n+3) .door-unpictured { background-image: url(assets/tuer-03.webp) !important; }
+.door:nth-child(14n+4) .door-unpictured { background-image: url(assets/tuer-04.webp) !important; }
+.door:nth-child(14n+5) .door-unpictured { background-image: url(assets/tuer-05.webp) !important; }
+.door:nth-child(14n+6) .door-unpictured { background-image: url(assets/tuer-06.webp) !important; }
+.door:nth-child(14n+7) .door-unpictured { background-image: url(assets/tuer-07.webp) !important; }
+.door:nth-child(14n+8) .door-unpictured { background-image: url(assets/tuer-08.webp) !important; }
+.door:nth-child(14n+9) .door-unpictured { background-image: url(assets/tuer-09.webp) !important; }
+.door:nth-child(14n+10) .door-unpictured { background-image: url(assets/tuer-10.webp) !important; }
+.door:nth-child(14n+11) .door-unpictured { background-image: url(assets/tuer-11.webp) !important; }
+.door:nth-child(14n+12) .door-unpictured { background-image: url(assets/tuer-12.webp) !important; }
+.door:nth-child(14n+13) .door-unpictured { background-image: url(assets/tuer-13.webp) !important; }
+.door:nth-child(14n) .door-unpictured { background-image: url(assets/tuer-14.webp) !important; }
 /* unten abdunkeln, damit Zahl und Wort auf jedem Foto lesbar bleiben */
-.door-photo:after { background: linear-gradient(180deg,#0c2c2226,#0c2c2214 30%,#071913e0); }
+.door-photo:after { background: linear-gradient(180deg,#0c2c2200 0%,#0c2c2200 48%,#07191396 74%,#071913ea 100%); }
 .door-number { color: #f3ead1; }
 .door-mark { color: #e7d4a8; opacity: .85; }
 </style>
