@@ -86,6 +86,29 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
   .door:hover .door-border { border-color: rgba(240,228,194,.85); }
 }
 
+/* Das Tuerchen im Kopfbereich gehoert zur selben Reihe und bekommt
+   deshalb dieselbe Form und dasselbe Milchglas. */
+.featured-frame {
+  border-radius: 5px;
+  background: linear-gradient(180deg, rgba(253,250,245,.16), rgba(253,250,245,.07) 55%, rgba(10,28,20,.30));
+  backdrop-filter: blur(7px) saturate(1.15) brightness(1.1);
+  -webkit-backdrop-filter: blur(7px) saturate(1.15) brightness(1.1);
+  box-shadow: inset 0 1px 0 rgba(253,250,245,.22), 0 15px 70px #05140e66;
+}
+.featured-light { background: none !important; box-shadow: none !important; }
+.featured-frame:after { background: none; }
+.arch-border { border-radius: 3px; inset: 8px; border-color: rgba(236,221,180,.5); }
+.featured-number { color: #fdfaf5; text-shadow: 0 1px 10px rgba(8,22,16,.55); }
+.featured-word { color: #fdfaf5; }
+.featured-word em { color: #f0e4c2; }
+
+@media (hover: hover) and (pointer: fine) {
+  .featured:hover .featured-frame {
+    background: linear-gradient(180deg, rgba(253,250,245,.26), rgba(253,250,245,.12) 55%, rgba(10,28,20,.26));
+  }
+  .featured:hover .arch-border { border-color: rgba(240,228,194,.85); }
+}
+
 /* Auf sehr schmalen Handys ragten die Schalter rechts aus dem Bild. */
 @media(max-width:380px){
   .nav{flex-wrap:wrap;gap:10px;padding-left:5%;padding-right:5%}
