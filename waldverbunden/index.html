@@ -57,66 +57,74 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 }
 </style>
 <style>
-/* Nachtrag Waldmomente: alle Tuerchen gleich, als Milchglas.
-   Statt 24 verschiedener Fotos liegt hinter allen derselbe Wald, naemlich
-   der Hintergrund der Seite. Die Tuerchen sind nur eine helle, leicht
-   durchscheinende Scheibe davor. Dadurch sehen sie alle gleich aus und
-   gehoeren sichtbar zum Bild dahinter.
-   Die Fotos tuer-01 bis tuer-22 bleiben im Ordner liegen, falls sie
-   spaeter hinter den geoeffneten Tuerchen gebraucht werden. */
-.door-photo {
-  border-radius: 5px;
-  background: linear-gradient(180deg, rgba(253,250,245,.16), rgba(253,250,245,.07) 55%, rgba(10,28,20,.30));
-  backdrop-filter: blur(7px) saturate(1.15) brightness(1.1);
-  -webkit-backdrop-filter: blur(7px) saturate(1.15) brightness(1.1);
-  box-shadow: inset 0 1px 0 rgba(253,250,245,.22);
+/* Nachtrag Waldmomente: Fotos in den Tuerchen, eckige Form.
+   Zweiundzwanzig Fotos liegen in assets/ als tuer-01 bis tuer-22 und werden
+   reihum auf die vierundzwanzig Tuerchen verteilt. Kommen neue dazu,
+   die Zahl 22 in allen Zeilen erhoehen und eine Zeile anhaengen.
+   background-image steht mit !important da, damit das Foto auch dann
+   liegen bleibt, wenn ein Tuerchen geoeffnet oder ueberfahren wird. */
+.door-photo { border-radius: 5px; background: #1b3528; }
+.door-border { border-radius: 3px; inset: 8px; }
+.door-unpictured {
+  /* Die Seite setzt fuer einen Teil der Tuerchen eigene background-
+     Kurzschreibweisen. Die setzen Groesse und Lage zurueck, deshalb
+     stehen beide hier mit !important, sonst liegt das Foto bei diesen
+     Tuerchen in Originalgroesse in der linken oberen Ecke. */
+  background-size: cover !important;
+  background-position: 50% 45% !important;
+  background-repeat: no-repeat !important;
+  filter: saturate(.64) brightness(.78);
 }
-/* Die Seite legt hier je nach Tuerchen eigene Verlaeufe hinein.
-   Die werden entfernt, sonst sind die Tuerchen doch wieder verschieden. */
-.door-unpictured { background: none !important; }
-.door-photo:after { background: none; }
-.door-border { border-radius: 3px; inset: 8px; border-color: rgba(236,221,180,.5); }
-.door-number { color: #fdfaf5; text-shadow: 0 1px 10px rgba(8,22,16,.55); }
-.door-mark { color: rgba(253,250,245,.82); opacity: 1; }
+.door:nth-child(22n+1) .door-unpictured { background-image: url(assets/tuer-01.webp) !important; }
+.door:nth-child(22n+2) .door-unpictured { background-image: url(assets/tuer-02.webp) !important; }
+.door:nth-child(22n+3) .door-unpictured { background-image: url(assets/tuer-03.webp) !important; }
+.door:nth-child(22n+4) .door-unpictured { background-image: url(assets/tuer-04.webp) !important; }
+.door:nth-child(22n+5) .door-unpictured { background-image: url(assets/tuer-05.webp) !important; }
+.door:nth-child(22n+6) .door-unpictured { background-image: url(assets/tuer-06.webp) !important; }
+.door:nth-child(22n+7) .door-unpictured { background-image: url(assets/tuer-07.webp) !important; }
+.door:nth-child(22n+8) .door-unpictured { background-image: url(assets/tuer-08.webp) !important; }
+.door:nth-child(22n+9) .door-unpictured { background-image: url(assets/tuer-09.webp) !important; }
+.door:nth-child(22n+10) .door-unpictured { background-image: url(assets/tuer-10.webp) !important; }
+.door:nth-child(22n+11) .door-unpictured { background-image: url(assets/tuer-11.webp) !important; }
+.door:nth-child(22n+12) .door-unpictured { background-image: url(assets/tuer-12.webp) !important; }
+.door:nth-child(22n+13) .door-unpictured { background-image: url(assets/tuer-13.webp) !important; }
+.door:nth-child(22n+14) .door-unpictured { background-image: url(assets/tuer-14.webp) !important; }
+.door:nth-child(22n+15) .door-unpictured { background-image: url(assets/tuer-15.webp) !important; }
+.door:nth-child(22n+16) .door-unpictured { background-image: url(assets/tuer-16.webp) !important; }
+.door:nth-child(22n+17) .door-unpictured { background-image: url(assets/tuer-17.webp) !important; }
+.door:nth-child(22n+18) .door-unpictured { background-image: url(assets/tuer-18.webp) !important; }
+.door:nth-child(22n+19) .door-unpictured { background-image: url(assets/tuer-19.webp) !important; }
+.door:nth-child(22n+20) .door-unpictured { background-image: url(assets/tuer-20.webp) !important; }
+.door:nth-child(22n+21) .door-unpictured { background-image: url(assets/tuer-21.webp) !important; }
+.door:nth-child(22n) .door-unpictured { background-image: url(assets/tuer-22.webp) !important; }
+/* unten abdunkeln, damit Zahl und Wort auf jedem Foto lesbar bleiben */
+.door-photo:after { background: linear-gradient(180deg,#0c2c2200 0%,#0c2c2200 48%,#07191396 74%,#071913ea 100%); }
+.door-number { color: #f3ead1; }
+.door-mark { color: #e7d4a8; opacity: .85; }
+</style>
+<style>
+/* Das Tuerchen im Kopfbereich gehoert zur selben Reihe: dieselbe
+   eckige Form, derselbe Rahmen, und ein Waldfoto wie die anderen. */
+.featured-frame { border-radius: 5px; }
+.arch-border { border-radius: 3px; inset: 8px; }
+.featured-light {
+  background-image: url(assets/tuer-01.webp) !important;
+  background-size: cover !important;
+  background-position: 50% 45% !important;
+  background-repeat: no-repeat !important;
+  filter: saturate(.64) brightness(.78);
+  box-shadow: none !important;
+}
+/* Im Kopfbereich steht Text mitten auf dem Foto, deshalb dunkelt es
+   hier schon weiter oben ab als bei den kleinen Tuerchen. */
+.featured-frame:after { background: linear-gradient(180deg,rgba(7,25,19,.18) 0%,rgba(7,25,19,.62) 34%,rgba(7,25,19,.74) 62%,rgba(7,25,19,.88) 100%); }
+.featured-number { color: #f3ead1; }
 
-@media (hover: hover) and (pointer: fine) {
-  .door:hover .door-photo {
-    background: linear-gradient(180deg, rgba(253,250,245,.26), rgba(253,250,245,.12) 55%, rgba(10,28,20,.26));
-  }
-  .door:hover .door-border { border-color: rgba(240,228,194,.85); }
-}
-
-/* Hinter dem geoeffneten Tuerchen steht das Waldfoto des Tages. */
-.door-layout.waldfoto .door-media {
-  background-size: cover;
-  background-position: center;
-}
+/* Hinter dem geoeffneten Tuerchen steht dasselbe Foto gross. */
+.door-layout.waldfoto .door-media { background-size: cover; background-position: center; }
 .door-layout.waldfoto .door-media:before {
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(8,22,16,.18), rgba(8,22,16,.42));
-}
-
-/* Das Tuerchen im Kopfbereich gehoert zur selben Reihe und bekommt
-   deshalb dieselbe Form und dasselbe Milchglas. */
-.featured-frame {
-  border-radius: 5px;
-  background: linear-gradient(180deg, rgba(253,250,245,.16), rgba(253,250,245,.07) 55%, rgba(10,28,20,.30));
-  backdrop-filter: blur(7px) saturate(1.15) brightness(1.1);
-  -webkit-backdrop-filter: blur(7px) saturate(1.15) brightness(1.1);
-  box-shadow: inset 0 1px 0 rgba(253,250,245,.22), 0 15px 70px #05140e66;
-}
-.featured-light { background: none !important; box-shadow: none !important; }
-.featured-frame:after { background: none; }
-.arch-border { border-radius: 3px; inset: 8px; border-color: rgba(236,221,180,.5); }
-.featured-number { color: #fdfaf5; text-shadow: 0 1px 10px rgba(8,22,16,.55); }
-.featured-word { color: #fdfaf5; }
-.featured-word em { color: #f0e4c2; }
-
-@media (hover: hover) and (pointer: fine) {
-  .featured:hover .featured-frame {
-    background: linear-gradient(180deg, rgba(253,250,245,.26), rgba(253,250,245,.12) 55%, rgba(10,28,20,.26));
-  }
-  .featured:hover .arch-border { border-color: rgba(240,228,194,.85); }
 }
 
 /* Auf sehr schmalen Handys ragten die Schalter rechts aus dem Bild. */
