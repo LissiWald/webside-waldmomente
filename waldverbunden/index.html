@@ -86,6 +86,16 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
   .door:hover .door-border { border-color: rgba(240,228,194,.85); }
 }
 
+/* Hinter dem geoeffneten Tuerchen steht das Waldfoto des Tages. */
+.door-layout.waldfoto .door-media {
+  background-size: cover;
+  background-position: center;
+}
+.door-layout.waldfoto .door-media:before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8,22,16,.18), rgba(8,22,16,.42));
+}
+
 /* Das Tuerchen im Kopfbereich gehoert zur selben Reihe und bekommt
    deshalb dieselbe Form und dasselbe Milchglas. */
 .featured-frame {
@@ -174,4 +184,38 @@ function draw(t){raf=0;if(document.hidden)return;let dt=Math.min((t-last)/1000||
 $('#snow').onclick=()=>{storm=!storm;document.body.classList.toggle('storm',storm);$('#snow').setAttribute('aria-pressed',String(storm));$('#snow .controltext').textContent=storm?'Gestöber aus':'Schneegestöber';if(storm){particles.forEach(p=>{p.x=Math.random()*width;p.y=Math.random()*height});notify('Schneegestöber an · Noch einmal tippen zum Ausschalten.')}if(!raf){last=performance.now();raf=requestAnimationFrame(draw)}if(!storm&&reduce){cancelAnimationFrame(raf);raf=0;ctx.clearRect(0,0,width,height)}};
 let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document.hidden){resumeAudio=[audio,forestAudio].filter(el=>!el.paused);resumeAudio.forEach(el=>el.pause());cancelAnimationFrame(raf);raf=0}else{resumeAudio.forEach(el=>el.play().catch(()=>{}));resumeAudio=[];if(!raf&&(!reduce||storm)){last=performance.now();raf=requestAnimationFrame(draw)}}});
 
-</script></body></html>
+</script><script>
+/* Nachtrag Waldmomente: Solange hinter einem Tuerchen noch keine
+   Partnerin eingetragen ist, zeigt es das Waldfoto des Tages. Die
+   22 Fotos werden reihum verteilt, wie im Raster. Traegt jemand
+   spaeter ein eigenes Bild oder Video ein, hat das Vorrang und hier
+   passiert nichts. */
+(function () {
+  "use strict";
+  var ANZAHL = 22;
+  var inhalt = document.getElementById('door-content');
+  var zaehler = document.getElementById('modal-counter');
+  if (!inhalt || !zaehler) return;
+
+  function fotoEinsetzen() {
+    var layout = inhalt.querySelector('.door-layout');
+    if (!layout || layout.dataset.waldfoto) return;
+    if (layout.classList.contains('with-partner-media')) return;
+    var treffer = zaehler.textContent.match(/(\d+)/);
+    if (!treffer) return;
+    var tag = parseInt(treffer[1], 10);
+    if (!(tag >= 1 && tag <= 24)) return;
+    var nr = ((tag - 1) % ANZAHL) + 1;
+    var medien = layout.querySelector('.door-media');
+    if (!medien) return;
+    layout.classList.remove('no-photo');
+    layout.classList.add('waldfoto');
+    medien.style.backgroundImage = 'url(assets/tuer-' + (nr < 10 ? '0' : '') + nr + '.webp)';
+    layout.dataset.waldfoto = '1';
+  }
+
+  new MutationObserver(fotoEinsetzen).observe(inhalt, { childList: true, subtree: true });
+  fotoEinsetzen();
+})();
+</script>
+</body></html>
