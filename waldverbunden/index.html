@@ -103,22 +103,14 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 .door-mark { color: #e7d4a8; opacity: .85; }
 </style>
 <style>
-/* Das Tuerchen im Kopfbereich gehoert zur selben Reihe: dieselbe
-   eckige Form, derselbe Rahmen, und ein Waldfoto wie die anderen. */
-.featured-frame { border-radius: 5px; }
-.arch-border { border-radius: 3px; inset: 8px; }
-.featured-light {
-  background-image: url(assets/tuer-01.webp) !important;
-  background-size: cover !important;
-  background-position: 50% 45% !important;
-  background-repeat: no-repeat !important;
-  filter: saturate(.64) brightness(.78);
-  box-shadow: none !important;
-}
-/* Im Kopfbereich steht Text mitten auf dem Foto, deshalb dunkelt es
-   hier schon weiter oben ab als bei den kleinen Tuerchen. */
-.featured-frame:after { background: linear-gradient(180deg,rgba(7,25,19,.18) 0%,rgba(7,25,19,.62) 34%,rgba(7,25,19,.74) 62%,rgba(7,25,19,.88) 100%); }
-.featured-number { color: #f3ead1; }
+/* Das Tuerchen im Kopfbereich ist raus. Das Element bleibt stehen,
+   weil das Skript der Seite darauf zugreift, es wird nur nicht mehr
+   angezeigt. Der Kopfbereich zeigt jetzt nur noch das Waldbild. */
+.featured { display: none !important; }
+
+/* Alle Tuerchen einer Reihe stehen auf einer Hoehe. Die Seite hatte
+   jede zweite und fuenfte Spalte versetzt. */
+.door { transform: none !important; }
 
 /* Hinter dem geoeffneten Tuerchen steht dasselbe Foto gross. */
 .door-layout.waldfoto .door-media { background-size: cover; background-position: center; }
