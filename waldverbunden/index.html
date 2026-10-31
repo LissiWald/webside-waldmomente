@@ -58,32 +58,45 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 </style>
 <style>
 /* Nachtrag Waldmomente: Fotos in den Tuerchen, eckige Form.
-   Vierzehn Fotos liegen in assets/ als tuer-01 bis tuer-14 und werden
+   Zweiundzwanzig Fotos liegen in assets/ als tuer-01 bis tuer-22 und werden
    reihum auf die vierundzwanzig Tuerchen verteilt. Kommen neue dazu,
-   die Zahl 14 in allen Zeilen erhoehen und eine Zeile anhaengen.
+   die Zahl 22 in allen Zeilen erhoehen und eine Zeile anhaengen.
    background-image steht mit !important da, damit das Foto auch dann
    liegen bleibt, wenn ein Tuerchen geoeffnet oder ueberfahren wird. */
 .door-photo { border-radius: 5px; background: #1b3528; }
 .door-border { border-radius: 3px; inset: 8px; }
 .door-unpictured {
-  background-size: cover;
-  background-position: 50% 45%;
+  /* Die Seite setzt fuer einen Teil der Tuerchen eigene background-
+     Kurzschreibweisen. Die setzen Groesse und Lage zurueck, deshalb
+     stehen beide hier mit !important, sonst liegt das Foto bei diesen
+     Tuerchen in Originalgroesse in der linken oberen Ecke. */
+  background-size: cover !important;
+  background-position: 50% 45% !important;
+  background-repeat: no-repeat !important;
   filter: saturate(.64) brightness(.78);
 }
-.door:nth-child(14n+1) .door-unpictured { background-image: url(assets/tuer-01.webp) !important; }
-.door:nth-child(14n+2) .door-unpictured { background-image: url(assets/tuer-02.webp) !important; }
-.door:nth-child(14n+3) .door-unpictured { background-image: url(assets/tuer-03.webp) !important; }
-.door:nth-child(14n+4) .door-unpictured { background-image: url(assets/tuer-04.webp) !important; }
-.door:nth-child(14n+5) .door-unpictured { background-image: url(assets/tuer-05.webp) !important; }
-.door:nth-child(14n+6) .door-unpictured { background-image: url(assets/tuer-06.webp) !important; }
-.door:nth-child(14n+7) .door-unpictured { background-image: url(assets/tuer-07.webp) !important; }
-.door:nth-child(14n+8) .door-unpictured { background-image: url(assets/tuer-08.webp) !important; }
-.door:nth-child(14n+9) .door-unpictured { background-image: url(assets/tuer-09.webp) !important; }
-.door:nth-child(14n+10) .door-unpictured { background-image: url(assets/tuer-10.webp) !important; }
-.door:nth-child(14n+11) .door-unpictured { background-image: url(assets/tuer-11.webp) !important; }
-.door:nth-child(14n+12) .door-unpictured { background-image: url(assets/tuer-12.webp) !important; }
-.door:nth-child(14n+13) .door-unpictured { background-image: url(assets/tuer-13.webp) !important; }
-.door:nth-child(14n) .door-unpictured { background-image: url(assets/tuer-14.webp) !important; }
+.door:nth-child(22n+1) .door-unpictured { background-image: url(assets/tuer-01.webp) !important; }
+.door:nth-child(22n+2) .door-unpictured { background-image: url(assets/tuer-02.webp) !important; }
+.door:nth-child(22n+3) .door-unpictured { background-image: url(assets/tuer-03.webp) !important; }
+.door:nth-child(22n+4) .door-unpictured { background-image: url(assets/tuer-04.webp) !important; }
+.door:nth-child(22n+5) .door-unpictured { background-image: url(assets/tuer-05.webp) !important; }
+.door:nth-child(22n+6) .door-unpictured { background-image: url(assets/tuer-06.webp) !important; }
+.door:nth-child(22n+7) .door-unpictured { background-image: url(assets/tuer-07.webp) !important; }
+.door:nth-child(22n+8) .door-unpictured { background-image: url(assets/tuer-08.webp) !important; }
+.door:nth-child(22n+9) .door-unpictured { background-image: url(assets/tuer-09.webp) !important; }
+.door:nth-child(22n+10) .door-unpictured { background-image: url(assets/tuer-10.webp) !important; }
+.door:nth-child(22n+11) .door-unpictured { background-image: url(assets/tuer-11.webp) !important; }
+.door:nth-child(22n+12) .door-unpictured { background-image: url(assets/tuer-12.webp) !important; }
+.door:nth-child(22n+13) .door-unpictured { background-image: url(assets/tuer-13.webp) !important; }
+.door:nth-child(22n+14) .door-unpictured { background-image: url(assets/tuer-14.webp) !important; }
+.door:nth-child(22n+15) .door-unpictured { background-image: url(assets/tuer-15.webp) !important; }
+.door:nth-child(22n+16) .door-unpictured { background-image: url(assets/tuer-16.webp) !important; }
+.door:nth-child(22n+17) .door-unpictured { background-image: url(assets/tuer-17.webp) !important; }
+.door:nth-child(22n+18) .door-unpictured { background-image: url(assets/tuer-18.webp) !important; }
+.door:nth-child(22n+19) .door-unpictured { background-image: url(assets/tuer-19.webp) !important; }
+.door:nth-child(22n+20) .door-unpictured { background-image: url(assets/tuer-20.webp) !important; }
+.door:nth-child(22n+21) .door-unpictured { background-image: url(assets/tuer-21.webp) !important; }
+.door:nth-child(22n) .door-unpictured { background-image: url(assets/tuer-22.webp) !important; }
 /* unten abdunkeln, damit Zahl und Wort auf jedem Foto lesbar bleiben */
 .door-photo:after { background: linear-gradient(180deg,#0c2c2200 0%,#0c2c2200 48%,#07191396 74%,#071913ea 100%); }
 .door-number { color: #f3ead1; }
