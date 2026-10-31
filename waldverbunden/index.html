@@ -56,6 +56,30 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
   .sep{display:none}
 }
 </style>
+<style>
+/* Nachtrag Waldmomente: Fotos in den Tuerchen, eckige Form.
+   Die Fotos liegen in assets/ und werden reihum verteilt. Kommen neue
+   dazu, hier eine weitere nth-child-Zeile ergaenzen und den Teiler
+   erhoehen: bei vier Fotos 4n+1, 4n+2, 4n+3, 4n.
+   background-image steht mit !important da, damit das Foto auch dann
+   liegen bleibt, wenn ein Tuerchen geoeffnet oder ueberfahren wird. */
+.door-photo { border-radius: 5px; background: #1b3528; }
+.door-border { border-radius: 3px; inset: 8px; }
+.door-unpictured {
+  background-size: cover;
+  background-position: 50% 45%;
+  filter: saturate(.55) brightness(.66);
+}
+.door:nth-child(2n+1) .door-unpictured { background-image: url(assets/DSC07929.webp) !important; }
+.door:nth-child(2n)   .door-unpictured { background-image: url(assets/IMG_9131.webp) !important; }
+/* damit sich die wenigen Fotos nicht sichtbar wiederholen */
+.door:nth-child(3n)   .door-unpictured { background-position: 22% 30%; }
+.door:nth-child(3n+1) .door-unpictured { background-position: 74% 62%; }
+/* unten abdunkeln, damit Zahl und Wort auf jedem Foto lesbar bleiben */
+.door-photo:after { background: linear-gradient(180deg,#0c2c2226,#0c2c2214 30%,#071913e0); }
+.door-number { color: #f3ead1; }
+.door-mark { color: #e7d4a8; opacity: .85; }
+</style>
 </head>
 <!-- TEIL 1: Seitenaufbau und Texte. -->
 <body>
