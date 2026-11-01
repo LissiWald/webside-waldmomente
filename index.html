@@ -1842,22 +1842,43 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="kal__text">
  <span class="kal__kicker reveal">Neu · Versand ab 6. November</span>
  <h2 class="kal__title reveal d1">Ein Stück Wald<br>für deine Wand.</h2>
- <p class="kal__unter reveal d1">Wald statt WLAN · Waldkalender 2027</p>
- <p class="kal__lead reveal d2">Zwölf Monate draußen. Mit Waldwissen, Mondphasen und besonderen Tagen durch das Jahr.</p>
+ <p class="kal__unter reveal d1">Wald statt WLAN · Der Waldkalender 2027</p>
+ <p class="kal__lead reveal d2">Draußen verändert sich dauernd was. Du merkst es nur, wenn dir jemand sagt, wo du hinschauen sollst.</p>
+ <p class="kal__absatz reveal d2">Dafür habe ich diesen Kalender gemacht. Erst für meine eigene Wand. Dann wollten ihn meine Familie und meine Kolleginnen auch.</p>
 
- <ul class="kal__liste reveal d2">
- <li>Für jeden Monat, was gerade im Wald passiert</li>
- <li>Mondphasen mit Datum</li>
- <li>Bauernregeln</li>
- <li>Feiertage, Natur- und Welttage</li>
- </ul>
-
+ <div class="kal__preis reveal d3">24,90 €</div>
+ <p class="kal__versand reveal d3">Versand innerhalb Deutschlands inklusive</p>
  <a href="https://payhip.com/b/yvrGW" class="kal__knopf reveal d3" target="_blank" rel="noopener">
- <span>Kalender ansehen</span>
+ <span>Jetzt kaufen</span>
  </a>
- <p class="kal__fein reveal d3">Inklusive Versand innerhalb Deutschlands. Verschickt wird ab dem 6. November.</p>
+ <p class="kal__fein reveal d3">Verschickt wird ab dem 6. November.</p>
  </div>
  </div>
+
+ <div class="kal__mehr">
+ <div class="kal__spalte reveal">
+ <h3>Was jeden Monat auf dich wartet</h3>
+ <p>Ein großes Waldfoto. Echte Bilder aus dem Wald, kein Stockfoto, keine KI.</p>
+ <p>Darunter stehen zwei kurze Texte. Einer erzählt, was draußen gerade los ist. Der andere zeigt dir ein Detail, an dem du sonst vorbeiläufst. Im Oktober zum Beispiel: Pilze sind enger mit dir verwandt als mit jeder Pflanze im Wald. Das erklärt einiges.</p>
+ <p>Dazu kommen eine alte Bauernregel, die Mondphasen und die besonderen Tage im Monat: alle Feiertage in Deutschland, Sternschnuppennächte, alte Bräuche und Welttage.</p>
+ </div>
+
+ <div class="kal__spalte reveal d1">
+ <h3>Für wen er ist</h3>
+ <p>Für dich, wenn du gern rausgehst und wissen willst, was du da siehst. Oder für jemanden, der im Wald ständig stehen bleibt und sich bückt.</p>
+ <p>Er ist nicht für dich, wenn du einen Planer suchst, in den du viele Termine schreiben kannst. Dafür ist er nicht gemacht.</p>
+
+ <h3 class="kal__h3-zweit">Die Daten</h3>
+ <ul class="kal__daten">
+ <li>DIN A3 hoch, 29,7 × 42 cm</li>
+ <li>13 Blätter: Titel und zwölf Monate</li>
+ <li>Mattes Papier, 170 g</li>
+ <li>Silberne Spirale mit Aufhänger</li>
+ </ul>
+ </div>
+ </div>
+
+ <p class="kal__schluss reveal">Mit diesem Kalender ist es wie mit Pfifferlingen. Es gibt nicht viele. Und wer eine Stelle kennt, erzählt es nicht jedem.</p>
  </section>
 
  <span class="gold-sep"></span>
@@ -1993,6 +2014,45 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  padding: 1.15rem 2.6rem; transition: background .3s, transform .4s;
  }
  .kal__knopf:hover { background: var(--dark); transform: translateY(-2px); }
+ .kal__absatz {
+ font-size: .99rem; line-height: 1.85; color: var(--text);
+ margin: 0 0 2rem; max-width: 32em;
+ }
+ .kal__preis {
+ font-family: 'Cormorant Garamond', serif; font-size: 2.3rem;
+ color: var(--gold-dark); line-height: 1; margin-bottom: .35rem;
+ }
+ .kal__versand {
+ font-size: .8rem; letter-spacing: .04em; color: var(--brown);
+ margin: 0 0 1.4rem;
+ }
+ .kal__mehr {
+ max-width: 1180px; margin: 4.5rem auto 0;
+ display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem;
+ border-top: 1px solid rgba(139,104,71,.22); padding-top: 3.2rem;
+ }
+ .kal__spalte h3 {
+ font-family: 'Cormorant Garamond', serif; font-style: italic;
+ font-weight: 500; font-size: 1.6rem; color: var(--green);
+ margin: 0 0 1rem;
+ }
+ .kal__spalte .kal__h3-zweit { margin-top: 2.4rem; }
+ .kal__spalte p {
+ font-size: .97rem; line-height: 1.85; color: var(--text);
+ margin: 0 0 1.1rem; max-width: 34em;
+ }
+ .kal__daten { list-style: none; margin: 0; padding: 0; }
+ .kal__daten li {
+ font-size: .92rem; line-height: 1.7; color: var(--text);
+ padding: .55rem 0; border-bottom: 1px solid rgba(139,104,71,.14);
+ }
+ .kal__daten li:last-child { border-bottom: 0; }
+ .kal__schluss {
+ max-width: 1180px; margin: 3.2rem auto 0;
+ font-family: 'Cormorant Garamond', serif; font-style: italic;
+ font-size: clamp(1.15rem, 2.6vw, 1.5rem); line-height: 1.6;
+ color: var(--green); max-width: 30em;
+ }
  .kal__fein {
  font-size: .82rem; line-height: 1.6; color: var(--brown);
  margin: 1.1rem 0 0; max-width: 28em;
@@ -2002,6 +2062,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  .kal__inner { grid-template-columns: 1fr; gap: 2.4rem; }
  .kal__text { text-align: left; }
  .kal__knopf { width: 100%; }
+ .kal__mehr { grid-template-columns: 1fr; gap: 2.6rem; margin-top: 3rem; padding-top: 2.4rem; }
+ .kal__schluss { margin-top: 2.6rem; }
  }
 
  /* Der Einstieg ins Geschaeft: der Test steht direkt unter dem Bild
@@ -2125,9 +2187,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <img src="assets/waldkalender-cover.jpg" alt="Wald statt WLAN, der Waldkalender 2027" class="produkt-cover" loading="lazy">
  <span class="produkt-badge" style="background:var(--gold);color:var(--dark);">Neu · gedruckt</span>
  <h3 class="produkt-name">Wald statt WLAN<br>Waldkalender 2027</h3>
- <p class="produkt-desc">Zwölf Monate draußen. Mit Waldwissen, Mondphasen, Bauernregeln und besonderen Tagen durch das Jahr. Inklusive Versand innerhalb Deutschlands.</p>
+ <p class="produkt-desc">Zwölf Monate draußen. Jeden Monat ein großes Waldfoto, dazu Waldwissen, eine Bauernregel, die Mondphasen und die besonderen Tage. DIN A3, gedruckt.</p>
+ <div class="produkt-price">24,90 € <span style="font-size:.7rem;font-weight:400;opacity:.65;margin-left:.3rem;">inkl. Versand</span></div>
  <a href="https://payhip.com/b/yvrGW" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
- <span>Kalender ansehen</span>
+ <span>Jetzt kaufen</span>
  </a>
  <a href="#waldkalender" class="produkt-more">Mehr erfahren ↑</a>
  </div>
