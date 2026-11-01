@@ -1843,11 +1843,12 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <span class="kal__kicker reveal">Neu · Versand ab 6. November</span>
  <h2 class="kal__title reveal d1">Ein Stück Wald<br>für deine Wand.</h2>
  <p class="kal__unter reveal d1">Wald statt WLAN · Der Waldkalender 2027</p>
- <p class="kal__lead reveal d2">Draußen verändert sich dauernd was. Du merkst es nur, wenn dir jemand sagt, wo du hinschauen sollst.</p>
+ <p class="kal__lead reveal d2">Du gehst denselben Weg wie letzte Woche. Er sieht aus wie ein anderer.</p>
+ <p class="kal__absatz reveal d2">Draußen verändert sich dauernd was. Du merkst es nur, wenn dir jemand sagt, wo du hinschauen sollst.</p>
  <p class="kal__absatz reveal d2">Dafür habe ich diesen Kalender gemacht. Erst für meine eigene Wand. Dann wollten ihn meine Familie und meine Kolleginnen auch.</p>
 
  <div class="kal__preis reveal d3">24,90 €</div>
- <p class="kal__versand reveal d3">Versand innerhalb Deutschlands inklusive</p>
+ <p class="kal__versand reveal d3">inklusive Versand innerhalb Deutschlands</p>
  <a href="https://payhip.com/b/yvrGW" class="kal__knopf reveal d3" target="_blank" rel="noopener">
  <span>Jetzt kaufen</span>
  </a>
@@ -2014,10 +2015,12 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  padding: 1.15rem 2.6rem; transition: background .3s, transform .4s;
  }
  .kal__knopf:hover { background: var(--dark); transform: translateY(-2px); }
+ .kal__lead + .kal__absatz { margin-top: -.6rem; }
  .kal__absatz {
  font-size: .99rem; line-height: 1.85; color: var(--text);
- margin: 0 0 2rem; max-width: 32em;
+ margin: 0 0 1.2rem; max-width: 32em;
  }
+ .kal__absatz:last-of-type { margin-bottom: 2rem; }
  .kal__preis {
  font-family: 'Cormorant Garamond', serif; font-size: 2.3rem;
  color: var(--gold-dark); line-height: 1; margin-bottom: .35rem;
