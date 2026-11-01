@@ -1720,13 +1720,13 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="hero__slide"></div>
  <div class="hero__overlay"></div>
  <div class="hero__content">
- <a href="raschel.html" class="hero__neu reveal" aria-label="Raschels Waldrallye entdecken">
- <picture class="hero__neu-bild"><source srcset="assets/raschel-knopf.webp" type="image/webp"><img src="assets/raschel-knopf.jpg" width="132" height="132" alt="" loading="eager"></picture>
+ <a href="#waldkalender" class="hero__neu reveal" aria-label="Zum Waldkalender 2027">
+ <picture class="hero__neu-bild"><img src="assets/waldkalender-cover.jpg" width="132" height="132" alt="" loading="eager"></picture>
  <span class="hero__neu-strich" aria-hidden="true"></span>
  <span class="hero__neu-inhalt">
  <span class="hero__neu-wort">Neu</span>
- <span class="hero__neu-titel">Sieben Flicken.<br>Ein Waldgespenst.</span>
- <span class="hero__neu-zusatz">Raschels Waldrallye<span class="hero__neu-lang"> für 4 bis 7 Jahre</span> · 12,90 €</span>
+ <span class="hero__neu-titel">Ein Stück Wald<br>für deine Wand.</span>
+ <span class="hero__neu-zusatz">Waldkalender 2027<span class="hero__neu-lang"> · zwölf Monate draußen</span></span>
  </span>
  <span class="hero__neu-pfeil" aria-hidden="true">→</span>
  <span class="hero__neu-schimmer" aria-hidden="true"></span>
@@ -1827,6 +1827,41 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </section>
 
 
+ <!-- ══════════ WALDKALENDER 2027 ══════════ -->
+ <section id="waldkalender" aria-label="Waldkalender 2027">
+ <div class="kal__inner">
+ <div class="kal__bild reveal">
+ <picture>
+ <source srcset="assets/waldkalender-2027.webp" type="image/webp">
+ <img src="assets/waldkalender-2027.jpg" width="1020" height="720"
+ alt="Der Waldkalender 2027 an der Wand, daneben ein Monatsblatt und die Seite mit besonderen Tagen und Mondphasen"
+ loading="eager">
+ </picture>
+ </div>
+
+ <div class="kal__text">
+ <span class="kal__kicker reveal">Neu · Versand ab 6. November</span>
+ <h2 class="kal__title reveal d1">Ein Stück Wald<br>für deine Wand.</h2>
+ <p class="kal__unter reveal d1">Wald statt WLAN · Waldkalender 2027</p>
+ <p class="kal__lead reveal d2">Zwölf Monate draußen. Mit Waldwissen, Mondphasen und besonderen Tagen durch das Jahr.</p>
+
+ <ul class="kal__liste reveal d2">
+ <li>Für jeden Monat, was gerade im Wald passiert</li>
+ <li>Mondphasen mit Datum</li>
+ <li>Bauernregeln</li>
+ <li>Feiertage, Natur- und Welttage</li>
+ </ul>
+
+ <a href="https://payhip.com/b/yvrGW" class="kal__knopf reveal d3" target="_blank" rel="noopener">
+ <span>Kalender ansehen</span>
+ </a>
+ <p class="kal__fein reveal d3">Inklusive Versand innerhalb Deutschlands. Verschickt wird ab dem 6. November.</p>
+ </div>
+ </div>
+ </section>
+
+ <span class="gold-sep"></span>
+
  <!-- ══════════ WALDTYP-TEST ══════════ -->
  <section id="waldtyp-einstieg" aria-label="Waldtyp-Test">
  <div class="wt__inner">
@@ -1908,6 +1943,67 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </section>
 
  <style>
+ /* Der Waldkalender ist das erste, was nach dem Bild kommt: ein
+    gedrucktes Produkt mit Versandtermin, das traegt die Seite im
+    November. Bild gross links, Text rechts, auf dem Handy
+    untereinander. */
+ #waldkalender {
+ background: var(--sand);
+ padding: 5.5rem 1.5rem;
+ }
+ .kal__inner {
+ max-width: 1180px; margin: 0 auto;
+ display: grid; grid-template-columns: 1.15fr 1fr;
+ gap: 4rem; align-items: center;
+ }
+ .kal__bild img {
+ width: 100%; height: auto; display: block;
+ box-shadow: 0 24px 60px rgba(45,74,53,.17);
+ }
+ .kal__kicker {
+ display: block; font-size: .58rem; letter-spacing: .34em;
+ text-transform: uppercase; color: var(--gold-dark); margin-bottom: 1.4rem;
+ }
+ .kal__title {
+ font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
+ font-size: clamp(2.3rem, 5.2vw, 3.6rem); line-height: 1.08;
+ color: var(--green); margin: 0 0 .9rem;
+ }
+ .kal__unter {
+ font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+ color: var(--brown); margin: 0 0 1.6rem;
+ }
+ .kal__lead {
+ font-size: clamp(1rem, 2.2vw, 1.12rem); line-height: 1.8;
+ color: var(--text); margin: 0 0 1.8rem; max-width: 32em;
+ }
+ .kal__liste { list-style: none; margin: 0 0 2.2rem; padding: 0; }
+ .kal__liste li {
+ position: relative; padding-left: 1.6rem; margin-bottom: .7rem;
+ font-size: .97rem; line-height: 1.7; color: var(--text);
+ }
+ .kal__liste li::before {
+ content: ''; position: absolute; left: 0; top: .66em;
+ width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+ }
+ .kal__knopf {
+ display: inline-flex; align-items: center; justify-content: center;
+ background: var(--green); color: var(--cream); text-decoration: none;
+ font-size: .68rem; letter-spacing: .24em; text-transform: uppercase;
+ padding: 1.15rem 2.6rem; transition: background .3s, transform .4s;
+ }
+ .kal__knopf:hover { background: var(--dark); transform: translateY(-2px); }
+ .kal__fein {
+ font-size: .82rem; line-height: 1.6; color: var(--brown);
+ margin: 1.1rem 0 0; max-width: 28em;
+ }
+ @media (max-width: 900px) {
+ #waldkalender { padding: 4rem 1.2rem; }
+ .kal__inner { grid-template-columns: 1fr; gap: 2.4rem; }
+ .kal__text { text-align: left; }
+ .kal__knopf { width: 100%; }
+ }
+
  /* Der Einstieg ins Geschaeft: der Test steht direkt unter dem Bild
     und ist das Erste, was man nach dem Hero liest. */
  #waldtyp-einstieg {
@@ -2024,30 +2120,16 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <a href="#workbook" class="produkt-more">Mehr erfahren ↓</a>
  </div>
 
- <!-- Raschel, das Waldgespenst -->
+ <!-- Waldkalender 2027 -->
  <div class="produkt-card reveal d3">
- <img src="assets/raschel-cover.jpg" alt="Cover Raschel, das Waldgespenst" class="produkt-cover" loading="lazy">
- <span class="produkt-badge" style="background:var(--gold);color:var(--dark);">Neu</span>
- <h3 class="produkt-name">Raschel, das<br>Waldgespenst</h3>
- <p class="produkt-desc">Der Sturm hat Raschels Laken zerrissen. Sieben Flicken liegen irgendwo zwischen den Bäumen. Eine Waldrallye für 4 bis 7 Jahre.</p>
- <div class="produkt-price">12,90 €</div>
- <a href="https://payhip.com/b/arw7M" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
- <span>Jetzt kaufen</span>
+ <img src="assets/waldkalender-cover.jpg" alt="Wald statt WLAN, der Waldkalender 2027" class="produkt-cover" loading="lazy">
+ <span class="produkt-badge" style="background:var(--gold);color:var(--dark);">Neu · gedruckt</span>
+ <h3 class="produkt-name">Wald statt WLAN<br>Waldkalender 2027</h3>
+ <p class="produkt-desc">Zwölf Monate draußen. Mit Waldwissen, Mondphasen, Bauernregeln und besonderen Tagen durch das Jahr. Inklusive Versand innerhalb Deutschlands.</p>
+ <a href="https://payhip.com/b/yvrGW" class="btn btn--green reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;">
+ <span>Kalender ansehen</span>
  </a>
- <a href="raschel.html" class="produkt-more">Mehr erfahren →</a>
- </div>
-
- <!-- Waldpaket, Spur und Raschel zusammen -->
- <div class="produkt-card produkt-card--feat reveal d3">
- <img src="assets/waldpaket-cover.jpg" alt="Waldpaket mit Waldspur und Raschel" class="produkt-cover" loading="lazy">
- <span class="produkt-badge" style="background:var(--gold);color:var(--dark);">Beides zusammen</span>
- <h3 class="produkt-name">Waldpaket</h3>
- <p class="produkt-desc">Deine Waldrunde. Euer Waldabenteuer. Zwölf Beobachtungsaufgaben für dich und Raschels Waldrallye für die Kinder, zusammen in einem Paket.</p>
- <div class="produkt-price">17,90 € <span style="font-size:.72rem;font-weight:400;opacity:.6;text-decoration:line-through;margin-left:.35rem;">20,80 €</span></div>
- <a href="https://payhip.com/b/gZnaG" class="btn reveal" target="_blank" rel="noopener" style="margin-top:.5rem;width:100%;justify-content:center;background:var(--gold);color:var(--dark);border-color:var(--gold);">
- <span>Jetzt kaufen</span>
- </a>
- <a href="raschel.html" class="produkt-more">Raschel ansehen →</a>
+ <a href="#waldkalender" class="produkt-more">Mehr erfahren ↑</a>
  </div>
 
  </div>
