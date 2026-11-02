@@ -112,6 +112,66 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
    jede zweite und fuenfte Spalte versetzt. */
 .door { transform: none !important; }
 
+/* Der Kopfbereich: die Ueberschrift taucht langsam auf, "verbunden."
+   in Gold mit einem Schimmer, der einmal darueberlaeuft. Darunter
+   wachsen auf einer Leinwand feine goldene Eisblumen vom unteren Rand
+   ins Bild. Beides laeuft genau einmal beim Oeffnen der Seite. */
+#frost {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 1; pointer-events: none;
+}
+.hero-content { z-index: 2; }
+
+h1 .h1-wald, h1 .h1-gold {
+  display: block;
+  opacity: 0;
+  transform: translateY(26px);
+  filter: blur(9px);
+  animation: auftauchen 1.9s cubic-bezier(.19,.72,.21,1) forwards;
+}
+h1 .h1-wald { font-style: normal; margin-top: 0; }
+h1 .h1-gold {
+  font-style: italic;
+  animation-delay: .85s;
+  background: linear-gradient(100deg,
+    #c6a56d 0%, #e3cb94 28%, #fff3d4 44%, #e3cb94 60%, #c6a56d 100%);
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+@keyframes auftauchen {
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+/* der Schimmer laeuft einmal durch, nachdem die Zeile steht */
+h1 .h1-gold { animation-name: auftauchen, schimmer; animation-duration: 1.9s, 2.6s;
+  animation-delay: .85s, 2.2s; animation-fill-mode: forwards, forwards;
+  animation-timing-function: cubic-bezier(.19,.72,.21,1), cubic-bezier(.4,0,.2,1); }
+@keyframes schimmer { to { background-position: -30% 0; } }
+
+.hero .goldline { width: 0; animation: strichwaechst 1.4s ease-out 2.5s forwards; }
+@keyframes strichwaechst { to { width: 44px; } }
+
+.hero .lead, .hero .description, .hero .enter {
+  opacity: 0; animation: leiseauf 1.5s ease-out forwards;
+}
+.hero .lead { animation-delay: 2.7s; }
+.hero .description { animation-delay: 3s; }
+.hero .enter { animation-delay: 3.3s; }
+@keyframes leiseauf { to { opacity: 1; } }
+
+/* Wer Bewegung abbestellt hat, sieht alles sofort und vollstaendig.
+   Die Seite schaltet Animationen global ab, deshalb muss hier
+   ausdruecklich der Endzustand stehen. */
+@media (prefers-reduced-motion: reduce) {
+  h1 .h1-wald, h1 .h1-gold,
+  .hero .lead, .hero .description, .hero .enter {
+    opacity: 1 !important; transform: none !important; filter: none !important;
+  }
+  h1 .h1-gold { background-position: 0 0 !important; }
+  .hero .goldline { width: 44px !important; }
+}
+
 /* Hinter dem geoeffneten Tuerchen steht dasselbe Foto gross. */
 .door-layout.waldfoto .door-media { background-size: cover; background-position: center; }
 .door-layout.waldfoto .door-media:before {
@@ -136,7 +196,7 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 <canvas id="weather" aria-hidden="true"></canvas><div id="veil" aria-hidden="true"></div>
 <header class="nav"><a class="wordmark" href="https://waldmomente.me" target="_blank" rel="noopener">Waldmomente</a><a class="navlink" href="#advent">ADVENT 2026</a><div class="controls"><select id="music-track" aria-label="Musikstück auswählen"><option value="piano">Ruhiges Klavier</option><option value="christmas">Nussknacker</option></select><button id="music" aria-pressed="false"><span class="soundbars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="controltext">Musik an</span></button><span class="sep"></span><button id="woods" aria-pressed="false"><span class="snowicon" aria-hidden="true">♧</span><span class="controltext">Schritte an</span></button><span class="sep"></span><button id="snow" aria-pressed="false"><span class="snowicon" aria-hidden="true">✧</span><span class="controltext">Schneegestöber</span></button></div></header>
 <main>
-<section class="hero" aria-labelledby="title"><img class="hero-photo" src="assets/DSC07929.webp" alt="Lissis Winterwald mit schneebedeckten Tannen und einem kleinen Bach"><div class="hero-shade"></div><div class="hero-content"><p class="eyebrow">DER WALDMOMENTE ADVENTSKALENDER</p><h1 id="title">Wald<span>verbunden.</span></h1><div class="goldline"></div><p class="lead">24 Türchen voller Natur und Geschichten.</p><p class="description">Gemeinsam mit Partnerinnen,<br>die unsere Liebe zum Wald teilen.</p><a class="enter" href="#advent">Den Advent entdecken <span aria-hidden="true">↓</span></a></div><button class="featured" id="featured" aria-label="Erstes Türchen zum Ausprobieren öffnen"><span class="featured-frame"><span class="featured-light" aria-hidden="true"></span><span class="arch-border"></span><span class="featured-word">Ein kleiner<br><em>Anfang.</em></span><span class="featured-number">01</span><span class="featured-star" aria-hidden="true">✧</span></span><span class="featured-caption">DEIN ERSTES TÜRCHEN <span>↗</span></span></button><div class="hero-bottom"><span>1. — 24. DEZEMBER</span><span>MIT LIEBE ZUM WALD. VON LISSI.</span><a href="#advent" aria-label="Zum Kalender scrollen">↓</a></div></section>
+<section class="hero" aria-labelledby="title"><img class="hero-photo" src="assets/DSC07929.webp" alt="Lissis Winterwald mit schneebedeckten Tannen und einem kleinen Bach"><div class="hero-shade"></div><canvas id="frost" aria-hidden="true"></canvas><div class="hero-content"><p class="eyebrow">DER WALDMOMENTE ADVENTSKALENDER</p><h1 id="title"><span class="h1-wald">Wald</span><span class="h1-gold">verbunden.</span></h1><div class="goldline"></div><p class="lead">24 Türchen voller Natur und Geschichten.</p><p class="description">Gemeinsam mit Partnerinnen,<br>die unsere Liebe zum Wald teilen.</p><a class="enter" href="#advent">Den Advent entdecken <span aria-hidden="true">↓</span></a></div><button class="featured" id="featured" aria-label="Erstes Türchen zum Ausprobieren öffnen"><span class="featured-frame"><span class="featured-light" aria-hidden="true"></span><span class="arch-border"></span><span class="featured-word">Ein kleiner<br><em>Anfang.</em></span><span class="featured-number">01</span><span class="featured-star" aria-hidden="true">✧</span></span><span class="featured-caption">DEIN ERSTES TÜRCHEN <span>↗</span></span></button><div class="hero-bottom"><span>1. — 24. DEZEMBER</span><span>MIT LIEBE ZUM WALD. VON LISSI.</span><a href="#advent" aria-label="Zum Kalender scrollen">↓</a></div></section>
 <section class="calendar-section" id="advent"><div class="section-top"><div><p class="eyebrow">JEDEN TAG EINE ENTDECKUNG</p><h2>Der Dezember hat<br><em>24 kleine Geheimnisse.</em></h2></div><div class="section-aside"><p>Ein Foto. Eine Geschichte. Eine besondere Idee.<br>Hinter jedem Türchen wartet etwas anderes.</p><span class="progress"><span id="opened-count">0</span> VON 24 ENTDECKT</span></div></div><div class="preview-banner"><span><span class="dot"></span>Vorschau: Alle Türchen sind zum Ausprobieren offen.</span><button id="mode">Kalendermodus testen</button></div><div id="calendar" class="calendar" aria-label="Die 24 Adventstürchen"></div><div class="below-calendar"><span>Ein geöffnetes Türchen bleibt für dich offen.</span><button id="reset">Entdeckungen zurücksetzen</button></div></section>
 <section class="interlude"><div class="interlude-photo"><img src="assets/IMG_9131.webp" alt="Grünes Moos mit kleinen Schneeresten" loading="lazy"></div><div class="interlude-text"><p class="eyebrow">WALDVERBUNDEN</p><h2>Was uns verbindet,<br><em>wächst draußen.</em></h2><p>Dieser Adventskalender bringt Waldmomente und Partnerinnen zusammen, die ihre Liebe zum Wald auf ganz eigene Weise zeigen. In Büchern, in ihrer Arbeit und in den Dingen, die sie gestalten.</p><p>Im Dezember öffnen wir hier ihre Türchen.</p><a class="textlink" href="https://www.instagram.com/waldmomente/" target="_blank" rel="noopener">Waldmomente auf Instagram <span>↗</span></a></div></section>
 <div class="closing"><span class="ornament" aria-hidden="true">✧</span><p>Schön, dass du hier bist.</p><span class="eyebrow">LISSI · WALDMOMENTE</span></div>
@@ -216,6 +276,132 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
 
   new MutationObserver(fotoEinsetzen).observe(inhalt, { childList: true, subtree: true });
   fotoEinsetzen();
+})();
+</script>
+<script>
+/* Nachtrag Waldmomente: Eisblumen im Kopfbereich.
+   Vom unteren Rand wachsen feine goldene Linien ins Bild, wie Frost,
+   der sich an einer Scheibe ausbreitet. Sie wachsen genau einmal und
+   bleiben dann stehen. Danach rechnet nichts mehr.
+   Wer Bewegung abbestellt hat, bekommt das fertige Muster sofort. */
+(function () {
+  "use strict";
+  var leinwand = document.getElementById('frost');
+  var kopf = document.querySelector('.hero');
+  if (!leinwand || !kopf || !leinwand.getContext) return;
+
+  var stift = leinwand.getContext('2d');
+  var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var zweige, laeuft, breite, hoehe, uhr;
+
+  function zufall(a, b) { return a + Math.random() * (b - a); }
+
+  /* Ein Zweig waechst Stueck fuer Stueck nach oben und verzweigt sich. */
+  function neuerZweig(x, y, richtung, dicke, leben, tiefe) {
+    return { x: x, y: y, richtung: richtung, dicke: dicke,
+             leben: leben, rest: leben, tiefe: tiefe };
+  }
+
+  function saeen() {
+    breite = kopf.clientWidth;
+    hoehe = kopf.clientHeight;
+    var dichte = Math.max(4, Math.round(breite / 150));
+    zweige = [];
+    for (var i = 0; i < dichte; i++) {
+      var x = breite * (i + zufall(.2, .8)) / dichte;
+      /* abwechselnd von unten und von der Seite herein */
+      var vonUnten = i % 3 !== 1;
+      zweige.push(vonUnten
+        ? neuerZweig(x, hoehe + 4, -Math.PI / 2 + zufall(-.45, .45), zufall(1.2, 2.1), zufall(150, 240), 0)
+        : neuerZweig(zufall(0, 1) < .5 ? -4 : breite + 4, zufall(hoehe * .45, hoehe * .95),
+                     zufall(0, 1) < .5 ? zufall(-.7, -.2) : Math.PI + zufall(.2, .7),
+                     zufall(1.1, 1.8), zufall(110, 190), 0));
+    }
+  }
+
+  function schritt(zweig) {
+    var laenge = zufall(2.2, 4.4);
+    var nx = zweig.x + Math.cos(zweig.richtung) * laenge;
+    var ny = zweig.y + Math.sin(zweig.richtung) * laenge;
+    var anteil = zweig.rest / zweig.leben;          /* 1 am Anfang, 0 am Ende */
+    var deckung = .42 * anteil * (1 - zweig.tiefe * .2);
+    if (deckung > 0) {
+      stift.strokeStyle = 'rgba(219,192,131,' + deckung.toFixed(3) + ')';
+      stift.lineWidth = Math.max(.4, zweig.dicke * anteil);
+      stift.lineCap = 'round';
+      stift.beginPath();
+      stift.moveTo(zweig.x, zweig.y);
+      stift.lineTo(nx, ny);
+      stift.stroke();
+
+      /* Reifzacken: alle paar Schritte zwei kurze Stacheln im gleichen
+         Winkel nach beiden Seiten. Das unterscheidet Frost von Gras. */
+      zweig.zaehler = (zweig.zaehler || 0) + 1;
+      if (zweig.zaehler % 3 === 0 && zweig.tiefe < 3) {
+        var zacke = zufall(3.5, 7) * anteil;
+        stift.lineWidth = Math.max(.3, zweig.dicke * anteil * .55);
+        stift.strokeStyle = 'rgba(219,192,131,' + (deckung * .8).toFixed(3) + ')';
+        for (var v = -1; v <= 1; v += 2) {
+          var w = zweig.richtung + v * 1.0;
+          stift.beginPath();
+          stift.moveTo(nx, ny);
+          stift.lineTo(nx + Math.cos(w) * zacke, ny + Math.sin(w) * zacke);
+          stift.stroke();
+        }
+      }
+    }
+    zweig.x = nx; zweig.y = ny;
+    zweig.richtung += zufall(-.14, .14);
+    zweig.rest--;
+
+    var kinder = [];
+    /* Seitenaeste, wie bei Eisblumen in spitzem Winkel */
+    if (zweig.tiefe < 3 && zweig.rest > 14 && Math.random() < .055) {
+      var seite = Math.random() < .5 ? 1 : -1;
+      kinder.push(neuerZweig(nx, ny, zweig.richtung + seite * zufall(.5, .95),
+                             zweig.dicke * .62, zweig.rest * zufall(.4, .7), zweig.tiefe + 1));
+    }
+    return kinder;
+  }
+
+  function wachsen() {
+    var nachwuchs = [];
+    for (var i = 0; i < zweige.length; i++) {
+      if (zweige[i].rest > 0) nachwuchs = nachwuchs.concat(schritt(zweige[i]));
+    }
+    zweige = zweige.filter(function (z) { return z.rest > 0; }).concat(nachwuchs);
+    if (zweige.length) laeuft = requestAnimationFrame(wachsen);
+    else laeuft = null;
+  }
+
+  function aufbauen() {
+    var dichte = Math.min(window.devicePixelRatio || 1, 2);
+    leinwand.width = Math.round(kopf.clientWidth * dichte);
+    leinwand.height = Math.round(kopf.clientHeight * dichte);
+    stift.setTransform(dichte, 0, 0, dichte, 0, 0);
+    stift.clearRect(0, 0, kopf.clientWidth, kopf.clientHeight);
+    saeen();
+    if (laeuft) cancelAnimationFrame(laeuft);
+    if (ruhig) {
+      /* ohne Bewegung: in einem Rutsch fertig zeichnen */
+      var schutz = 0;
+      while (zweige.length && schutz++ < 20000) {
+        var n = [];
+        for (var i = 0; i < zweige.length; i++) {
+          if (zweige[i].rest > 0) n = n.concat(schritt(zweige[i]));
+        }
+        zweige = zweige.filter(function (z) { return z.rest > 0; }).concat(n);
+      }
+    } else {
+      laeuft = requestAnimationFrame(wachsen);
+    }
+  }
+
+  aufbauen();
+  window.addEventListener('resize', function () {
+    clearTimeout(uhr);
+    uhr = setTimeout(aufbauen, 350);
+  });
 })();
 </script>
 </body></html>
