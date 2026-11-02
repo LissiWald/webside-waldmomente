@@ -280,9 +280,15 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
 </script>
 <script>
 /* Nachtrag Waldmomente: Eisblumen im Kopfbereich.
-   Vom unteren Rand wachsen feine goldene Linien ins Bild, wie Frost,
-   der sich an einer Scheibe ausbreitet. Sie wachsen genau einmal und
-   bleiben dann stehen. Danach rechnet nichts mehr.
+
+   Echter Frost an einer Scheibe waechst als Feder: eine gerade
+   Mittelrippe, daran dicht an dicht Seitenrippen im immer gleichen
+   Winkel, und an denen wieder kleinere. Genau so ist es hier gebaut,
+   deshalb sieht es nach Eis aus und nicht nach Rissen oder Gras.
+
+   Gewachsen wird nach Zeit, nicht nach Bildern pro Sekunde, damit es
+   auf jedem Geraet gleich langsam laeuft: ungefaehr zwoelf Sekunden.
+   Danach steht das Muster und es rechnet nichts mehr.
    Wer Bewegung abbestellt hat, bekommt das fertige Muster sofort. */
 (function () {
   "use strict";
@@ -292,86 +298,94 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
 
   var stift = leinwand.getContext('2d');
   var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var zweige, laeuft, breite, hoehe, uhr;
+
+  var WINKEL = 1.047;        /* 60 Grad, der Winkel echter Eisfedern */
+  var TAKT = 9;              /* alle wieviel Pixel eine Seitenrippe ansetzt */
+  var TEMPO = 30;            /* Pixel pro Sekunde fuer die Mittelrippe */
+
+  var rippen, laeuft, letzte, uhr;
 
   function zufall(a, b) { return a + Math.random() * (b - a); }
 
-  /* Ein Zweig waechst Stueck fuer Stueck nach oben und verzweigt sich. */
-  function neuerZweig(x, y, richtung, dicke, leben, tiefe) {
-    return { x: x, y: y, richtung: richtung, dicke: dicke,
-             leben: leben, rest: leben, tiefe: tiefe };
+  function rippe(x, y, richtung, laenge, dicke, tiefe) {
+    return { x: x, y: y, richtung: richtung, gelaufen: 0, laenge: laenge,
+             dicke: dicke, tiefe: tiefe, seit: 0, tempo: TEMPO / (1 + tiefe * 0.9) };
   }
 
   function saeen() {
-    breite = kopf.clientWidth;
-    hoehe = kopf.clientHeight;
-    var dichte = Math.max(4, Math.round(breite / 150));
-    zweige = [];
-    for (var i = 0; i < dichte; i++) {
-      var x = breite * (i + zufall(.2, .8)) / dichte;
-      /* abwechselnd von unten und von der Seite herein */
-      var vonUnten = i % 3 !== 1;
-      zweige.push(vonUnten
-        ? neuerZweig(x, hoehe + 4, -Math.PI / 2 + zufall(-.45, .45), zufall(1.2, 2.1), zufall(150, 240), 0)
-        : neuerZweig(zufall(0, 1) < .5 ? -4 : breite + 4, zufall(hoehe * .45, hoehe * .95),
-                     zufall(0, 1) < .5 ? zufall(-.7, -.2) : Math.PI + zufall(.2, .7),
-                     zufall(1.1, 1.8), zufall(110, 190), 0));
+    var breite = kopf.clientWidth, hoehe = kopf.clientHeight;
+    var anzahl = Math.max(3, Math.round(breite / 270));
+    rippen = [];
+    for (var i = 0; i < anzahl; i++) {
+      var x = breite * (i + zufall(.25, .75)) / anzahl;
+      rippen.push(rippe(x, hoehe + 6, -Math.PI / 2 + zufall(-.55, .55),
+                        hoehe * zufall(.17, .3), zufall(1.4, 2.1), 0));
+    }
+    /* zwei kleinere, die von der Seite hereinwachsen */
+    for (var k = 0; k < 2; k++) {
+      var links = k === 0;
+      rippen.push(rippe(links ? -6 : breite + 6, zufall(hoehe * .55, hoehe * .95),
+                        links ? zufall(-.85, -.35) : Math.PI + zufall(.35, .85),
+                        breite * zufall(.1, .17), zufall(1.3, 1.8), 0));
     }
   }
 
-  function schritt(zweig) {
-    var laenge = zufall(2.2, 4.4);
-    var nx = zweig.x + Math.cos(zweig.richtung) * laenge;
-    var ny = zweig.y + Math.sin(zweig.richtung) * laenge;
-    var anteil = zweig.rest / zweig.leben;          /* 1 am Anfang, 0 am Ende */
-    var deckung = .42 * anteil * (1 - zweig.tiefe * .2);
-    if (deckung > 0) {
-      stift.strokeStyle = 'rgba(219,192,131,' + deckung.toFixed(3) + ')';
-      stift.lineWidth = Math.max(.4, zweig.dicke * anteil);
-      stift.lineCap = 'round';
-      stift.beginPath();
-      stift.moveTo(zweig.x, zweig.y);
-      stift.lineTo(nx, ny);
-      stift.stroke();
+  function strich(x1, y1, x2, y2, dicke, deckung) {
+    stift.strokeStyle = 'rgba(226,201,142,' + deckung.toFixed(3) + ')';
+    stift.lineWidth = dicke;
+    stift.lineCap = 'round';
+    stift.beginPath();
+    stift.moveTo(x1, y1);
+    stift.lineTo(x2, y2);
+    stift.stroke();
+  }
 
-      /* Reifzacken: alle paar Schritte zwei kurze Stacheln im gleichen
-         Winkel nach beiden Seiten. Das unterscheidet Frost von Gras. */
-      zweig.zaehler = (zweig.zaehler || 0) + 1;
-      if (zweig.zaehler % 3 === 0 && zweig.tiefe < 3) {
-        var zacke = zufall(3.5, 7) * anteil;
-        stift.lineWidth = Math.max(.3, zweig.dicke * anteil * .55);
-        stift.strokeStyle = 'rgba(219,192,131,' + (deckung * .8).toFixed(3) + ')';
-        for (var v = -1; v <= 1; v += 2) {
-          var w = zweig.richtung + v * 1.0;
-          stift.beginPath();
-          stift.moveTo(nx, ny);
-          stift.lineTo(nx + Math.cos(w) * zacke, ny + Math.sin(w) * zacke);
-          stift.stroke();
+  /* Eine Rippe ein Stueck weiterwachsen lassen. Gibt neue Seitenrippen zurueck. */
+  function wachse(r, weg) {
+    var neue = [];
+    var rest = weg;
+    while (rest > 0 && r.gelaufen < r.laenge) {
+      var stueck = Math.min(rest, 1.6);
+      var nx = r.x + Math.cos(r.richtung) * stueck;
+      var ny = r.y + Math.sin(r.richtung) * stueck;
+      var anteil = 1 - r.gelaufen / r.laenge;              /* 1 unten, 0 an der Spitze */
+      var deckung = (r.tiefe === 0 ? .5 : r.tiefe === 1 ? .3 : .19) * (.25 + .75 * anteil);
+      strich(r.x, r.y, nx, ny, Math.max(.45, r.dicke * (.3 + .7 * anteil)), deckung);
+      r.x = nx; r.y = ny;
+      r.gelaufen += stueck;
+      r.seit += stueck;
+      /* die Mittelrippe darf kaum wandern, sonst wirkt sie wie ein Riss */
+      if (r.tiefe === 0) r.richtung += zufall(-.01, .01);
+
+      if (r.tiefe < 2 && r.seit >= TAKT) {
+        r.seit = 0;
+        /* Die Rippe ist immer nur ein Bruchteil der Mittelrippe und
+           nach oben hin kuerzer. So entsteht die Federform. */
+        var kurz = r.tiefe === 0
+          ? Math.min(34, (r.laenge - r.gelaufen) * .3)
+          : Math.min(13, (r.laenge - r.gelaufen) * .42);
+        if (kurz > 4) {
+          for (var v = -1; v <= 1; v += 2) {
+            neue.push(rippe(nx, ny, r.richtung + v * WINKEL, kurz,
+                            r.dicke * .5, r.tiefe + 1));
+          }
         }
       }
+      rest -= stueck;
     }
-    zweig.x = nx; zweig.y = ny;
-    zweig.richtung += zufall(-.14, .14);
-    zweig.rest--;
-
-    var kinder = [];
-    /* Seitenaeste, wie bei Eisblumen in spitzem Winkel */
-    if (zweig.tiefe < 3 && zweig.rest > 14 && Math.random() < .055) {
-      var seite = Math.random() < .5 ? 1 : -1;
-      kinder.push(neuerZweig(nx, ny, zweig.richtung + seite * zufall(.5, .95),
-                             zweig.dicke * .62, zweig.rest * zufall(.4, .7), zweig.tiefe + 1));
-    }
-    return kinder;
+    return neue;
   }
 
-  function wachsen() {
-    var nachwuchs = [];
-    for (var i = 0; i < zweige.length; i++) {
-      if (zweige[i].rest > 0) nachwuchs = nachwuchs.concat(schritt(zweige[i]));
+  function bild(jetzt) {
+    var dt = Math.min((jetzt - letzte) / 1000, .05);
+    letzte = jetzt;
+    var neue = [];
+    for (var i = 0; i < rippen.length; i++) {
+      var r = rippen[i];
+      if (r.gelaufen < r.laenge) neue = neue.concat(wachse(r, r.tempo * dt));
     }
-    zweige = zweige.filter(function (z) { return z.rest > 0; }).concat(nachwuchs);
-    if (zweige.length) laeuft = requestAnimationFrame(wachsen);
-    else laeuft = null;
+    rippen = rippen.filter(function (r) { return r.gelaufen < r.laenge; }).concat(neue);
+    laeuft = rippen.length ? requestAnimationFrame(bild) : null;
   }
 
   function aufbauen() {
@@ -381,19 +395,19 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     stift.setTransform(dichte, 0, 0, dichte, 0, 0);
     stift.clearRect(0, 0, kopf.clientWidth, kopf.clientHeight);
     saeen();
-    if (laeuft) cancelAnimationFrame(laeuft);
+    if (laeuft) { cancelAnimationFrame(laeuft); laeuft = null; }
     if (ruhig) {
-      /* ohne Bewegung: in einem Rutsch fertig zeichnen */
       var schutz = 0;
-      while (zweige.length && schutz++ < 20000) {
-        var n = [];
-        for (var i = 0; i < zweige.length; i++) {
-          if (zweige[i].rest > 0) n = n.concat(schritt(zweige[i]));
+      while (rippen.length && schutz++ < 4000) {
+        var neue = [];
+        for (var i = 0; i < rippen.length; i++) {
+          if (rippen[i].gelaufen < rippen[i].laenge) neue = neue.concat(wachse(rippen[i], 9999));
         }
-        zweige = zweige.filter(function (z) { return z.rest > 0; }).concat(n);
+        rippen = rippen.filter(function (r) { return r.gelaufen < r.laenge; }).concat(neue);
       }
     } else {
-      laeuft = requestAnimationFrame(wachsen);
+      letzte = performance.now();
+      laeuft = requestAnimationFrame(bild);
     }
   }
 
