@@ -133,20 +133,33 @@ h1 .h1-wald { font-style: normal; margin-top: 0; }
 h1 .h1-gold {
   font-style: italic;
   animation-delay: .85s;
-  background: linear-gradient(100deg,
-    #c6a56d 0%, #e3cb94 28%, #fff3d4 44%, #e3cb94 60%, #c6a56d 100%);
-  background-size: 260% 100%;
-  background-position: 120% 0;
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent; -webkit-text-fill-color: transparent;
+  /* Grundfarbe steht zuerst. Wenn der Verlauf aus irgendeinem Grund
+     nicht greift, ist die Zeile trotzdem golden und nie unsichtbar. */
+  color: #e3cb94;
+}
+/* Der Verlauf mit Schimmer nur auf groesseren Bildschirmen. Auf iPhones
+   verschluckt Safari bei background-clip:text mit bewegtem Verlauf
+   gelegentlich die ganze Zeile, und eine unsichtbare Ueberschrift ist
+   schlimmer als eine ohne Schimmer. */
+@media (min-width: 760px) {
+  h1 .h1-gold {
+    background: linear-gradient(100deg,
+      #c6a56d 0%, #e3cb94 28%, #fff3d4 44%, #e3cb94 60%, #c6a56d 100%);
+    background-size: 260% 100%;
+    background-position: 120% 0;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
 }
 @keyframes auftauchen {
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 /* der Schimmer laeuft einmal durch, nachdem die Zeile steht */
-h1 .h1-gold { animation-name: auftauchen, schimmer; animation-duration: 1.9s, 2.6s;
-  animation-delay: .85s, 2.2s; animation-fill-mode: forwards, forwards;
-  animation-timing-function: cubic-bezier(.19,.72,.21,1), cubic-bezier(.4,0,.2,1); }
+@media (min-width: 760px) {
+  h1 .h1-gold { animation-name: auftauchen, schimmer; animation-duration: 1.9s, 2.6s;
+    animation-delay: .85s, 2.2s; animation-fill-mode: forwards, forwards;
+    animation-timing-function: cubic-bezier(.19,.72,.21,1), cubic-bezier(.4,0,.2,1); }
+}
 @keyframes schimmer { to { background-position: -30% 0; } }
 
 .hero .goldline { width: 0; animation: strichwaechst 1.4s ease-out 2.5s forwards; }
