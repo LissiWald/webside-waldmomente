@@ -185,6 +185,87 @@ h1 .h1-gold {
   .hero .goldline { width: 44px !important; }
 }
 
+/* Die Bildspalte war so hoch wie der Text. Bei langen Tuerchen wurde
+   dadurch tief ins Foto hineingezoomt, bei Portraets bis ins Gesicht.
+   Jetzt hat sie ein festes Seitenverhaeltnis und bleibt beim Scrollen
+   oben stehen. */
+.door-layout.with-partner-media { align-items: start; }
+.door-layout.with-partner-media .door-media {
+  aspect-ratio: 3 / 4; min-height: 0; height: auto;
+  position: sticky; top: 0; background: #11271e;
+}
+/* Vollstaendig zeigen statt beschneiden: unter den Bildern sind
+   Portraets, Titelbilder und ein Flyer, bei denen ein Anschnitt
+   Gesichter oder Schrift abschneidet. Was uebrig bleibt, fuellt
+   das Dunkelgruen der Seite. */
+.door-layout.with-partner-media .door-media img { object-fit: contain; }
+@media (max-width: 650px) {
+  .door-layout.with-partner-media .door-media {
+    aspect-ratio: 1 / 1; height: auto; min-height: 0; position: static;
+  }
+}
+
+/* Nachtrag Waldmomente: die reicheren Tuercheninhalte. */
+.mehr-block { margin-top: 1.8rem; }
+.mehr-block h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+  font-weight: 500; font-size: 1.35rem; color: #ead9ae;
+  margin: 1.6rem 0 .5rem;
+}
+.mehr-block p { font-size: 12px; line-height: 1.9; color: #d7e0d2; margin: 0 0 .8rem; }
+.mehr-bild-unterschrift {
+  font-size: 10.5px; line-height: 1.6; color: #aebaa8; font-style: italic;
+  margin: -.4rem 0 .8rem;
+}
+.mehr-galerie {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 1rem 0 .4rem;
+}
+.mehr-galerie img {
+  width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px;
+  border: 1px solid #e3d1a12e;
+}
+.mehr-quellen { margin-top: 1.8rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.mehr-quellen .titel {
+  font-size: 8px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--gold); display: block; margin-bottom: .6rem;
+}
+.mehr-quellen a { display: block; font-size: 10.5px; line-height: 1.8; color: #c9d3c4; }
+.mehr-quellen a:hover { color: var(--gold); }
+
+/* Verlosung */
+.verlosung {
+  margin-top: 1.9rem; border: 1px solid #d6bd7f66; background: #ffffff0a;
+  padding: 1.1rem 1.2rem; border-radius: 2px;
+}
+.verlosung .kopf {
+  font-size: 8px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--gold); display: block; margin-bottom: .7rem;
+}
+.verlosung .gewinn {
+  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+  font-size: 1.3rem; color: #f2e4c2; line-height: 1.3; margin: 0 0 .8rem;
+}
+.verlosung p { font-size: 11.5px; line-height: 1.8; color: #d7e0d2; margin: 0 0 .6rem; }
+.verlosung .frage { color: #eee4c8; }
+.verlosung .zeitraum {
+  font-size: 10.5px; color: #b9c4b4; border-top: 1px solid var(--line);
+  margin-top: .8rem; padding-top: .7rem;
+}
+.verlosung .lage { display: inline-block; font-size: 9px; letter-spacing: .14em;
+  text-transform: uppercase; padding: .25rem .55rem; border-radius: 999px;
+  border: 1px solid currentColor; margin-bottom: .7rem; }
+.verlosung .lage.offen { color: #a8d59b; }
+.verlosung .lage.spaeter, .verlosung .lage.vorbei { color: #bcae8c; }
+.verlosung details { margin-top: .8rem; }
+.verlosung summary {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); cursor: pointer; padding: .35rem 0;
+}
+.verlosung details p { font-size: 10.5px; color: #bfcbba; }
+@media (max-width: 650px) {
+  .mehr-galerie { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+}
+
 /* Hinter dem geoeffneten Tuerchen steht dasselbe Foto gross. */
 .door-layout.waldfoto .door-media { background-size: cover; background-position: center; }
 .door-layout.waldfoto .door-media:before {
@@ -219,7 +300,378 @@ h1 .h1-gold {
 <!-- TEIL 4: Hier später die Partnerinnen und Türcheninhalte eintragen. -->
 <script>
 window.WALDVERBUNDEN_INHALTE = {
-  "doors": {}
+ "doors": {
+  "1": {
+   "name": "Lissi · Waldmomente",
+   "title": "Der Baum ruht. Wir rennen.",
+   "text": "Im Dezember wird es früh dunkel. Die Laubbäume stehen kahl. Bei uns leuchtet noch der Bildschirm, und auf dem Küchentisch liegt die Liste für morgen.\n\nBei vielen Laubbäumen ruht jetzt das Wachstum von Stamm und Zweigen. Die Knospen für das nächste Frühjahr sind längst angelegt und geschützt. Der Baum lebt weiter. Winterruhe bedeutet nicht, dass in ihm alles stillsteht. Auch unter der Erde kann noch etwas wachsen.",
+   "sections": [
+    {
+     "title": "Dein Dezemberbaum",
+     "text": "Such dir heute einen Baum an einem Weg, den du öfter gehst. Einen, zu dem du bis Weihnachten zurückkommen kannst.\n\nBleib kurz stehen. Schau auf die Rinde, die Form der Krone und eine Knospe, die du vom Weg aus sehen kannst. Merk dir ein Detail. Beim nächsten Besuch schaust du wieder genau dort hin."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Winterstrategien der Bäume",
+     "url": "https://starnberg.lbv.de/umweltbildung/einblicke-in-die-natur/winterstrategien-b%C3%A4ume/"
+    },
+    {
+     "label": "Wurzeln wachsen auch im Winter",
+     "url": "https://www.wsl.ch/de/news/wurzeln-wachsen-im-winter-und-das-ist-ueberraschend/"
+    }
+   ],
+   "illustration": {
+    "src": "assets/IMG_1024.webp",
+    "alt": "Lissis Dezemberbaum mit kahler Krone am Waldweg"
+   },
+   "image": "assets/IMG_1024.webp",
+   "imageAlt": "Lissis Dezemberbaum mit kahler Krone am Waldweg"
+  },
+  "4": {
+   "name": "Lissi · Waldmomente",
+   "title": "Draußen Dezember. In der Vase vielleicht Frühling.",
+   "text": "Ein kahler Kirschzweig auf dem Küchentisch. An seinen Knospen ist heute noch kaum etwas zu sehen. Bis Weihnachten könnten sich daraus Blüten öffnen.",
+   "sections": [
+    {
+     "title": "Die Geschichte dahinter",
+     "text": "Heute ist Barbaratag. Eine Legende erzählt, dass ein Kirschzweig am Gewand der heiligen Barbara hängen blieb. Sie stellte ihn ins Wasser. Später soll er geblüht haben.\n\nDaran erinnert der Brauch, am 4. Dezember Zweige zu schneiden und in eine Vase zu stellen. Ihre Blüten gelten als Zeichen der Hoffnung. Die Geschichte ist eine Legende."
+    },
+    {
+     "title": "Was im Zweig wirklich passiert",
+     "text": "Die Blütenknospen sind schon am Zweig angelegt. Sie entstehen nicht erst im Wohnzimmer. Haben sie ausreichend Kälte bekommen, kann die Wärme im Haus sie zum Öffnen bringen.\n\nOb der Zweig pünktlich zu Weihnachten blüht, hängt von der Pflanzenart und den Bedingungen ab."
+    },
+    {
+     "title": "Ein Zweig für dein Fenster",
+     "text": "Nimm einen kleinen Kirschzweig mit rundlichen Blütenknospen aus dem eigenen Garten. Oder frag jemanden, der dir einen abgeben kann. Auch Forsythien eignen sich.\n\nFrisch schräg anschneiden, in eine saubere Vase mit Wasser stellen. Hell, aber nicht direkt an die Heizung. Das Wasser regelmäßig wechseln.\n\nSuch dir eine Knospe aus. Schau morgen wieder hin. Und übermorgen. Vielleicht siehst du schon vor der ersten Blüte, was sich verändert."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Barbarazweige: Arten, Knospen und Pflege",
+     "url": "https://lwg.bayern.de/gartenakademie/gartendokumente/wochentipps/389344/index.php"
+    },
+    {
+     "label": "Kälte und Blütenknospen",
+     "url": "https://www.nabu-aichtal.de/kalenderblatt/dezember/barbarazweige/"
+    }
+   ],
+   "illustration": {
+    "src": "assets/IMG_5872.webp",
+    "alt": "Laubzweige mit Reif im Winterwald"
+   },
+   "image": "assets/IMG_5872.webp",
+   "imageAlt": "Laubzweige mit Reif im Winterwald"
+  },
+  "7": {
+   "name": "Lissi · Waldmomente",
+   "title": "Ein Jahr Wald für deine Wand.",
+   "text": "Wald statt WLAN. Zwölf Monate draußen, auch wenn du gerade am Küchentisch sitzt. Für meinen Waldkalender 2027 habe ich zwölf eigene Waldfotos ausgesucht. Dazu gibt es für jeden Monat etwas zum Entdecken, Mondphasen, alte Bauernregeln und besondere Tage. Ein Exemplar im A3-Format verlose ich hinter diesem Türchen.",
+   "illustration": {
+    "src": "assets/waldkalender-2027-deckblatt.jpg",
+    "alt": "Deckblatt von Lissis Waldkalender 2027 mit dem Titel Wald statt WLAN"
+   },
+   "giveaway": {
+    "prize": "Ein Exemplar des gedruckten Waldkalenders 2027 im A3-Format",
+    "question": "Für welches Jahr ist der Waldkalender?",
+    "answer": "2027",
+    "opens": "2026-12-07T08:00:00+01:00",
+    "closes": "2026-12-08T23:59:00+01:00",
+    "drawFrom": "2026-12-09T08:00:00+01:00",
+    "drawTimeApproximate": true,
+    "delivery": "Die Versandadresse wird erst nach dem Gewinn benötigt."
+   },
+   "image": "assets/waldkalender-2027-deckblatt.jpg",
+   "imageAlt": "Deckblatt von Lissis Waldkalender 2027 mit dem Titel Wald statt WLAN"
+  },
+  "9": {
+   "name": "Inselglück",
+   "title": "Eine Insel. Zwei Schwestern. Und das Meer.",
+   "text": "Hej! Wir sind zwei Schwestern und haben auf unserer Familieninsel Mölandet im finnischen Schärengarten einen Rückzugsort geschaffen.\n\nBei Inselglück verbringen wir Zeit draußen. Mit Pilates, Waldbaden, gemeinsamen Mahlzeiten und finnischer Sauna direkt am Meer. In kleinen Gruppen und bewusst offline.",
+   "instagramUrl": "https://www.instagram.com/inselglueck1/",
+   "website": "https://www.inselglueck-retreat.com/",
+   "illustration": {
+    "src": "assets/inselglueck-flyer.jpg",
+    "alt": "Originalflyer von Inselglück"
+   },
+   "giveaway": {
+    "prize": "20 % Rabatt auf die nächste Buchung bei Inselglück",
+    "question": "Wie heißt die Insel von Inselglück?",
+    "answer": "Mölandet",
+    "opens": "2026-12-09T08:00:00+01:00",
+    "closes": "2026-12-10T23:59:00+01:00",
+    "drawFrom": "2026-12-11T08:00:00+01:00",
+    "drawTimeApproximate": true,
+    "delivery": "Buchung und Einlösung des Rabatts besprichst du direkt mit Inselglück."
+   },
+   "image": "assets/inselglueck-flyer.jpg",
+   "imageAlt": "Originalflyer von Inselglück"
+  },
+  "12": {
+   "name": "Lissi · Waldmomente",
+   "title": "Da ist jemand vor dir gelaufen.",
+   "text": "Eine schmale Reihe von Abdrücken zieht über den Schnee. Fast wie Perlen an einer Schnur. So kann die Spur eines Fuchses aussehen.\n\nBeim sogenannten Schnüren setzt er im gleichmäßigen Trab die Hinterpfote in den Abdruck der Vorderpfote derselben Seite. Die Spur bleibt dadurch auffallend schmal.\n\nGanz so einfach wie „gerade Spur gleich Fuchs“ ist es allerdings nicht. Auch Hundespuren können ähnlich aussehen. Ein einzelner Abdruck reicht oft nicht für eine sichere Bestimmung.",
+   "sections": [
+    {
+     "title": "Eine Spur lesen",
+     "text": "Schau vom Weg aus auf mehrere Abdrücke hintereinander. Wie verläuft die Spur? Gerade oder mit vielen Richtungswechseln? Siehst du vier Zehen und Krallen?\n\nMach ein Foto, wenn du später vergleichen möchtest. Folge der Spur nicht ins Dickicht. Dort könnte das Tier ruhen.\n\nKein Schnee? Schau auf einen weichen, schlammigen Wegabschnitt. Auch dort bleibt sichtbar, wer vor dir unterwegs war."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Spuren im Winter: Fuchs und Verwechslungsgefahr",
+     "url": "https://naturdetektive.bfn.de/fileadmin/NATDET/documents/Kinatschu/Kinatschu_Winter_2022_bf.pdf"
+    }
+   ],
+   "illustration": {
+    "src": "assets/IMG_9566.webp",
+    "alt": "Verschneite Fläche vor dem dunklen Waldrand"
+   },
+   "image": "assets/IMG_9566.webp",
+   "imageAlt": "Verschneite Fläche vor dem dunklen Waldrand"
+  },
+  "14": {
+   "name": "Lissi · Waldmomente",
+   "title": "Der Winterwald ist nicht nur braun.",
+   "text": "Von weitem: kahle Äste, Laub, dunkle Stämme. Und dann liegt da dieses grüne Moospolster. Ein paar Schritte weiter klettert Efeu am Stamm. Darüber stehen die Nadeln einer Fichte.\n\nViele Laubbäume haben ihre Blätter verloren. Immergrüne Pflanzen wie Efeu behalten sie. Auch Moose können im Winter grün bleiben. Nicht jede Pflanze macht den Winter auf dieselbe Weise mit.",
+   "sections": [
+    {
+     "title": "Finde drei grüne Dinge",
+     "text": "Such bei deinem nächsten Spaziergang drei verschiedene grüne Pflanzen oder Pflanzenteile. Bleib dabei auf dem Weg.\n\nSchau nach unten, auf Augenhöhe und nach oben. Ist das Grün hell, dunkel oder fast blau? Glänzt es oder wirkt es matt?\n\nLass alles dort, wo es wächst. Drei Entdeckungen reichen. Du brauchst dafür keine drei Pflanzennamen."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Efeu als immergrüne Pflanze",
+     "url": "https://www.nabu-markgroeningen.de/tiere-pflanzenwelt/pflanzen/efeu/"
+    },
+    {
+     "label": "Moose und ihre Aktivität bei niedrigen Temperaturen",
+     "url": "https://www.nabu-aichtal.de/kalenderblatt/m%C3%A4rz/moos/"
+    }
+   ],
+   "illustration": {
+    "src": "assets/IMG_9131.webp",
+    "alt": "Grünes Moos zwischen Schneeresten · Foto von Lissi"
+   },
+   "image": "assets/IMG_9131.webp",
+   "imageAlt": "Grünes Moos zwischen Schneeresten · Foto von Lissi"
+  },
+  "16": {
+   "name": "Lissi · Waldmomente",
+   "title": "Warum holen wir uns im Winter Grün ins Haus?",
+   "text": "Ein Zweig auf dem Tisch. Ein Kranz an der Tür. Der Baum im Wohnzimmer. Draußen ist vieles kahl, drinnen stellen wir Grün auf.\n\nImmergrüne Pflanzen wurden schon lange vor unserem heutigen Weihnachtsfest als Zeichen für Leben und das Wiederkehren des Frühlings verwendet. Der geschmückte Weihnachtsbaum entwickelte sich später.\n\nEs gibt dafür keinen einzigen Anfang, aus dem sich jeder Zweig, jeder Kranz und jeder Baum ableiten lässt. Verschiedene Bräuche kamen über die Jahrhunderte zusammen.",
+   "sections": [
+    {
+     "title": "Ein Zweig, genauer betrachtet",
+     "text": "Vielleicht liegt schon Tannen oder Fichtengrün bei dir zu Hause. Schau dir einen Zweig aus der Nähe an. Wie sitzen die Nadeln? Wie sehen seine Spitzen aus?\n\nReibe vorsichtig eine einzelne Nadel zwischen den Fingern und rieche daran. Nur bei einem sicher erkannten Nadelzweig, keine Eibe verwenden.\n\nFalls du noch Grün holen möchtest, nimm Schnittgrün aus dem eigenen Garten oder aus einer Gärtnerei. Zweige an lebenden Waldbäumen bleiben dran."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Zur Geschichte des Weihnachtsbaumes",
+     "url": "https://www.waldwissen.net/de/wald-und-mensch/forstgeschichte/geschichte-des-weihnachtsbaumes"
+    }
+   ],
+   "illustration": {
+    "src": "assets/IMG_9084.webp",
+    "alt": "Verschneiter Nadelzweig · Foto von Lissi"
+   },
+   "image": "assets/IMG_9084.webp",
+   "imageAlt": "Verschneiter Nadelzweig · Foto von Lissi"
+  },
+  "19": {
+   "name": "Lissi · Waldmomente",
+   "title": "Schneeweiß? Schau mal in den Schatten.",
+   "text": "An einem klaren Wintertag liegt Schnee in der Sonne. Daneben zieht ein Baum seinen Schatten über den Boden. Und plötzlich sieht derselbe Schnee bläulich aus.\n\nIm Schatten fehlt das direkte Sonnenlicht. Licht vom blauen Himmel erreicht die Fläche trotzdem und kann ihr einen blauen Ton geben. Auch der Farbkontrast zur sonnigen Umgebung beeinflusst, wie wir das Blau wahrnehmen.\n\nDas ist kein Effekt, den jeder Schatten bei jedem Wetter zeigt. Unter einer grauen Wolkendecke kann die ganze Szene ganz anders aussehen.",
+   "sections": [
+    {
+     "title": "Zwei Stellen, ein Blick",
+     "text": "Vergleiche bei klarem Himmel eine sonnige Schneefläche mit einer direkt daneben im Schatten. Schau erst auf die eine, dann auf die andere und schließlich auf beide zusammen.\n\nKein Schnee vor der Tür? Behalte die Frage für den nächsten Schneetag: Welche Farbe hat der Schatten wirklich? Ein Winterfoto mit Sonne und Schatten eignet sich ebenfalls zum genauen Hinsehen. Die Kamera kann Farben allerdings anders wiedergeben als dein Auge."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Blaue Schatten: Himmelslicht und Farbwahrnehmung",
+     "url": "https://opg.optica.org/ao/abstract.cfm?URI=AO-33-21-4719"
+    }
+   ],
+   "illustration": {
+    "src": "assets/IMG_9570.webp",
+    "alt": "Sonniger Schnee neben dem blauen Schatten der Bäume"
+   },
+   "image": "assets/IMG_9570.webp",
+   "imageAlt": "Sonniger Schnee neben dem blauen Schatten der Bäume"
+  },
+  "21": {
+   "name": "Petra Priller",
+   "title": "Was in Petras Gläsern steckt.",
+   "text": "Auf Petras Tisch stehen Gläser mit handgeschriebenen Etiketten. Daneben liegen Blätter, Wurzeln und Harze. Aus diesen Zutaten stellt sie eigene Räuchermischungen zusammen.\n\nPetra beschäftigt sich intensiv mit Kräutern, stellt eigene Räuchermischungen her und bindet Räucherbündel selbst. Heute gibt sie dir einen Einblick in ihre Arbeit.",
+   "instagramUrl": "https://www.instagram.com/witch_crafts68/",
+   "sections": [
+    {
+     "title": "Dein Gewinn",
+     "text": "Petra verlost eine spezielle Räuchermischung. Unter allen richtigen Antworten wird ausgelost."
+    }
+   ],
+   "gallery": [
+    {
+     "src": "assets/petra-kraeutertisch.jpeg",
+     "alt": "Petras Arbeitstisch mit Blättern, Kräutern und Harzen"
+    },
+    {
+     "src": "assets/petra-mischungen.jpeg",
+     "alt": "Von Petra beschriftete Gläser mit eigenen Räuchermischungen"
+    },
+    {
+     "src": "assets/petra-raeucherbuendel.jpeg",
+     "alt": "Petras selbst gebundene Räucherbündel mit Kräutern und Blüten auf Holz"
+    },
+    {
+     "src": "assets/petra-raeucherbuendel-teller.jpeg",
+     "alt": "Petras kleine Räucherbündel auf einem schwarzen Teller"
+    }
+   ],
+   "illustration": {
+    "src": "assets/petra-portraet.jpeg",
+    "alt": "Petra mit einer Schale ihrer Räuchermischung"
+   },
+   "additionalContent": [
+    {
+     "title": "Ein Blick auf ihren Tisch",
+     "text": "Im Glas sieht vieles erst einmal ähnlich aus. Auf den Etiketten stehen Namen, Zutaten und Daten. Petra bewahrt ihre Mischungen getrennt auf und beschriftet sie von Hand.",
+     "captions": [
+      "Blätter, Kräuter und Harze aus Petras Vorrat.",
+      "Ihre eigenen Mischungen in beschrifteten Gläsern."
+     ]
+    },
+    {
+     "title": "Von Hand gebunden",
+     "text": "Petra bindet auch eigene Räucherbündel aus Kräutern und Blüten.",
+     "captions": []
+    }
+   ],
+   "giveaway": {
+    "prize": "Eine spezielle Räuchermischung von Petra",
+    "question": "Was stellt Petra für diese Verlosung zur Verfügung?",
+    "answer": "Eine spezielle Räuchermischung",
+    "opens": "2026-12-21T08:00:00+01:00",
+    "closes": "2026-12-22T23:59:00+01:00",
+    "drawFrom": "2026-12-23T08:00:00+01:00",
+    "drawTimeApproximate": true,
+    "delivery": "Die Versandadresse wird erst nach dem Gewinn benötigt. Die Abstimmung zur Gewinnübergabe erfolgt direkt mit Petra."
+   },
+   "image": "assets/petra-portraet.jpeg",
+   "imageAlt": "Petra mit einer Schale ihrer Räuchermischung"
+  },
+  "22": {
+   "name": "Lissi · Waldmomente",
+   "title": "Der Baum steht kahl. Seine Vorräte sieht man nicht.",
+   "text": "An den Zweigen hängt kein Blatt mehr. Was der Baum in der hellen Jahreszeit aufgebaut hat, ist trotzdem nicht einfach verschwunden.\n\nMit seinen Blättern hat er aus Licht, Wasser und Kohlendioxid Zucker hergestellt. Einen Teil davon speichert er als Reserven, unter anderem als Stärke in lebenden Geweben von Wurzeln, Stamm und Ästen.\n\nDiese Vorräte tragen dazu bei, den Stoffwechsel aufrechtzuerhalten. Sie helfen auch beim Austrieb im Frühjahr, bevor die neuen Blätter selbst ausreichend Zucker liefern.",
+   "sections": [
+    {
+     "title": "Noch einmal zu deinem Dezemberbaum",
+     "text": "Vielleicht hast du am 1. Dezember einen Baum ausgesucht. Geh heute noch einmal hin. Oder schau dir einen anderen kahlen Laubbaum an.\n\nSuch eine Knospe. Folge mit dem Blick dem Zweig bis zum Stamm und weiter zum Boden. Die Reserven kannst du von außen nicht sehen. Die Knospe, für deren Austrieb sie gebraucht werden, schon.\n\nHat sich das Detail verändert, das dir beim ersten Besuch aufgefallen ist?"
+    }
+   ],
+   "sources": [
+    {
+     "label": "Speicherfunktion der Wurzeln und Austrieb",
+     "url": "https://www.waldverband.at/wp-content/uploads/2023/12/1_BAUMKOERPERTEILE_Detailwissen.pdf"
+    },
+    {
+     "label": "Speichergewebe im Stamm",
+     "url": "https://www.lwf.bayern.de/wissenstransfer/forstcastnet/261726/index.php"
+    }
+   ],
+   "illustration": {
+    "src": "assets/IMG_7777.webp",
+    "alt": "Kahle Laubbäume mit kräftigen Stämmen im Nebel"
+   },
+   "image": "assets/IMG_7777.webp",
+   "imageAlt": "Kahle Laubbäume mit kräftigen Stämmen im Nebel"
+  },
+  "23": {
+   "name": "Lissi · Waldmomente",
+   "title": "Morgen ist Heiligabend. Heute wird es erst einmal dunkel.",
+   "text": "Vielleicht steht noch eine Einkaufstasche im Flur. Vielleicht fehlt ausgerechnet das eine Geschenk. Draußen verschwindet währenddessen das Licht zwischen den Stämmen.\n\nWann es am 23. Dezember dunkel wird, hängt in Deutschland davon ab, wo du bist. Die Sonne geht in Görlitz gegen 15:55 Uhr unter, in Hamburg gegen 16:05 Uhr, in München gegen 16:25 Uhr und in Aachen gegen 16:35 Uhr. Die Zeiten sind gerundet. Im Wald kann es schon früher dunkel wirken.",
+   "sections": [
+    {
+     "title": "Eine Viertelstunde vor dem Abend",
+     "text": "Geh noch bei Tageslicht auf einen kurzen, vertrauten Weg am Waldrand oder durch einen Park. Plane den Rückweg mit ein und nimm eine Lampe mit. Bei Sturm oder Glätte bleib an einem sicheren Ort.\n\nBleib an einer übersichtlichen Stelle stehen. Schau, wo noch Licht zwischen den Ästen liegt. Hör auf ein nahes Geräusch. Dann auf eines, das weiter weg ist.\n\nDer Wald muss dabei nicht still sein. Vielleicht hörst du Verkehr, einen Vogel oder Schritte. Bleib auf dem Weg und lass die Rückzugsorte der Tiere in Ruhe."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Sonnenuntergang in Görlitz, Dezember 2026",
+     "url": "https://www.timeanddate.de/sonne/deutschland/goerlitz?month=12&year=2026"
+    },
+    {
+     "label": "Sonnenuntergang in Hamburg, Dezember 2026",
+     "url": "https://www.timeanddate.de/sonne/deutschland/hamburg?month=12&year=2026"
+    },
+    {
+     "label": "Sonnenuntergang in München, Dezember 2026",
+     "url": "https://www.timeanddate.de/sonne/deutschland/muenchen?month=12&year=2026"
+    },
+    {
+     "label": "Sonnenuntergang in Aachen, Dezember 2026",
+     "url": "https://www.timeanddate.de/sonne/deutschland/aachen?month=12&year=2026"
+    }
+   ],
+   "illustration": {
+    "src": "assets/abendlicht-im-dezember.jpg",
+    "alt": "Mond in der Abenddämmerung neben beleuchteten Tannenzweigen"
+   },
+   "image": "assets/abendlicht-im-dezember.jpg",
+   "imageAlt": "Mond in der Abenddämmerung neben beleuchteten Tannenzweigen"
+  },
+  "24": {
+   "name": "Lissi · Waldmomente",
+   "title": "Die Weihnachtsverlosung.",
+   "text": "Hinter dem letzten Türchen verlosen wir unser digitales Begleitbuch Waldrauhnächte. Zwölf Waldgeschichten von Lissi, alte Bräuche und Räucherrituale von Petra begleiten dich vom 21. Dezember bis zum 6. Januar.",
+   "sections": [
+    {
+     "title": "Aus den Waldrauhnächten",
+     "text": "Zwei Frauen. Ein Wald.\n\nIm Dezember scrollen alle durch ihr Jahr. Die Musikapp zeigt dir deine Lieblingslieder, Instagram deine schönsten Momente. Die Monate, in denen es nicht lief, kommen da nicht vor. Bei uns schon.\n\nWir haben uns auf Instagram kennengelernt. Zwischen Waldbildern, Kräutern und unserer gemeinsamen Liebe zur Natur.\n\nAus ersten Nachrichten wurden Gespräche. Schnell merkten wir: Unser Wissen ergänzt sich wunderbar.\n\nLissi bringt die Geschichten des Waldes mit. Petra kennt die Kräuter, das Räuchern und die alten Bräuche.\n\nSo entstanden unsere Waldrauhnächte. Zwölf Nächte, in denen wir durch ein ganzes Waldjahr gehen und auf unser eigenes zurückschauen.\n\nDu bekommst dabei zwei Blicke auf diese Nächte. Lissi schaut mit Naturwissen auf den Wald, Petra mit dem überlieferten Brauchtum. Nimm dir von beiden, was zu dir passt.\n\nLissi & Petra"
+    }
+   ],
+   "illustration": {
+    "src": "assets/waldrauhnaechte-cover.jpg",
+    "alt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra"
+   },
+   "giveaway": {
+    "prize": "Das digitale Begleitbuch Waldrauhnächte von Lissi und Petra",
+    "question": "Mit wem hat Lissi die Waldrauhnächte zusammengestellt?",
+    "answer": "Petra",
+    "opens": "2026-12-24T08:00:00+01:00",
+    "closes": "2026-12-25T23:59:00+01:00",
+    "drawFrom": "2026-12-26T08:00:00+01:00",
+    "drawTimeApproximate": true,
+    "delivery": "Der Gewinn wird digital bereitgestellt. Es muss nichts verschickt werden."
+   },
+   "image": "assets/waldrauhnaechte-cover.jpg",
+   "imageAlt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra"
+  }
+ },
+ "giveawayTerms": [
+  "Diese Bedingungen gelten für die Verlosungen im Waldverbunden Adventskalender 2026. Veranstalterin ist Elisabeth Müller, Waldmomente, Bismarckstraße 94, 66121 Saarbrücken. Kontakt: info@waldmomente.me.",
+  "Die Teilnahme ist kostenlos und unabhängig von einem Kauf. Teilnehmen können Personen ab 18 Jahren. Pro Person und Verlosung wird eine Teilnahme berücksichtigt. Automatisierte oder manipulierte Teilnahmen sind ausgeschlossen.",
+  "Jede Verlosung beginnt am jeweiligen Türchentag um 08:00 Uhr und endet am Folgetag um 23:59 Uhr. Ausgelost wird am Morgen danach ab ca. 08:00 Uhr. Es gilt die Zeitzone Europe/Berlin.",
+  "Zur Teilnahme ist die Frage im jeweiligen Türchen zu beantworten und das Teilnahmeformular vollständig abzusenden. Unter allen fristgerecht eingegangenen richtigen Antworten wird per Zufall ausgelost. Gibt es keine richtige Antwort, wird kein Gewinn vergeben.",
+  "Art und Anzahl der Gewinne stehen im jeweiligen Türchen. Die gewinnende Person wird über die angegebene E-Mail-Adresse benachrichtigt. Eine richtige Antwort allein begründet keinen Gewinnanspruch.",
+  "Für Sachgewinne wird die Versandadresse erst nach dem Gewinn angefragt. Digitale Gewinne oder Rabattgewinne werden per E-Mail bereitgestellt oder nach Abstimmung durch die jeweilige Partnerin übergeben. Eine Barauszahlung ist ausgeschlossen.",
+  "Die Einlösung eines Partnergewinns erfolgt direkt mit der im Türchen genannten Partnerin. Gewinnbezogene Einschränkungen, etwa Gültigkeit, ausgeschlossene Angebote oder zusätzliche Buchungskosten, werden vor Teilnahme im jeweiligen Türchen genannt. Weitere Buchungsabsprachen erfolgen direkt mit der Partnerin.",
+  "Die Verlosungen werden von Waldmomente organisiert und stehen in keiner Verbindung zu Instagram oder Meta. Sie werden von diesen weder gesponsert noch veranstaltet."
+ ],
+ "giveawayPrivacy": [
+  "Verantwortlich ist Elisabeth Müller, Waldmomente, Bismarckstraße 94, 66121 Saarbrücken, info@waldmomente.me.",
+  "Verarbeitet werden deine Antwort, dein Vorname, deine E-Mail-Adresse und der Teilnahmezeitpunkt, um die Teilnahme zu prüfen, auszulosen und Gewinne abzuwickeln. Bei einem Versandgewinn werden zusätzlich Name und Versandadresse der gewinnenden Person benötigt. Ohne die erforderlichen Angaben ist eine Teilnahme beziehungsweise Zustellung nicht möglich.",
+  "Rechtsgrundlage für die Durchführung und Abwicklung ist Art. 6 Abs. 1 Buchstabe b DSGVO. Eine Anmeldung zum Newsletter ist mit der Teilnahme nicht verbunden. Deine Daten werden nicht für Werbung verwendet und nicht öffentlich als Gewinnerdaten veröffentlicht.",
+  "Partnerinnen erhalten keine vollständigen Teilnehmerlisten. Soweit für die Übergabe eines Gewinns erforderlich, werden nur die dafür notwendigen Daten der gewinnenden Person an die im Türchen genannte Partnerin beziehungsweise den Versanddienstleister übermittelt. Bei direkter Kontaktaufnahme mit einer Partnerin gelten für deren weitere Datenverarbeitung deren Datenschutzhinweise.",
+  "Die Teilnahmedaten werden nach vollständiger Abwicklung der jeweiligen Verlosung gelöscht, soweit keine gesetzlichen Aufbewahrungspflichten bestehen oder Daten zur Klärung konkreter Ansprüche benötigt werden. In diesen Fällen bleibt die Verarbeitung auf diesen Zweck beschränkt.",
+  "Du hast nach den gesetzlichen Voraussetzungen Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Datenübertragbarkeit. Bei einer Verarbeitung aufgrund berechtigter Interessen besteht ein Widerspruchsrecht. Du kannst dich bei einer Datenschutzaufsichtsbehörde beschweren, insbesondere beim Unabhängigen Datenschutzzentrum Saarland."
+ ]
 };
 </script>
 <!-- TEIL 3: Türchen, Kalenderdatum, Musik, Schritte und Schnee. -->
@@ -436,6 +888,143 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     clearTimeout(uhr);
     uhr = setTimeout(aufbauen, 350);
   });
+})();
+</script>
+<script>
+/* Nachtrag Waldmomente: zeigt die reicheren Felder eines Tuerchens an.
+   Das Grundgeruest der Seite kann nur Name, Titel, Text, ein Bild und
+   zwei Verweise. Hier kommen Abschnitte, Galerie, Quellen, Webseite und
+   die Verlosung dazu. Angehaengt wird erst, nachdem das Fenster steht. */
+(function () {
+  "use strict";
+  var inhalt = document.getElementById('door-content');
+  var zaehler = document.getElementById('modal-counter');
+  if (!inhalt || !zaehler) return;
+
+  var ALLES = window.WALDVERBUNDEN_INHALTE || {};
+  var TUEREN = ALLES.doors || {};
+
+  function sicher(t) {
+    return String(t == null ? '' : t).replace(/[&<>"']/g, function (z) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[z];
+    });
+  }
+
+  /* Nur eigene und https-Adressen, nie javascript: */
+  function adresse(u) {
+    try {
+      var z = new URL(u, location.href);
+      return (z.protocol === 'https:' || z.protocol === 'http:') ? z.href : '';
+    } catch (e) { return ''; }
+  }
+
+  function absaetze(text) {
+    return String(text || '').split(/\n\s*\n/).filter(Boolean)
+      .map(function (a) { return '<p>' + sicher(a).replace(/\n/g, '<br>') + '</p>'; })
+      .join('');
+  }
+
+  var MONATE = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                'August','September','Oktober','November','Dezember'];
+
+  function wann(iso, mitUhrzeit) {
+    var d = new Date(iso);
+    if (isNaN(d)) return '';
+    var teile = new Intl.DateTimeFormat('de-DE', {
+      timeZone: 'Europe/Berlin', day: 'numeric', month: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    }).formatToParts(d);
+    var w = {};
+    teile.forEach(function (t) { w[t.type] = t.value; });
+    var text = w.day + '. ' + MONATE[parseInt(w.month, 10) - 1];
+    return mitUhrzeit ? text + ', ' + w.hour + ':' + w.minute + ' Uhr' : text;
+  }
+
+  function verlosung(v) {
+    var jetzt = Date.now();
+    var auf = new Date(v.opens).getTime(), zu = new Date(v.closes).getTime();
+    var lage = jetzt < auf ? ['spaeter', 'Teilnahme ab ' + wann(v.opens, true)]
+             : jetzt > zu  ? ['vorbei', 'Teilnahme beendet']
+                           : ['offen', 'Teilnahme läuft'];
+    var h = '<div class="verlosung">';
+    h += '<span class="kopf">Verlosung</span>';
+    h += '<span class="lage ' + lage[0] + '">' + sicher(lage[1]) + '</span>';
+    if (v.prize) h += '<p class="gewinn">' + sicher(v.prize) + '</p>';
+    if (v.question) h += '<p class="frage"><strong>Die Frage:</strong> ' + sicher(v.question) + '</p>';
+    if (v.delivery) h += '<p>' + sicher(v.delivery) + '</p>';
+    h += '<p class="zeitraum">Teilnahme von ' + sicher(wann(v.opens, true))
+       + ' bis ' + sicher(wann(v.closes, true))
+       + '. Ausgelost wird ab ' + sicher(wann(v.drawFrom, true)) + '.</p>';
+    if ((ALLES.giveawayTerms || []).length) {
+      h += '<details><summary>Teilnahmebedingungen</summary>'
+         + (ALLES.giveawayTerms || []).map(function (t) { return '<p>' + sicher(t) + '</p>'; }).join('')
+         + '</details>';
+    }
+    if ((ALLES.giveawayPrivacy || []).length) {
+      h += '<details><summary>Datenschutz zur Verlosung</summary>'
+         + (ALLES.giveawayPrivacy || []).map(function (t) { return '<p>' + sicher(t) + '</p>'; }).join('')
+         + '</details>';
+    }
+    return h + '</div>';
+  }
+
+  function bauen(tuer) {
+    var h = '';
+    (tuer.sections || []).forEach(function (a) {
+      if (a.title) h += '<h3>' + sicher(a.title) + '</h3>';
+      h += absaetze(a.text);
+    });
+    (tuer.additionalContent || []).forEach(function (a) {
+      if (a.title) h += '<h3>' + sicher(a.title) + '</h3>';
+      h += absaetze(a.text);
+      (a.captions || []).forEach(function (u) {
+        h += '<p class="mehr-bild-unterschrift">' + sicher(u) + '</p>';
+      });
+    });
+    if ((tuer.gallery || []).length) {
+      h += '<div class="mehr-galerie">';
+      tuer.gallery.forEach(function (b) {
+        if (!b.src) return;
+        h += '<img src="' + sicher(b.src) + '" alt="' + sicher(b.alt || '') + '" loading="lazy">';
+      });
+      h += '</div>';
+    }
+    var netz = tuer.website && adresse(tuer.website);
+    if (netz) {
+      h += '<a class="textlink" href="' + sicher(netz) + '" target="_blank" rel="noopener">'
+         + sicher(tuer.name || 'Webseite') + ' besuchen ↗</a>';
+    }
+    if (tuer.giveaway) h += verlosung(tuer.giveaway);
+    if ((tuer.sources || []).length) {
+      h += '<div class="mehr-quellen"><span class="titel">Zum Weiterlesen</span>';
+      tuer.sources.forEach(function (q) {
+        var u = q.url && adresse(q.url);
+        if (!u) return;
+        h += '<a href="' + sicher(u) + '" target="_blank" rel="noopener">'
+           + sicher(q.label || u) + ' ↗</a>';
+      });
+      h += '</div>';
+    }
+    return h ? '<div class="mehr-block">' + h + '</div>' : '';
+  }
+
+  function ergaenzen() {
+    var spalte = inhalt.querySelector('.door-copy');
+    if (!spalte || spalte.dataset.mehr) return;
+    var treffer = zaehler.textContent.match(/(\d+)/);
+    if (!treffer) return;
+    var tuer = TUEREN[String(parseInt(treffer[1], 10))];
+    if (!tuer) return;
+    var zusatz = bauen(tuer);
+    if (!zusatz) return;
+    var hinweis = spalte.querySelector('.demo-note');
+    if (hinweis) hinweis.remove();
+    spalte.insertAdjacentHTML('beforeend', zusatz);
+    spalte.dataset.mehr = '1';
+  }
+
+  new MutationObserver(ergaenzen).observe(inhalt, { childList: true, subtree: true });
+  ergaenzen();
 })();
 </script>
 </body></html>
