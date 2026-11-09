@@ -211,32 +211,50 @@ h1 .h1-gold {
    dadurch tief ins Foto hineingezoomt, bei Portraets bis ins Gesicht.
    Jetzt hat sie ein festes Seitenverhaeltnis und bleibt beim Scrollen
    oben stehen. */
-.door-layout.with-partner-media { align-items: start; }
+/* Das Tuerchen ist ein Lesestueck, kein Bildschirmfoto. Deshalb steht
+   das Bild oben und bleibt klein, darunter laeuft der Text in einer
+   Spalte mit lesbarer Groesse. Vorher nahm das Bild die halbe Breite
+   und der Text stand in 12 Pixeln daneben, dadurch sah selbst ein
+   langer Text nach nichts aus. */
+.door-layout.with-partner-media { display: block; }
+/* Das Band schmiegt sich an das Bild, statt es in einer leeren
+   Flaeche stehen zu lassen. Die grosse Zahl entfaellt hier, das
+   Datum steht ohnehin als erste Zeile im Text. */
 .door-layout.with-partner-media .door-media {
-  aspect-ratio: 3 / 4; min-height: 0; height: auto;
-  position: sticky; top: 0; background: #11271e;
+  position: relative; height: auto; min-height: 0; aspect-ratio: auto;
+  overflow: visible; display: flex; justify-content: center;
+  padding: 26px 24px 0;
 }
-/* Vollstaendig zeigen statt beschneiden: unter den Bildern sind
-   Portraets, Titelbilder und ein Flyer, bei denen ein Anschnitt
-   Gesichter oder Schrift abschneidet. Was uebrig bleibt, fuellt
-   das Dunkelgruen der Seite. */
-.door-layout.with-partner-media .door-media img { object-fit: contain; }
+.door-layout.with-partner-media .door-media img {
+  position: static; width: auto; height: auto;
+  max-height: 300px; max-width: 100%;
+  object-fit: contain; border-radius: 2px;
+}
+.door-layout.with-partner-media .door-media:after { content: none; }
+.door-layout.with-partner-media .media-number { display: none; }
+
+.door-copy { max-width: 60ch; margin: 0 auto; padding: 34px 38px 38px; }
+.door-copy p { font-size: 15px; line-height: 1.85; color: #dde5d8; }
+.door-copy h2 { font-size: 40px; line-height: 1.12; }
+.door-copy .eyebrow { font-size: 9px; letter-spacing: .24em; }
+
 @media (max-width: 650px) {
-  .door-layout.with-partner-media .door-media {
-    aspect-ratio: 1 / 1; height: auto; min-height: 0; position: static;
-  }
+  .door-layout.with-partner-media .door-media { height: 210px; }
+  .door-copy { padding: 24px 24px 30px; }
+  .door-copy p { font-size: 14.5px; }
+  .door-copy h2 { font-size: 31px; }
 }
 
 /* Nachtrag Waldmomente: die reicheren Tuercheninhalte. */
 .mehr-block { margin-top: 1.8rem; }
 .mehr-block h3 {
   font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
-  font-weight: 500; font-size: 1.35rem; color: #ead9ae;
+  font-weight: 500; font-size: 1.6rem; color: #ead9ae;
   margin: 1.6rem 0 .5rem;
 }
-.mehr-block p { font-size: 12px; line-height: 1.9; color: #d7e0d2; margin: 0 0 .8rem; }
+.mehr-block p { font-size: 15px; line-height: 1.85; color: #dde5d8; margin: 0 0 .9rem; }
 .mehr-bild-unterschrift {
-  font-size: 10.5px; line-height: 1.6; color: #aebaa8; font-style: italic;
+  font-size: 12.5px; line-height: 1.6; color: #aebaa8; font-style: italic;
   margin: -.4rem 0 .8rem;
 }
 .mehr-galerie {
@@ -265,12 +283,12 @@ h1 .h1-gold {
 }
 .verlosung .gewinn {
   font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
-  font-size: 1.3rem; color: #f2e4c2; line-height: 1.3; margin: 0 0 .8rem;
+  font-size: 1.5rem; color: #f2e4c2; line-height: 1.3; margin: 0 0 .8rem;
 }
-.verlosung p { font-size: 11.5px; line-height: 1.8; color: #d7e0d2; margin: 0 0 .6rem; }
+.verlosung p { font-size: 14px; line-height: 1.8; color: #d7e0d2; margin: 0 0 .6rem; }
 .verlosung .frage { color: #eee4c8; }
 .verlosung .zeitraum {
-  font-size: 10.5px; color: #b9c4b4; border-top: 1px solid var(--line);
+  font-size: 12.5px; color: #b9c4b4; border-top: 1px solid var(--line);
   margin-top: .8rem; padding-top: .7rem;
 }
 .verlosung .lage { display: inline-block; font-size: 9px; letter-spacing: .14em;
@@ -283,7 +301,7 @@ h1 .h1-gold {
   font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--gold); cursor: pointer; padding: .35rem 0;
 }
-.verlosung details p { font-size: 10.5px; color: #bfcbba; }
+.verlosung details p { font-size: 12.5px; color: #bfcbba; }
 @media (max-width: 650px) {
   .mehr-galerie { grid-template-columns: repeat(2, 1fr); gap: 6px; }
 }
@@ -1062,16 +1080,8 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
          + sicher(tuer.name || 'Webseite') + ' besuchen ↗</a>';
     }
     if (tuer.giveaway) h += verlosung(tuer.giveaway, nummer);
-    if ((tuer.sources || []).length) {
-      h += '<div class="mehr-quellen"><span class="titel">Zum Weiterlesen</span>';
-      tuer.sources.forEach(function (q) {
-        var u = q.url && adresse(q.url);
-        if (!u) return;
-        h += '<a href="' + sicher(u) + '" target="_blank" rel="noopener">'
-           + sicher(q.label || u) + ' ↗</a>';
-      });
-      h += '</div>';
-    }
+    /* Die Quellenangaben stehen weiter in der Inhaltsdatei, werden
+       aber nicht mehr angezeigt: sie fuehren aus dem Kalender heraus. */
     return h ? '<div class="mehr-block">' + h + '</div>' : '';
   }
 
