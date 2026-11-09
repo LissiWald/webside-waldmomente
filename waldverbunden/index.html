@@ -211,38 +211,71 @@ h1 .h1-gold {
    dadurch tief ins Foto hineingezoomt, bei Portraets bis ins Gesicht.
    Jetzt hat sie ein festes Seitenverhaeltnis und bleibt beim Scrollen
    oben stehen. */
-/* Das Tuerchen ist ein Lesestueck, kein Bildschirmfoto. Deshalb steht
-   das Bild oben und bleibt klein, darunter laeuft der Text in einer
-   Spalte mit lesbarer Groesse. Vorher nahm das Bild die halbe Breite
-   und der Text stand in 12 Pixeln daneben, dadurch sah selbst ein
-   langer Text nach nichts aus. */
+/* Das Tuerchen ist ein Lesestueck. Fliesstext in Cormorant Garamond
+   und gross, so wie in Lissis eigener Fassung. Das Bild steht oben in
+   der Textspalte, es gibt kein eigenes Bildband mehr. */
 .door-layout.with-partner-media { display: block; }
-/* Das Band schmiegt sich an das Bild, statt es in einer leeren
-   Flaeche stehen zu lassen. Die grosse Zahl entfaellt hier, das
-   Datum steht ohnehin als erste Zeile im Text. */
-.door-layout.with-partner-media .door-media {
-  position: relative; height: auto; min-height: 0; aspect-ratio: auto;
-  overflow: visible; display: flex; justify-content: center;
-  padding: 26px 24px 0;
-}
-.door-layout.with-partner-media .door-media img {
-  position: static; width: auto; height: auto;
-  max-height: 300px; max-width: 100%;
-  object-fit: contain; border-radius: 2px;
-}
-.door-layout.with-partner-media .door-media:after { content: none; }
-.door-layout.with-partner-media .media-number { display: none; }
+.door-layout.with-partner-media .door-media { display: none; }
 
-.door-copy { max-width: 60ch; margin: 0 auto; padding: 34px 38px 38px; }
-.door-copy p { font-size: 15px; line-height: 1.85; color: #dde5d8; }
-.door-copy h2 { font-size: 40px; line-height: 1.12; }
+.door-copy { max-width: 36em; margin: 0 auto; padding: 30px 38px 38px; }
 .door-copy .eyebrow { font-size: 9px; letter-spacing: .24em; }
-
+.door-copy h2 { font-size: 45px; line-height: 1.08; margin: 16px 0 18px; }
+.door-copy p,
+#door-content .door-copy .mehr-block p {
+  font: 400 22px/1.5 'Cormorant Garamond', Georgia, serif;
+  color: #e3ead9; margin: 0 0 1rem;
+}
+.tuer-nummer {
+  display: block; font: 400 34px/1 'Cormorant Garamond', Georgia, serif;
+  color: #ffffff38; margin-bottom: 14px;
+}
+.tuer-bild {
+  display: block; margin: 0 0 22px;
+  border: 1px solid #e3d1a13b; border-radius: 2px;
+}
+/* Lissis eigene Waldfotos sind hochkant aufgenommen. Hochkant ueber die
+   volle Spaltenbreite fuellt den halben Bildschirm, deshalb werden sie
+   auf ein ruhiges Querformat beschnitten. */
+.tuer-bild--beschnitten {
+  width: 100%; height: 250px; object-fit: cover; object-position: center 45%;
+}
+/* Titelbilder, ein Flyer und ein Portraet duerfen nicht beschnitten
+   werden, sonst fehlen Schrift oder Gesicht. Sie stehen vollstaendig da. */
+.tuer-bild--ganz {
+  width: auto; max-width: 100%; max-height: 330px; height: auto; margin-inline: auto;
+}
 @media (max-width: 650px) {
-  .door-layout.with-partner-media .door-media { height: 210px; }
-  .door-copy { padding: 24px 24px 30px; }
-  .door-copy p { font-size: 14.5px; }
-  .door-copy h2 { font-size: 31px; }
+  .tuer-bild--beschnitten { height: 200px; }
+  .tuer-bild--ganz { max-height: 270px; }
+}
+.mehr-block h3,
+#door-content .door-copy .mehr-block h3 {
+  font: italic 29px/1.15 'Cormorant Garamond', Georgia, serif;
+  color: #dfc697; margin: 30px 0 14px;
+}
+.mehr-bild-unterschrift,
+#door-content .mehr-bild-unterschrift {
+  font: italic 16px/1.5 'Cormorant Garamond', Georgia, serif;
+  color: #c3cfba; margin: -.4rem 0 1rem;
+}
+.moment-done {
+  display: block; width: 100%; margin-top: 26px; padding: 16px 20px;
+  background: none; border: 1px solid var(--gold); color: #f0e4c2;
+  font: 400 20px 'Cormorant Garamond', Georgia, serif; cursor: pointer;
+  border-radius: 2px; transition: background .3s;
+}
+.moment-done:hover { background: #c8a96e1f; }
+.moment-done[aria-pressed="true"] { border-color: #a8d59b88; color: #cfe3c6; }
+.moment-local {
+  font: 400 16px/1.5 'Cormorant Garamond', Georgia, serif !important;
+  color: #b6c2ae !important; margin-top: 10px !important;
+}
+@media (max-width: 650px) {
+  .door-copy { padding: 22px 24px 30px; }
+  .door-copy h2 { font-size: 34px; }
+  .door-copy p,
+  #door-content .door-copy .mehr-block p { font-size: 20px; }
+  .mehr-block h3, #door-content .door-copy .mehr-block h3 { font-size: 26px; }
 }
 
 /* Nachtrag Waldmomente: die reicheren Tuercheninhalte. */
@@ -1090,16 +1123,57 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     if (!spalte || spalte.dataset.mehr) return;
     var treffer = zaehler.textContent.match(/(\d+)/);
     if (!treffer) return;
-    var tuer = TUEREN[String(parseInt(treffer[1], 10))];
+    var nr = parseInt(treffer[1], 10);
+    var tuer = TUEREN[String(nr)];
     if (!tuer) return;
-    var zusatz = bauen(tuer, parseInt(treffer[1], 10));
-    if (!zusatz) return;
+
+    /* Nummer und Bild gehoeren oben in die Textspalte, nicht in ein
+       eigenes Band daneben. */
+    var kopf = spalte.querySelector('.eyebrow');
+    if (kopf) {
+      kopf.insertAdjacentHTML('beforebegin',
+        '<span class="tuer-nummer">' + (nr < 10 ? '0' : '') + nr + '</span>');
+      var bild = tuer.illustration;
+      if (bild && bild.src) {
+        /* Waldfotos vertragen einen Zuschnitt aufs Querformat.
+           Titelbilder, Flyer und Portraets nicht: dort fiele Schrift
+           oder ein Gesicht weg. Erkennbar am Dateinamen. */
+        var ganz = /deckblatt|flyer|portraet|cover/i.test(bild.src);
+        var art = ganz ? 'tuer-bild--ganz' : 'tuer-bild--beschnitten';
+        kopf.insertAdjacentHTML('afterend',
+          '<img class="tuer-bild ' + art + '" src="' + sicher(bild.src) + '" alt="'
+          + sicher(bild.alt || '') + '" loading="lazy">');
+      }
+    }
+
+    var zusatz = bauen(tuer, nr);
     var hinweis = spalte.querySelector('.demo-note');
     if (hinweis) hinweis.remove();
-    spalte.insertAdjacentHTML('beforeend', zusatz);
+    if (zusatz) spalte.insertAdjacentHTML('beforeend', zusatz);
+
+    /* Bei Lissis eigenen Tuerchen steht ein Auftrag fuer draussen.
+       Dafuer gibt es einen Knopf zum Abhaken, rein im Browser. */
+    if ((tuer.sections || []).length) {
+      var gemerkt = false;
+      try { gemerkt = localStorage.getItem('waldmoment-done-' + nr) === '1'; } catch (e) {}
+      spalte.insertAdjacentHTML('beforeend',
+        '<button type="button" class="moment-done" data-moment="' + nr + '" aria-pressed="'
+        + gemerkt + '">' + (gemerkt ? 'Meinen Waldmoment gemacht ✓' : 'Meinen Waldmoment merken')
+        + '</button><p class="moment-local">Die Markierung bleibt nur in deinem Browser.</p>');
+    }
+
     frageVerdrahten(spalte, tuer.giveaway);
     spalte.dataset.mehr = '1';
   }
+
+  inhalt.addEventListener('click', function (e) {
+    var knopf = e.target.closest ? e.target.closest('.moment-done') : null;
+    if (!knopf) return;
+    var jetztJa = knopf.getAttribute('aria-pressed') !== 'true';
+    knopf.setAttribute('aria-pressed', String(jetztJa));
+    knopf.textContent = jetztJa ? 'Meinen Waldmoment gemacht ✓' : 'Meinen Waldmoment merken';
+    try { localStorage.setItem('waldmoment-done-' + knopf.dataset.moment, jetztJa ? '1' : '0'); } catch (x) {}
+  });
 
   new MutationObserver(ergaenzen).observe(inhalt, { childList: true, subtree: true });
   ergaenzen();
