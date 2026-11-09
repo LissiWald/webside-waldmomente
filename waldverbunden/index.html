@@ -185,6 +185,28 @@ h1 .h1-gold {
   .hero .goldline { width: 44px !important; }
 }
 
+/* Die Frage zur Verlosung */
+.verlosung form { margin-top: .9rem; }
+.verlosung label {
+  display: block; font-size: 10px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: .45rem;
+}
+.verlosung input[type=text] {
+  width: 100%; padding: .75rem .85rem; border-radius: 2px;
+  border: 1px solid #dac59a55; background: #ffffff12; color: var(--cream);
+  font: 400 13px 'Jost', sans-serif;
+}
+.verlosung input[type=text]:focus { outline: none; border-color: var(--gold); }
+.verlosung button.pruefen {
+  margin-top: .6rem; width: 100%; min-height: 44px; border: 0; cursor: pointer;
+  background: var(--gold); color: var(--dark); border-radius: 2px;
+  font: 500 10px/1 'Jost', sans-serif; letter-spacing: .2em; text-transform: uppercase;
+}
+.verlosung button.pruefen:hover { background: #d8bb7e; }
+.verlosung .rueckmeldung { margin-top: .7rem; font-size: 11.5px; line-height: 1.7; }
+.verlosung .rueckmeldung.richtig { color: #a8d59b; }
+.verlosung .rueckmeldung.falsch { color: #e8c99a; }
+
 /* Die Bildspalte war so hoch wie der Text. Bei langen Tuerchen wurde
    dadurch tief ins Foto hineingezoomt, bei Portraets bis ins Gesicht.
    Jetzt hat sie ein festes Seitenverhaeltnis und bleibt beim Scrollen
@@ -940,7 +962,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     return mitUhrzeit ? text + ', ' + w.hour + ':' + w.minute + ' Uhr' : text;
   }
 
-  function verlosung(v) {
+  function verlosung(v, nr) {
     var jetzt = Date.now();
     var auf = new Date(v.opens).getTime(), zu = new Date(v.closes).getTime();
     var lage = jetzt < auf ? ['spaeter', 'Teilnahme ab ' + wann(v.opens, true)]
@@ -950,7 +972,15 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     h += '<span class="kopf">Verlosung</span>';
     h += '<span class="lage ' + lage[0] + '">' + sicher(lage[1]) + '</span>';
     if (v.prize) h += '<p class="gewinn">' + sicher(v.prize) + '</p>';
-    if (v.question) h += '<p class="frage"><strong>Die Frage:</strong> ' + sicher(v.question) + '</p>';
+    if (v.question) {
+      h += '<form class="frageform" novalidate>'
+         + '<label for="antwort-' + nr + '">' + sicher(v.question) + '</label>'
+         + '<input type="text" id="antwort-' + nr + '" autocomplete="off" '
+         + 'placeholder="Deine Antwort" aria-describedby="rueck-' + nr + '">'
+         + '<button type="submit" class="pruefen">Antwort prüfen</button>'
+         + '<p class="rueckmeldung" id="rueck-' + nr + '" role="status"></p>'
+         + '</form>';
+    }
     if (v.delivery) h += '<p>' + sicher(v.delivery) + '</p>';
     h += '<p class="zeitraum">Teilnahme von ' + sicher(wann(v.opens, true))
        + ' bis ' + sicher(wann(v.closes, true))
@@ -968,7 +998,44 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     return h + '</div>';
   }
 
-  function bauen(tuer) {
+/* Nachsichtiger Vergleich: Gross- und Kleinschreibung, Satzzeichen und
+     Fuellwoerter drumherum sollen nicht ueber Gewinnen entscheiden. */
+  function vereinfachen(t) {
+    return String(t || '')
+      .toLowerCase()
+      .replace(/[\u00df]/g, 'ss')
+      .replace(/[^\p{L}\p{N}]+/gu, ' ')
+      .trim();
+  }
+
+  function frageVerdrahten(spalte, v) {
+    var form = spalte.querySelector('.frageform');
+    if (!form || !v || !v.answer) return;
+    var feld = form.querySelector('input');
+    var sagt = form.querySelector('.rueckmeldung');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var gegeben = vereinfachen(feld.value);
+      var richtig = vereinfachen(v.answer);
+      if (!gegeben) {
+        sagt.className = 'rueckmeldung falsch';
+        sagt.textContent = 'Da steht noch nichts.';
+        return;
+      }
+      if (gegeben === richtig || gegeben.indexOf(richtig) !== -1) {
+        sagt.className = 'rueckmeldung richtig';
+        sagt.textContent = 'Richtig. Damit bist du bei der Verlosung dabei, '
+          + 'sobald das Teilnahmeformular hier steht.';
+        feld.readOnly = true;
+        form.querySelector('button').disabled = true;
+      } else {
+        sagt.className = 'rueckmeldung falsch';
+        sagt.textContent = 'Das stimmt noch nicht. Die Antwort steht im Text über der Verlosung.';
+      }
+    });
+  }
+
+  function bauen(tuer, nummer) {
     var h = '';
     (tuer.sections || []).forEach(function (a) {
       if (a.title) h += '<h3>' + sicher(a.title) + '</h3>';
@@ -994,7 +1061,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
       h += '<a class="textlink" href="' + sicher(netz) + '" target="_blank" rel="noopener">'
          + sicher(tuer.name || 'Webseite') + ' besuchen ↗</a>';
     }
-    if (tuer.giveaway) h += verlosung(tuer.giveaway);
+    if (tuer.giveaway) h += verlosung(tuer.giveaway, nummer);
     if ((tuer.sources || []).length) {
       h += '<div class="mehr-quellen"><span class="titel">Zum Weiterlesen</span>';
       tuer.sources.forEach(function (q) {
@@ -1015,11 +1082,12 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     if (!treffer) return;
     var tuer = TUEREN[String(parseInt(treffer[1], 10))];
     if (!tuer) return;
-    var zusatz = bauen(tuer);
+    var zusatz = bauen(tuer, parseInt(treffer[1], 10));
     if (!zusatz) return;
     var hinweis = spalte.querySelector('.demo-note');
     if (hinweis) hinweis.remove();
     spalte.insertAdjacentHTML('beforeend', zusatz);
+    frageVerdrahten(spalte, tuer.giveaway);
     spalte.dataset.mehr = '1';
   }
 
