@@ -2054,8 +2054,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
       buch:  'https://payhip.com/b/XXXXX'
     Die Kaufknoepfe erscheinen dann von allein, auch im Produktraster. */
  window.RAUHNAECHTE_KAUF = {
- buch: '',
- paket: ''
+ buch: 'https://payhip.com/b/xcPYd',
+ paket: 'https://payhip.com/b/2VBrz'
  };
  </script>
 
@@ -2558,6 +2558,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
     Stehen die Payhip-Adressen oben im Skript, werden daraus
     Kaufknoepfe. Steht dort nichts, fuehren sie zur Leseprobe,
     damit niemand ins Leere klickt. */
+ function knoepfeSetzen() {
  var adressen = window.RAUHNAECHTE_KAUF || {};
  Array.prototype.forEach.call(
  document.querySelectorAll('[data-rn-kauf]'), function (knopf) {
@@ -2574,6 +2575,15 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  var beschriftung = knopf.querySelector('span') || knopf;
  beschriftung.textContent = 'Jetzt kaufen';
  });
+ }
+
+ /* Die Karte im Produktraster steht weiter unten im Quelltext als
+    dieses Skript. Deshalb erst warten, bis die Seite ganz da ist. */
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', knoepfeSetzen);
+ } else {
+ knoepfeSetzen();
+ }
 })();
 </script>
 
