@@ -3536,7 +3536,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
 
  <!-- ══════════ CLOSING ══════════ -->
  <section id="closing" aria-label="Abschluss">
- <video class="closing__video" autoplay muted loop playsinline src="video%20dunkel.mp4"></video>
+ <video class="closing__video" muted loop playsinline preload="none" data-film="video%20dunkel.mp4"></video>
  <div class="closing__content">
  <h2 class="closing__title reveal">Der Wald ist einfach da.</h2>
  <p class="closing__sub reveal d1">WALDMOMENTE</p>
@@ -4016,5 +4016,27 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  });
  })();
  </script>
+<script>
+/* Das Hintergrundvideo im Abschluss wiegt 2,8 MB und steht ganz unten.
+   Vorher wurde es bei jedem Seitenaufruf mitgeladen, auch auf dem Handy,
+   auch wenn niemand so weit scrollt. Jetzt kommt es erst, wenn der
+   Abschnitt in die Naehe des Fensters rueckt. */
+(function () {
+ var v = document.querySelector('.closing__video');
+ if (!v || !v.dataset.film) return;
+ function anwerfen() {
+  if (v.src) return;
+  v.src = v.dataset.film;
+  var lauf = v.play();
+  if (lauf && lauf.catch) lauf.catch(function () {});
+ }
+ if ('IntersectionObserver' in window) {
+  var o = new IntersectionObserver(function (e) {
+   if (e[0].isIntersecting) { anwerfen(); o.disconnect(); }
+  }, { rootMargin: '400px' });
+  o.observe(v);
+ } else { anwerfen(); }
+})();
+</script>
 </body>
 </html>
