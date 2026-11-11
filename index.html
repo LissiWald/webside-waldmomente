@@ -2003,10 +2003,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="rn__karte rn__karte--gross reveal d1">
  <span class="rn__karte-band">Mit Petras Räucherwerk</span>
  <span class="rn__karte-marke">Das Paket</span>
- <div class="rn__karte-bild">
+ <div class="rn__karte-bild rn__karte-bild--quer">
  <picture>
- <source srcset="assets/waldrauhnaechte-raeucherwerk.webp" type="image/webp">
- <img src="assets/waldrauhnaechte-raeucherwerk.jpg" width="760" height="760" alt="Ein dunkler Teller mit Petras gebundenem Räucherwerk, von Hand beschriftet" loading="lazy">
+ <source srcset="assets/waldrauhnaechte-glaeser.webp" type="image/webp">
+ <img src="assets/waldrauhnaechte-glaeser.jpg" width="800" height="560" alt="Petras Räuchermischungen in Gläsern auf einem Holztisch" loading="lazy">
  </picture>
  </div>
  <div class="rn__preis">49,90&nbsp;€</div>
@@ -2061,20 +2061,21 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
 
 <style>
  /* ── WALDRAUHNÄCHTE ──
-    Der dunkelste Abschnitt der Seite. Das passt zum Produkt: zwölf
-    Abende im Dezember. Die Farben kommen vom Buchumschlag, ein warmes
-    Pflaumenschwarz mit einem Rest Abendrot oben rechts. */
+    Hell wie der Rest der Seite. Die Töne kommen aus Lissis eigener
+    Mail: #E9E4D8 als Grund, #F4F1EA für die Karten, #8A6C3C für das
+    Gold. Etwas wärmer als der Kalenderabschnitt darunter, damit die
+    beiden sich trennen. */
  #waldrauhnaechte {
  position: relative; overflow: hidden;
- background: #120e14;
- color: #ece6dc;
+ background: #E9E4D8;
+ color: #2A2A24;
  padding: 6rem 1.5rem 5.5rem;
  }
  .rn__schimmer {
  position: absolute; inset: 0; pointer-events: none;
  background:
- radial-gradient(60% 45% at 78% 0%, rgba(176,106,118,.30), transparent 70%),
- radial-gradient(70% 50% at 10% 100%, rgba(45,74,53,.38), transparent 72%);
+ radial-gradient(58% 42% at 82% 0%, rgba(199,155,158,.26), transparent 70%),
+ radial-gradient(70% 50% at 6% 100%, rgba(45,74,53,.07), transparent 72%);
  }
  #waldrauhnaechte > *:not(.rn__schimmer) { position: relative; z-index: 1; }
 
@@ -2087,38 +2088,38 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  .rn__buch img {
  width: 100%; height: auto; display: block;
  border-radius: 2px;
- box-shadow: 0 2px 6px rgba(0,0,0,.5), 0 34px 80px rgba(0,0,0,.6);
+ box-shadow: 0 2px 6px rgba(42,42,36,.14), 0 26px 60px rgba(42,42,36,.22);
  }
  .rn__kicker {
  display: block; font-family: 'Jost', sans-serif;
  font-size: .58rem; letter-spacing: .42em; text-transform: uppercase;
- color: var(--gold); margin-bottom: 1.3rem;
+ color: #8A6C3C; margin-bottom: 1.3rem;
  }
  .rn__title {
  font-family: 'Cormorant Garamond', Georgia, serif;
  font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.12;
- font-weight: 400; color: #fdfaf5; margin-bottom: .9rem;
+ font-weight: 400; color: #2A2A24; margin-bottom: .9rem;
  }
  .rn__unter {
  font-family: 'Jost', sans-serif; font-size: .68rem; font-weight: 300;
  letter-spacing: .2em; text-transform: uppercase;
- color: rgba(200,169,110,.85); margin-bottom: 1.8rem;
+ color: #857F6F; margin-bottom: 1.8rem;
  }
  .rn__lead {
  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
- font-size: clamp(1.2rem, 2.4vw, 1.5rem); line-height: 1.55;
- color: #f0e6cd; margin-bottom: 1.6rem;
+ font-size: clamp(1.25rem, 2.5vw, 1.6rem); line-height: 1.5;
+ color: #4A4538; margin-bottom: 1.6rem;
  }
  .rn__absatz {
  font-family: 'Cormorant Garamond', Georgia, serif;
- font-size: 1.24rem; line-height: 1.62; color: rgba(236,230,220,.86);
+ font-size: 1.24rem; line-height: 1.62; color: #2A2A24;
  margin-bottom: 1.15rem;
  }
- .rn__absatz--stark { color: #f0e6cd; }
+ .rn__absatz--stark { color: #1E2E24; }
  .rn__zitat {
  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
- font-size: 1.3rem; line-height: 1.55; color: var(--gold-light);
- border-left: 2px solid rgba(200,169,110,.5);
+ font-size: 1.7rem; line-height: 1.35; color: #8A6C3C;
+ border-left: 2px solid rgba(138,108,60,.45);
  padding: .2rem 0 .2rem 1.3rem; margin: 1.9rem 0 2.3rem;
  }
 
@@ -2126,50 +2127,51 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  .rn__knopf {
  display: inline-flex; flex-direction: column; align-items: center;
  gap: .25rem; padding: .95rem 2.1rem .85rem;
- background: var(--gold); color: #1b1410; border-radius: 2px;
+ background: var(--green); color: var(--cream); border-radius: 2px;
  transition: transform .4s cubic-bezier(.2,.7,.3,1), background .4s;
- box-shadow: 0 10px 34px rgba(0,0,0,.45);
+ box-shadow: 0 8px 26px rgba(42,42,36,.18);
  }
- .rn__knopf:hover { background: #dcbd84; transform: translateY(-2px); }
+ .rn__knopf:hover { background: var(--dark); transform: translateY(-2px); }
  .rn__knopf-gross {
  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
- font-size: 1.18rem; font-weight: 500; line-height: 1;
+ font-size: 1.18rem; font-weight: 500; line-height: 1; color: var(--gold-light);
  }
  .rn__knopf-klein {
  font-family: 'Jost', sans-serif; font-size: .5rem; font-weight: 400;
- letter-spacing: .26em; text-transform: uppercase; opacity: .72; line-height: 1;
+ letter-spacing: .26em; text-transform: uppercase; line-height: 1;
+ color: rgba(253,250,245,.6);
  }
  .rn__zweitknopf {
  font-family: 'Jost', sans-serif; font-size: .64rem; letter-spacing: .2em;
- text-transform: uppercase; color: rgba(200,169,110,.8);
- border-bottom: 1px solid rgba(200,169,110,.35); padding-bottom: 3px;
+ text-transform: uppercase; color: #8A6C3C;
+ border-bottom: 1px solid rgba(138,108,60,.4); padding-bottom: 3px;
  transition: color .3s, border-color .3s;
  }
- .rn__zweitknopf:hover { color: var(--gold); border-color: var(--gold); }
+ .rn__zweitknopf:hover { color: #5F4A26; border-color: #8A6C3C; }
 
- /* Erzaehlband */
+ /* Erzählband */
  .rn__band {
  max-width: 680px; margin: 5rem auto 0;
- border-top: 1px solid rgba(200,169,110,.22); padding-top: 3rem;
+ border-top: 1px solid rgba(138,108,60,.28); padding-top: 3rem;
  }
 
  /* Was drin ist */
  .rn__inhalt { max-width: 680px; margin: 3rem auto 0; }
  .rn__h3 {
  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
- font-size: 1.6rem; color: var(--gold-light); margin-bottom: 1.1rem;
+ font-size: 1.75rem; color: #8A6C3C; margin-bottom: 1.1rem;
  }
  .rn__h3--mitte { text-align: center; }
  .rn__liste { list-style: none; margin: 0; padding: 0; }
  .rn__liste li {
  font-family: 'Cormorant Garamond', Georgia, serif;
- font-size: 1.18rem; line-height: 1.5; color: rgba(236,230,220,.88);
+ font-size: 1.18rem; line-height: 1.5; color: #2A2A24;
  padding: .62rem 0 .62rem 1.5rem; position: relative;
- border-bottom: 1px solid rgba(200,169,110,.14);
+ border-bottom: 1px solid rgba(138,108,60,.2);
  }
  .rn__liste li::before {
  content: '\00b7'; position: absolute; left: .35rem; top: .5rem;
- color: var(--gold); font-size: 1.3rem; line-height: 1;
+ color: #8A6C3C; font-size: 1.3rem; line-height: 1;
  }
  .rn__liste li:last-child { border-bottom: 0; }
 
@@ -2177,9 +2179,10 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  .rn__probe {
  scroll-margin-top: 118px;
  max-width: 920px; margin: 4.5rem auto 0;
- border: 1px solid rgba(200,169,110,.35); border-radius: 3px;
- background: rgba(255,255,255,.035);
+ border: 1px solid rgba(138,108,60,.3); border-radius: 3px;
+ background: #F4F1EA;
  padding: 3rem 2.4rem;
+ box-shadow: 0 10px 40px rgba(42,42,36,.07);
  }
  .rn__faecher {
  display: flex; justify-content: center; align-items: flex-end;
@@ -2187,8 +2190,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  }
  .rn__faecher img {
  width: 126px; height: auto; border-radius: 2px;
- border: 1px solid rgba(200,169,110,.3);
- box-shadow: 0 12px 34px rgba(0,0,0,.55);
+ border: 1px solid rgba(138,108,60,.25);
+ box-shadow: 0 10px 28px rgba(42,42,36,.22);
  }
  .rn__faecher img:nth-child(1) { transform: rotate(-7deg) translateX(26px); z-index: 1; }
  .rn__faecher img:nth-child(2) { transform: translateY(-14px); z-index: 3; width: 142px; }
@@ -2197,17 +2200,17 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  .rn__probe-titel {
  font-family: 'Cormorant Garamond', Georgia, serif;
  font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.2; font-weight: 400;
- color: #fdfaf5; text-align: center; margin-bottom: 1rem;
+ color: #2A2A24; text-align: center; margin-bottom: 1rem;
  }
  .rn__probe-titel--klein { font-size: clamp(1.4rem, 2.8vw, 1.85rem); }
  .rn__probe-text {
  font-family: 'Cormorant Garamond', Georgia, serif;
- font-size: 1.2rem; line-height: 1.6; color: rgba(236,230,220,.82);
+ font-size: 1.2rem; line-height: 1.6; color: #3C382E;
  text-align: center; max-width: 520px; margin: 0 auto 2rem;
  }
  .rn__feldname {
  display: block; font-family: 'Jost', sans-serif; font-size: .55rem;
- letter-spacing: .28em; text-transform: uppercase; color: var(--gold);
+ letter-spacing: .28em; text-transform: uppercase; color: #8A6C3C;
  margin-bottom: .55rem; text-align: center;
  }
  .rn__feldreihe {
@@ -2215,34 +2218,34 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  }
  .rn__feldreihe input {
  flex: 1 1 auto; min-width: 0; padding: .95rem 1rem;
- border: 1px solid rgba(200,169,110,.4); border-radius: 2px;
- background: rgba(0,0,0,.25); color: #fdfaf5;
+ border: 1px solid rgba(138,108,60,.45); border-radius: 2px;
+ background: #FDFBF6; color: #2A2A24;
  font-family: 'Jost', sans-serif; font-size: .9rem;
  }
- .rn__feldreihe input::placeholder { color: rgba(236,230,220,.4); }
- .rn__feldreihe input:focus { outline: none; border-color: var(--gold); }
+ .rn__feldreihe input::placeholder { color: #A39C8C; }
+ .rn__feldreihe input:focus { outline: none; border-color: #8A6C3C; }
  .rn__feldreihe button {
  flex: 0 0 auto; border: 0; cursor: pointer; border-radius: 2px;
- padding: .95rem 1.6rem; background: var(--gold); color: #1b1410;
+ padding: .95rem 1.6rem; background: var(--green); color: var(--cream);
  font-family: 'Jost', sans-serif; font-size: .62rem; font-weight: 500;
  letter-spacing: .2em; text-transform: uppercase;
  transition: background .3s;
  }
- .rn__feldreihe button:hover { background: #dcbd84; }
+ .rn__feldreihe button:hover { background: var(--dark); }
  .rn__fein {
- font-size: .74rem; line-height: 1.8; color: rgba(236,230,220,.55);
+ font-size: .78rem; line-height: 1.8; color: #6E6A5E;
  text-align: center; max-width: 520px; margin: 1.1rem auto 0;
  }
- .rn__fein a { color: rgba(200,169,110,.9); border-bottom: 1px solid rgba(200,169,110,.35); }
+ .rn__fein a { color: #8A6C3C; border-bottom: 1px solid rgba(138,108,60,.4); }
 
- /* Der Blaetterer */
+ /* Der Blätterer */
  .rn__blaetter {
  display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
  padding: .4rem .2rem 1.2rem; margin-top: 1.6rem;
- scrollbar-width: thin; scrollbar-color: rgba(200,169,110,.5) transparent;
+ scrollbar-width: thin; scrollbar-color: rgba(138,108,60,.5) transparent;
  }
  .rn__blaetter::-webkit-scrollbar { height: 6px; }
- .rn__blaetter::-webkit-scrollbar-thumb { background: rgba(200,169,110,.45); border-radius: 3px; }
+ .rn__blaetter::-webkit-scrollbar-thumb { background: rgba(138,108,60,.45); border-radius: 3px; }
  .rn__blaetter a {
  flex: 0 0 min(80%, 520px); width: min(80%, 520px);
  scroll-snap-align: center; display: block; line-height: 0;
@@ -2250,60 +2253,60 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  .rn__blaetter img {
  width: 100%; height: auto;
  scroll-snap-align: center; border-radius: 2px;
- border: 1px solid rgba(200,169,110,.25);
- box-shadow: 0 14px 40px rgba(0,0,0,.5);
+ border: 1px solid rgba(138,108,60,.25);
+ box-shadow: 0 10px 32px rgba(42,42,36,.18);
  }
- .rn__blaetter:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+ .rn__blaetter:focus-visible { outline: 2px solid #8A6C3C; outline-offset: 4px; }
  .rn__steuer {
  display: flex; align-items: center; justify-content: center; gap: 1.1rem;
  margin-top: .4rem;
  }
  .rn__pfeil {
  width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
- border: 1px solid rgba(200,169,110,.45); background: transparent;
- color: var(--gold); font-size: 1.1rem; line-height: 1;
+ border: 1px solid rgba(138,108,60,.5); background: transparent;
+ color: #8A6C3C; font-size: 1.1rem; line-height: 1;
  transition: background .3s, border-color .3s;
  }
- .rn__pfeil:hover { background: rgba(200,169,110,.14); border-color: var(--gold); }
+ .rn__pfeil:hover { background: rgba(138,108,60,.12); border-color: #8A6C3C; }
  .rn__pfeil[disabled] { opacity: .3; cursor: default; }
  .rn__zaehler {
  font-family: 'Jost', sans-serif; font-size: .62rem; letter-spacing: .24em;
- color: rgba(236,230,220,.6); min-width: 56px; text-align: center;
+ color: #6E6A5E; min-width: 56px; text-align: center;
  }
  .rn__laden {
  display: block; width: fit-content; margin: 1.4rem auto 0;
  font-family: 'Jost', sans-serif; font-size: .6rem; letter-spacing: .24em;
- text-transform: uppercase; color: rgba(200,169,110,.85);
- border-bottom: 1px solid rgba(200,169,110,.35); padding-bottom: 3px;
+ text-transform: uppercase; color: #8A6C3C;
+ border-bottom: 1px solid rgba(138,108,60,.4); padding-bottom: 3px;
  transition: color .3s, border-color .3s;
  }
- .rn__laden:hover { color: var(--gold); border-color: var(--gold); }
+ .rn__laden:hover { color: #5F4A26; border-color: #8A6C3C; }
 
  /* Die zwei Varianten */
  .rn__varianten { scroll-margin-top: 118px; max-width: 1020px; margin: 5rem auto 0; }
  .rn__varianten-sub {
  font-family: 'Cormorant Garamond', Georgia, serif;
  text-align: center; font-size: 1.22rem; line-height: 1.6;
- color: rgba(236,230,220,.78); margin-bottom: 2.6rem;
+ color: #3C382E; margin-bottom: 2.6rem;
  }
  .rn__karten {
  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem;
  align-items: start;
  }
  .rn__karte {
- position: relative; border: 1px solid rgba(200,169,110,.28);
- border-radius: 3px; background: rgba(255,255,255,.035);
+ position: relative; border: 1px solid rgba(138,108,60,.3);
+ border-radius: 3px; background: #F4F1EA;
  padding: 2.2rem 1.8rem;
  display: flex; flex-direction: column;
  }
  .rn__karte--gross {
- border-color: rgba(200,169,110,.7);
- background: rgba(200,169,110,.07);
- box-shadow: 0 18px 60px rgba(0,0,0,.45);
+ border-color: rgba(138,108,60,.65);
+ background: #FBF8F1;
+ box-shadow: 0 14px 44px rgba(42,42,36,.12);
  }
  .rn__karte-band {
  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
- white-space: nowrap; background: var(--gold); color: #1b1410;
+ white-space: nowrap; background: #C4A870; color: #1E2E24;
  font-family: 'Jost', sans-serif; font-size: .52rem; font-weight: 500;
  letter-spacing: .22em; text-transform: uppercase;
  padding: .32rem .9rem; border-radius: 2px;
@@ -2311,9 +2314,9 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  .rn__karte-marke {
  display: block; font-family: 'Jost', sans-serif; font-size: .56rem;
  letter-spacing: .3em; text-transform: uppercase;
- color: rgba(200,169,110,.9); text-align: center; margin-bottom: 1.2rem;
+ color: #8A6C3C; text-align: center; margin-bottom: 1.2rem;
  }
- /* Das Buch steht hoch, der Teller ist quadratisch. Beide bekommen
+ /* Das Buch steht hoch, die Gläser sind quadratisch. Beide bekommen
     denselben Platz, dann stehen die Preise darunter auf einer Linie. */
  .rn__karte-bild {
  height: 290px; margin-bottom: 1.4rem;
@@ -2321,88 +2324,90 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  }
  .rn__karte-bild img {
  width: auto; max-width: 230px; max-height: 290px; height: auto; display: block;
- border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,.5);
+ border-radius: 2px; box-shadow: 0 8px 24px rgba(42,42,36,.2);
  }
+ /* Das Foto der Gläser liegt quer, es darf breiter werden. */
+ .rn__karte-bild--quer img { max-width: 100%; max-height: 240px; }
  .rn__preis {
- font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.3rem;
- color: var(--gold); text-align: center; line-height: 1;
+ font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.4rem;
+ color: #8A6C3C; text-align: center; line-height: 1;
  }
  .rn__preis-fein {
  font-family: 'Jost', sans-serif; font-size: .58rem; letter-spacing: .18em;
- text-transform: uppercase; color: rgba(236,230,220,.55);
+ text-transform: uppercase; color: #857F6F;
  text-align: center; margin: .6rem 0 1.5rem;
  }
  .rn__karte-liste { list-style: none; margin: 0 0 1.6rem; padding: 0; }
  .rn__karte-liste li {
  font-family: 'Cormorant Garamond', Georgia, serif;
- font-size: 1.12rem; line-height: 1.5; color: rgba(236,230,220,.88);
+ font-size: 1.12rem; line-height: 1.5; color: #2A2A24;
  padding: .5rem 0 .5rem 1.4rem; position: relative;
- border-bottom: 1px solid rgba(200,169,110,.12);
+ border-bottom: 1px solid rgba(138,108,60,.18);
  }
  .rn__karte-liste li::before {
  content: '\00b7'; position: absolute; left: .3rem; top: .38rem;
- color: var(--gold); font-size: 1.25rem; line-height: 1;
+ color: #8A6C3C; font-size: 1.25rem; line-height: 1;
  }
  .rn__karte-liste li:last-child { border-bottom: 0; }
- .rn__karte-liste strong { color: #f0e6cd; font-weight: 500; }
+ .rn__karte-liste strong { color: #1E2E24; font-weight: 600; }
  .rn__frist {
  font-family: 'Cormorant Garamond', Georgia, serif;
- font-size: 1.05rem; line-height: 1.5; color: var(--gold-light);
+ font-size: 1.05rem; line-height: 1.5; color: #8A6C3C;
  text-align: center; margin-bottom: 1.2rem;
  }
- .rn__karte--zu .rn__frist { color: rgba(236,230,220,.6); }
+ .rn__karte--zu .rn__frist { color: #857F6F; }
  .rn__kaufknopf {
  margin-top: auto; display: block; text-align: center;
  padding: .95rem 1.4rem; border-radius: 2px;
- border: 1px solid var(--gold); color: var(--gold);
+ border: 1px solid var(--green); color: var(--green);
  font-family: 'Jost', sans-serif; font-size: .62rem; font-weight: 500;
  letter-spacing: .2em; text-transform: uppercase;
  transition: background .3s, color .3s, transform .4s;
  }
- .rn__kaufknopf:hover { background: rgba(200,169,110,.14); transform: translateY(-2px); }
- .rn__kaufknopf--gold { background: var(--gold); color: #1b1410; }
- .rn__kaufknopf--gold:hover { background: #dcbd84; color: #1b1410; }
+ .rn__kaufknopf:hover { background: rgba(45,74,53,.08); transform: translateY(-2px); }
+ .rn__kaufknopf--gold { background: var(--green); color: var(--cream); }
+ .rn__kaufknopf--gold:hover { background: var(--dark); color: var(--cream); }
  .rn__hinweis {
- font-size: .72rem; line-height: 1.8; color: rgba(236,230,220,.45);
+ font-size: .74rem; line-height: 1.8; color: #857F6F;
  text-align: center; max-width: 640px; margin: 2rem auto 0;
  }
 
- /* So laeuft es und die Fragen */
+ /* So läuft es und die Fragen */
  .rn__schluss {
  max-width: 1020px; margin: 4.5rem auto 0;
- border-top: 1px solid rgba(200,169,110,.22); padding-top: 3rem;
+ border-top: 1px solid rgba(138,108,60,.28); padding-top: 3rem;
  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem;
  }
  .rn__spalte p {
  font-family: 'Cormorant Garamond', Georgia, serif;
- font-size: 1.2rem; line-height: 1.6; color: rgba(236,230,220,.82);
+ font-size: 1.2rem; line-height: 1.6; color: #3C382E;
  margin-bottom: .9rem;
  }
  .rn__spalte details {
- border-bottom: 1px solid rgba(200,169,110,.16);
+ border-bottom: 1px solid rgba(138,108,60,.22);
  }
  .rn__spalte summary {
  cursor: pointer; list-style: none; padding: .85rem 1.6rem .85rem 0;
- position: relative; color: #f0e6cd;
+ position: relative; color: #2A2A24;
  font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.18rem;
  }
  .rn__spalte summary::-webkit-details-marker { display: none; }
  .rn__spalte summary::after {
  content: '+'; position: absolute; right: .2rem; top: .72rem;
- color: var(--gold); font-size: 1.1rem; line-height: 1;
+ color: #8A6C3C; font-size: 1.1rem; line-height: 1;
  }
  .rn__spalte details[open] summary::after { content: '\2013'; }
  .rn__spalte details p {
  font-size: 1.14rem; padding: 0 0 .9rem; margin: 0;
- color: rgba(236,230,220,.76);
+ color: #4A4538;
  }
 
  @media (max-width: 920px) {
  #waldrauhnaechte { padding: 4.5rem 1.2rem 4rem; }
  .rn__kopf { grid-template-columns: 1fr; gap: 2.6rem; }
  .rn__buch img { max-width: 320px; margin: 0 auto; }
- .rn__karten { grid-template-columns: 1fr; gap: 2.2rem; }
- .rn__karte--gross { order: -1; }
+ /* Das günstigere Angebot steht zuerst, auch untereinander. */
+ .rn__karten { grid-template-columns: 1fr; gap: 2.6rem; }
  .rn__schluss { grid-template-columns: 1fr; gap: 2.4rem; }
  .rn__probe { padding: 2.2rem 1.3rem; }
  .rn__faecher { height: 150px; }
@@ -2587,6 +2592,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
 })();
 </script>
 
+
+ <span class="gold-sep"></span>
 
  <!-- ══════════ WALDKALENDER 2027 ══════════ -->
  <section id="waldkalender" aria-label="Waldkalender 2027">
