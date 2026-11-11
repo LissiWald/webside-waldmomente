@@ -666,6 +666,31 @@
  .hero__neu-pfeil { display: none; }
  }
 
+ /* Zwei Ankündigungen nebeneinander: das Begleitbuch und der
+    Kalender. Auf dem Handy stehen sie untereinander und werden
+    kleiner, damit die Überschrift darunter noch zu sehen ist. */
+ .hero__schiene {
+ display: flex; flex-wrap: wrap; justify-content: center;
+ align-items: stretch; gap: .9rem; margin: 0 0 2.4rem;
+ }
+ .hero__schiene .hero__neu { margin: 0; }
+ .hero__neu-bild img { object-fit: cover; object-position: center; }
+ /* Nur die Neuheit blinkt, sonst flackert die ganze Reihe. */
+ .hero__neu--ruhig { box-shadow: 0 2px 4px rgba(0,0,0,.18), 0 14px 38px rgba(0,0,0,.36); }
+
+ @media (max-width: 860px) {
+ .hero__schiene { gap: .6rem; margin-bottom: 1.6rem; }
+ }
+ @media (max-width: 760px) {
+ .hero__schiene .hero__neu { width: 100%; max-width: 420px; }
+ }
+ @media (max-width: 520px) {
+ .hero__schiene { gap: .5rem; }
+ .hero__schiene .hero__neu-bild img { width: 46px; height: 46px; }
+ .hero__schiene .hero__neu-titel { font-size: 1.06rem; }
+ .hero__schiene .hero__neu { padding: .6rem .8rem .6rem .6rem; }
+ }
+
  .d1 { transition-delay: .15s; }
  .d2 { transition-delay: .3s; }
  .d3 { transition-delay: .45s; }
@@ -1729,7 +1754,19 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <div class="hero__slide"></div>
  <div class="hero__overlay"></div>
  <div class="hero__content">
- <a href="#waldkalender" class="hero__neu reveal" aria-label="Zum Waldkalender 2027">
+ <div class="hero__schiene reveal">
+ <a href="#waldrauhnaechte" class="hero__neu" aria-label="Zu den Waldrauhnächten, dem Begleitbuch">
+ <picture class="hero__neu-bild"><img src="assets/waldrauhnaechte-knopf.jpg" width="132" height="132" alt="" loading="eager"></picture>
+ <span class="hero__neu-strich" aria-hidden="true"></span>
+ <span class="hero__neu-inhalt">
+ <span class="hero__neu-wort">Neu</span>
+ <span class="hero__neu-titel">Zwölf Nächte<br>für dein Jahr.</span>
+ <span class="hero__neu-zusatz">Waldrauhnächte<span class="hero__neu-lang"> · ab 21. Dezember</span></span>
+ </span>
+ <span class="hero__neu-pfeil" aria-hidden="true">→</span>
+ <span class="hero__neu-schimmer" aria-hidden="true"></span>
+ </a>
+ <a href="#waldkalender" class="hero__neu hero__neu--ruhig" aria-label="Zum Waldkalender 2027">
  <picture class="hero__neu-bild"><img src="assets/waldkalender-cover.jpg" width="132" height="132" alt="" loading="eager"></picture>
  <span class="hero__neu-strich" aria-hidden="true"></span>
  <span class="hero__neu-inhalt">
@@ -1738,8 +1775,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <span class="hero__neu-zusatz">Waldkalender 2027<span class="hero__neu-lang"> · zwölf Monate draußen</span></span>
  </span>
  <span class="hero__neu-pfeil" aria-hidden="true">→</span>
- <span class="hero__neu-schimmer" aria-hidden="true"></span>
  </a>
+ </div>
  <h1 class="hero__title">
  <span class="w">Derselbe</span>&nbsp;<span class="w">Weg</span>&nbsp;<span class="w">wie</span>&nbsp;<span class="w">immer.</span><br>
  <span class="w">Und</span>&nbsp;<span class="w">du</span>&nbsp;<span class="w">hast</span>&nbsp;<span class="w">die</span>&nbsp;<span class="w">Hälfte</span>&nbsp;<span class="w">noch</span>&nbsp;<span class="w">nie</span>&nbsp;<span class="w">gesehen.</span>
@@ -1834,6 +1871,700 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  </div>
  <div class="scroll-ind"><div class="scroll-ind__line"></div></div>
  </section>
+
+
+ <!-- ══════════ WALDRAUHNÄCHTE ══════════ -->
+ <section id="waldrauhnaechte" aria-label="Waldrauhnächte, das Begleitbuch">
+ <div class="rn__schimmer" aria-hidden="true"></div>
+
+ <!-- Kopf: das Buch und der Einstieg -->
+ <div class="rn__kopf">
+ <div class="rn__buch reveal">
+ <picture>
+ <source srcset="assets/waldrauhnaechte-cover.webp" type="image/webp">
+ <img src="assets/waldrauhnaechte-cover.jpg" width="780" height="1104"
+ alt="Das Begleitbuch Waldrauhnächte. Auf dem Umschlag kahle Äste vor einem rosa Abendhimmel."
+ loading="lazy">
+ </picture>
+ </div>
+
+ <div class="rn__text">
+ <span class="rn__kicker reveal" id="rn-kicker">Neu · Start am 21. Dezember</span>
+ <h2 class="rn__title reveal d1">Dein Handy hat dein Jahr<br>schon zusammengeschnitten.</h2>
+ <p class="rn__unter reveal d1">Waldrauhnächte · Das Begleitbuch für deinen Jahresrückblick</p>
+ <p class="rn__lead reveal d2">Mit Musik drunter und ohne die Hälfte. In zwölf Rauhnächten holst du dir den Rest.</p>
+ <p class="rn__absatz reveal d2">Im Dezember liefert dir jede App deinen Jahresrückblick. Lieblingssongs, die besten Fotos, deine Highlights in 30&nbsp;Sekunden. Sieht gut aus. Stimmt nur zur Hälfte.</p>
+ <p class="rn__absatz reveal d2">Die Monate, in denen es gekracht hat, schneidet der Algorithmus raus. Die Nacht, in der du um drei wach lagst. Der Moment, in dem du fast alles hingeschmissen hättest. Genau da ist am meisten passiert.</p>
+ <p class="rn__zitat reveal d3">Ein Baum schneidet nichts raus. Jedes Jahr landet als Ring im Holz, das gute breit, das harte schmal.</p>
+
+ <div class="rn__knopfreihe reveal d3">
+ <a href="#rn-leseprobe" class="rn__knopf">
+ <span class="rn__knopf-gross">Erste Nacht kostenlos lesen</span>
+ <span class="rn__knopf-klein">Sechs Seiten · sofort</span>
+ </a>
+ <a href="#rn-varianten" class="rn__zweitknopf">Ab 24,90&nbsp;€ · zu den Varianten ↓</a>
+ </div>
+ </div>
+ </div>
+
+ <!-- Erzählband -->
+ <div class="rn__band">
+ <p class="rn__absatz reveal">Zwischen den Jahren bleibt alles stehen. Früher hießen diese Tage Rauhnächte. Zwölf Nächte, in denen die Arbeit ruhte und man genau hinsah: Was war, was kommt. Wir holen das zurück. Ohne Hokuspokus.</p>
+ <p class="rn__absatz reveal">Jede Nacht gehört einem Monat. Ich zeige dir, was der Wald in dieser Zeit getrieben hat. Warum die Buche im Januar auf Frost wartet. Warum die Eiche mitten im Sommer noch mal von vorn anfängt. Dann bist du dran. Ein Monat, ein Zettel, ab an den Ast. Am 6.&nbsp;Januar hängt dein komplettes Jahr am Fenster. Ungefiltert.</p>
+ <p class="rn__absatz reveal">Petra ist Kräuterpädagogin. Sie weiß, wie welches Harz riecht, wenn es auf dem Sieb liegt, und warum man früher genau diese Pflanzen in den Rauch gelegt hat. Sie zeigt dir, wie Räuchern geht. Zur Wintersonnenwende, an Heiligabend, an Silvester und am 6.&nbsp;Januar, wenn C+M+B über die Tür kommt.</p>
+ <p class="rn__absatz rn__absatz--stark reveal">Du brauchst einen Stift, einen Ast und eine Viertelstunde, wenn es draußen dunkel ist. Vorsätze kannst du dir sparen.</p>
+ </div>
+
+ <!-- Was drin ist -->
+ <div class="rn__inhalt reveal">
+ <h3 class="rn__h3">Das bekommst du</h3>
+ <ul class="rn__liste">
+ <li>70 Seiten als PDF in A4, fürs Handy oder zum Ausdrucken</li>
+ <li>Zwölf Waldgeschichten, eine für jeden Monat, mit Fragen an dein Jahr</li>
+ <li>Wintersonnenwende, Ahnenlicht, die 13 Wünsche, Silvester und die Heiligen Drei Könige</li>
+ <li>Petras Räucherkunde mit allem, was du zum Räuchern brauchst</li>
+ <li>Zwölf Zettel für deinen Ast zum Ausschneiden</li>
+ <li>Fotos aus unserem Wald</li>
+ </ul>
+ </div>
+
+ <!-- Leseprobe mit E-Mail -->
+ <div class="rn__probe" id="rn-leseprobe">
+ <div class="rn__tor" id="rn-tor">
+ <div class="rn__faecher" aria-hidden="true">
+ <img src="assets/leseprobe/seite-3.webp" alt="" loading="lazy" width="1000" height="1415">
+ <img src="assets/leseprobe/seite-1.webp" alt="" loading="lazy" width="1000" height="1415">
+ <img src="assets/leseprobe/seite-4.webp" alt="" loading="lazy" width="1000" height="1415">
+ </div>
+ <span class="rn__kicker">Leseprobe · kostenlos</span>
+ <h3 class="rn__probe-titel">Lies die erste Rauhnacht,<br>bevor du dich entscheidest.</h3>
+ <p class="rn__probe-text">Unser Vorwort und die komplette erste Nacht: Januar, 25.&nbsp;Dezember. Sechs Seiten, dieselbe Gestaltung wie im Buch. Trag deine E-Mail ein, dann geht die Leseprobe hier auf der Seite auf.</p>
+ <form id="rn-form" action="https://assets.mailerlite.com/jsonp/2587270/forms/198406643568870499/subscribe" method="post" target="rn-sink">
+ <input type="hidden" name="ml-submit" value="1">
+ <input type="hidden" name="fields[leseprobe]" value="Waldrauhnächte">
+ <label class="rn__feldname" for="rn-mail">Deine E-Mail</label>
+ <div class="rn__feldreihe">
+ <input type="email" id="rn-mail" name="fields[email]" required placeholder="deine@email.de" autocomplete="email">
+ <button type="submit">Leseprobe öffnen</button>
+ </div>
+ </form>
+ <p class="rn__fein">Du bekommst danach ab und zu Post von mir aus dem Wald und erfährst als Erste, wenn die Waldrauhnächte starten. Abmelden geht jederzeit mit einem Klick. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+ </div>
+
+ <div class="rn__leser" id="rn-leser" hidden>
+ <span class="rn__kicker">Deine Leseprobe</span>
+ <h3 class="rn__probe-titel rn__probe-titel--klein">Wisch dich durch die erste Nacht.</h3>
+ <div class="rn__blaetter" id="rn-blaetter" tabindex="0" role="group" aria-label="Leseprobe, sechs Seiten zum Durchblättern">
+ <a href="assets/leseprobe/seite-1.webp" target="_blank" rel="noopener" aria-label="Diese Seite gross ansehen"><img src="assets/leseprobe/seite-1.webp" width="1000" height="1415" alt="Titelseite der Leseprobe" loading="lazy"></a>
+ <a href="assets/leseprobe/seite-2.webp" target="_blank" rel="noopener" aria-label="Diese Seite gross ansehen"><img src="assets/leseprobe/seite-2.webp" width="1000" height="1415" alt="Unser Vorwort, zwei Frauen, ein Wald" loading="lazy"></a>
+ <a href="assets/leseprobe/seite-3.webp" target="_blank" rel="noopener" aria-label="Diese Seite gross ansehen"><img src="assets/leseprobe/seite-3.webp" width="1000" height="1415" alt="Erste Rauhnacht, Januar, 25. Dezember" loading="lazy"></a>
+ <a href="assets/leseprobe/seite-4.webp" target="_blank" rel="noopener" aria-label="Diese Seite gross ansehen"><img src="assets/leseprobe/seite-4.webp" width="1000" height="1415" alt="Ohne Kälte kein Frühling, die Waldgeschichte für den Januar" loading="lazy"></a>
+ <a href="assets/leseprobe/seite-5.webp" target="_blank" rel="noopener" aria-label="Diese Seite gross ansehen"><img src="assets/leseprobe/seite-5.webp" width="1000" height="1415" alt="Und bei dir, die Fragen an deinen Januar" loading="lazy"></a>
+ <a href="assets/leseprobe/seite-6.webp" target="_blank" rel="noopener" aria-label="Diese Seite gross ansehen"><img src="assets/leseprobe/seite-6.webp" width="1000" height="1415" alt="Das war der Januar, elf Monate fehlen noch" loading="lazy"></a>
+ </div>
+ <div class="rn__steuer">
+ <button type="button" class="rn__pfeil" data-rn-blatt="-1" aria-label="Eine Seite zurück">←</button>
+ <span class="rn__zaehler" id="rn-zaehler" role="status">1 / 6</span>
+ <button type="button" class="rn__pfeil" data-rn-blatt="1" aria-label="Eine Seite weiter">→</button>
+ </div>
+ <p class="rn__fein">Tipp: Tipp eine Seite an, dann geht sie groß auf.</p>
+ <a class="rn__laden" href="assets/Waldrauhnaechte-Leseprobe.pdf" download="Waldrauhnaechte-Leseprobe.pdf">Leseprobe als PDF mitnehmen</a>
+ <p class="rn__fein" id="rn-bestaetigung" hidden>Schau gleich noch in dein Postfach. Dort liegt eine Mail, mit der du deine Anmeldung bestätigst.</p>
+ </div>
+ </div>
+ <iframe name="rn-sink" title="Formularziel" style="display:none" aria-hidden="true"></iframe>
+
+ <!-- Die zwei Varianten -->
+ <div class="rn__varianten" id="rn-varianten">
+ <h3 class="rn__h3 rn__h3--mitte reveal">Zwei Varianten</h3>
+ <p class="rn__varianten-sub reveal">Das Buch allein, oder das Buch mit Petras Räucherwerk im Briefkasten.</p>
+
+ <div class="rn__karten">
+
+ <div class="rn__karte reveal">
+ <span class="rn__karte-marke">Das Begleitbuch</span>
+ <div class="rn__karte-bild">
+ <picture>
+ <source srcset="assets/waldrauhnaechte-cover.webp" type="image/webp">
+ <img src="assets/waldrauhnaechte-cover.jpg" width="780" height="1104" alt="" loading="lazy">
+ </picture>
+ </div>
+ <div class="rn__preis">24,90&nbsp;€</div>
+ <p class="rn__preis-fein">PDF · Download sofort nach dem Kauf</p>
+ <ul class="rn__karte-liste">
+ <li>70 Seiten in A4, fürs Handy oder zum Ausdrucken</li>
+ <li>Zwölf Waldgeschichten mit Fragen an dein Jahr</li>
+ <li>Petras Räucherkunde zum Nachlesen</li>
+ <li>Zwölf Zettel für deinen Ast zum Ausschneiden</li>
+ </ul>
+ <a class="rn__kaufknopf" data-rn-kauf="buch" href="#rn-leseprobe">Erst die Leseprobe</a>
+ </div>
+
+ <div class="rn__karte rn__karte--gross reveal d1">
+ <span class="rn__karte-band">Mit Petras Räucherwerk</span>
+ <span class="rn__karte-marke">Das Paket</span>
+ <div class="rn__karte-bild">
+ <picture>
+ <source srcset="assets/waldrauhnaechte-raeucherwerk.webp" type="image/webp">
+ <img src="assets/waldrauhnaechte-raeucherwerk.jpg" width="760" height="760" alt="Ein dunkler Teller mit Petras gebundenem Räucherwerk, von Hand beschriftet" loading="lazy">
+ </picture>
+ </div>
+ <div class="rn__preis">49,90&nbsp;€</div>
+ <p class="rn__preis-fein">Buch als PDF · Räucherwerk per Post</p>
+ <ul class="rn__karte-liste">
+ <li>Das komplette Begleitbuch ist enthalten</li>
+ <li><strong>Lichtfunkeln</strong> mit Alant, Mistel, Tannennadeln, Weihrauch und Orangenschalen</li>
+ <li><strong>Happy New Year</strong> mit Weihrauch, Dammar, Zimtrinde, Rose und Lavendel</li>
+ <li><strong>Die heiligen Drei</strong> mit Fichtenharz, Salbei, Beifuß, Minze und Wacholder</li>
+ </ul>
+ <p class="rn__frist" id="rn-frist">Bestellbar bis 14.&nbsp;Dezember, damit alles vor der Wintersonnenwende bei dir ist.</p>
+ <a class="rn__kaufknopf rn__kaufknopf--gold" data-rn-kauf="paket" href="#rn-leseprobe">Erst die Leseprobe</a>
+ </div>
+
+ </div>
+
+ <p class="rn__hinweis reveal">Das Räucherwerk ist nur zum Räuchern gedacht und nicht zum Verzehr. Die Bedeutungen der Pflanzen stammen aus der Räuchertradition und sind keine medizinischen Wirkungsversprechen.</p>
+ </div>
+
+ <!-- So laeuft es und die Fragen -->
+ <div class="rn__schluss">
+ <div class="rn__spalte reveal">
+ <h3 class="rn__h3">So läuft es</h3>
+ <p>Nach dem Kauf kommt der Download für das Buch per Mail.</p>
+ <p>Das Räucherwerk geht per Post an die Adresse, die du beim Kauf angibst.</p>
+ <p>Start ist am 21.&nbsp;Dezember. Wer erst am 25.&nbsp;Dezember einsteigt, ist zur ersten Rauhnacht noch pünktlich.</p>
+ </div>
+ <div class="rn__spalte reveal d1">
+ <h3 class="rn__h3">Fragen</h3>
+ <details><summary>Brauche ich einen Wald vor der Tür?</summary><p>Nein. Ein Park reicht. Den Ast holst du dir vorher bei einem Spaziergang.</p></details>
+ <details><summary>Wie viel Zeit kostet das?</summary><p>Eine Viertelstunde pro Abend.</p></details>
+ <details><summary>Muss ich räuchern?</summary><p>Nein. Die Waldgeschichten und dein Ast kommen auch ohne Rauch aus. Wer räuchern will, findet alles dazu im Buch. Petras drei Mischungen gibt es im Paket, bestellbar bis 14.&nbsp;Dezember.</p></details>
+ <details><summary>Ich habe noch nie geräuchert.</summary><p>Steht alles im Buch: was du brauchst und worauf du achten musst.</p></details>
+ <details><summary>Kann ich das verschenken?</summary><p>Ja. Leite die Mail mit dem Download einfach weiter. Soll das Räucherwerk an eine andere Adresse gehen, schreib mir nach dem Kauf.</p></details>
+ </div>
+ </div>
+
+ </section>
+
+ <script>
+ /* Die beiden Payhip-Adressen fuer die Waldrauhnaechte.
+    Solange hier nichts steht, fuehren die Knoepfe zur Leseprobe und
+    sammeln E-Mail-Adressen. Sobald die Produkte in Payhip stehen,
+    nur diese zwei Zeilen fuellen, zum Beispiel
+      buch:  'https://payhip.com/b/XXXXX'
+    Die Kaufknoepfe erscheinen dann von allein, auch im Produktraster. */
+ window.RAUHNAECHTE_KAUF = {
+ buch: '',
+ paket: ''
+ };
+ </script>
+
+<style>
+ /* ── WALDRAUHNÄCHTE ──
+    Der dunkelste Abschnitt der Seite. Das passt zum Produkt: zwölf
+    Abende im Dezember. Die Farben kommen vom Buchumschlag, ein warmes
+    Pflaumenschwarz mit einem Rest Abendrot oben rechts. */
+ #waldrauhnaechte {
+ position: relative; overflow: hidden;
+ background: #120e14;
+ color: #ece6dc;
+ padding: 6rem 1.5rem 5.5rem;
+ }
+ .rn__schimmer {
+ position: absolute; inset: 0; pointer-events: none;
+ background:
+ radial-gradient(60% 45% at 78% 0%, rgba(176,106,118,.30), transparent 70%),
+ radial-gradient(70% 50% at 10% 100%, rgba(45,74,53,.38), transparent 72%);
+ }
+ #waldrauhnaechte > *:not(.rn__schimmer) { position: relative; z-index: 1; }
+
+ /* Kopf */
+ .rn__kopf {
+ max-width: 1180px; margin: 0 auto;
+ display: grid; grid-template-columns: .85fr 1fr;
+ gap: 4.5rem; align-items: center;
+ }
+ .rn__buch img {
+ width: 100%; height: auto; display: block;
+ border-radius: 2px;
+ box-shadow: 0 2px 6px rgba(0,0,0,.5), 0 34px 80px rgba(0,0,0,.6);
+ }
+ .rn__kicker {
+ display: block; font-family: 'Jost', sans-serif;
+ font-size: .58rem; letter-spacing: .42em; text-transform: uppercase;
+ color: var(--gold); margin-bottom: 1.3rem;
+ }
+ .rn__title {
+ font-family: 'Cormorant Garamond', Georgia, serif;
+ font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.12;
+ font-weight: 400; color: #fdfaf5; margin-bottom: .9rem;
+ }
+ .rn__unter {
+ font-family: 'Jost', sans-serif; font-size: .68rem; font-weight: 300;
+ letter-spacing: .2em; text-transform: uppercase;
+ color: rgba(200,169,110,.85); margin-bottom: 1.8rem;
+ }
+ .rn__lead {
+ font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+ font-size: clamp(1.2rem, 2.4vw, 1.5rem); line-height: 1.55;
+ color: #f0e6cd; margin-bottom: 1.6rem;
+ }
+ .rn__absatz {
+ font-size: .98rem; line-height: 1.9; color: rgba(236,230,220,.82);
+ margin-bottom: 1.1rem;
+ }
+ .rn__absatz--stark { color: #f0e6cd; }
+ .rn__zitat {
+ font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+ font-size: 1.3rem; line-height: 1.55; color: var(--gold-light);
+ border-left: 2px solid rgba(200,169,110,.5);
+ padding: .2rem 0 .2rem 1.3rem; margin: 1.9rem 0 2.3rem;
+ }
+
+ .rn__knopfreihe { display: flex; flex-wrap: wrap; align-items: center; gap: 1.3rem; }
+ .rn__knopf {
+ display: inline-flex; flex-direction: column; align-items: center;
+ gap: .25rem; padding: .95rem 2.1rem .85rem;
+ background: var(--gold); color: #1b1410; border-radius: 2px;
+ transition: transform .4s cubic-bezier(.2,.7,.3,1), background .4s;
+ box-shadow: 0 10px 34px rgba(0,0,0,.45);
+ }
+ .rn__knopf:hover { background: #dcbd84; transform: translateY(-2px); }
+ .rn__knopf-gross {
+ font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+ font-size: 1.18rem; font-weight: 500; line-height: 1;
+ }
+ .rn__knopf-klein {
+ font-family: 'Jost', sans-serif; font-size: .5rem; font-weight: 400;
+ letter-spacing: .26em; text-transform: uppercase; opacity: .72; line-height: 1;
+ }
+ .rn__zweitknopf {
+ font-family: 'Jost', sans-serif; font-size: .64rem; letter-spacing: .2em;
+ text-transform: uppercase; color: rgba(200,169,110,.8);
+ border-bottom: 1px solid rgba(200,169,110,.35); padding-bottom: 3px;
+ transition: color .3s, border-color .3s;
+ }
+ .rn__zweitknopf:hover { color: var(--gold); border-color: var(--gold); }
+
+ /* Erzaehlband */
+ .rn__band {
+ max-width: 680px; margin: 5rem auto 0;
+ border-top: 1px solid rgba(200,169,110,.22); padding-top: 3rem;
+ }
+
+ /* Was drin ist */
+ .rn__inhalt { max-width: 680px; margin: 3rem auto 0; }
+ .rn__h3 {
+ font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+ font-size: 1.6rem; color: var(--gold-light); margin-bottom: 1.1rem;
+ }
+ .rn__h3--mitte { text-align: center; }
+ .rn__liste { list-style: none; margin: 0; padding: 0; }
+ .rn__liste li {
+ font-size: .95rem; line-height: 1.75; color: rgba(236,230,220,.85);
+ padding: .62rem 0 .62rem 1.5rem; position: relative;
+ border-bottom: 1px solid rgba(200,169,110,.14);
+ }
+ .rn__liste li::before {
+ content: '\00b7'; position: absolute; left: .35rem; top: .5rem;
+ color: var(--gold); font-size: 1.3rem; line-height: 1;
+ }
+ .rn__liste li:last-child { border-bottom: 0; }
+
+ /* Leseprobe */
+ .rn__probe {
+ scroll-margin-top: 118px;
+ max-width: 920px; margin: 4.5rem auto 0;
+ border: 1px solid rgba(200,169,110,.35); border-radius: 3px;
+ background: rgba(255,255,255,.035);
+ padding: 3rem 2.4rem;
+ }
+ .rn__faecher {
+ display: flex; justify-content: center; align-items: flex-end;
+ margin-bottom: 2rem; height: 180px;
+ }
+ .rn__faecher img {
+ width: 126px; height: auto; border-radius: 2px;
+ border: 1px solid rgba(200,169,110,.3);
+ box-shadow: 0 12px 34px rgba(0,0,0,.55);
+ }
+ .rn__faecher img:nth-child(1) { transform: rotate(-7deg) translateX(26px); z-index: 1; }
+ .rn__faecher img:nth-child(2) { transform: translateY(-14px); z-index: 3; width: 142px; }
+ .rn__faecher img:nth-child(3) { transform: rotate(7deg) translateX(-26px); z-index: 2; }
+ .rn__probe .rn__kicker { text-align: center; }
+ .rn__probe-titel {
+ font-family: 'Cormorant Garamond', Georgia, serif;
+ font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.2; font-weight: 400;
+ color: #fdfaf5; text-align: center; margin-bottom: 1rem;
+ }
+ .rn__probe-titel--klein { font-size: clamp(1.4rem, 2.8vw, 1.85rem); }
+ .rn__probe-text {
+ font-size: .95rem; line-height: 1.85; color: rgba(236,230,220,.78);
+ text-align: center; max-width: 520px; margin: 0 auto 2rem;
+ }
+ .rn__feldname {
+ display: block; font-family: 'Jost', sans-serif; font-size: .55rem;
+ letter-spacing: .28em; text-transform: uppercase; color: var(--gold);
+ margin-bottom: .55rem; text-align: center;
+ }
+ .rn__feldreihe {
+ display: flex; gap: .6rem; max-width: 520px; margin: 0 auto;
+ }
+ .rn__feldreihe input {
+ flex: 1 1 auto; min-width: 0; padding: .95rem 1rem;
+ border: 1px solid rgba(200,169,110,.4); border-radius: 2px;
+ background: rgba(0,0,0,.25); color: #fdfaf5;
+ font-family: 'Jost', sans-serif; font-size: .9rem;
+ }
+ .rn__feldreihe input::placeholder { color: rgba(236,230,220,.4); }
+ .rn__feldreihe input:focus { outline: none; border-color: var(--gold); }
+ .rn__feldreihe button {
+ flex: 0 0 auto; border: 0; cursor: pointer; border-radius: 2px;
+ padding: .95rem 1.6rem; background: var(--gold); color: #1b1410;
+ font-family: 'Jost', sans-serif; font-size: .62rem; font-weight: 500;
+ letter-spacing: .2em; text-transform: uppercase;
+ transition: background .3s;
+ }
+ .rn__feldreihe button:hover { background: #dcbd84; }
+ .rn__fein {
+ font-size: .74rem; line-height: 1.8; color: rgba(236,230,220,.55);
+ text-align: center; max-width: 520px; margin: 1.1rem auto 0;
+ }
+ .rn__fein a { color: rgba(200,169,110,.9); border-bottom: 1px solid rgba(200,169,110,.35); }
+
+ /* Der Blaetterer */
+ .rn__blaetter {
+ display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+ padding: .4rem .2rem 1.2rem; margin-top: 1.6rem;
+ scrollbar-width: thin; scrollbar-color: rgba(200,169,110,.5) transparent;
+ }
+ .rn__blaetter::-webkit-scrollbar { height: 6px; }
+ .rn__blaetter::-webkit-scrollbar-thumb { background: rgba(200,169,110,.45); border-radius: 3px; }
+ .rn__blaetter a {
+ flex: 0 0 min(80%, 520px); width: min(80%, 520px);
+ scroll-snap-align: center; display: block; line-height: 0;
+ }
+ .rn__blaetter img {
+ width: 100%; height: auto;
+ scroll-snap-align: center; border-radius: 2px;
+ border: 1px solid rgba(200,169,110,.25);
+ box-shadow: 0 14px 40px rgba(0,0,0,.5);
+ }
+ .rn__blaetter:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+ .rn__steuer {
+ display: flex; align-items: center; justify-content: center; gap: 1.1rem;
+ margin-top: .4rem;
+ }
+ .rn__pfeil {
+ width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+ border: 1px solid rgba(200,169,110,.45); background: transparent;
+ color: var(--gold); font-size: 1.1rem; line-height: 1;
+ transition: background .3s, border-color .3s;
+ }
+ .rn__pfeil:hover { background: rgba(200,169,110,.14); border-color: var(--gold); }
+ .rn__pfeil[disabled] { opacity: .3; cursor: default; }
+ .rn__zaehler {
+ font-family: 'Jost', sans-serif; font-size: .62rem; letter-spacing: .24em;
+ color: rgba(236,230,220,.6); min-width: 56px; text-align: center;
+ }
+ .rn__laden {
+ display: block; width: fit-content; margin: 1.4rem auto 0;
+ font-family: 'Jost', sans-serif; font-size: .6rem; letter-spacing: .24em;
+ text-transform: uppercase; color: rgba(200,169,110,.85);
+ border-bottom: 1px solid rgba(200,169,110,.35); padding-bottom: 3px;
+ transition: color .3s, border-color .3s;
+ }
+ .rn__laden:hover { color: var(--gold); border-color: var(--gold); }
+
+ /* Die zwei Varianten */
+ .rn__varianten { scroll-margin-top: 118px; max-width: 1020px; margin: 5rem auto 0; }
+ .rn__varianten-sub {
+ text-align: center; font-size: .95rem; line-height: 1.8;
+ color: rgba(236,230,220,.72); margin-bottom: 2.6rem;
+ }
+ .rn__karten {
+ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem;
+ align-items: start;
+ }
+ .rn__karte {
+ position: relative; border: 1px solid rgba(200,169,110,.28);
+ border-radius: 3px; background: rgba(255,255,255,.035);
+ padding: 2.2rem 1.8rem;
+ display: flex; flex-direction: column;
+ }
+ .rn__karte--gross {
+ border-color: rgba(200,169,110,.7);
+ background: rgba(200,169,110,.07);
+ box-shadow: 0 18px 60px rgba(0,0,0,.45);
+ }
+ .rn__karte-band {
+ position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+ white-space: nowrap; background: var(--gold); color: #1b1410;
+ font-family: 'Jost', sans-serif; font-size: .52rem; font-weight: 500;
+ letter-spacing: .22em; text-transform: uppercase;
+ padding: .32rem .9rem; border-radius: 2px;
+ }
+ .rn__karte-marke {
+ display: block; font-family: 'Jost', sans-serif; font-size: .56rem;
+ letter-spacing: .3em; text-transform: uppercase;
+ color: rgba(200,169,110,.9); text-align: center; margin-bottom: 1.2rem;
+ }
+ /* Das Buch steht hoch, der Teller ist quadratisch. Beide bekommen
+    denselben Platz, dann stehen die Preise darunter auf einer Linie. */
+ .rn__karte-bild {
+ height: 290px; margin-bottom: 1.4rem;
+ display: flex; align-items: center; justify-content: center;
+ }
+ .rn__karte-bild img {
+ width: auto; max-width: 230px; max-height: 290px; height: auto; display: block;
+ border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,.5);
+ }
+ .rn__preis {
+ font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.3rem;
+ color: var(--gold); text-align: center; line-height: 1;
+ }
+ .rn__preis-fein {
+ font-family: 'Jost', sans-serif; font-size: .58rem; letter-spacing: .18em;
+ text-transform: uppercase; color: rgba(236,230,220,.55);
+ text-align: center; margin: .6rem 0 1.5rem;
+ }
+ .rn__karte-liste { list-style: none; margin: 0 0 1.6rem; padding: 0; }
+ .rn__karte-liste li {
+ font-size: .88rem; line-height: 1.7; color: rgba(236,230,220,.85);
+ padding: .5rem 0 .5rem 1.4rem; position: relative;
+ border-bottom: 1px solid rgba(200,169,110,.12);
+ }
+ .rn__karte-liste li::before {
+ content: '\00b7'; position: absolute; left: .3rem; top: .38rem;
+ color: var(--gold); font-size: 1.25rem; line-height: 1;
+ }
+ .rn__karte-liste li:last-child { border-bottom: 0; }
+ .rn__karte-liste strong { color: #f0e6cd; font-weight: 500; }
+ .rn__frist {
+ font-size: .8rem; line-height: 1.7; color: var(--gold-light);
+ text-align: center; margin-bottom: 1.2rem;
+ }
+ .rn__karte--zu .rn__frist { color: rgba(236,230,220,.6); }
+ .rn__kaufknopf {
+ margin-top: auto; display: block; text-align: center;
+ padding: .95rem 1.4rem; border-radius: 2px;
+ border: 1px solid var(--gold); color: var(--gold);
+ font-family: 'Jost', sans-serif; font-size: .62rem; font-weight: 500;
+ letter-spacing: .2em; text-transform: uppercase;
+ transition: background .3s, color .3s, transform .4s;
+ }
+ .rn__kaufknopf:hover { background: rgba(200,169,110,.14); transform: translateY(-2px); }
+ .rn__kaufknopf--gold { background: var(--gold); color: #1b1410; }
+ .rn__kaufknopf--gold:hover { background: #dcbd84; color: #1b1410; }
+ .rn__hinweis {
+ font-size: .72rem; line-height: 1.8; color: rgba(236,230,220,.45);
+ text-align: center; max-width: 640px; margin: 2rem auto 0;
+ }
+
+ /* So laeuft es und die Fragen */
+ .rn__schluss {
+ max-width: 1020px; margin: 4.5rem auto 0;
+ border-top: 1px solid rgba(200,169,110,.22); padding-top: 3rem;
+ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem;
+ }
+ .rn__spalte p {
+ font-size: .92rem; line-height: 1.85; color: rgba(236,230,220,.78);
+ margin-bottom: .9rem;
+ }
+ .rn__spalte details {
+ border-bottom: 1px solid rgba(200,169,110,.16);
+ }
+ .rn__spalte summary {
+ cursor: pointer; list-style: none; padding: .85rem 1.6rem .85rem 0;
+ position: relative; font-size: .9rem; color: #f0e6cd;
+ }
+ .rn__spalte summary::-webkit-details-marker { display: none; }
+ .rn__spalte summary::after {
+ content: '+'; position: absolute; right: .2rem; top: .72rem;
+ color: var(--gold); font-size: 1.1rem; line-height: 1;
+ }
+ .rn__spalte details[open] summary::after { content: '\2013'; }
+ .rn__spalte details p {
+ font-size: .88rem; padding: 0 0 .9rem; margin: 0;
+ color: rgba(236,230,220,.72);
+ }
+
+ @media (max-width: 920px) {
+ #waldrauhnaechte { padding: 4.5rem 1.2rem 4rem; }
+ .rn__kopf { grid-template-columns: 1fr; gap: 2.6rem; }
+ .rn__buch img { max-width: 320px; margin: 0 auto; }
+ .rn__karten { grid-template-columns: 1fr; gap: 2.2rem; }
+ .rn__karte--gross { order: -1; }
+ .rn__schluss { grid-template-columns: 1fr; gap: 2.4rem; }
+ .rn__probe { padding: 2.2rem 1.3rem; }
+ .rn__faecher { height: 150px; }
+ .rn__faecher img { width: 104px; }
+ .rn__faecher img:nth-child(2) { width: 118px; }
+ .rn__feldreihe { flex-direction: column; }
+ .rn__feldreihe button { width: 100%; }
+ .rn__blaetter a { flex-basis: min(92%, 360px); width: min(92%, 360px); }
+ .rn__knopfreihe { flex-direction: column; align-items: stretch; gap: 1rem; }
+ .rn__knopf { width: 100%; }
+ .rn__zweitknopf { text-align: center; }
+ }
+</style>
+
+<script>
+(function () {
+ "use strict";
+
+ /* ── Die Leseprobe hinter der E-Mail ──
+    Das Formular geht wie die anderen Formulare der Seite per
+    unsichtbarem iframe an MailerLite, die Seite bleibt also stehen.
+    Danach geht die Leseprobe hier auf. Wer sie einmal geholt hat,
+    sieht sie beim naechsten Besuch sofort wieder. */
+ var SCHLUESSEL = 'wm-leseprobe-rauhnaechte';
+ var tor = document.getElementById('rn-tor');
+ var leser = document.getElementById('rn-leser');
+ var form = document.getElementById('rn-form');
+ var bestaetigung = document.getElementById('rn-bestaetigung');
+
+ function geholt() {
+ try { return localStorage.getItem(SCHLUESSEL) === '1'; } catch (e) { return false; }
+ }
+
+ function aufmachen(hinscrollen, frischAngemeldet) {
+ if (!tor || !leser) return;
+ tor.hidden = true;
+ leser.hidden = false;
+ if (frischAngemeldet && bestaetigung) bestaetigung.hidden = false;
+ zaehlerSetzen();
+ if (hinscrollen) {
+ try { leser.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+ catch (e) { leser.scrollIntoView(); }
+ }
+ }
+
+ if (geholt()) aufmachen(false, false);
+
+ if (form) {
+ form.addEventListener('submit', function () {
+ var feld = form.querySelector('input[type=email]');
+ if (feld && !feld.checkValidity()) return;
+ try { localStorage.setItem(SCHLUESSEL, '1'); } catch (e) {}
+ setTimeout(function () { aufmachen(true, true); }, 400);
+ });
+ }
+
+ /* ── Blaettern ── */
+ var streifen = document.getElementById('rn-blaetter');
+ var zaehler = document.getElementById('rn-zaehler');
+
+ function seiten() {
+ return streifen ? streifen.querySelectorAll('img') : [];
+ }
+
+ function jetzigeSeite() {
+ if (!streifen) return 0;
+ var bilder = seiten();
+ if (!bilder.length) return 0;
+ var kasten = streifen.getBoundingClientRect();
+ var mitte = kasten.left + kasten.width / 2;
+ var beste = 0, kuerzeste = Infinity;
+ for (var i = 0; i < bilder.length; i++) {
+ var r = bilder[i].getBoundingClientRect();
+ var abstand = Math.abs((r.left + r.width / 2) - mitte);
+ if (abstand < kuerzeste) { kuerzeste = abstand; beste = i; }
+ }
+ return beste;
+ }
+
+ function zaehlerSetzen() {
+ if (!zaehler || !streifen) return;
+ var bilder = seiten();
+ zaehler.textContent = (jetzigeSeite() + 1) + ' / ' + bilder.length;
+ }
+
+ function blaettern(richtung) {
+ if (!streifen) return;
+ var bilder = seiten();
+ var ziel = Math.min(bilder.length - 1, Math.max(0, jetzigeSeite() + richtung));
+ if (!bilder[ziel]) return;
+ var kasten = streifen.getBoundingClientRect();
+ var r = bilder[ziel].getBoundingClientRect();
+ var links = streifen.scrollLeft + (r.left - kasten.left)
+ - (kasten.width - r.width) / 2;
+ try { streifen.scrollTo({ left: links, behavior: 'smooth' }); }
+ catch (e) { streifen.scrollLeft = links; }
+ }
+
+ if (streifen) {
+ var warten = null;
+ streifen.addEventListener('scroll', function () {
+ if (warten) clearTimeout(warten);
+ warten = setTimeout(zaehlerSetzen, 90);
+ });
+ streifen.addEventListener('keydown', function (e) {
+ if (e.key === 'ArrowRight') { e.preventDefault(); blaettern(1); }
+ if (e.key === 'ArrowLeft') { e.preventDefault(); blaettern(-1); }
+ });
+ }
+
+ Array.prototype.forEach.call(
+ document.querySelectorAll('[data-rn-blatt]'), function (knopf) {
+ knopf.addEventListener('click', function () {
+ blaettern(parseInt(knopf.getAttribute('data-rn-blatt'), 10));
+ });
+ });
+
+ /* ── Fristen ──
+    Das Paket ist bis zum 14. Dezember bestellbar, los geht es am
+    21. Dezember. Beides steht hier einmal, damit die Seite im Januar
+    nicht laenger etwas Falsches behauptet. */
+ var FRIST = new Date('2026-12-14T23:59:59+01:00');
+ var START = new Date('2026-12-21T00:00:00+01:00');
+ var jetzt = new Date();
+
+ var kicker = document.getElementById('rn-kicker');
+ if (kicker && jetzt >= START) {
+ kicker.textContent = 'Zw\u00f6lf N\u00e4chte \u00b7 21. Dezember bis 6. Januar';
+ }
+
+ var frist = document.getElementById('rn-frist');
+ if (frist) {
+ if (jetzt > FRIST) {
+ frist.textContent = 'Die Bestellfrist f\u00fcr das R\u00e4ucherwerk ist vorbei. '
+ + 'Das Begleitbuch gibt es weiter.';
+ var karte = frist.closest ? frist.closest('.rn__karte') : null;
+ if (karte) karte.className += ' rn__karte--zu';
+ } else {
+ var tage = Math.ceil((FRIST - jetzt) / 86400000);
+ if (tage <= 1) {
+ frist.textContent = 'Heute ist der letzte Bestelltag f\u00fcr das R\u00e4ucherwerk.';
+ } else if (tage <= 40) {
+ frist.textContent = 'Noch ' + tage + ' Tage bestellbar, bis zum 14. Dezember. '
+ + 'Dann ist alles vor der Wintersonnenwende bei dir.';
+ }
+ }
+ }
+
+ /* ── Die Kaufknoepfe ──
+    Stehen die Payhip-Adressen oben im Skript, werden daraus
+    Kaufknoepfe. Steht dort nichts, fuehren sie zur Leseprobe,
+    damit niemand ins Leere klickt. */
+ var adressen = window.RAUHNAECHTE_KAUF || {};
+ Array.prototype.forEach.call(
+ document.querySelectorAll('[data-rn-kauf]'), function (knopf) {
+ var welche = knopf.getAttribute('data-rn-kauf');
+ var adresse = (adressen[welche] || '').trim();
+ var zu = welche === 'paket' && jetzt > FRIST;
+ if (!adresse || zu) {
+ if (zu) knopf.hidden = true;
+ return;
+ }
+ knopf.setAttribute('href', adresse);
+ knopf.setAttribute('target', '_blank');
+ knopf.setAttribute('rel', 'noopener');
+ var beschriftung = knopf.querySelector('span') || knopf;
+ beschriftung.textContent = 'Jetzt kaufen';
+ });
+})();
+</script>
 
 
  <!-- ══════════ WALDKALENDER 2027 ══════════ -->
@@ -2173,6 +2904,19 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <p class="produkte__sub reveal d1">Für dich allein, mit deinem Kind, oder beides zusammen.</p>
 
  <div class="produkte__grid">
+
+ <!-- Waldrauhnächte -->
+ <div class="produkt-card reveal d1">
+ <img src="assets/waldrauhnaechte-cover.jpg" alt="Das Begleitbuch Waldrauhnächte" class="produkt-cover" loading="lazy">
+ <span class="produkt-badge" style="background:var(--gold);color:var(--dark);">Neu · ab 21. Dezember</span>
+ <h3 class="produkt-name">Waldrauhnächte<br>Das Begleitbuch</h3>
+ <p class="produkt-desc">Zwölf Nächte, zwölf Monate, dein Jahresrückblick. 70 Seiten als PDF, mit Petras Räucherkunde. Auch im Paket mit drei Räuchermischungen.</p>
+ <div class="produkt-price">ab 24,90 €</div>
+ <a data-rn-kauf="buch" href="#rn-leseprobe" class="btn btn--green reveal" style="margin-top:.5rem;width:100%;justify-content:center;">
+ <span>Erst die Leseprobe</span>
+ </a>
+ <a href="#waldrauhnaechte" class="produkt-more">Mehr erfahren ↑</a>
+ </div>
 
  <!-- Waldspur -->
  <div class="produkt-card reveal d1">
