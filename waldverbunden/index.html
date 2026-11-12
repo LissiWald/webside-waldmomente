@@ -229,6 +229,12 @@ h1 .h1-gold {
   display: block; font: 400 34px/1 'Cormorant Garamond', Georgia, serif;
   color: #ffffff38; margin-bottom: 14px;
 }
+.tuer-video {
+  display: block; width: auto; max-width: 100%; max-height: 520px;
+  margin: 0 auto 22px; background: #0b1d16;
+  border: 1px solid #e3d1a13b; border-radius: 2px;
+}
+@media (max-width: 650px) { .tuer-video { max-height: 420px; } }
 .tuer-bild {
   display: block; margin: 0 0 22px;
   border: 1px solid #e3d1a13b; border-radius: 2px;
@@ -400,6 +406,14 @@ window.WALDVERBUNDEN_INHALTE = {
    },
    "image": "assets/IMG_1024.webp",
    "imageAlt": "Lissis Dezemberbaum mit kahler Krone am Waldweg"
+  },
+  "2": {
+   "name": "Nina · Waldesruf Schmuckerei",
+   "title": "Ein Stück Wald, das bleibt.",
+   "text": "Nina sammelt, was draußen wächst, und gießt es in Harz. Blüten, Moos, Flechten, ein Farnwedel. Jedes Stück gibt es genau einmal.\n\nHier stellt sie sich selbst vor.",
+   "video": "assets/waldesruf-nina.mp4",
+   "videoPoster": "assets/waldesruf-nina.jpg",
+   "instagramUrl": "https://www.instagram.com/waldesruf_schmuckerei"
   },
   "4": {
    "name": "Lissi · Waldmomente",
@@ -1133,6 +1147,18 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     if (kopf) {
       kopf.insertAdjacentHTML('beforebegin',
         '<span class="tuer-nummer">' + (nr < 10 ? '0' : '') + nr + '</span>');
+      /* Bei einem Video gilt dasselbe wie beim Foto: es gehoert nach
+         oben in die Textspalte. Das Geruest legt es in die Bildspalte
+         daneben, und die ist in der Lesefassung ausgeblendet. */
+      var film = inhalt.querySelector('.door-media video');
+      if (film) {
+        film.className = 'tuer-video';
+        film.setAttribute('controls', '');
+        film.setAttribute('playsinline', '');
+        if (tuer.videoPoster) film.setAttribute('poster', sicher(tuer.videoPoster));
+        kopf.insertAdjacentElement('afterend', film);
+      }
+
       var bild = tuer.illustration;
       if (bild && bild.src) {
         /* Waldfotos vertragen einen Zuschnitt aufs Querformat.
