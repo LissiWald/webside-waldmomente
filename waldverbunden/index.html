@@ -279,6 +279,9 @@ h1 .h1-gold {
 }
 /* Titelbilder, ein Flyer und ein Portraet duerfen nicht beschnitten
    werden, sonst fehlen Schrift oder Gesicht. Sie stehen vollstaendig da. */
+/* Eine Vorstellungskarte traegt ihren eigenen Text. Sie wird weder
+   beschnitten noch klein gerechnet, sonst waere er nicht zu lesen. */
+.tuer-bild--karte { width: 100%; max-width: 440px; height: auto; margin-inline: auto; }
 .tuer-bild--ganz {
   width: auto; max-width: 100%; max-height: 330px; height: auto; margin-inline: auto;
 }
@@ -605,7 +608,13 @@ window.WALDVERBUNDEN_INHALTE = {
    "text": "Mit Tones of Cozyness nimmt dich Kerstin mit in ihre kleine Bohemian Forest Welt. Bei ihr dreht sich alles um Aquarellfarben, ums Malen als Anker im Alltag und um die Freude daran, mit den eigenen Händen etwas entstehen zu lassen.\n\nIhr Geschenk für heute heißt Pilzwanderung: ein Vorlagenpaket rund um die Welt der Waldpilze, und darauf bekommst du 24 Prozent. Den Rabattcode und den Weg dorthin findest du auf ihrer Seite.",
    "offerUrl": "https://tonesofcozyness.mytentary.com/waldmomente",
    "offerLabel": "Zu Kerstins Pilzwanderung",
-   "instagramUrl": "https://www.instagram.com/tones.of.cozyness"
+   "instagramUrl": "https://www.instagram.com/tones.of.cozyness",
+   "image": "assets/kerstin-karte.webp",
+   "imageAlt": "Kerstin von Tones of Cozyness stellt sich vor, daneben zwei gemalte Pilze",
+   "illustration": {
+    "src": "assets/kerstin-karte.webp",
+    "alt": "Kerstin von Tones of Cozyness stellt sich vor, daneben zwei gemalte Pilze"
+   }
   },
   "19": {
    "name": "Lissi · Waldmomente",
@@ -1205,7 +1214,8 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
            Titelbilder, Flyer und Portraets nicht: dort fiele Schrift
            oder ein Gesicht weg. Erkennbar am Dateinamen. */
         var ganz = /deckblatt|flyer|portraet|cover/i.test(bild.src);
-        var art = ganz ? 'tuer-bild--ganz' : 'tuer-bild--beschnitten';
+        var art = /karte/i.test(bild.src) ? 'tuer-bild--karte'
+                : ganz ? 'tuer-bild--ganz' : 'tuer-bild--beschnitten';
         kopf.insertAdjacentHTML('afterend',
           '<img class="tuer-bild ' + art + '" src="' + sicher(bild.src) + '" alt="'
           + sicher(bild.alt || '') + '" loading="lazy">');
