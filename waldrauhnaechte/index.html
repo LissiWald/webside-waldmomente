@@ -131,7 +131,7 @@ font-size:.8rem;line-height:1.9}
 
 <header class="kopf">
  <a class="kopf__name" href="../">Waldmomente</a>
- <a class="kopf__zurueck" href="../">&larr; Zur Startseite</a>
+ <a class="kopf__zurueck" href="../"><i class="pf pf--l" aria-hidden="true"></i>Zur Startseite</a>
 </header>
 
 <main>
@@ -163,7 +163,7 @@ font-size:.8rem;line-height:1.9}
  <span class="rn__knopf-gross">Erste Nacht kostenlos lesen</span>
  <span class="rn__knopf-klein">Sechs Seiten · sofort</span>
  </a>
- <a href="#rn-varianten" class="rn__zweitknopf">Ab 24,90&nbsp;€ · zu den Varianten ↓</a>
+ <a href="#rn-varianten" class="rn__zweitknopf">Ab 24,90&nbsp;€ · zu den Varianten <i class="pf pf--ab" aria-hidden="true"></i></a>
  </div>
  </div>
  </div>
@@ -248,9 +248,9 @@ font-size:.8rem;line-height:1.9}
  <a href="../assets/leseprobe/seite-6.webp" target="_blank" rel="noopener" aria-label="Diese Seite gross ansehen"><img src="../assets/leseprobe/seite-6.webp" width="1000" height="1415" alt="Das war der Januar, elf Monate fehlen noch" loading="lazy"></a>
  </div>
  <div class="rn__steuer">
- <button type="button" class="rn__pfeil" data-rn-blatt="-1" aria-label="Eine Seite zurück">←</button>
+ <button type="button" class="rn__pfeil" data-rn-blatt="-1" aria-label="Eine Seite zurück"><i class="pf pf--l" aria-hidden="true"></i></button>
  <span class="rn__zaehler" id="rn-zaehler" role="status">1 / 6</span>
- <button type="button" class="rn__pfeil" data-rn-blatt="1" aria-label="Eine Seite weiter">→</button>
+ <button type="button" class="rn__pfeil" data-rn-blatt="1" aria-label="Eine Seite weiter"><i class="pf" aria-hidden="true"></i></button>
  </div>
  <p class="rn__fein">Tipp: Tipp eine Seite an, dann geht sie groß auf.</p>
  <a class="rn__laden" href="../assets/Waldrauhnaechte-Leseprobe.pdf" download="Waldrauhnaechte-Leseprobe.pdf">Leseprobe als PDF mitnehmen</a>
@@ -720,6 +720,36 @@ font-size:.8rem;line-height:1.9}
  .rn__knopf { width: 100%; }
  .rn__zweitknopf { text-align: center; }
  }
+
+/* Pfeile als feine Haarlinie, wie im Adventskalender. Die Farbe kommt
+   vom Text, nichts wird nachgeladen. */
+.pf {
+  display: inline-block; flex: none; vertical-align: middle;
+  width: 26px; height: 9px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 10'%3E%3Cpath d='M0 5h29M24.6 .8 29 5l-4.4 4.2' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 10'%3E%3Cpath d='M0 5h29M24.6 .8 29 5l-4.4 4.2' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform .55s cubic-bezier(.2,.7,.3,1);
+}
+.pf--l { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 10'%3E%3Cpath d='M30 5H1M5.4 .8 1 5l4.4 4.2' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 10'%3E%3Cpath d='M30 5H1M5.4 .8 1 5l4.4 4.2' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.pf--ab { width: 7px; height: 17px; -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 30'%3E%3Cpath d='M5 0v29M.8 24.6 5 29l4.2-4.4' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 30'%3E%3Cpath d='M5 0v29M.8 24.6 5 29l4.2-4.4' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.pf--auf { width: 7px; height: 17px; -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 30'%3E%3Cpath d='M5 0v29M.8 24.6 5 29l4.2-4.4' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 30'%3E%3Cpath d='M5 0v29M.8 24.6 5 29l4.2-4.4' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); transform: rotate(180deg); }
+a .pf, button .pf { margin-left: .75em; }
+a .pf--l { margin-left: 0; margin-right: .75em; }
+.rn__pfeil .pf, .hero__neu-pfeil .pf { margin: 0; }
+a:hover > .pf:not(.pf--l):not(.pf--ab):not(.pf--auf) { transform: translateX(5px); }
+a:hover > .pf--l { transform: translateX(-5px); }
+a:hover > .pf--ab { transform: translateY(4px); }
+a:hover > .pf--auf { transform: rotate(180deg) translateY(4px); }
+.hero__neu:hover .pf { transform: translateX(5px); }
+.rn__pfeil:not([disabled]):hover .pf { transform: translateX(3px); }
+.rn__pfeil[data-rn-blatt="-1"]:not([disabled]):hover .pf { transform: translateX(-3px); }
+@media (prefers-reduced-motion: reduce) { .pf { transition: none; } }
+
+.rn__zweitknopf { display: inline-flex; align-items: center; }
+.rn__pfeil { display: inline-flex; align-items: center; justify-content: center; }
+.rn__pfeil .pf { width: 20px; height: 7px; }
+.kopf__zurueck { display: inline-flex; align-items: center; }
+@media (max-width: 920px) { .rn__zweitknopf { justify-content: center; } }
 </style>
 
 <script>
