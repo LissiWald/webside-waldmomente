@@ -444,11 +444,22 @@ window.WALDVERBUNDEN_INHALTE = {
   },
   "2": {
    "name": "Nina · Waldesruf Schmuckerei",
-   "title": "Ein Stück Wald, das bleibt.",
-   "text": "Nina sammelt, was draußen wächst, und gießt es in Harz. Blüten, Moos, Flechten, ein Farnwedel. Jedes Stück gibt es genau einmal.\n\nHier stellt sie sich selbst vor.",
+   "title": "Den Zauber des Waldes einfangen.",
+   "text": "Servus, ich bin Nina, der Kreativling hinter Waldesruf Schmuckerei.\n\nIn meiner kleinen Werkstatt in Bayern fange ich den Zauber des Waldes und der Natur ein: selbst gesammeltes Moos, Pilze, Gräser, Blumen und andere botanische Schätze.",
    "video": "assets/waldesruf-nina.mp4",
    "videoPoster": "assets/waldesruf-nina.jpg",
-   "instagramUrl": "https://www.instagram.com/waldesruf_schmuckerei"
+   "instagramUrl": "https://www.instagram.com/waldesruf_schmuckerei",
+   "gallery": [
+    {
+     "src": "assets/waldesruf-ohrringe-1.webp",
+     "alt": "Zwei runde Ohrhänger mit getrockneten Blüten und Farn auf hellem Grund, aufgehängt an einem gewundenen Ast"
+    },
+    {
+     "src": "assets/waldesruf-ohrringe-2.webp",
+     "alt": "Dieselben Ohrhänger von näher, die Blüten leuchten gelb und grün"
+    }
+   ],
+   "website": "https://waldesruf-schmuckerei.de"
   },
   "4": {
    "name": "Lissi · Waldmomente",
@@ -1226,6 +1237,21 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     var hinweis = spalte.querySelector('.demo-note');
     if (hinweis) hinweis.remove();
     if (zusatz) spalte.insertAdjacentHTML('beforeend', zusatz);
+
+    /* Der Instagram-Verweis steht vom Geruest aus direkt hinter dem Text,
+       also oft ueber Fotos und Webseite. Alle Verweise gehoeren zusammen
+       ans Ende des Blocks, hinter den Verweis zur Webseite. */
+    var block = spalte.querySelector('.mehr-block');
+    if (block) {
+      var lose = Array.prototype.slice.call(spalte.querySelectorAll(':scope > a.textlink'));
+      var inBlock = block.querySelectorAll('a.textlink');
+      var anker = inBlock.length ? inBlock[inBlock.length - 1]
+                : block.querySelector('.mehr-galerie');
+      if (anker && lose.length) {
+        lose.reverse().forEach(function (a) { anker.insertAdjacentElement('afterend', a); });
+        Array.prototype.forEach.call(spalte.querySelectorAll(':scope > br'), function (b) { b.remove(); });
+      }
+    }
 
     /* Bei Lissis eigenen Tuerchen steht ein Auftrag fuer draussen.
        Dafuer gibt es einen Knopf zum Abhaken, rein im Browser. */
