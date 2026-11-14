@@ -685,7 +685,8 @@ window.WALDVERBUNDEN_INHALTE = {
     "drawFrom": "2026-12-08T08:00:00+01:00",
     "drawTimeApproximate": true,
     "delivery": "Der Verlag verlost drei Buchpakete. Die Versandadresse wird erst nach dem Gewinn benötigt.",
-    "question": "Sag uns, was dein Lieblingspilz ist."
+    "question": "Welcher ist dein Lieblingspilz?",
+    "anyAnswer": true
    }
   },
   "7": {
@@ -1090,9 +1091,9 @@ window.WALDVERBUNDEN_INHALTE = {
   "Diese Bedingungen gelten für die Verlosungen im Waldverbunden Adventskalender 2026. Veranstalterin ist Elisabeth Müller, Waldmomente, Bismarckstraße 94, 66121 Saarbrücken. Kontakt: info@waldmomente.me.",
   "Die Teilnahme ist kostenlos und unabhängig von einem Kauf. Teilnehmen können Personen ab 18 Jahren mit Wohnsitz in Deutschland oder Österreich. Pro Person und Verlosung wird eine Teilnahme berücksichtigt. Automatisierte oder manipulierte Teilnahmen sind ausgeschlossen.",
   "Jede Verlosung beginnt am jeweiligen Türchentag um 08:00 Uhr und endet am Folgetag um 23:59 Uhr. Ausgelost wird am Morgen danach ab ca. 08:00 Uhr. Es gilt die Zeitzone Europe/Berlin.",
-  "Zur Teilnahme ist die Frage im jeweiligen Türchen zu beantworten und das Teilnahmeformular mit deinem Instagram Namen vollständig abzusenden. Unter allen fristgerecht eingegangenen richtigen Antworten wird per Zufall ausgelost. Gibt es keine richtige Antwort, wird kein Gewinn vergeben.",
+  "Zur Teilnahme ist die Frage im jeweiligen Türchen zu beantworten und das Teilnahmeformular mit deinem Instagram Namen vollständig abzusenden. Unter allen fristgerecht eingegangenen gültigen Teilnahmen wird per Zufall ausgelost. Wenn die Frage im Türchen keine richtige oder falsche Antwort hat, ist jede ausgefüllte Teilnahme gültig. Gibt es keine gültige Teilnahme, wird kein Gewinn vergeben.",
   "Wer mitmacht, folgt auf Instagram @waldmomente und allen Partnerinnen des Kalenders: @waldesruf_schmuckerei, @miriquidi_herbs, @wildeswaldwerk, @tina.stein.autorin, @bonatea, @inselglueck1, @sonne_mond_und_erde, @idaki_kraeuter, @hejsoulwild, @oafoch_ausdernatur, @tones.of.cozyness, @faeloras_waldwerk, @inmytree_living, @witchcraft_s68. Vor der Benachrichtigung wird geprüft, ob die ausgeloste Person allen Accounts folgt. Folgt sie nicht allen, wird neu ausgelost.",
-  "Art und Anzahl der Gewinne stehen im jeweiligen Türchen. Die gewinnende Person wird über die angegebene E-Mail-Adresse benachrichtigt. Eine richtige Antwort allein begründet keinen Gewinnanspruch.",
+  "Art und Anzahl der Gewinne stehen im jeweiligen Türchen. Die gewinnende Person wird über die angegebene E-Mail-Adresse benachrichtigt. Eine gültige Teilnahme allein begründet keinen Gewinnanspruch.",
   "Meldet sich die gewinnende Person nicht innerhalb von sieben Tagen nach der Benachrichtigung, wird neu ausgelost.",
   "Für Sachgewinne wird die Versandadresse erst nach dem Gewinn angefragt. Die Lieferadresse wird nur mit Einverständnis der gewinnenden Person an die jeweilige Partnerin weitergegeben. Digitale Gewinne oder Rabattgewinne werden per E-Mail bereitgestellt oder nach Abstimmung durch die jeweilige Partnerin übergeben. Eine Barauszahlung ist ausgeschlossen.",
   "Die Einlösung eines Partnergewinns erfolgt direkt mit der im Türchen genannten Partnerin. Gewinnbezogene Einschränkungen, etwa Gültigkeit, ausgeschlossene Angebote oder zusätzliche Buchungskosten, werden vor Teilnahme im jeweiligen Türchen genannt. Weitere Buchungsabsprachen erfolgen direkt mit der Partnerin.",
@@ -1435,9 +1436,9 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     /* Eine richtige Antwort steht in answer, mehrere in answers. */
     var richtige = v ? (v.answers && v.answers.length ? v.answers : [v.answer]) : [];
     richtige = richtige.filter(Boolean).map(vereinfachen);
-    /* Ohne richtige Antwort, etwa bei der Frage nach dem Lieblingspilz,
-       nimmt jede ausgefuellte Antwort teil. */
-    var offen = !richtige.length;
+    /* anyAnswer: true oder keine richtige Antwort, etwa bei der Frage nach dem
+       Lieblingspilz: jede nicht leere Antwort ist eine gueltige Teilnahme. */
+    var offen = (v && v.anyAnswer === true) || !richtige.length;
     if (!form || !v) return;
     var feld = form.querySelector('input.antwort') || form.querySelector('input');
     var insta = form.querySelector('input.insta');
