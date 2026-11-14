@@ -481,15 +481,6 @@ h1 .h1-gold {
   font: 400 12px/1.6 'Jost', sans-serif; letter-spacing: 0; text-transform: none; color: #d7e0d2; cursor: pointer; }
 .verlosung label.haken input { margin-top: .28rem; accent-color: #c6a56d; flex: none; width: 16px; height: 16px; }
 
-/* Waldkalender: Rabatt */
-.aktion-rabatt { margin-top: 1.5rem; text-align: center; }
-.aktion-rabatt p { font: 400 21px/1.5 'Cormorant Garamond', Georgia, serif; color: #f0e4c2; margin: 0 0 .9rem; }
-.aktion-knopf { display: inline-block; padding: .95rem 2.1rem; border-radius: 2px;
-  background: linear-gradient(180deg, #f0dca8, #d9b978); color: #1b2b21;
-  font: 500 10px/1 'Jost', sans-serif; letter-spacing: .2em; text-transform: uppercase;
-  transition: transform .4s, filter .3s; }
-.aktion-knopf:hover { transform: translateY(-2px); filter: brightness(1.06); }
-
 /* Heiligabend: Musikknopf */
 .musik-knopf { display: flex; align-items: center; gap: .75rem; width: fit-content; margin: .3rem auto 1.2rem;
   padding: .75rem 1.5rem; border: 1px solid #e1c88f; border-radius: 999px; background: #e1c88f14;
@@ -694,8 +685,7 @@ window.WALDVERBUNDEN_INHALTE = {
     "drawFrom": "2026-12-08T08:00:00+01:00",
     "drawTimeApproximate": true,
     "delivery": "Der Verlag verlost drei Buchpakete. Die Versandadresse wird erst nach dem Gewinn benötigt.",
-    "question": "Wie heißt der sprechende Bär?",
-    "answer": "Urs"
+    "question": "Sag uns, was dein Lieblingspilz ist."
    }
   },
   "7": {
@@ -901,7 +891,7 @@ window.WALDVERBUNDEN_INHALTE = {
    "name": "Petra Priller",
    "title": "Was in Petras Gläsern steckt.",
    "text": "Auf Petras Tisch stehen Gläser mit handgeschriebenen Etiketten. Daneben liegen Blätter, Wurzeln und Harze. Aus diesen Zutaten stellt sie eigene Räuchermischungen zusammen.\n\nPetra beschäftigt sich intensiv mit Kräutern, stellt eigene Räuchermischungen her und bindet Räucherbündel selbst. Heute gibt sie dir einen Einblick in ihre Arbeit.",
-   "instagramUrl": "https://www.instagram.com/witch_crafts68/",
+   "instagramUrl": "https://www.instagram.com/witchcraft_s68/",
    "sections": [
     {
      "title": "Dein Gewinn",
@@ -1086,40 +1076,11 @@ window.WALDVERBUNDEN_INHALTE = {
        "handle": "witchcraft_s68"
       }
      ]
-    },
-    {
-     "kicker": "Mein Geschenk zum Schluss: Waldkalender 2027",
-     "title": "Ein ganzes Jahr draußen.",
-     "image": {
-      "src": "assets/waldkalender-2027-deckblatt.jpg",
-      "alt": "Deckblatt von Lissis Waldkalender 2027 mit dem Titel Wald statt WLAN"
-     },
-     "text": "Zum Schluss habe ich noch etwas für dich. Mein Waldkalender 2027 begleitet dich durch zwölf Monate draußen, mit meinen eigenen Fotos, mit Mondphasen, Bauernregeln und besonderen Tagen. Für alle, die nach diesem Dezember weiter genauer hinschauen wollen."
     }
    ],
    "illustration": {
     "src": "assets/24_heiligabend.webp",
     "alt": "Frohe Weihnachten aus dem Wald: ein verschneiter Winterwald bei Nacht, über dem Gipfel leuchtet ein goldener Stern"
-   },
-   "aktion": {
-    "modus": "aus",
-    "verlosung": {
-     "prize": "Ein gedruckter Waldkalender 2027",
-     "question": "Wald statt …?",
-     "answers": [
-      "WLAN"
-     ],
-     "opens": "2026-12-24T08:00:00+01:00",
-     "closes": "2026-12-25T23:59:00+01:00",
-     "drawFrom": "2026-12-26T08:00:00+01:00",
-     "drawTimeApproximate": true,
-     "delivery": "Die Versandadresse wird erst nach dem Gewinn benötigt."
-    },
-    "rabatt": {
-     "text": "Mit dem Code [CODE] bekommst du den Waldkalender bis zum 15. Januar günstiger.",
-     "knopf": "Zum Waldkalender",
-     "link": "[LINK]"
-    }
    },
    "image": "assets/24_heiligabend.webp",
    "imageAlt": "Frohe Weihnachten aus dem Wald: ein verschneiter Winterwald bei Nacht, über dem Gipfel leuchtet ein goldener Stern"
@@ -1474,7 +1435,10 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     /* Eine richtige Antwort steht in answer, mehrere in answers. */
     var richtige = v ? (v.answers && v.answers.length ? v.answers : [v.answer]) : [];
     richtige = richtige.filter(Boolean).map(vereinfachen);
-    if (!form || !richtige.length) return;
+    /* Ohne richtige Antwort, etwa bei der Frage nach dem Lieblingspilz,
+       nimmt jede ausgefuellte Antwort teil. */
+    var offen = !richtige.length;
+    if (!form || !v) return;
     var feld = form.querySelector('input.antwort') || form.querySelector('input');
     var insta = form.querySelector('input.insta');
     var sagt = form.querySelector('.rueckmeldung');
@@ -1486,7 +1450,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
         sagt.textContent = 'Da steht noch nichts.';
         return;
       }
-      var stimmt = richtige.some(function (r) {
+      var stimmt = offen || richtige.some(function (r) {
         return gegeben === r || gegeben.indexOf(r) !== -1;
       });
       if (!stimmt) {
@@ -1501,31 +1465,13 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
         return;
       }
       sagt.className = 'rueckmeldung richtig';
-      sagt.textContent = 'Richtig. Damit bist du bei der Verlosung dabei, '
-        + 'sobald das Teilnahmeformular hier steht.';
+      sagt.textContent = (offen ? 'Danke für deine Antwort. ' : 'Richtig. ')
+        + 'Damit bist du bei der Verlosung dabei, sobald das Teilnahmeformular hier steht.';
       Array.prototype.forEach.call(form.querySelectorAll('input'), function (i) {
         if (i.type === 'checkbox') i.disabled = true; else i.readOnly = true;
       });
       form.querySelector('button').disabled = true;
     });
-  }
-
-  /* Die Aktion zum Waldkalender in Tuerchen 24: aus, verlosung oder rabatt.
-     Umgeschaltet wird mit aktion.modus in den Tuerchendaten. Beim Rabatt
-     erscheint nichts, solange [CODE] oder [LINK] noch Platzhalter sind. */
-  function aktionBauen(a, nr) {
-    if (!a) return '';
-    if (a.modus === 'verlosung' && a.verlosung) return verlosung(a.verlosung, nr);
-    if (a.modus === 'rabatt' && a.rabatt) {
-      var r = a.rabatt;
-      if (/\[[A-Z]+\]/.test(String(r.text || '') + String(r.link || ''))) return '';
-      var u = adresse(r.link);
-      if (!u) return '';
-      return '<div class="aktion-rabatt"><p>' + sicher(r.text) + '</p>'
-           + '<a class="aktion-knopf" href="' + sicher(u) + '" target="_blank" rel="noopener">'
-           + sicher(r.knopf || 'Zum Waldkalender') + '</a></div>';
-    }
-    return '';
   }
 
   function bauen(tuer, nummer) {
@@ -1580,7 +1526,6 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
          + sicher(tuer.name || 'Webseite') + ' besuchen</a>';
     }
     if (tuer.giveaway) h += verlosung(tuer.giveaway, nummer);
-    if (tuer.aktion) h += aktionBauen(tuer.aktion, nummer);
     /* Die Quellenangaben stehen weiter in der Inhaltsdatei, werden
        aber nicht mehr angezeigt: sie fuehren aus dem Kalender heraus. */
     return h ? '<div class="mehr-block">' + h + '</div>' : '';
@@ -1778,8 +1723,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
       heiligabendMusik(spalte);
       goldschnee();
     }
-    frageVerdrahten(spalte, tuer.giveaway
-      || (tuer.aktion && tuer.aktion.modus === 'verlosung' ? tuer.aktion.verlosung : null));
+    frageVerdrahten(spalte, tuer.giveaway);
     spalte.dataset.mehr = '1';
   }
 
