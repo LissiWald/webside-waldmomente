@@ -71,6 +71,40 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 .modal-navigation button:not(:disabled):hover .pfeil { transform: translateX(5px); }
 .modal-navigation #prev:not(:disabled):hover .pfeil { transform: translateX(-5px); }
 @media (prefers-reduced-motion: reduce) { .pfeil, .textlink::after { transition: none; } }
+
+/* Heiligabend: das einzige Tuerchen mit goldenem Rahmen. Ein Ornament
+   oben und unten, grosse kursive Ueberschrift, alles mittig, ruhig. */
+.door-layout.festlich { display: block; position: relative;
+  background: radial-gradient(ellipse at 50% 0%, #2d4c3a 0%, #163023 62%, #102319 100%); }
+.door-layout.festlich .door-media { display: none; }
+.door-layout.festlich::before { content: ""; position: absolute; inset: 12px; z-index: 0;
+  border: 1px solid #dac59a80; pointer-events: none; }
+.door-layout.festlich::after { content: ""; position: absolute; inset: 19px; z-index: 0;
+  border: 1px solid #dac59a2b; pointer-events: none; }
+.festlich .door-copy { position: relative; z-index: 1; max-width: 34em; text-align: center;
+  padding: 58px 46px 52px; }
+.festlich .tuer-nummer { color: #e7cf9a; font-size: 30px; margin-bottom: 4px; letter-spacing: .12em; }
+.door-layout.festlich.waldfoto .tuer-nummer { display: block; font-size: 38px; }
+.festlich .door-copy .eyebrow { color: #d6bd88; }
+.festlich .door-copy h2 { font-style: italic; font-weight: 400; font-size: 64px; line-height: 1.02;
+  margin: 12px 0 22px;
+  background: linear-gradient(180deg, #f7e8bd 0%, #d9b978 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+.festlich .door-copy p { text-align: center; }
+.festlich .mehr-block h3, .festlich #door-content .door-copy .mehr-block h3 { color: #ecd8a5; }
+.festlich .orn { display: block; width: 140px; height: 26px; margin: 18px auto; background: #dac59a;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 26'%3E%3Cpath d='M0 13h52M88 13h52M70 2l2.8 8.2L81 13l-8.2 2.8L70 24l-2.8-8.2L59 13l8.2-2.8z' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='46' cy='13' r='1.3'/%3E%3Ccircle cx='94' cy='13' r='1.3'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 26'%3E%3Cpath d='M0 13h52M88 13h52M70 2l2.8 8.2L81 13l-8.2 2.8L70 24l-2.8-8.2L59 13l8.2-2.8z' fill='none' stroke='%23000' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='46' cy='13' r='1.3'/%3E%3Ccircle cx='94' cy='13' r='1.3'/%3E%3C/svg%3E") center / contain no-repeat; }
+.festlich .moment-done { border-color: #e1c88f; }
+@media (max-width: 650px) {
+  .door-layout.festlich::before { inset: 8px; } .door-layout.festlich::after { inset: 14px; }
+  .festlich .door-copy { padding: 40px 28px 38px; }
+  .festlich .door-copy h2 { font-size: 46px; }
+}
+/* Die Kachel im Kalender: ein goldener Rand und die Zahl in Gold. */
+.door[data-day="24"] .door-border { border-color: #e3c98d; inset: 5px; border-width: 1px;
+  box-shadow: 0 0 0 4px #e3c98d1c, inset 0 0 22px #e3c98d22; }
+.door[data-day="24"] .door-number { color: #f4dfaa; }
+.door[data-day="24"] .door-mark { color: #f1dba3; opacity: 1; }
 </style><style>
 /* Nachtrag Waldmomente: Auf sehr schmalen Handys (320 px) ragten die
    Schalter rechts aus dem Bild heraus. Sie duerfen jetzt umbrechen, und
@@ -542,6 +576,39 @@ window.WALDVERBUNDEN_INHALTE = {
   },
   "12": {
    "name": "Lissi · Waldmomente",
+   "title": "Zwölf Nächte für dein Jahr.",
+   "text": "Dein Handy hat dein Jahr schon zusammengeschnitten. Mit Musik drunter und ohne die Hälfte. In zwölf Rauhnächten holst du dir den Rest.\n\nHeute verlosen wir unser digitales Begleitbuch Waldrauhnächte. Zwölf Waldgeschichten von Lissi, alte Bräuche und Räucherrituale von Petra begleiten dich vom 21. Dezember bis zum 6. Januar.",
+   "sections": [
+    {
+     "title": "Aus den Waldrauhnächten",
+     "text": "Zwei Frauen. Ein Wald.\n\nIm Dezember scrollen alle durch ihr Jahr. Die Musikapp zeigt dir deine Lieblingslieder, Instagram deine schönsten Momente. Die Monate, in denen es nicht lief, kommen da nicht vor. Bei uns schon.\n\nWir haben uns auf Instagram kennengelernt. Zwischen Waldbildern, Kräutern und unserer gemeinsamen Liebe zur Natur.\n\nAus ersten Nachrichten wurden Gespräche. Schnell merkten wir: Unser Wissen ergänzt sich wunderbar.\n\nLissi bringt die Geschichten des Waldes mit. Petra kennt die Kräuter, das Räuchern und die alten Bräuche.\n\nSo entstanden unsere Waldrauhnächte. Zwölf Nächte, in denen wir durch ein ganzes Waldjahr gehen und auf unser eigenes zurückschauen.\n\nDu bekommst dabei zwei Blicke auf diese Nächte. Lissi schaut mit Naturwissen auf den Wald, Petra mit dem überlieferten Brauchtum. Nimm dir von beiden, was zu dir passt.\n\nLissi & Petra"
+    },
+    {
+     "title": "Petras Räucherwerk",
+     "text": "Petra ist Kräuterpädagogin. Sie weiß, wie welches Harz riecht, wenn es auf dem Sieb liegt, und warum man früher genau diese Pflanzen in den Rauch gelegt hat.\n\nIhre drei Mischungen gibt es im Paket, bestellbar bis zum 14. Dezember, damit alles vor der Wintersonnenwende bei dir ist."
+    }
+   ],
+   "illustration": {
+    "src": "assets/waldrauhnaechte-cover.jpg",
+    "alt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra"
+   },
+   "image": "assets/waldrauhnaechte-cover.jpg",
+   "imageAlt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra",
+   "offerUrl": "https://waldmomente.me/waldrauhnaechte/",
+   "offerLabel": "Zu den Waldrauhnächten",
+   "giveaway": {
+    "prize": "Das digitale Begleitbuch Waldrauhnächte von Lissi und Petra",
+    "question": "Mit wem hat Lissi die Waldrauhnächte zusammengestellt?",
+    "answer": "Petra",
+    "opens": "2026-12-12T08:00:00+01:00",
+    "closes": "2026-12-13T23:59:00+01:00",
+    "drawFrom": "2026-12-14T08:00:00+01:00",
+    "drawTimeApproximate": true,
+    "delivery": "Der Gewinn wird digital bereitgestellt. Es muss nichts verschickt werden."
+   }
+  },
+  "13": {
+   "name": "Lissi · Waldmomente",
    "title": "Da ist jemand vor dir gelaufen.",
    "text": "Eine schmale Reihe von Abdrücken zieht über den Schnee. Fast wie Perlen an einer Schnur. So kann die Spur eines Fuchses aussehen.\n\nBeim sogenannten Schnüren setzt er im gleichmäßigen Trab die Hinterpfote in den Abdruck der Vorderpfote derselben Seite. Die Spur bleibt dadurch auffallend schmal.\n\nGanz so einfach wie „gerade Spur gleich Fuchs“ ist es allerdings nicht. Auch Hundespuren können ähnlich aussehen. Ein einzelner Abdruck reicht oft nicht für eine sichere Bestimmung.",
    "sections": [
@@ -775,30 +842,14 @@ window.WALDVERBUNDEN_INHALTE = {
   },
   "24": {
    "name": "Lissi · Waldmomente",
-   "title": "Die Weihnachtsverlosung.",
-   "text": "Hinter dem letzten Türchen verlosen wir unser digitales Begleitbuch Waldrauhnächte. Zwölf Waldgeschichten von Lissi, alte Bräuche und Räucherrituale von Petra begleiten dich vom 21. Dezember bis zum 6. Januar.",
+   "title": "Frohe Weihnachten.",
+   "text": "Heiligabend. Vierundzwanzig Türchen lang hast du genauer hingeschaut. Bei Spuren im Schnee, bei einem kahlen Baum, bei Moos. Heute ist das letzte Türchen offen, und es ist das ruhigste.\n\nDanke, dass du dabei warst. Danke auch an die Menschen hinter diesen Türchen, die ihr Können und ihre Zeit mit dir geteilt haben.",
    "sections": [
     {
-     "title": "Aus den Waldrauhnächten",
-     "text": "Zwei Frauen. Ein Wald.\n\nIm Dezember scrollen alle durch ihr Jahr. Die Musikapp zeigt dir deine Lieblingslieder, Instagram deine schönsten Momente. Die Monate, in denen es nicht lief, kommen da nicht vor. Bei uns schon.\n\nWir haben uns auf Instagram kennengelernt. Zwischen Waldbildern, Kräutern und unserer gemeinsamen Liebe zur Natur.\n\nAus ersten Nachrichten wurden Gespräche. Schnell merkten wir: Unser Wissen ergänzt sich wunderbar.\n\nLissi bringt die Geschichten des Waldes mit. Petra kennt die Kräuter, das Räuchern und die alten Bräuche.\n\nSo entstanden unsere Waldrauhnächte. Zwölf Nächte, in denen wir durch ein ganzes Waldjahr gehen und auf unser eigenes zurückschauen.\n\nDu bekommst dabei zwei Blicke auf diese Nächte. Lissi schaut mit Naturwissen auf den Wald, Petra mit dem überlieferten Brauchtum. Nimm dir von beiden, was zu dir passt.\n\nLissi & Petra"
+     "title": "Ein Moment vor dem Fest",
+     "text": "Geh heute noch einmal kurz vor die Tür, bevor es drinnen losgeht. Auch wenn es nur fünf Minuten sind.\n\nBleib stehen. Schau, was du in diesen vierundzwanzig Tagen sehen gelernt hast. Und nimm mit hinein, was dir aufgefallen ist.\n\nZwischen den Jahren bleibt alles stehen.\n\nDeine Lissi"
     }
-   ],
-   "illustration": {
-    "src": "assets/waldrauhnaechte-cover.jpg",
-    "alt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra"
-   },
-   "giveaway": {
-    "prize": "Das digitale Begleitbuch Waldrauhnächte von Lissi und Petra",
-    "question": "Mit wem hat Lissi die Waldrauhnächte zusammengestellt?",
-    "answer": "Petra",
-    "opens": "2026-12-24T08:00:00+01:00",
-    "closes": "2026-12-25T23:59:00+01:00",
-    "drawFrom": "2026-12-26T08:00:00+01:00",
-    "drawTimeApproximate": true,
-    "delivery": "Der Gewinn wird digital bereitgestellt. Es muss nichts verschickt werden."
-   },
-   "image": "assets/waldrauhnaechte-cover.jpg",
-   "imageAlt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra"
+   ]
   }
  },
  "giveawayTerms": [
@@ -1203,6 +1254,11 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
 
     /* Nummer und Bild gehoeren oben in die Textspalte, nicht in ein
        eigenes Band daneben. */
+    /* Heiligabend bekommt einen eigenen, festlichen Auftritt. */
+    if (nr === 24 && spalte.parentElement) {
+      spalte.parentElement.classList.add('festlich');
+      spalte.insertAdjacentHTML('afterbegin', '<i class="orn" aria-hidden="true"></i>');
+    }
     var kopf = spalte.querySelector('.eyebrow');
     if (kopf) {
       kopf.insertAdjacentHTML('beforebegin',
@@ -1264,6 +1320,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
         + '</button><p class="moment-local">Die Markierung bleibt nur in deinem Browser.</p>');
     }
 
+    if (nr === 24) spalte.insertAdjacentHTML('beforeend', '<i class="orn" aria-hidden="true"></i>');
     frageVerdrahten(spalte, tuer.giveaway);
     spalte.dataset.mehr = '1';
   }
