@@ -590,9 +590,7 @@ window.WALDVERBUNDEN_INHALTE = {
     "closes": "2026-12-07T23:59:00+01:00",
     "drawFrom": "2026-12-08T08:00:00+01:00",
     "drawTimeApproximate": true,
-    "delivery": "Der Verlag verlost drei Buchpakete. Die Versandadresse wird erst nach dem Gewinn benötigt.",
-    "question": "Verrate uns deinen Lieblingspilz.",
-    "openQuestion": true
+    "delivery": "Der Verlag verlost drei Buchpakete. Die Versandadresse wird erst nach dem Gewinn benötigt."
    }
   },
   "7": {
@@ -1269,28 +1267,9 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
 
   function frageVerdrahten(spalte, v) {
     var form = spalte.querySelector('.frageform');
-    if (!form || !v) return;
+    if (!form || !v || !v.answer) return;
     var feld = form.querySelector('input');
     var sagt = form.querySelector('.rueckmeldung');
-    /* Offene Frage, zum Beispiel nach dem Lieblingspilz: es gibt keine
-       richtige Antwort, jede ausgefuellte Antwort nimmt teil. Ohne diesen
-       Zweig wuerde das Formular die Seite neu laden. */
-    if (!v.answer) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (!vereinfachen(feld.value)) {
-          sagt.className = 'rueckmeldung falsch';
-          sagt.textContent = 'Da steht noch nichts.';
-          return;
-        }
-        sagt.className = 'rueckmeldung richtig';
-        sagt.textContent = 'Danke für deine Antwort. Damit bist du bei der Verlosung dabei, '
-          + 'sobald das Teilnahmeformular hier steht.';
-        feld.readOnly = true;
-        form.querySelector('button').disabled = true;
-      });
-      return;
-    }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var gegeben = vereinfachen(feld.value);
