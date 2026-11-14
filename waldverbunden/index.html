@@ -166,7 +166,10 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 .door:nth-child(22n+9) .door-unpictured { background-image: url(assets/tuer-09.webp) !important; }
 .door:nth-child(22n+10) .door-unpictured { background-image: url(assets/tuer-10.webp) !important; }
 .door:nth-child(22n+11) .door-unpictured { background-image: url(assets/tuer-11.webp) !important; }
-.door:nth-child(22n+12) .door-unpictured { background-image: url(assets/tuer-12.webp) !important; }
+/* Das Bild hat unten eine eigene Schrift. Auf der Kachel liegt dort die Zahl,
+   deshalb nur der obere Teil, der Nebelwald. */
+.door:nth-child(22n+12) .door-unpictured { background-image: url(assets/12_nebel.webp) !important;
+  background-size: auto 168% !important; background-position: 50% 6% !important; }
 .door:nth-child(22n+13) .door-unpictured { background-image: url(assets/tuer-13.webp) !important; }
 .door:nth-child(22n+14) .door-unpictured { background-image: url(assets/tuer-14.webp) !important; }
 .door:nth-child(22n+15) .door-unpictured { background-image: url(assets/tuer-15.webp) !important; }
@@ -463,7 +466,7 @@ h1 .h1-gold {
   border: 1px solid #e3d1a12e; margin: .5rem 0 1rem; }
 .festlich .mehr-sektionsbild { max-width: 240px; margin: 1.1rem auto 1.3rem;
   box-shadow: 0 18px 50px #00000066, 0 0 0 1px #dac59a55; }
-.verlosung-bild { display: block; width: 100%; max-width: 220px; height: auto; margin: .2rem auto 1rem;
+.verlosung-bild { display: block; width: 100%; max-width: 300px; height: auto; margin: .2rem auto 1rem;
   border-radius: 2px; border: 1px solid #e3d1a133; box-shadow: 0 10px 30px #00000055; }
 .mehr-dank { list-style: none; margin: 1.1rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; }
 .festlich .mehr-dank { justify-content: center; }
@@ -752,17 +755,17 @@ window.WALDVERBUNDEN_INHALTE = {
      "title": "Petras Räucherwerk",
      "text": "Petra ist Kräuterpädagogin. Sie weiß, wie welches Harz riecht, wenn es auf dem Sieb liegt, und warum man früher genau diese Pflanzen in den Rauch gelegt hat.\n\nIhre drei Mischungen gibt es im Paket, bestellbar bis zum 14. Dezember, damit alles vor der Wintersonnenwende bei dir ist.",
      "image": {
-      "src": "assets/petra-kraeutertisch.jpeg",
-      "alt": "Petras Kräutertisch mit Kerze, Harzen und getrockneten Blättern"
+      "src": "assets/12_kraeutertisch.webp",
+      "alt": "Petras Räucherwerk: Gläser mit Kräutern und Harzen, Reagenzgläser mit weißem Salbei, Mistel und Harz, daneben eine Kerze und Herbstblätter"
      }
     }
    ],
    "illustration": {
-    "src": "assets/waldrauhnaechte-cover.jpg",
-    "alt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra"
+    "src": "assets/12_nebel.webp",
+    "alt": "Waldrauhnächte, Zwölf Nächte zwischen den Jahren: kahle Bäume im Nebel"
    },
-   "image": "assets/waldrauhnaechte-cover.jpg",
-   "imageAlt": "Cover des Begleitbuchs Waldrauhnächte von Lissi und Petra",
+   "image": "assets/12_nebel.webp",
+   "imageAlt": "Waldrauhnächte, Zwölf Nächte zwischen den Jahren: kahle Bäume im Nebel",
    "offerUrl": "https://waldmomente.me/waldrauhnaechte/",
    "offerLabel": "Zu den Waldrauhnächten",
    "giveaway": {
@@ -779,8 +782,8 @@ window.WALDVERBUNDEN_INHALTE = {
      "zwoelf"
     ],
     "image": {
-     "src": "assets/waldrauhnaechte-cover.jpg",
-     "alt": "Das Begleitbuch Waldrauhnächte, der Preis dieser Verlosung"
+     "src": "assets/12_buch.webp",
+     "alt": "Das Begleitbuch Waldrauhnächte als gedrehtes Buch mit goldenem Schimmer, darunter: Scroll mal durch dein Jahr"
     }
    }
   },
@@ -1095,8 +1098,8 @@ window.WALDVERBUNDEN_INHALTE = {
     }
    ],
    "illustration": {
-    "src": "assets/weihnachtsbaum-wald.webp",
-    "alt": "Eine junge Fichte im Wald, geschmückt mit roten und silbernen Christbaumkugeln"
+    "src": "assets/24_heiligabend.webp",
+    "alt": "Frohe Weihnachten aus dem Wald: ein verschneiter Winterwald bei Nacht, über dem Gipfel leuchtet ein goldener Stern"
    },
    "aktion": {
     "modus": "aus",
@@ -1117,7 +1120,9 @@ window.WALDVERBUNDEN_INHALTE = {
      "knopf": "Zum Waldkalender",
      "link": "[LINK]"
     }
-   }
+   },
+   "image": "assets/24_heiligabend.webp",
+   "imageAlt": "Frohe Weihnachten aus dem Wald: ein verschneiter Winterwald bei Nacht, über dem Gipfel leuchtet ein goldener Stern"
   }
  },
  "giveawayTerms": [
@@ -1726,7 +1731,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
            Titelbilder, Flyer und Portraets nicht: dort fiele Schrift
            oder ein Gesicht weg. Erkennbar am Dateinamen. */
         var ganz = /deckblatt|flyer|portraet|cover/i.test(bild.src);
-        var art = /heiligabend/i.test(bild.src) ? 'tuer-bild--karte'
+        var art = /heiligabend|12_nebel/i.test(bild.src) ? 'tuer-bild--karte'
                 : /weihnachtsbaum/i.test(bild.src) ? 'tuer-bild--bogen'
                 : /karte/i.test(bild.src) ? 'tuer-bild--karte'
                 : ganz ? 'tuer-bild--ganz' : 'tuer-bild--beschnitten';
