@@ -105,6 +105,23 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
   box-shadow: 0 0 0 4px #e3c98d1c, inset 0 0 22px #e3c98d22; }
 .door[data-day="24"] .door-number { color: #f4dfaa; }
 .door[data-day="24"] .door-mark { color: #f1dba3; opacity: 1; }
+
+/* Ein einzelnes Foto in der Galerie steht einspaltig, ungeschnitten. */
+.mehr-galerie.mehr-galerie--eins { grid-template-columns: 1fr; }
+.mehr-galerie.mehr-galerie--eins img { aspect-ratio: auto; height: auto; max-width: 420px; margin: 0 auto; }
+/* Erwaehnungen: Rolle klein, darunter der Verweis. */
+.mehr-erwaehnt { margin-top: 1.6rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.mehr-erwaehnt .titel { display: block; font-size: 8px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .5rem; }
+.mehr-erwaehnt ul { list-style: none; margin: 0; padding: 0; }
+.mehr-erwaehnt li { display: grid; grid-template-columns: 8.8em 1fr; gap: 14px; align-items: baseline; padding: .42rem 0;
+  border-bottom: 1px solid #b7a16e1f; }
+.mehr-erwaehnt li:last-child { border-bottom: 0; }
+.mehr-erwaehnt .rolle { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: #b9c4b4; }
+.mehr-erwaehnt a, .mehr-erwaehnt .wer { font: 400 19px/1.35 'Cormorant Garamond', Georgia, serif; color: #f0e4c2; }
+.mehr-erwaehnt a { border-bottom: 1px solid #c6a56d66; transition: color .3s, border-color .3s; }
+.mehr-erwaehnt a:hover { color: var(--gold); border-color: var(--gold); }
+@media (max-width: 650px) { .mehr-erwaehnt li { grid-template-columns: 7.6em 1fr; } .mehr-erwaehnt a, .mehr-erwaehnt .wer { font-size: 18px; } }
 </style><style>
 /* Nachtrag Waldmomente: Auf sehr schmalen Handys (320 px) ragten die
    Schalter rechts aus dem Bild heraus. Sie duerfen jetzt umbrechen, und
@@ -536,6 +553,43 @@ window.WALDVERBUNDEN_INHALTE = {
    },
    "image": "assets/IMG_5872.webp",
    "imageAlt": "Laubzweige mit Reif im Winterwald"
+  },
+  "6": {
+   "name": "Tina Stein · Secret Forest Academy",
+   "title": "Die geheime Waldschule.",
+   "text": "Du möchtest Kinder für den Wald begeistern? Dann folge Ava und dem sprechenden Bären Urs in die geheime Waldschule! Dort erwartet dich eine magische Welt voller Blätterrauschen, Glücksribbeln und Mammutbäumen. Doch Vorsicht: Nachts rumpelt es im Wald ziemlich laut! Und mit etwas Pech läuft dir ein Totenfinger über den Weg!\n\nDie Geschichte ist für alle kleinen und großen Walddetektive ab 10 Jahren geeignet.",
+   "video": "assets/tina-stein-video.mp4",
+   "videoPoster": "assets/tina-stein-video.jpg",
+   "sections": [
+    {
+     "title": "Das Gewinnspiel",
+     "text": "Du möchtest die ersten beiden Bände der Kinderbuchreihe „Secret Forest Academy“ gewinnen? Dann mach Folgendes:\n\n1. Folge @waldmomente und @tina.stein.autorin.\n2. Verrate uns in den Kommentaren deinen Lieblingspilz!\n\nDer Verlag verlost drei Buchpakete. Viel Erfolg!"
+    }
+   ],
+   "gallery": [
+    {
+     "src": "assets/tina-stein-buecher.webp",
+     "alt": "Tina Stein hält die ersten beiden Bände der Secret Forest Academy in die Kamera, „Der Seelendieb“ und „Avas Bestimmung“"
+    }
+   ],
+   "erwaehnungen": [
+    {
+     "rolle": "Autorin",
+     "handle": "tina.stein.autorin"
+    },
+    {
+     "rolle": "Verlag",
+     "handle": "fischer.sauerlaender_kids"
+    },
+    {
+     "rolle": "Illustrationen",
+     "handle": "benteschlickchildrensbook"
+    },
+    {
+     "rolle": "Sprecher",
+     "name": "Jens Wendland"
+    }
+   ]
   },
   "7": {
    "name": "Lissi · Waldmomente",
@@ -1250,12 +1304,23 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
       });
     });
     if ((tuer.gallery || []).length) {
-      h += '<div class="mehr-galerie">';
+      h += '<div class="mehr-galerie' + (tuer.gallery.length === 1 ? ' mehr-galerie--eins' : '') + '">';
       tuer.gallery.forEach(function (b) {
         if (!b.src) return;
         h += '<img src="' + sicher(b.src) + '" alt="' + sicher(b.alt || '') + '" loading="lazy">';
       });
       h += '</div>';
+    }
+    if ((tuer.erwaehnungen || []).length) {
+      h += '<div class="mehr-erwaehnt"><span class="titel">Mit dabei</span><ul>';
+      tuer.erwaehnungen.forEach(function (e) {
+        var u = e.handle ? adresse('https://www.instagram.com/' + e.handle) : '';
+        h += '<li><span class="rolle">' + sicher(e.rolle) + '</span>'
+           + (u ? '<a href="' + sicher(u) + '" target="_blank" rel="noopener">@' + sicher(e.handle) + '</a>'
+                : '<span class="wer">' + sicher(e.name) + '</span>')
+           + '</li>';
+      });
+      h += '</ul></div>';
     }
     var netz = tuer.website && adresse(tuer.website);
     if (netz) {
@@ -1327,8 +1392,9 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     if (block) {
       var lose = Array.prototype.slice.call(spalte.querySelectorAll(':scope > a.textlink'));
       var inBlock = block.querySelectorAll('a.textlink');
-      var anker = inBlock.length ? inBlock[inBlock.length - 1]
-                : block.querySelector('.mehr-galerie');
+      var anker = block.querySelector('.mehr-erwaehnt')
+                || (inBlock.length ? inBlock[inBlock.length - 1]
+                : block.querySelector('.mehr-galerie'));
       if (anker && lose.length) {
         lose.reverse().forEach(function (a) { anker.insertAdjacentElement('afterend', a); });
         Array.prototype.forEach.call(spalte.querySelectorAll(':scope > br'), function (b) { b.remove(); });
