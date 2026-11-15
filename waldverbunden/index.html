@@ -895,11 +895,11 @@ window.WALDVERBUNDEN_INHALTE = {
    "title": "Among Trees: Wald zum Anzünden.",
    "text": "Liebt ihr auch den Geruch von frischen Tannenzweigen, geschlagenem Holz, würzigem Harz und fruchtigen Waldbeeren?\n\nFür uns ist das ein Stück Heimat, und dieses Lebensgefühl bringen wir zu euch nach Hause. Fühlt euch wie auf einem langen Waldspaziergang und entspannt beim flackernden Kerzenschein handgegossener Duftkerzen aus nachhaltigem Rapswachs mit der natürlichen Kraft aus ätherischen Ölen.\n\nWir sind Doreen und Nadine von IN MY TREE. Unsere Duftkerzen werden in unserer Manufaktur in Wernigerode von Hand gefertigt.",
    "illustration": {
-    "src": "assets/inmytree-kerze.webp",
-    "alt": "Eine Duftkerze Among Trees brennt in einem bernsteinfarbenen Glas, daneben weitere Kerzen auf dunklem Grün"
+    "src": "assets/inmytree-oben.webp",
+    "alt": "In My Tree: Eine Duftkerze Among Trees mit dem Logo der Marke, darüber eine Tannenspitze. Daneben Kerzen auf dunklem Grün."
    },
-   "image": "assets/inmytree-kerze.webp",
-   "imageAlt": "Eine Duftkerze Among Trees brennt in einem bernsteinfarbenen Glas, daneben weitere Kerzen auf dunklem Grün",
+   "image": "assets/inmytree-oben.webp",
+   "imageAlt": "In My Tree: Eine Duftkerze Among Trees mit dem Logo der Marke, darüber eine Tannenspitze. Daneben Kerzen auf dunklem Grün.",
    "video": "assets/inmytree-video.mp4",
    "videoPoster": "assets/inmytree-video.jpg",
    "gallery": [
@@ -1710,7 +1710,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
            Titelbilder, Flyer und Portraets nicht: dort fiele Schrift
            oder ein Gesicht weg. Erkennbar am Dateinamen. */
         var ganz = /deckblatt|flyer|portraet|cover/i.test(bild.src);
-        var art = /heiligabend|12_nebel/i.test(bild.src) ? 'tuer-bild--karte'
+        var art = /heiligabend|12_nebel|inmytree-oben/i.test(bild.src) ? 'tuer-bild--karte'
                 : /weihnachtsbaum/i.test(bild.src) ? 'tuer-bild--bogen'
                 : /karte/i.test(bild.src) ? 'tuer-bild--karte'
                 : ganz ? 'tuer-bild--ganz' : /IMG_9566/.test(bild.src) ? 'tuer-bild--spur' : 'tuer-bild--beschnitten';
