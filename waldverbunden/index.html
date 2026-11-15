@@ -1734,7 +1734,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
            Titelbilder, Flyer und Portraets nicht: dort fiele Schrift
            oder ein Gesicht weg. Erkennbar am Dateinamen. */
         var ganz = /deckblatt|flyer|portraet|cover/i.test(bild.src);
-        var art = /heiligabend|12_nebel|inmytree-oben/i.test(bild.src) ? 'tuer-bild--karte'
+        var art = /heiligabend|12_nebel|inmytree-oben|IMG_1024|IMG_5872|tuer-18-bild/i.test(bild.src) ? 'tuer-bild--karte'
                 : /weihnachtsbaum/i.test(bild.src) ? 'tuer-bild--bogen'
                 : /karte/i.test(bild.src) ? 'tuer-bild--karte'
                 : ganz ? 'tuer-bild--ganz' : /IMG_9566/.test(bild.src) ? 'tuer-bild--spur' : 'tuer-bild--beschnitten';
