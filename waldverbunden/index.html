@@ -122,6 +122,7 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 .mehr-erwaehnt a { border-bottom: 1px solid #c6a56d66; transition: color .3s, border-color .3s; }
 .mehr-erwaehnt a:hover { color: var(--gold); border-color: var(--gold); }
 @media (max-width: 650px) { .mehr-erwaehnt li { grid-template-columns: 7.6em 1fr; } .mehr-erwaehnt a, .mehr-erwaehnt .wer { font-size: 18px; } }
+.mehr-galerie--ganz img { aspect-ratio: auto; height: auto; object-fit: contain; }
 </style><style>
 /* Nachtrag Waldmomente: Auf sehr schmalen Handys (320 px) ragten die
    Schalter rechts aus dem Bild heraus. Sie duerfen jetzt umbrechen, und
@@ -881,11 +882,7 @@ window.WALDVERBUNDEN_INHALTE = {
    "sections": [
     {
      "title": "Krautgeflüster",
-     "text": "Und da uns Pflanzen so viel mehr schenken als Inhaltsstoffe oder eine Erholung, ist daraus ein ganzes Geflüster aus 47 Kräutern entstanden.\n\nBist du bereit für deine ganz individuelle Pflanze?",
-     "image": {
-      "src": "assets/idaki-krautgefluester.jpg",
-      "alt": "Krautgeflüster: Kartenstapel mit Pflanzen und Stoffbeutel mit dem Schriftzug Rausmüll"
-     }
+     "text": "Und da uns Pflanzen so viel mehr schenken als Inhaltsstoffe oder eine Erholung, ist daraus ein ganzes Geflüster aus 47 Kräutern entstanden.\n\nBist du bereit für deine ganz individuelle Pflanze?"
     },
     {
      "title": "Dein Rabattcode",
@@ -894,7 +891,28 @@ window.WALDVERBUNDEN_INHALTE = {
    ],
    "instagramUrl": "https://www.instagram.com/idaki_kraeuter/",
    "video": "assets/idaki-video.mp4",
-   "videoPoster": "assets/idaki-video.jpg"
+   "videoPoster": "assets/idaki-video.jpg",
+   "gallery": [
+    {
+     "src": "assets/idaki-intro.jpg",
+     "alt": "Waldmomente x Idaki: Idaki ist die Hingabe zu Wildkräutern und Pflanzen"
+    },
+    {
+     "src": "assets/idaki-krautgefluester.jpg",
+     "alt": "Krautgeflüster: Kartenstapel mit Pflanzen und Stoffbeutel mit dem Schriftzug Rausmüll"
+    }
+   ],
+   "galleryGanz": true,
+   "videos": [
+    {
+     "src": "assets/idaki-video-2.mp4",
+     "poster": "assets/idaki-video-2.jpg"
+    },
+    {
+     "src": "assets/idaki-video-3.mp4",
+     "poster": "assets/idaki-video-3.jpg"
+    }
+   ]
   },
   "12": {
    "name": "Lissi · Waldmomente",
@@ -1746,13 +1764,18 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
       });
     });
     if ((tuer.gallery || []).length) {
-      h += '<div class="mehr-galerie' + (tuer.gallery.length === 1 ? ' mehr-galerie--eins' : '') + '">';
+      h += '<div class="mehr-galerie' + (tuer.gallery.length === 1 ? ' mehr-galerie--eins' : '') + (tuer.galleryGanz ? ' mehr-galerie--ganz' : '') + '">';
       tuer.gallery.forEach(function (b) {
         if (!b.src) return;
         h += '<img src="' + sicher(b.src) + '" alt="' + sicher(b.alt || '') + '" loading="lazy">';
       });
       h += '</div>';
     }
+    (tuer.videos || []).forEach(function (f) {
+      if (!f.src) return;
+      h += '<video class="tuer-video" controls playsinline preload="metadata" src="' + sicher(f.src) + '"'
+         + (f.poster ? ' poster="' + sicher(f.poster) + '"' : '') + '></video>';
+    });
     if ((tuer.erwaehnungen || []).length) {
       h += '<div class="mehr-erwaehnt"><span class="titel">Mit dabei</span><ul>';
       tuer.erwaehnungen.forEach(function (e) {
