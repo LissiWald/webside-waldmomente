@@ -122,7 +122,8 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 .mehr-erwaehnt a { border-bottom: 1px solid #c6a56d66; transition: color .3s, border-color .3s; }
 .mehr-erwaehnt a:hover { color: var(--gold); border-color: var(--gold); }
 @media (max-width: 650px) { .mehr-erwaehnt li { grid-template-columns: 7.6em 1fr; } .mehr-erwaehnt a, .mehr-erwaehnt .wer { font-size: 18px; } }
-.mehr-galerie--ganz img { aspect-ratio: auto; height: auto; object-fit: contain; }
+.mehr-galerie.mehr-galerie--ganz { grid-template-columns: 1fr; gap: 14px; }
+.mehr-galerie.mehr-galerie--ganz img { aspect-ratio: auto; height: auto; object-fit: contain; max-width: 440px; margin: 0 auto; }
 </style><style>
 /* Nachtrag Waldmomente: Auf sehr schmalen Handys (320 px) ragten die
    Schalter rechts aus dem Bild heraus. Sie duerfen jetzt umbrechen, und
@@ -873,12 +874,6 @@ window.WALDVERBUNDEN_INHALTE = {
    "name": "IDAKI · Wildkräuter",
    "title": "Eine Brücke zur Natur und zu dir selbst.",
    "text": "Idaki ist die Hingabe zu Wildkräutern und Pflanzen. Eine Brücke zur Natur und zu dir selbst.",
-   "image": "assets/idaki-intro.jpg",
-   "imageAlt": "Idaki: Waldmomente x Idaki, Idaki ist die Hingabe zu Wildkräutern und Pflanzen",
-   "illustration": {
-    "src": "assets/idaki-intro.jpg",
-    "alt": "Waldmomente x Idaki: Idaki ist die Hingabe zu Wildkräutern und Pflanzen"
-   },
    "sections": [
     {
      "title": "Krautgeflüster",
