@@ -871,9 +871,7 @@ window.WALDVERBUNDEN_INHALTE = {
   "11": {
    "name": "IDAKI · Wildkräuter",
    "title": "Eine Brücke zur Natur und zu dir selbst.",
-   "text": "Idaki ist die Hingabe zu Wildkräutern und Pflanzen. Eine Brücke zur Natur und zu dir selbst.\n\nSchau dir das Video an, dort siehst du Idaki selbst und erfährst, was hinter ihrer Arbeit steckt.\n\nMit dem Code Waldmomente10 bekommst du 10 % Rabatt auf deine Bestellung bei Waldmomente.",
-   "video": "assets/idaki-video.mp4",
-   "videoPoster": "assets/idaki-video.jpg",
+   "text": "Idaki ist die Hingabe zu Wildkräutern und Pflanzen. Eine Brücke zur Natur und zu dir selbst.\n\nZu gewinnen gibt es 10 % Rabatt auf deine Bestellung bei Waldmomente mit dem Code Waldmomente10.",
    "image": "assets/idaki-intro.jpg",
    "imageAlt": "Idaki: Waldmomente x Idaki, Idaki ist die Hingabe zu Wildkräutern und Pflanzen",
    "illustration": {
@@ -890,7 +888,15 @@ window.WALDVERBUNDEN_INHALTE = {
      }
     }
    ],
-   "instagramUrl": "https://www.instagram.com/idaki_kraeuter/"
+   "instagramUrl": "https://www.instagram.com/idaki_kraeuter/",
+   "giveaway": {
+    "prize": "10 % Rabatt auf deine Bestellung bei Waldmomente mit dem Code Waldmomente10",
+    "opens": "2026-12-11T08:00:00+01:00",
+    "closes": "2026-12-12T23:59:00+01:00",
+    "drawFrom": "2026-12-13T08:00:00+01:00",
+    "drawTimeApproximate": true,
+    "delivery": "Den Code gibst du bei deiner Bestellung bei Waldmomente ein."
+   }
   },
   "12": {
    "name": "Lissi · Waldmomente",
@@ -1916,7 +1922,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
            Titelbilder, Flyer und Portraets nicht: dort fiele Schrift
            oder ein Gesicht weg. Erkennbar am Dateinamen. */
         var ganz = /deckblatt|flyer|portraet|cover/i.test(bild.src);
-        var art = /heiligabend|12_nebel|12_cover|inmytree-oben|wildes-kollektion|IMG_1024|IMG_5872|tuer-18-bild/i.test(bild.src) ? 'tuer-bild--karte'
+        var art = /heiligabend|12_nebel|12_cover|inmytree-oben|wildes-kollektion|idaki-intro|IMG_1024|IMG_5872|tuer-18-bild/i.test(bild.src) ? 'tuer-bild--karte'
                 : /weihnachtsbaum/i.test(bild.src) ? 'tuer-bild--bogen'
                 : /karte/i.test(bild.src) ? 'tuer-bild--karte'
                 : ganz ? 'tuer-bild--ganz' : /IMG_9566/.test(bild.src) ? 'tuer-bild--spur' : 'tuer-bild--beschnitten';
