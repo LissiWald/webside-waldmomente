@@ -905,7 +905,8 @@ window.WALDVERBUNDEN_INHALTE = {
     },
     {
      "src": "assets/idaki-video-3.mp4",
-     "poster": "assets/idaki-video-3.jpg"
+     "poster": "assets/idaki-video-3.jpg",
+     "schleife": true
     }
    ],
    "website": "https://www.idaki-kraeuter.de",
@@ -1777,7 +1778,9 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     }
     (tuer.videos || []).forEach(function (f) {
       if (!f.src) return;
-      h += '<video class="tuer-video" controls playsinline preload="metadata" src="' + sicher(f.src) + '"'
+      /* schleife: stummer Kurzclip wie ein bewegtes Bild, ohne Bedienfeld. */
+      h += '<video class="tuer-video" ' + (f.schleife ? 'autoplay muted loop ' : 'controls ')
+         + 'playsinline preload="metadata" src="' + sicher(f.src) + '"'
          + (f.poster ? ' poster="' + sicher(f.poster) + '"' : '') + '></video>';
     });
     if ((tuer.erwaehnungen || []).length) {
