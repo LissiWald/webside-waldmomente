@@ -312,8 +312,8 @@
         vorbeigegangen wärst.
       </p>
 
-      <a class="button" href="#kurs">
-        Kurs starten
+      <a class="button" href="#start">
+        Zum ersten Video
       </a>
     </div>
 
@@ -325,7 +325,7 @@
 
   </section>
 
-  <section class="intro" id="kurs">
+  <section class="intro" id="start">
 
     <div class="eyebrow">
       Wald statt WLAN
@@ -417,7 +417,7 @@
     }
   ];
 
-  const storageKey = "waldmomente-kurs-fortschritt";
+  const storageKey = "waldrauhnaechte-challenge-fortschritt";
 
   function ladeFortschritt() {
     try {
@@ -547,7 +547,7 @@
     return artikel;
   }
 
-  function kursAnzeigen() {
+  function alleAnzeigen() {
     const container = document.getElementById("lessons");
     container.innerHTML = "";
     kapitelListe.forEach((kapitel, index) => {
@@ -567,7 +567,7 @@
     });
   }
 
-  kursAnzeigen();
+  alleAnzeigen();
   setInterval(freigabenPruefen, 60000);
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) freigabenPruefen();

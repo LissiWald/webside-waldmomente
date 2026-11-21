@@ -1,4 +1,4 @@
-# Waldrauhnächte-Challenge (waldmomente.me/waldmomente-kurs/)
+# Waldrauhnächte-Challenge (waldmomente.me/waldrauhnaechte-challenge/)
 
 Diese Dateien gehören dazu. Zum Austauschen einfach mit gleichem Namen ersetzen:
 
