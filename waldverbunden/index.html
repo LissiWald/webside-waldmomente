@@ -901,7 +901,8 @@ window.WALDVERBUNDEN_INHALTE = {
    "videos": [
     {
      "src": "assets/idaki-video-2.mp4",
-     "poster": "assets/idaki-video-2.jpg"
+     "poster": "assets/idaki-video-2.jpg",
+     "schleife": true
     },
     {
      "src": "assets/idaki-video-3.mp4",
@@ -910,7 +911,8 @@ window.WALDVERBUNDEN_INHALTE = {
     }
    ],
    "website": "https://www.idaki-kraeuter.de",
-   "bedingungenZeigen": true
+   "bedingungenZeigen": true,
+   "videoSchleife": true
   },
   "12": {
    "name": "Lissi · Waldmomente",
@@ -1634,6 +1636,14 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     return mitUhrzeit ? text + ', ' + w.hour + ':' + w.minute + ' Uhr' : text;
   }
 
+  /* Videos ohne Bedienfeld: Tippen schaltet den Ton an und aus. */
+  document.addEventListener('click', function (e) {
+    var v = e.target && e.target.closest ? e.target.closest('video[data-schleife]') : null;
+    if (!v) return;
+    v.muted = !v.muted;
+    if (v.paused) { var q = v.play(); if (q && q.catch) q.catch(function () {}); }
+  });
+
   /* Teilnahmebedingungen und Datenschutz, auch fuer Tueren ohne Verlosung. */
   function bedingungen() {
     var h = '';
@@ -1779,7 +1789,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     (tuer.videos || []).forEach(function (f) {
       if (!f.src) return;
       /* schleife: stummer Kurzclip wie ein bewegtes Bild, ohne Bedienfeld. */
-      h += '<video class="tuer-video" ' + (f.schleife ? 'autoplay muted loop ' : 'controls ')
+      h += '<video class="tuer-video" ' + (f.schleife ? 'data-schleife="1" autoplay muted loop ' : 'controls ')
          + 'playsinline preload="metadata" src="' + sicher(f.src) + '"'
          + (f.poster ? ' poster="' + sicher(f.poster) + '"' : '') + '></video>';
     });
@@ -1941,6 +1951,13 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
         film.className = 'tuer-video';
         film.setAttribute('controls', '');
         film.setAttribute('playsinline', '');
+        if (tuer.videoSchleife) {
+          film.removeAttribute('controls');
+          film.setAttribute('data-schleife', '1');
+          film.muted = true; film.loop = true; film.autoplay = true;
+          film.setAttribute('muted', ''); film.setAttribute('loop', ''); film.setAttribute('autoplay', '');
+          var los = film.play(); if (los && los.catch) los.catch(function () {});
+        }
         if (tuer.videoPoster) film.setAttribute('poster', sicher(tuer.videoPoster));
         kopf.insertAdjacentElement('afterend', film);
       }
