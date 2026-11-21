@@ -1,4 +1,4 @@
-# Waldrauhnächte-Challenge (waldmomente.me/waldrauhnaechte-challenge/)
+# Waldrauhnächte-Challenge (waldmomente.me/challenge-ast-994827/ (geheime Adresse, nur per Mail verschicken))
 
 Diese Dateien gehören dazu. Zum Austauschen einfach mit gleichem Namen ersetzen:
 
