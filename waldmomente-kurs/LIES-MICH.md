@@ -1,6 +1,6 @@
 # Waldrauhnächte-Challenge (waldmomente.me/waldmomente-kurs/)
 
-Diese Dateien hier hineinlegen, Namen genau so (Kleinschreibung beachten):
+Diese Dateien gehören dazu. Zum Austauschen einfach mit gleichem Namen ersetzen:
 
 assets/
 - ast_1.jpg      Foto oben rechts (Hero), am besten Querformat, ca. 1600 px breit
