@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b23">
+  <meta name="robots" content="noindex, follow">
+
+  <title>Waldrauhnächte-Challenge | Waldmomente</title>
+  <meta name="description" content="Drei Tage. Ein Ast. Deine kostenlose Waldrauhnächte-Challenge von Waldmomente.">
+
+  <style>
+    /* Schriften liegen auf dem eigenen Server (keine Verbindung zu Google). */
+    @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 600;font-display:swap;src:url(../assets/fonts/cormorant-normal-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 600;font-display:swap;src:url(../assets/fonts/cormorant-normal-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:300 600;font-display:swap;src:url(../assets/fonts/cormorant-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:300 600;font-display:swap;src:url(../assets/fonts/cormorant-italic-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    @font-face{font-family:'Jost';font-style:normal;font-weight:300 500;font-display:swap;src:url(../assets/fonts/jost-normal-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Jost';font-style:normal;font-weight:300 500;font-display:swap;src:url(../assets/fonts/jost-normal-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+    :root {
+      --wald: #172b23;
+      --wald-hell: #243e30;
+      --creme: #f5f0e5;
+      --gold: #c9b184;
+      --text: #d0d8cf;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--wald);
+      color: var(--creme);
+      font-family: "Jost", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      line-height: 1.08;
+    }
+
+    h1 {
+      font-size: clamp(60px, 8vw, 110px);
+      margin: 20px 0;
+    }
+
+    h2 {
+      font-size: clamp(44px, 6vw, 75px);
+      margin: 15px 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    header {
+      padding: 25px 6%;
+      border-bottom: 1px solid #405448;
+      letter-spacing: 0.25em;
+      font-size: 12px;
+    }
+
+    header a {
+      text-decoration: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+
+    .hero-text {
+      padding: 80px 8%;
+      align-self: center;
+    }
+
+    .hero-text em {
+      color: var(--gold);
+    }
+
+    .hero-image {
+      background-color: var(--wald-hell);
+      background-image: url("assets/ast_1.jpg");
+      background-position: center 40%;
+      background-size: cover;
+      min-height: 400px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 11px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 22px;
+      border: 1px solid var(--gold);
+      text-decoration: none;
+      background: transparent;
+      color: var(--creme);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .button:hover,
+    .complete:hover {
+      background: var(--gold);
+      color: var(--wald);
+    }
+
+    .intro {
+      max-width: 750px;
+      margin: auto;
+      padding: 70px 25px;
+      text-align: center;
+    }
+
+    .lessons {
+      max-width: 1150px;
+      margin: auto;
+      padding: 0 25px 80px;
+    }
+
+    .lesson {
+      padding: 65px 0;
+      border-top: 1px solid #526357;
+      scroll-margin-top: 20px;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: 7%;
+      align-items: center;
+    }
+
+    .lesson p {
+      color: var(--text);
+    }
+
+    .video-container {
+      position: relative;
+      background: #08120c;
+      border: 8px solid #30483a;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-container.hochkant {
+      aspect-ratio: 9 / 16;
+      max-height: 640px;
+      margin: 0 auto;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #08120c;
+      object-fit: contain;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: #14251bef;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .overlay[hidden] {
+      display: none;
+    }
+
+    .overlay h3 {
+      font-size: 48px;
+      margin: 10px;
+    }
+
+    .overlay p {
+      color: var(--gold);
+      margin: 0;
+    }
+
+    .complete {
+      margin-top: 20px;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--creme);
+      padding: 12px 18px;
+      cursor: pointer;
+      font: inherit;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .complete[hidden] {
+      display: none;
+    }
+
+    .complete.done {
+      color: var(--gold);
+    }
+
+    .complete.done:hover {
+      color: var(--wald);
+    }
+
+    .freigabe {
+      color: var(--gold) !important;
+    }
+
+    .progress {
+      color: var(--gold);
+      font-size: 13px;
+      margin-top: 25px;
+    }
+
+    footer {
+      padding: 60px 25px;
+      text-align: center;
+      color: var(--gold);
+      border-top: 1px solid #405448;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+    }
+
+    footer .klein {
+      letter-spacing: normal;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    footer .klein a {
+      margin: 0 8px;
+    }
+
+    @media (max-width: 800px) {
+      .hero,
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text {
+        padding: 45px 25px;
+      }
+
+      .hero-image {
+        min-height: 350px;
+        grid-row: 1;
+      }
+
+      .lesson-grid {
+        gap: 25px;
+      }
+
+      .lesson {
+        padding: 45px 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="https://waldmomente.me/">WALDMOMENTE</a>
+</header>
+
+<main>
+
+  <section class="hero">
+
+    <div class="hero-text">
+      <div class="eyebrow">
+        Deine kostenlose Waldrauhnächte-Challenge
+      </div>
+
+      <h1>
+        Drei Tage.<br>
+        Ein <em>Ast.</em><br>
+        Dein Jahr.
+      </h1>
+
+      <p>
+        Wir beginnen nicht mit zwölf Wunschzetteln.
+        Sondern mit einem Ast, an dem du sonst
+        vorbeigegangen wärst.
+      </p>
+
+      <a class="button" href="#start">
+        Challenge starten
+      </a>
+    </div>
+
+    <div
+      class="hero-image"
+      role="img"
+      aria-label="Ein kahler Ast in einer Glasvase, daran zwei Anhänger mit den Monaten September und Januar">
+    </div>
+
+  </section>
+
+  <section class="intro" id="start">
+
+    <div class="eyebrow">
+      Wald statt WLAN
+    </div>
+
+    <h2>Schön, dass du bei der Challenge bist.</h2>
+
+    <p>
+      Fünf kurze Videos. Drei Tage.
+      Eine Geschichte, die draußen beginnt.
+      Jeden Morgen um acht öffnet sich ein neues Kapitel.
+    </p>
+
+    <div class="progress" id="progress" aria-live="polite"></div>
+
+  </section>
+
+  <div class="lessons" id="lessons"></div>
+
+</main>
+
+<footer>
+  WALDRAUHNÄCHTE-CHALLENGE · WALDMOMENTE
+
+  <p>
+    <a href="https://waldmomente.me/">waldmomente.me</a>
+  </p>
+
+  <p class="klein">
+    <a href="../impressum.html">Impressum</a>
+    <a href="../datenschutz.html">Datenschutz</a>
+  </p>
+</footer>
+
+<script>
+  /*
+    So pflegst du die Kapitel:
+    - freigabe: Zeitpunkt der Freischaltung (deutsche Zeit, Winterzeit = +01:00).
+      null = sofort offen.
+    - hochkant: true, wenn das Video im Hochformat (9:16) gedreht ist.
+    Hinweis: Die Sperre passiert nur im Browser. Wer die Videoadresse kennt,
+    kann ein Video auch vorher öffnen.
+  */
+  const kapitelListe = [
+    {
+      tag: "Willkommen",
+      titel: "Schön, dass du da bist.",
+      text: "Wir beginnen die Waldrauhnächte mit einem Ast. In den nächsten drei Tagen erfährst du, warum.",
+      video: "videos/01_Einleitung.mp4",
+      bild: "assets/video_1.jpg",
+      freigabe: null,
+      hochkant: true
+    },
+    {
+      tag: "Tag 1",
+      titel: "Die Geschichte des Astes",
+      text: "Wir laufen an Hunderten Ästen vorbei. Heute schauen wir genauer hin. Du musst noch keinen mitnehmen.",
+      video: "videos/02_Geschichte_des_Astes.mp4",
+      bild: "assets/video_2.jpg",
+      freigabe: "2026-11-23T08:00:00+01:00",
+      hochkant: true
+    },
+    {
+      tag: "Tag 2",
+      titel: "Deinen eigenen Ast finden",
+      text: "Heute geht es nach draußen. Suche einen bereits am Boden liegenden Ast. Beachte die örtlichen Sammelregeln und Schutzgebiete.",
+      video: "videos/03_Ast_finden.mp4",
+      bild: "assets/video_3.jpg",
+      freigabe: "2026-11-24T08:00:00+01:00",
+      hochkant: true
+    },
+    {
+      tag: "Tag 3",
+      titel: "Dein Ast bekommt einen Platz",
+      text: "Entferne losen Schmutz, lass den Ast trocknen und gib ihm einen sicheren Platz. Die Wunschzettel kommen später.",
+      video: "videos/04_Ast_vorbereiten.mp4",
+      bild: "assets/video_4.jpg",
+      freigabe: "2026-11-25T08:00:00+01:00",
+      hochkant: true
+    },
+    {
+      tag: "Abschluss",
+      titel: "Die Geschichte geht weiter",
+      text: "Drei Tage, ein Ast. Jetzt beginnt die eigentliche Geschichte der zwölf Waldrauhnächte.",
+      video: "videos/05_Abschluss.mp4",
+      bild: "assets/video_5.jpg",
+      freigabe: "2026-11-25T08:00:00+01:00",
+      hochkant: true
+    }
+  ];
+
+  const storageKey = "waldrauhnaechte-challenge-fortschritt";
+
+  function ladeFortschritt() {
+    try {
+      const daten = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      return Array.isArray(daten) ? daten.filter(Number.isInteger) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function speichereFortschritt() {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(angesehen));
+    } catch (error) {
+      // Privater Modus o. Ä.: Fortschritt gilt dann nur bis zum Schließen.
+    }
+  }
+
+  let angesehen = ladeFortschritt();
+
+  function istOffen(kapitel) {
+    return !kapitel.freigabe ||
+      Date.now() >= new Date(kapitel.freigabe).getTime();
+  }
+
+  function datumText(kapitel) {
+    return new Date(kapitel.freigabe).toLocaleString("de-DE", {
+      timeZone: "Europe/Berlin",
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      hour: "2-digit",
+      minute: "2-digit"
+    }) + " Uhr";
+  }
+
+  function fortschrittAnzeigen() {
+    const anzahl = kapitelListe.filter((_, i) => angesehen.includes(i)).length;
+    document.getElementById("progress").textContent =
+      `${anzahl} von ${kapitelListe.length} Videos angesehen`;
+  }
+
+  function knopfAktualisieren(button, index) {
+    const fertig = angesehen.includes(index);
+    button.classList.toggle("done", fertig);
+    button.textContent = fertig ? "✓ Angesehen" : "Als angesehen markieren";
+    button.setAttribute("aria-pressed", fertig ? "true" : "false");
+  }
+
+  function setzeAngesehen(index, wert) {
+    const schon = angesehen.includes(index);
+    if (wert && !schon) angesehen.push(index);
+    if (!wert && schon) angesehen = angesehen.filter(i => i !== index);
+    speichereFortschritt();
+
+    const button = document.querySelector(`.complete[data-index="${index}"]`);
+    if (button) knopfAktualisieren(button, index);
+    fortschrittAnzeigen();
+  }
+
+  // Baut ein einzelnes Kapitel. Wird nur neu gebaut, wenn es sich öffnet,
+  // damit ein laufendes Video nicht unterbrochen wird.
+  function kapitelBauen(kapitel, index) {
+    const offen = istOffen(kapitel);
+
+    const artikel = document.createElement("article");
+    artikel.className = "lesson";
+    artikel.id = `kapitel-${index + 1}`;
+    artikel.dataset.offen = offen ? "1" : "0";
+
+    artikel.innerHTML = `
+      <div class="eyebrow">${kapitel.tag}</div>
+
+      <div class="lesson-grid">
+        <div>
+          <h2>${kapitel.titel}</h2>
+          <p>${kapitel.text}</p>
+          ${
+            offen
+              ? `<button type="button" class="complete" data-index="${index}"></button>`
+              : `<p class="freigabe">Freischaltung: ${datumText(kapitel)}</p>`
+          }
+        </div>
+
+        <div class="video-container${kapitel.hochkant ? " hochkant" : ""}">
+          ${
+            offen
+              ? `<video controls playsinline preload="metadata" poster="${kapitel.bild}">
+                   <source src="${kapitel.video}" type="video/mp4">
+                 </video>
+                 <div class="overlay fehler" hidden>
+                   <h3>Gleich da.</h3>
+                   <p>Das Video lädt gerade nicht. Bitte lade die Seite später neu.</p>
+                 </div>`
+              : `<video playsinline preload="none" poster="${kapitel.bild}" aria-hidden="true" tabindex="-1"></video>
+                 <div class="overlay">
+                   <h3>Kommt bald.</h3>
+                   <p>${datumText(kapitel)}</p>
+                 </div>`
+          }
+        </div>
+      </div>
+    `;
+
+    if (offen) {
+      const button = artikel.querySelector(".complete");
+      knopfAktualisieren(button, index);
+      button.addEventListener("click", () => {
+        setzeAngesehen(index, !angesehen.includes(index));
+      });
+
+      const video = artikel.querySelector("video");
+      // Automatisch abhaken, wenn das Video bis zum Ende läuft.
+      video.addEventListener("ended", () => setzeAngesehen(index, true));
+      // Nur ein Video gleichzeitig abspielen.
+      video.addEventListener("play", () => {
+        document.querySelectorAll("video").forEach(v => {
+          if (v !== video) v.pause();
+        });
+      });
+      // Freundlicher Hinweis, falls die Datei fehlt.
+      video.querySelector("source").addEventListener("error", () => {
+        artikel.querySelector(".overlay.fehler").hidden = false;
+      });
+    }
+
+    return artikel;
+  }
+
+  function alleAnzeigen() {
+    const container = document.getElementById("lessons");
+    container.innerHTML = "";
+    kapitelListe.forEach((kapitel, index) => {
+      container.appendChild(kapitelBauen(kapitel, index));
+    });
+    fortschrittAnzeigen();
+  }
+
+  // Prüft regelmäßig, ob neue Kapitel freigegeben sind,
+  // und tauscht nur diese aus.
+  function freigabenPruefen() {
+    kapitelListe.forEach((kapitel, index) => {
+      const alt = document.getElementById(`kapitel-${index + 1}`);
+      if (alt && alt.dataset.offen === "0" && istOffen(kapitel)) {
+        alt.replaceWith(kapitelBauen(kapitel, index));
+      }
+    });
+  }
+
+  alleAnzeigen();
+  setInterval(freigabenPruefen, 60000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) freigabenPruefen();
+  });
+</script>
+
+</body>
+</html>
