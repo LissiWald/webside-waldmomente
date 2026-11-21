@@ -907,7 +907,9 @@ window.WALDVERBUNDEN_INHALTE = {
      "src": "assets/idaki-video-3.mp4",
      "poster": "assets/idaki-video-3.jpg"
     }
-   ]
+   ],
+   "website": "https://www.idaki-kraeuter.de",
+   "bedingungenZeigen": true
   },
   "12": {
    "name": "Lissi · Waldmomente",
@@ -1631,6 +1633,22 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     return mitUhrzeit ? text + ', ' + w.hour + ':' + w.minute + ' Uhr' : text;
   }
 
+  /* Teilnahmebedingungen und Datenschutz, auch fuer Tueren ohne Verlosung. */
+  function bedingungen() {
+    var h = '';
+    if ((ALLES.giveawayTerms || []).length) {
+      h += '<details><summary>Teilnahmebedingungen</summary>'
+         + (ALLES.giveawayTerms || []).map(function (t) { return '<p>' + sicher(t) + '</p>'; }).join('')
+         + '</details>';
+    }
+    if ((ALLES.giveawayPrivacy || []).length) {
+      h += '<details><summary>Datenschutz zur Verlosung</summary>'
+         + (ALLES.giveawayPrivacy || []).map(function (t) { return '<p>' + sicher(t) + '</p>'; }).join('')
+         + '</details>';
+    }
+    return h;
+  }
+
   function verlosung(v, nr) {
     var jetzt = Date.now();
     var auf = new Date(v.opens).getTime(), zu = new Date(v.closes).getTime();
@@ -1664,16 +1682,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     h += '<p class="zeitraum">Teilnahme von ' + sicher(wann(v.opens, true))
        + ' bis ' + sicher(wann(v.closes, true))
        + '. Ausgelost wird ab ' + sicher(wann(v.drawFrom, true)) + '.</p>';
-    if ((ALLES.giveawayTerms || []).length) {
-      h += '<details><summary>Teilnahmebedingungen</summary>'
-         + (ALLES.giveawayTerms || []).map(function (t) { return '<p>' + sicher(t) + '</p>'; }).join('')
-         + '</details>';
-    }
-    if ((ALLES.giveawayPrivacy || []).length) {
-      h += '<details><summary>Datenschutz zur Verlosung</summary>'
-         + (ALLES.giveawayPrivacy || []).map(function (t) { return '<p>' + sicher(t) + '</p>'; }).join('')
-         + '</details>';
-    }
+    h += bedingungen();
     return h + '</div>';
   }
 
@@ -1788,6 +1797,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
          + sicher(tuer.name || 'Webseite') + ' besuchen</a>';
     }
     if (tuer.giveaway) h += verlosung(tuer.giveaway, nummer);
+    else if (tuer.bedingungenZeigen) h += '<div class="verlosung">' + bedingungen() + '</div>';
     /* Die Quellenangaben stehen weiter in der Inhaltsdatei, werden
        aber nicht mehr angezeigt: sie fuehren aus dem Kalender heraus. */
     return h ? '<div class="mehr-block">' + h + '</div>' : '';
