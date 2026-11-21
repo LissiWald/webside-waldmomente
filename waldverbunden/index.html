@@ -125,6 +125,8 @@ dialog{background:#244b35;border-color:#d8be8180}.modal-close{background:#234631
 .mehr-galerie.mehr-galerie--ganz { grid-template-columns: 1fr; gap: 14px; }
 .mehr-galerie.mehr-galerie--ganz img { aspect-ratio: auto; height: auto; object-fit: contain; max-width: 440px; margin: 0 auto; }
 video[data-schleife] { cursor: pointer; }
+#door-content .door-copy .mehr-block .mehr-gewinn p { font-size: 32px; line-height: 1.2; color: #f0e4c2; margin: .2rem 0 1.2rem; }
+@media (max-width: 650px) { #door-content .door-copy .mehr-block .mehr-gewinn p { font-size: 27px; } }
 </style><style>
 /* Nachtrag Waldmomente: Auf sehr schmalen Handys (320 px) ragten die
    Schalter rechts aus dem Bild heraus. Sie duerfen jetzt umbrechen, und
@@ -1011,10 +1013,15 @@ window.WALDVERBUNDEN_INHALTE = {
   "13": {
    "name": "Hej Soulwild · Snail Mail Club",
    "title": "Waldgeflüster. Eine kleine Auszeit für dich.",
-   "text": "Manchmal braucht es gar nicht viel. Ein bisschen Wald. Ein bisschen Ruhe. Ein paar Minuten nur für dich.\n\nMeine Wilde Wurzeln Waldpost ist eine kleine Erinnerung daran, zwischendurch innezuhalten, durchzuatmen und dich wieder mit der Natur und dir selbst zu verbinden. Mit liebevoll ausgewählten Kleinigkeiten, Naturmomenten und kleinen Impulsen, wie Post von einer Freundin, nur ein bisschen wilder.\n\nverwurzelt · wild · verbunden\n\nZu gewinnen gibt es 1 × 1 Monatspost.",
+   "text": "Manchmal braucht es gar nicht viel. Ein bisschen Wald. Ein bisschen Ruhe. Ein paar Minuten nur für dich.\n\nMeine Wilde Wurzeln Waldpost ist eine kleine Erinnerung daran, zwischendurch innezuhalten, durchzuatmen und dich wieder mit der Natur und dir selbst zu verbinden. Mit liebevoll ausgewählten Kleinigkeiten, Naturmomenten und kleinen Impulsen, wie Post von einer Freundin, nur ein bisschen wilder.\n\nverwurzelt · wild · verbunden",
    "video": "assets/hejsoulwild-video.mp4",
    "videoPoster": "assets/hejsoulwild-video.jpg",
    "sections": [
+    {
+     "title": "Das kannst du gewinnen",
+     "text": "1 × 1 Monatspost der Wilde Wurzeln Waldpost",
+     "gross": true
+    },
     {
      "title": "Das erwartet dich",
      "text": "• ein persönlicher Monatsbrief\n• eine Wildpflanze im Fokus\n• einfache Ideen und kleine Rituale für draußen\n• Rezepte oder Anwendungen mit Kräutern\n• eine kleine Überraschung aus der Natur, zum Beispiel Tee, Kräuter, Räucherwerk, Samen oder ein Herbariumblatt"
@@ -1831,6 +1838,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
   function bauen(tuer, nummer) {
     var h = '';
     (tuer.sections || []).forEach(function (a) {
+      if (a.gross) h += '<div class="mehr-gewinn">';
       if (a.kicker) h += '<span class="mehr-kicker">' + sicher(a.kicker) + '</span>';
       if (a.title) h += '<h3>' + sicher(a.title) + '</h3>';
       if (a.image && a.image.src) {
@@ -1847,6 +1855,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
         });
         h += '</ul>';
       }
+      if (a.gross) h += '</div>';
     });
     (tuer.additionalContent || []).forEach(function (a) {
       if (a.title) h += '<h3>' + sicher(a.title) + '</h3>';
