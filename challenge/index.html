@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b23">
+  <meta name="robots" content="index, follow">
+
+  <title>Waldrauhnächte-Challenge | Waldmomente</title>
+  <meta name="description" content="Drei Tage. Ein Ast. Die kostenlose Waldrauhnächte-Challenge von Waldmomente.">
+  <meta property="og:title" content="Waldrauhnächte-Challenge | Waldmomente">
+  <meta property="og:description" content="Drei Tage. Ein Ast. Die kostenlose Waldrauhnächte-Challenge.">
+  <meta property="og:image" content="https://waldmomente.me/challenge/ast.jpg">
+
+  <style>
+    @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 600;font-display:swap;src:url(../assets/fonts/cormorant-normal-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300 600;font-display:swap;src:url(../assets/fonts/cormorant-normal-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:300 600;font-display:swap;src:url(../assets/fonts/cormorant-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Jost';font-style:normal;font-weight:300 500;font-display:swap;src:url(../assets/fonts/jost-normal-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Jost';font-style:normal;font-weight:300 500;font-display:swap;src:url(../assets/fonts/jost-normal-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+    :root { --wald:#172b23; --wald-hell:#243e30; --creme:#f5f0e5; --gold:#c9b184; --text:#d0d8cf; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--wald); color:var(--creme); font-family:"Jost",Arial,sans-serif; font-size:16px; line-height:1.7; }
+    h1, h2 { font-family:"Cormorant Garamond",Georgia,serif; font-weight:500; line-height:1.08; }
+    h1 { font-size:clamp(56px,8vw,104px); margin:20px 0; }
+    h2 { font-size:clamp(36px,5vw,56px); margin:10px 0 20px; }
+    a { color:inherit; }
+    header { padding:25px 6%; border-bottom:1px solid #405448; letter-spacing:.25em; font-size:12px; }
+    header a { text-decoration:none; }
+
+    .hero { display:grid; grid-template-columns:1fr 1fr; min-height:620px; }
+    .hero-text { padding:70px 8%; align-self:center; }
+    .hero-text em { color:var(--gold); }
+    .hero-text p { color:var(--text); max-width:480px; }
+    .hero-image { background:var(--wald-hell) url("ast.jpg") center 40% / cover; min-height:400px; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.2em; font-size:11px; }
+
+    .ablauf { max-width:1000px; margin:auto; padding:70px 25px; display:grid; grid-template-columns:repeat(3,1fr); gap:40px; border-bottom:1px solid #405448; }
+    .ablauf h3 { font-family:"Cormorant Garamond",Georgia,serif; font-weight:500; font-size:30px; margin:8px 0; }
+    .ablauf p { color:var(--text); margin:0; }
+
+    .anmeldung { max-width:620px; margin:auto; padding:80px 25px; text-align:center; }
+    .anmeldung p { color:var(--text); }
+    form { margin-top:25px; }
+    label { display:block; font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+    .reihe { display:flex; gap:10px; }
+    input[type=email] { flex:1; min-width:0; padding:14px 16px; border:1px solid #526357; background:#0f1d16; color:var(--creme); font:inherit; }
+    input[type=email]:focus { outline:2px solid var(--gold); outline-offset:1px; }
+    button { padding:14px 22px; border:1px solid var(--gold); background:var(--gold); color:var(--wald); font:inherit; font-weight:500; cursor:pointer; }
+    button:hover { background:transparent; color:var(--creme); }
+    button:disabled { opacity:.6; cursor:wait; }
+    .fein { font-size:13px; margin-top:18px; }
+    .danke { border:1px solid var(--gold); padding:35px 25px; margin-top:25px; }
+    .danke h2 { margin-top:0; }
+    .fehler { color:#e8b4a0; font-size:14px; }
+    [hidden] { display:none !important; }
+
+    footer { padding:50px 25px; text-align:center; color:var(--gold); border-top:1px solid #405448; font-size:13px; letter-spacing:.15em; }
+    footer .klein { letter-spacing:normal; font-size:12px; color:var(--text); }
+    footer .klein a { margin:0 8px; }
+
+    @media (max-width:800px) {
+      .hero { grid-template-columns:1fr; }
+      .hero-image { grid-row:1; min-height:340px; }
+      .hero-text { padding:40px 25px; }
+      .ablauf { grid-template-columns:1fr; gap:30px; padding:50px 25px; }
+      .reihe { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+<header><a href="https://waldmomente.me/">WALDMOMENTE</a></header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">Kostenlose Waldrauhnächte-Challenge</div>
+      <h1>Drei Tage.<br>Ein <em>Ast.</em><br>Dein Jahr.</h1>
+      <p>
+        Wir beginnen nicht mit zwölf Wunschzetteln.
+        Sondern mit einem Ast, an dem du sonst vorbeigegangen wärst.
+      </p>
+      <p>Ab Montag, 23. November, öffnet sich jeden Morgen um acht ein neues Video.</p>
+    </div>
+    <div class="hero-image" role="img" aria-label="Ein kahler Ast in einer Glasvase, daran zwei Anhänger mit den Monaten September und Januar"></div>
+  </section>
+
+  <section class="ablauf" aria-label="So läuft die Challenge">
+    <div>
+      <div class="eyebrow">Tag 1</div>
+      <h3>Hinschauen</h3>
+      <p>Die Geschichte des Astes. Du musst noch keinen mitnehmen.</p>
+    </div>
+    <div>
+      <div class="eyebrow">Tag 2</div>
+      <h3>Rausgehen</h3>
+      <p>Du suchst dir einen Ast, der schon am Boden liegt.</p>
+    </div>
+    <div>
+      <div class="eyebrow">Tag 3</div>
+      <h3>Einen Platz finden</h3>
+      <p>Dein Ast kommt mit nach Hause. Die Wunschzettel kommen später.</p>
+    </div>
+  </section>
+
+  <section class="anmeldung" id="anmelden">
+    <div id="tor">
+      <div class="eyebrow">Wald statt WLAN</div>
+      <h2>Bist du dabei?</h2>
+      <p>Fünf kurze Videos, jedes zwischen einer und zweieinhalb Minuten. Du brauchst nur einen Ast vom Waldboden.</p>
+
+      <!--
+        MAILERLITE: Hier die Adresse des Challenge-Formulars eintragen.
+        Aufbau: https://assets.mailerlite.com/jsonp/KONTO-ID/forms/FORMULAR-ID/subscribe
+      -->
+      <form id="anmeldeformular" action="https://assets.mailerlite.com/jsonp/KONTO-ID/forms/FORMULAR-ID/subscribe" method="post" target="ml-ziel">
+        <input type="hidden" name="ml-submit" value="1">
+        <label for="mail">Deine E-Mail</label>
+        <div class="reihe">
+          <input type="email" id="mail" name="fields[email]" required placeholder="deine@email.de" autocomplete="email">
+          <button type="submit">Zur Challenge anmelden</button>
+        </div>
+        <p class="fehler" id="fehler" role="alert" hidden>Die Anmeldung ist gerade noch nicht freigeschaltet. Versuch es bitte später noch einmal.</p>
+      </form>
+
+      <p class="fein">
+        Du bekommst zuerst eine Mail, mit der du deine Anmeldung bestätigst.
+        Danach schicke ich dir den Link zur Challenge.
+        Außerdem bekommst du ab und zu Post von mir aus dem Wald.
+        Abmelden geht jederzeit mit einem Klick.
+        Mehr dazu in der <a href="../datenschutz.html">Datenschutzerklärung</a>.
+      </p>
+    </div>
+
+    <div class="danke" id="danke" role="status" hidden>
+      <div class="eyebrow">Fast geschafft</div>
+      <h2>Schau in dein Postfach.</h2>
+      <p>Dort liegt eine Mail von mir. Bestätige deine Anmeldung, dann kommt der Link zur Challenge.</p>
+      <p class="fein">Nichts da? Schau auch im Spam-Ordner nach.</p>
+    </div>
+  </section>
+
+  <iframe name="ml-ziel" title="Formularziel" style="display:none" aria-hidden="true"></iframe>
+</main>
+
+<footer>
+  WALDRAUHNÄCHTE-CHALLENGE · WALDMOMENTE
+  <p><a href="https://waldmomente.me/">waldmomente.me</a></p>
+  <p class="klein">
+    <a href="../impressum.html">Impressum</a>
+    <a href="../datenschutz.html">Datenschutz</a>
+  </p>
+</footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('anmeldeformular');
+    var tor = document.getElementById('tor');
+    var danke = document.getElementById('danke');
+    var fehler = document.getElementById('fehler');
+    var eingerichtet = form.action.indexOf('KONTO-ID') === -1;
+
+    form.addEventListener('submit', function (e) {
+      var feld = form.querySelector('input[type=email]');
+      if (!feld.checkValidity()) return;
+      if (!eingerichtet) {
+        e.preventDefault();
+        fehler.hidden = false;
+        return;
+      }
+      // Das Formular geht in den unsichtbaren Rahmen, danach zeigen wir den Dank.
+      setTimeout(function () {
+        tor.hidden = true;
+        danke.hidden = false;
+        danke.scrollIntoView({ block: 'center' });
+      }, 400);
+    });
+  })();
+</script>
+
+</body>
+</html>
