@@ -53,7 +53,8 @@
     .fein { font-size:13px; margin-top:18px; }
     .danke { border:1px solid var(--gold); padding:35px 25px; margin-top:25px; }
     .danke h2 { margin-top:0; }
-    .fehler { color:#e8b4a0; font-size:14px; }
+    .knopf { display:inline-block; margin-top:10px; padding:14px 26px; background:var(--gold); color:var(--wald); text-decoration:none; font-weight:500; border:1px solid var(--gold); }
+    .knopf:hover { background:transparent; color:var(--creme); }
     [hidden] { display:none !important; }
 
     footer { padding:50px 25px; text-align:center; color:var(--gold); border-top:1px solid #405448; font-size:13px; letter-spacing:.15em; }
@@ -111,34 +112,30 @@
       <h2>Bist du dabei?</h2>
       <p>Fünf kurze Videos, jedes zwischen einer und zweieinhalb Minuten. Du brauchst nur einen Ast vom Waldboden.</p>
 
-      <!--
-        MAILERLITE: Hier die Adresse des Challenge-Formulars eintragen.
-        Aufbau: https://assets.mailerlite.com/jsonp/KONTO-ID/forms/FORMULAR-ID/subscribe
-      -->
-      <form id="anmeldeformular" action="https://assets.mailerlite.com/jsonp/KONTO-ID/forms/FORMULAR-ID/subscribe" method="post" target="ml-ziel">
+      <form id="anmeldeformular" action="https://assets.mailerlite.com/jsonp/2587270/forms/198406643568870499/subscribe" method="post" target="ml-ziel">
         <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="fields[leseprobe]" value="Waldrauhnächte-Challenge">
         <label for="mail">Deine E-Mail</label>
         <div class="reihe">
           <input type="email" id="mail" name="fields[email]" required placeholder="deine@email.de" autocomplete="email">
           <button type="submit">Zur Challenge anmelden</button>
         </div>
-        <p class="fehler" id="fehler" role="alert" hidden>Die Anmeldung ist gerade noch nicht freigeschaltet. Versuch es bitte später noch einmal.</p>
       </form>
 
       <p class="fein">
-        Du bekommst zuerst eine Mail, mit der du deine Anmeldung bestätigst.
-        Danach schicke ich dir den Link zur Challenge.
-        Außerdem bekommst du ab und zu Post von mir aus dem Wald.
+        Gleich nach dem Eintragen geht die Challenge hier auf.
+        Mit deiner Anmeldung bekommst du außerdem ab und zu Post von mir aus dem Wald.
         Abmelden geht jederzeit mit einem Klick.
         Mehr dazu in der <a href="../datenschutz.html">Datenschutzerklärung</a>.
       </p>
     </div>
 
     <div class="danke" id="danke" role="status" hidden>
-      <div class="eyebrow">Fast geschafft</div>
-      <h2>Schau in dein Postfach.</h2>
-      <p>Dort liegt eine Mail von mir. Bestätige deine Anmeldung, dann kommt der Link zur Challenge.</p>
-      <p class="fein">Nichts da? Schau auch im Spam-Ordner nach.</p>
+      <div class="eyebrow">Du bist dabei</div>
+      <h2>Schön, dass du mitmachst.</h2>
+      <p>Das Willkommensvideo kannst du dir gleich ansehen. Ab Montag, 23. November, öffnet sich jeden Morgen um acht ein neues Video.</p>
+      <a class="knopf" href="../challenge-ast-994827/">Zur Challenge</a>
+      <p class="fein">Leg dir die Seite am besten als Lesezeichen an. Und schau gleich in dein Postfach: Dort liegt eine Mail, mit der du deine Anmeldung bestätigst.</p>
     </div>
   </section>
 
@@ -156,26 +153,25 @@
 
 <script>
   (function () {
+    var SCHLUESSEL = 'waldrauhnaechte-challenge-angemeldet';
     var form = document.getElementById('anmeldeformular');
     var tor = document.getElementById('tor');
     var danke = document.getElementById('danke');
-    var fehler = document.getElementById('fehler');
-    var eingerichtet = form.action.indexOf('KONTO-ID') === -1;
 
-    form.addEventListener('submit', function (e) {
+    function aufmachen(hinscrollen) {
+      tor.hidden = true;
+      danke.hidden = false;
+      if (hinscrollen) danke.scrollIntoView({ block: 'center' });
+    }
+
+    try { if (localStorage.getItem(SCHLUESSEL) === '1') aufmachen(false); } catch (e) {}
+
+    form.addEventListener('submit', function () {
       var feld = form.querySelector('input[type=email]');
       if (!feld.checkValidity()) return;
-      if (!eingerichtet) {
-        e.preventDefault();
-        fehler.hidden = false;
-        return;
-      }
-      // Das Formular geht in den unsichtbaren Rahmen, danach zeigen wir den Dank.
-      setTimeout(function () {
-        tor.hidden = true;
-        danke.hidden = false;
-        danke.scrollIntoView({ block: 'center' });
-      }, 400);
+      try { localStorage.setItem(SCHLUESSEL, '1'); } catch (e) {}
+      // Das Formular geht an MailerLite (unsichtbarer Rahmen), danach öffnet sich die Challenge.
+      setTimeout(function () { aufmachen(true); }, 400);
     });
   })();
 </script>
