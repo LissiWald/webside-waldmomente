@@ -687,7 +687,11 @@ html.live .interlude { order: 5; } html.live .closing { order: 6; } html.live .r
   .werbung-karte.umgekehrt .werbung-bild { order: 0; }
 }
 @media (max-width: 560px) {
-  .vorab-hero { padding: 100px 4% 40px; }
+  html, body { overflow-x: clip; }
+  .nav { padding-left: 4%; padding-right: 4%; flex-wrap: wrap; gap: 8px 14px; }
+  .nav .controls { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px 10px; margin-left: 0; }
+  .nav .controls button { font-size: 8px; letter-spacing: .1em; gap: 4px; padding-left: 0; padding-right: 0; }
+  .vorab-hero { padding: 120px 4% 40px; }
   .vorab-tuer { padding-top: 132px; }
   .vorab-schloss { top: 58px; }
   .vorab-zaehler { gap: 6px; }
