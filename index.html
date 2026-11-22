@@ -1975,19 +1975,19 @@ html.wv-an #hero { display: none; }
 <p class="wvh-eyebrow">DER WALDMOMENTE ADVENTSKALENDER 2026</p>
 <h1 id="wvh-titel"><span class="vw-wald">Wald</span><span class="vw-gold">verbunden.</span></h1>
 <div class="wvh-linie" aria-hidden="true"><i></i><b>✧</b><i></i></div>
-<p class="wvh-lead" id="wvh-lead">Vierundzwanzig Türchen. Ein Wald voller Geschichten.</p>
-<p class="wvh-sub" id="wvh-sub">Hinter jedem Türchen wartet eine Partnerin, die den Wald liebt. Und an manchen Tagen ein kleiner Gewinn.</p>
+<p class="wvh-lead" id="wvh-lead">24 Türchen. Über ein Dutzend Gewinne.</p>
+<p class="wvh-sub" id="wvh-sub">Ab dem 1. Dezember öffnet sich jeden Morgen um 8 Uhr eine neue Tür. Dahinter wartet eine Partnerin, eine Geschichte und an vielen Tagen ein Gewinn, den du kostenlos gewinnen kannst.</p>
 <div class="wvh-zaehler" id="wvh-zaehler" role="timer" aria-label="Zeit bis zum ersten Türchen">
 <div><b id="z-tage">00</b><span>Tage</span></div><div><b id="z-std">00</b><span>Stunden</span></div><div><b id="z-min">00</b><span>Minuten</span></div><div><b id="z-sek">00</b><span>Sekunden</span></div>
 </div>
-<p class="wvh-hinweis" id="wvh-hinweis">Noch verschlossen. Am 1. Dezember um 0:00 Uhr öffnet sich das erste Türchen.</p>
-<div class="wvh-knoepfe"><a class="wvh-knopf" id="wvh-cta" href="waldverbunden/#advent">Zum Kalender</a><a class="wvh-link" href="waldverbunden/#so">So funktioniert es</a><a class="wvh-link" href="#waldrauhnaechte">Die Rauhnächte</a></div>
+<p class="wvh-hinweis" id="wvh-hinweis">Noch verschlossen. Am 1. Dezember um 8:00 Uhr öffnet sich das erste Türchen. Wer pünktlich da ist, ist als Erste dabei.</p>
+<div class="wvh-knoepfe"><a class="wvh-knopf" id="wvh-cta" href="waldverbunden/#advent">Zum Kalender</a><a class="wvh-link" id="wvh-ics" href="#" data-ics download="waldverbunden-erinnerung.ics">Jeden Morgen erinnern</a><a class="wvh-link" href="#waldrauhnaechte">Die Rauhnächte</a></div>
 </div>
 <ol class="wvh-schritte">
-<li><a href="waldverbunden/#so"><b>I</b><strong>Jeden Tag ein Türchen</strong><span>Ab dem 1. Dezember, um Mitternacht.</span></a></li>
-<li><a href="waldverbunden/#so"><b>II</b><strong>Eine Partnerin, eine Geschichte</strong><span>Mit Foto, Video und etwas Besonderem.</span></a></li>
-<li><a href="waldverbunden/#so"><b>III</b><strong>Frage beantworten, gewinnen</strong><span>Kleine Verlosungen an vielen Tagen.</span></a></li>
-<li><a href="waldverbunden/#so"><b>IV</b><strong>Musik, Schnee und Schritte</strong><span>Oben rechts schaltest du die Stimmung ein.</span></a></li>
+<li><a href="waldverbunden/#so"><b>I</b><strong>Jeden Morgen um 8 Uhr</strong><span>Eine neue Tür öffnet sich.</span></a></li>
+<li><a href="waldverbunden/#so"><b>II</b><strong>Partnerin, Geschichte, Gewinn</strong><span>Mit Foto, Video und etwas Besonderem.</span></a></li>
+<li><a href="waldverbunden/#so"><b>III</b><strong>Nur rund 40 Stunden Zeit</strong><span>Jede Verlosung endet am Folgetag um 23:59 Uhr.</span></a></li>
+<li><a href="waldverbunden/#so"><b>IV</b><strong>Kostenlos mitmachen</strong><span>Frage beantworten, E-Mail abschicken, fertig.</span></a></li>
 </ol>
 </section>
 
@@ -4172,7 +4172,7 @@ a:hover > .pf--auf { transform: rotate(180deg) translateY(4px); }
 // Waldverbunden-Hero
 /* Vorab-Hero: Countdown, Goldstaub und Sterne. Läuft nur, solange das erste Türchen noch zu ist. */
 (function () {
-  var ziel = Date.parse('2026-12-01T00:00:00+01:00');
+  var ziel = Date.parse('2026-12-01T08:00:00+01:00');
   var hero = document.getElementById('waldverbunden');
   if (!hero || !document.documentElement.classList.contains('wv-an')) return;
   var vorher = Date.now() < ziel;
@@ -4191,13 +4191,18 @@ a:hover > .pf--auf { transform: rotate(180deg) translateY(4px); }
   }
   if (vorher) { takt(); setInterval(takt, 1000); }
   else {
-    var teile = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', day: '2-digit' }).formatToParts(new Date());
-    var tag = parseInt(teile.filter(function (t) { return t.type === 'day'; })[0].value, 10);
+    var tl = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', day: '2-digit', hour: '2-digit', hour12: false }).formatToParts(new Date());
+    var tag = parseInt(tl.filter(function (x) { return x.type === 'day'; })[0].value, 10);
+    var std = parseInt(tl.filter(function (x) { return x.type === 'hour'; })[0].value, 10) % 24;
+    if (std < 8) tag -= 1;
     if (tag >= 1 && tag <= 24) {
       hero.classList.add('wvh-offen');
-      document.getElementById('wvh-lead').textContent = 'Heute öffnet sich Türchen ' + tag + '.';
-      document.getElementById('wvh-sub').textContent = 'Jeden Tag ein neues Türchen, bis zum 24. Dezember. Mit Partnerinnen, Geschichten und kleinen Verlosungen.';
+      document.getElementById('wvh-lead').textContent = 'Türchen ' + tag + ' ist offen.';
+      document.getElementById('wvh-sub').textContent = tag < 24
+        ? 'Morgen um 8 Uhr folgt die nächste Tür. Wer mitmacht, hat bis zum Ende des Folgetags Zeit.'
+        : 'Das letzte Türchen. Schön, dass du dabei warst.';
       document.getElementById('wvh-cta').textContent = 'Türchen ' + tag + ' öffnen';
+      var ik = document.getElementById('wvh-ics'); if (ik) ik.style.display = 'none';
     }
   }
 
@@ -4273,5 +4278,16 @@ a:hover > .pf--auf { transform: rotate(180deg) translateY(4px); }
 })();
 
 (function () { if (document.documentElement.classList.contains("wv-an")) { Array.prototype.forEach.call(document.querySelectorAll('a[href="#hero"]'), function (a) { a.setAttribute("href", "#waldverbunden"); }); } })();
+
+(function () {
+  var zeilen = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Waldmomente//Waldverbunden//DE', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+    'BEGIN:VEVENT', 'UID:waldverbunden-2026@waldmomente.me', 'DTSTAMP:20261122T060000Z', 'DTSTART:20261201T070000Z', 'DTEND:20261201T071500Z',
+    'RRULE:FREQ=DAILY;COUNT=24', 'SUMMARY:Waldverbunden: Dein Türchen wartet',
+    'DESCRIPTION:Jeden Morgen um 8 Uhr öffnet sich ein neues Türchen im Waldmomente Adventskalender. https://waldmomente.me/waldverbunden/',
+    'URL:https://waldmomente.me/waldverbunden/', 'BEGIN:VALARM', 'TRIGGER:PT0S', 'ACTION:DISPLAY', 'DESCRIPTION:Waldverbunden: Dein Türchen wartet', 'END:VALARM',
+    'END:VEVENT', 'END:VCALENDAR'];
+  var href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(zeilen.join('\r\n') + '\r\n');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-ics]'), function (a) { a.setAttribute('href', href); });
+})();
 </script></body>
 </html>
