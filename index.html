@@ -1853,6 +1853,78 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
 .fm__dl:hover{background:var(--dark)}
 @media(hover:none){.fm__close,.fm__submit{cursor:pointer}}
 </style>
+<style id="wvh-css">
+
+.wvh { --gold: #c6a56d; --gold-hell: #ecd8a5; --cream: #eee8d8; --serif: 'Cormorant Garamond', Georgia, serif; display: none; font-family: 'Jost', sans-serif; color: #eee8d8; }
+html.wv-an .wvh { display: flex; }
+html.wv-an #hero { display: none; }
+.wvh a { text-decoration: none; color: inherit; }
+.wvh h1 { color: inherit; }
+.wvh-eyebrow { font-size: 10px; letter-spacing: .32em; color: var(--gold); font-weight: 500; margin: 0 0 20px; text-transform: uppercase; }
+.wvh p { margin-top: 0; }
+.wvh.wvh-offen .wvh-zaehler, .wvh.wvh-offen .wvh-hinweis, .wvh.wvh-offen .wvh-schloss { display: none; }
+.wvh.wvh-offen .wvh-tuer { padding-top: 118px; }
+/* ---- Hero */
+.wvh { position: relative; min-height: 100svh; overflow: hidden; padding: 120px 5% 56px; flex-direction: column; align-items: center; justify-content: center; isolation: isolate; text-align: center; }
+.wvh-foto { position: absolute; inset: -3%; z-index: -3; background: url(waldverbunden/assets/DSC07929.webp) 50% 55% / cover no-repeat; filter: saturate(.3) sepia(.4) brightness(.42); animation: wvhAtmen 30s ease-in-out infinite alternate; }
+.wvh:before { content: ""; position: absolute; inset: 0; z-index: -2; background: radial-gradient(ellipse at 50% 34%, #d9bd7f38 0, transparent 52%), radial-gradient(ellipse at 50% 100%, #0b1d16 0, transparent 60%), linear-gradient(#0b1d16d9, #11271e80 42%, #0b1d16f2); }
+#wvh-staub { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.wvh-sterne { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.wvh-sterne i { position: absolute; font-style: normal; color: var(--gold-hell); opacity: 0; animation: wvhFunkeln 5s ease-in-out infinite; text-shadow: 0 0 12px #ecd8a5aa; }
+.wvh-tuer { position: relative; width: min(650px, 92vw); padding: 150px clamp(22px, 5vw, 66px) 52px; border-radius: 999px 999px 24px 24px; border: 1px solid #e3cf9fa6; background: linear-gradient(#0b1d16b0, #11271ed6); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); box-shadow: 0 0 0 7px #0b1d1690, 0 0 0 8px #c6a56d4d, 0 0 110px #c6a56d30, inset 0 0 80px #c6a56d16; animation: wvhTuerAtmen 7s ease-in-out infinite; }
+.wvh-tuer:before { content: ""; position: absolute; inset: 11px; border-radius: inherit; border: 1px solid #c6a56d40; pointer-events: none; }
+.wvh-bogenstern { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); color: var(--gold-hell); font-size: 30px; text-shadow: 0 0 22px #ecd8a5; line-height: 1; }
+.wvh-schloss { position: absolute; top: 68px; left: 50%; transform: translateX(-50%); color: var(--gold); opacity: .85; }
+.wvh-tuer h1 { font: 400 clamp(60px, 12vw, 108px)/.92 var(--serif); margin: 4px 0 0; letter-spacing: -.01em; }
+.vw-wald { display: block; color: var(--cream); }
+.vw-gold { display: block; font-style: italic; background: linear-gradient(100deg, #c6a56d 0%, #f7e9c1 38%, #c6a56d 62%, #a98a52 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: wvhSchimmer 8s ease-in-out infinite; padding-bottom: .08em; }
+.wvh-linie { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 20px 0 22px; color: var(--gold); }
+.wvh-linie i { height: 1px; width: 84px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.wvh-linie i:last-child { transform: scaleX(-1); }
+.wvh-lead { font: italic 400 clamp(23px, 3.6vw, 31px)/1.25 var(--serif); margin: 0 0 12px; color: var(--cream); }
+.wvh-sub { font-size: 13px; line-height: 1.9; color: #c9d3c4; max-width: 430px; margin: 0 auto; }
+.wvh-zaehler { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 440px; margin: 32px auto 14px; }
+.wvh-zaehler > div { padding: 15px 2px 11px; border: 1px solid #c6a56d55; background: linear-gradient(#ffffff0f, #ffffff03); position: relative; }
+.wvh-zaehler > div:before { content: ""; position: absolute; left: 50%; top: -1px; width: 22px; height: 1px; background: var(--gold-hell); transform: translateX(-50%); }
+.wvh-zaehler b { display: block; font: 500 clamp(34px, 7.5vw, 54px)/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; color: var(--gold-hell); text-shadow: 0 0 22px #c6a56d66; }
+.wvh-zaehler span { display: block; font-size: 8.5px; letter-spacing: .24em; text-transform: uppercase; color: #aeb9a9; margin-top: 8px; }
+.wvh-hinweis { font: italic 17px/1.5 var(--serif); color: #d8dccb; margin: 12px 0 0; }
+.wvh-knoepfe { display: flex; flex-wrap: wrap; gap: 14px 26px; justify-content: center; align-items: center; margin-top: 28px; }
+.wvh-knopf { display: inline-block; padding: 15px 28px; border: 1px solid var(--gold); background: linear-gradient(#c6a56d2e, #c6a56d10); color: var(--cream); letter-spacing: .2em; font-size: 10px; text-transform: uppercase; transition: background .4s, box-shadow .4s, transform .4s; }
+.wvh-knopf:hover { background: linear-gradient(#c6a56d55, #c6a56d26); box-shadow: 0 0 34px #c6a56d44; transform: translateY(-2px); }
+.wvh-link { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-hell); border-bottom: 1px solid #c6a56d88; padding: 6px 0; }
+.wvh-schritte { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); width: min(1060px, 94vw); margin: 52px 0 0; padding: 0; border-top: 1px solid #c6a56d44; }
+.wvh-schritte li { border-left: 1px solid #c6a56d26; }
+.wvh-schritte li:first-child { border-left: 0; }
+.wvh-schritte a { display: block; padding: 24px 22px 6px; text-align: left; transition: background .4s; }
+.wvh-schritte a:hover { background: #c6a56d12; }
+.wvh-schritte b { display: block; font: italic 400 22px var(--serif); color: var(--gold); margin-bottom: 6px; }
+.wvh-schritte strong { display: block; font: 500 20px/1.2 var(--serif); color: var(--cream); margin-bottom: 8px; }
+.wvh-schritte span { font-size: 12px; line-height: 1.7; color: #aeb9a9; }
+
+@keyframes wvhAtmen { from { transform: scale(1.03) translate3d(0, 0, 0); } to { transform: scale(1.1) translate3d(-1.5%, -1%, 0); } }
+@keyframes wvhTuerAtmen { 0%, 100% { box-shadow: 0 0 0 7px #0b1d1690, 0 0 0 8px #c6a56d4d, 0 0 90px #c6a56d26, inset 0 0 70px #c6a56d12; } 50% { box-shadow: 0 0 0 7px #0b1d1690, 0 0 0 8px #c6a56d66, 0 0 140px #c6a56d3d, inset 0 0 90px #c6a56d1f; } }
+@keyframes wvhSchimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes wvhFunkeln { 0%, 100% { opacity: 0; transform: scale(.6); } 50% { opacity: .9; transform: scale(1.1); } }
+@media (max-width: 860px) {
+  .wvh-schritte { grid-template-columns: repeat(2, 1fr); }
+  .wvh-schritte li:nth-child(3) { border-left: 0; }
+  .wvh-schritte li:nth-child(n+3) { border-top: 1px solid #c6a56d26; }
+}
+@media (max-width: 560px) {
+  .wvh { padding: 150px 4% 40px; }
+  .wvh-tuer { padding-top: 132px; }
+  .wvh-schloss { top: 58px; }
+  .wvh-zaehler { gap: 6px; }
+  .wvh-schritte a { padding: 20px 14px 4px; }
+  .wvh-schritte strong { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wvh-foto, .wvh-tuer, .vw-gold, .wvh-sterne i { animation: none !important; }
+  .wvh-sterne i { opacity: .6; }
+}
+</style>
+<script>document.documentElement.className+=Date.now()<Date.parse("2026-12-25T00:00:00+01:00")?" wv-an":""</script>
 </head>
 <body>
 
@@ -1872,6 +1944,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <a href="#hero" class="nav__logo">Waldmomente</a>
  <ul class="nav__list" id="nav-list">
  <li><a href="#hero" class="nav__link" data-sec="hero">Start</a></li>
+ <li><a href="waldverbunden/" class="nav__link">Adventskalender</a></li>
  <li><a href="#about" class="nav__link" data-sec="about">Über mich</a></li>
  <li><a href="#why" class="nav__link" data-sec="why">Waldbaden</a></li>
  <li><a href="#produkte" class="nav__link" data-sec="produkte">Produkte</a></li>
@@ -1892,6 +1965,32 @@ a:focus-visible,button:focus-visible{outline:3px solid #c8a96e;outline-offset:4p
  <main>
 
  <!-- ══════════ HERO ══════════ -->
+ <section id="waldverbunden" class="wvh" aria-labelledby="wvh-titel">
+<div class="wvh-foto" aria-hidden="true"></div>
+<canvas id="wvh-staub" aria-hidden="true"></canvas>
+<div class="wvh-sterne" id="wvh-sterne" aria-hidden="true"></div>
+<div class="wvh-tuer">
+<span class="wvh-bogenstern" aria-hidden="true">✦</span>
+<svg class="wvh-schloss" id="wvh-schloss" viewBox="0 0 40 52" width="34" height="44" aria-hidden="true" focusable="false"><path d="M9 22v-6a11 11 0 0 1 22 0v6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><rect x="4.5" y="22" width="31" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="32.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M20 35.7v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+<p class="wvh-eyebrow">DER WALDMOMENTE ADVENTSKALENDER 2026</p>
+<h1 id="wvh-titel"><span class="vw-wald">Wald</span><span class="vw-gold">verbunden.</span></h1>
+<div class="wvh-linie" aria-hidden="true"><i></i><b>✧</b><i></i></div>
+<p class="wvh-lead" id="wvh-lead">Vierundzwanzig Türchen. Ein Wald voller Geschichten.</p>
+<p class="wvh-sub" id="wvh-sub">Hinter jedem Türchen wartet eine Partnerin, die den Wald liebt. Und an manchen Tagen ein kleiner Gewinn.</p>
+<div class="wvh-zaehler" id="wvh-zaehler" role="timer" aria-label="Zeit bis zum ersten Türchen">
+<div><b id="z-tage">00</b><span>Tage</span></div><div><b id="z-std">00</b><span>Stunden</span></div><div><b id="z-min">00</b><span>Minuten</span></div><div><b id="z-sek">00</b><span>Sekunden</span></div>
+</div>
+<p class="wvh-hinweis" id="wvh-hinweis">Noch verschlossen. Am 1. Dezember um 0:00 Uhr öffnet sich das erste Türchen.</p>
+<div class="wvh-knoepfe"><a class="wvh-knopf" id="wvh-cta" href="waldverbunden/#advent">Zum Kalender</a><a class="wvh-link" href="waldverbunden/#so">So funktioniert es</a><a class="wvh-link" href="#waldrauhnaechte">Die Rauhnächte</a></div>
+</div>
+<ol class="wvh-schritte">
+<li><a href="waldverbunden/#so"><b>I</b><strong>Jeden Tag ein Türchen</strong><span>Ab dem 1. Dezember, um Mitternacht.</span></a></li>
+<li><a href="waldverbunden/#so"><b>II</b><strong>Eine Partnerin, eine Geschichte</strong><span>Mit Foto, Video und etwas Besonderem.</span></a></li>
+<li><a href="waldverbunden/#so"><b>III</b><strong>Frage beantworten, gewinnen</strong><span>Kleine Verlosungen an vielen Tagen.</span></a></li>
+<li><a href="waldverbunden/#so"><b>IV</b><strong>Musik, Schnee und Schritte</strong><span>Oben rechts schaltest du die Stimmung ein.</span></a></li>
+</ol>
+</section>
+
  <section id="hero" aria-label="Hero">
  <div class="hero__slide on"></div>
  <div class="hero__slide"></div>
@@ -4069,5 +4168,110 @@ a:hover > .pf--auf { transform: rotate(180deg) translateY(4px); }
  } else { anwerfen(); }
 })();
 </script>
-</body>
+<script>
+// Waldverbunden-Hero
+/* Vorab-Hero: Countdown, Goldstaub und Sterne. Läuft nur, solange das erste Türchen noch zu ist. */
+(function () {
+  var ziel = Date.parse('2026-12-01T00:00:00+01:00');
+  var hero = document.getElementById('waldverbunden');
+  if (!hero || !document.documentElement.classList.contains('wv-an')) return;
+  var vorher = Date.now() < ziel;
+
+  var tage = document.getElementById('z-tage'), std = document.getElementById('z-std'),
+      min = document.getElementById('z-min'), sek = document.getElementById('z-sek');
+  function zwei(n) { return (n < 10 ? '0' : '') + n; }
+  function takt() {
+    var rest = Math.max(0, ziel - Date.now());
+    if (rest <= 0) { location.reload(); return; }
+    var s = Math.floor(rest / 1000);
+    tage.textContent = zwei(Math.floor(s / 86400));
+    std.textContent = zwei(Math.floor(s % 86400 / 3600));
+    min.textContent = zwei(Math.floor(s % 3600 / 60));
+    sek.textContent = zwei(s % 60);
+  }
+  if (vorher) { takt(); setInterval(takt, 1000); }
+  else {
+    var teile = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', day: '2-digit' }).formatToParts(new Date());
+    var tag = parseInt(teile.filter(function (t) { return t.type === 'day'; })[0].value, 10);
+    if (tag >= 1 && tag <= 24) {
+      hero.classList.add('wvh-offen');
+      document.getElementById('wvh-lead').textContent = 'Heute öffnet sich Türchen ' + tag + '.';
+      document.getElementById('wvh-sub').textContent = 'Jeden Tag ein neues Türchen, bis zum 24. Dezember. Mit Partnerinnen, Geschichten und kleinen Verlosungen.';
+      document.getElementById('wvh-cta').textContent = 'Türchen ' + tag + ' öffnen';
+    }
+  }
+
+  /* Sterne: kleine Funken, die leise an- und ausgehen. */
+  var sterne = document.getElementById('wvh-sterne');
+  if (sterne) {
+    var zeichen = ['✦', '✧', '·', '✦'];
+    for (var i = 0; i < 22; i++) {
+      var e = document.createElement('i');
+      e.textContent = zeichen[i % zeichen.length];
+      e.style.left = (4 + (i * 37) % 92) + '%';
+      e.style.top = (4 + (i * 53) % 88) + '%';
+      e.style.fontSize = (9 + (i * 7) % 13) + 'px';
+      e.style.animationDelay = ((i * 0.83) % 5).toFixed(2) + 's';
+      e.style.animationDuration = (4 + (i % 5)) + 's';
+      sterne.appendChild(e);
+    }
+  }
+
+  /* Goldstaub: weiche Lichtpunkte, die langsam aufsteigen. */
+  var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cv = document.getElementById('wvh-staub');
+  if (!cv || ruhig) return;
+  var cx = cv.getContext('2d');
+  var w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2), teile = [], sichtbar = true, lauf = 0;
+  var sprite = document.createElement('canvas'); sprite.width = sprite.height = 64;
+  var sg = sprite.getContext('2d'), grad = sg.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grad.addColorStop(0, 'rgba(255,238,190,1)'); grad.addColorStop(.25, 'rgba(236,216,165,.55)'); grad.addColorStop(1, 'rgba(198,165,109,0)');
+  sg.fillStyle = grad; sg.fillRect(0, 0, 64, 64);
+
+  function masse() {
+    var r = hero.getBoundingClientRect();
+    w = r.width; h = r.height;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var anzahl = w < 600 ? 34 : 70;
+    teile = [];
+    for (var i = 0; i < anzahl; i++) teile.push(neu(true));
+  }
+  function neu(zufallsHoehe) {
+    return { x: Math.random() * w, y: zufallsHoehe ? Math.random() * h : h + 20,
+             r: 3 + Math.random() * 10, v: .12 + Math.random() * .38, ph: Math.random() * 6.28,
+             sw: 8 + Math.random() * 22, a: .25 + Math.random() * .6, f: .4 + Math.random() * 1.2 };
+  }
+  function zeichnen(t) {
+    if (!sichtbar) { lauf = 0; return; }
+    cx.clearRect(0, 0, w, h);
+    for (var i = 0; i < teile.length; i++) {
+      var p = teile[i];
+      p.y -= p.v;
+      var x = p.x + Math.sin(t / 1800 * p.f + p.ph) * p.sw;
+      var a = p.a * (.55 + .45 * Math.sin(t / 900 * p.f + p.ph));
+      if (p.y < -20) { teile[i] = neu(false); continue; }
+      cx.globalAlpha = Math.max(0, a);
+      cx.drawImage(sprite, x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+    }
+    cx.globalAlpha = 1;
+    lauf = requestAnimationFrame(zeichnen);
+  }
+  masse();
+  window.addEventListener('resize', function () { clearTimeout(masse.t); masse.t = setTimeout(masse, 200); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      sichtbar = es[0].isIntersecting;
+      if (sichtbar && !lauf) lauf = requestAnimationFrame(zeichnen);
+    }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', function () {
+    sichtbar = !document.hidden;
+    if (sichtbar && !lauf) lauf = requestAnimationFrame(zeichnen);
+  });
+  lauf = requestAnimationFrame(zeichnen);
+})();
+
+(function () { if (document.documentElement.classList.contains("wv-an")) { Array.prototype.forEach.call(document.querySelectorAll('a[href="#hero"]'), function (a) { a.setAttribute("href", "#waldverbunden"); }); } })();
+</script></body>
 </html>
