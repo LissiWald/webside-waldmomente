@@ -672,6 +672,20 @@ html.nach .interlude { order: 5; } html.nach .closing { order: 6; } html.nach .r
 .recht details p:last-child { padding-bottom: 22px; }
 .recht-links { font-size: 12px; margin-top: 30px; color: #aeb9a9; }
 
+/* ---- Waldpost im Dezember: Anmeldung zum Newsletter */
+.waldpost { padding: 72px 22px; background: var(--deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+.waldpost-innen { max-width: 560px; margin: 0 auto; }
+.waldpost h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 5vw, 44px); line-height: 1.12; color: var(--cream); margin: 0 0 18px; }
+.waldpost h2 em { color: var(--gold); }
+.waldpost-text { font-family: var(--sans); font-size: 15px; line-height: 1.75; color: #d7e0d2; margin: 0 0 26px; }
+.waldpost-reihe { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.waldpost-reihe input { flex: 1 1 240px; min-width: 0; padding: 15px 16px; background: #ffffff10; border: 1px solid var(--line); color: var(--cream); font: 400 15px/1.2 var(--sans); }
+.waldpost-reihe input::placeholder { color: #aeb9a9; }
+.waldpost-reihe input:focus { outline: none; border-color: var(--gold); }
+.waldpost-reihe button { padding: 15px 26px; border: 0; background: linear-gradient(135deg, #f0e0b3, #c6a56d); color: #11271e; font: 500 10.5px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; cursor: pointer; }
+.waldpost-fein { font-size: 12px; line-height: 1.7; color: #aeb9a9; margin: 16px 0 0; }
+.waldpost-fein a { color: var(--gold); }
+.waldpost-danke { font-family: var(--serif); font-size: 24px; line-height: 1.4; color: var(--cream); margin: 0; }
 /* ---- Formular: Teilnahme per E-Mail */
 .hinweis-teilnahme { font-size: 12px; line-height: 1.7; color: #aeb9a9; margin: 10px 0 4px; }
 .mailknopf { display: inline-block; margin: 14px 0 6px; padding: 14px 26px; background: linear-gradient(135deg, #f0e0b3, #c6a56d); color: #11271e !important; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; font-weight: 500; }
@@ -741,6 +755,43 @@ html.nach .interlude { order: 5; } html.nach .closing { order: 6; } html.nach .r
 <li><a href="#so"><b>III</b><strong>Nur rund 40 Stunden Zeit</strong><span>Jede Verlosung endet am Folgetag um 23:59 Uhr.</span></a></li>
 <li><a href="#so"><b>IV</b><strong>Kostenlos mitmachen</strong><span>Frage beantworten, E-Mail abschicken, fertig.</span></a></li>
 </ol>
+</section>
+
+<!-- WALDPOST: Anmeldung zum Newsletter (MailerLite, Feld quelle = Waldverbunden) -->
+<section class="waldpost" id="waldpost" aria-labelledby="waldpost-titel">
+<div class="waldpost-innen">
+<p class="vorab-eyebrow">WALDPOST IM DEZEMBER</p>
+<h2 id="waldpost-titel">Damit du im Dezember<br><em>nichts verpasst.</em></h2>
+<p class="waldpost-text">Trag dich ein, dann schreibe ich dir, wenn das erste Türchen aufgeht. Und im Dezember noch ein paar Mal, wenn es draußen etwas zu sehen gibt oder bei Waldmomente etwas für die Feiertage bereitliegt. Nicht jeden Tag.</p>
+<div id="waldpost-formular">
+<form id="waldpost-form" action="https://assets.mailerlite.com/jsonp/2587270/forms/198406643568870499/subscribe" method="post" target="waldpost-sink">
+<input type="hidden" name="ml-submit" value="1">
+<input type="hidden" name="fields[quelle]" value="Waldverbunden">
+<div class="waldpost-reihe">
+<input type="email" name="fields[email]" required placeholder="deine@email.de" autocomplete="email" aria-label="Deine E-Mail-Adresse">
+<button type="submit">Eintragen</button>
+</div>
+</form>
+<p class="waldpost-fein">Die Anmeldung ist freiwillig und hat nichts mit den Verlosungen zu tun. Du bekommst gleich eine Mail, mit der du deine Anmeldung bestätigst. Abmelden geht jederzeit mit einem Klick. Mehr dazu in der <a href="https://waldmomente.me/datenschutz.html">Datenschutzerklärung</a>.</p>
+</div>
+<div id="waldpost-fertig" hidden>
+<p class="waldpost-danke">Fast geschafft. Schau gleich in dein Postfach und bestätige deine Anmeldung.</p>
+<p class="waldpost-fein">Keine Mail da? Schau im Werbeordner nach.</p>
+</div>
+</div>
+<iframe name="waldpost-sink" title="Formularziel" style="display:none" aria-hidden="true"></iframe>
+<script>
+(function(){
+  var form = document.getElementById('waldpost-form');
+  if (!form) return;
+  form.addEventListener('submit', function(){
+    setTimeout(function(){
+      document.getElementById('waldpost-formular').hidden = true;
+      document.getElementById('waldpost-fertig').hidden = false;
+    }, 400);
+  });
+})();
+</script>
 </section>
 
 <!-- WERBUNG: Waldkalender und Rauhnächte -->
