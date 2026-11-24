@@ -2038,8 +2038,7 @@ let resumeAudio=[];document.addEventListener('visibilitychange',()=>{if(document
     var h = '';
     var vorab = Date.now() < Date.parse('2026-12-01T08:00:00+01:00');
     var konten = (ALLES.giveawayAccounts || []).map(function (a) { return '@' + a; });
-    var liste = vorab ? 'dem Account @waldmomente und den Partnerinnen des Kalenders. Ihre Accounts nenne ich ab dem 1. Dezember 2026, 8:00 Uhr, hier und in den Türchen'
-      : konten.length > 1 ? konten.slice(0, -1).join(', ') + ' und ' + konten[konten.length - 1] : konten.join('');
+    var liste = konten.length > 1 ? konten.slice(0, -1).join(', ') + ' und ' + konten[konten.length - 1] : konten.join('');
     if ((ALLES.giveawayTerms || []).length) {
       h += '<details><summary>Teilnahmebedingungen</summary>'
          + (ALLES.giveawayTerms || []).map(function (t) { return '<p>' + sicher(t.replace('{{ACCOUNTS}}', liste)) + '</p>'; }).join('')
